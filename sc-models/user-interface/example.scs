@@ -1,0 +1,9 @@
+// It is an example file just to push something in the directory
+metasystem_ui_menu
+	=> nrel_main_idtf: [Главное меню Метасистемы OSTIS] (* <- lang_ru;; *);
+	=> nrel_main_idtf: [Main meny of the OSTIS Metasystem] (* <- lang_ru;; *);;
+<= nrel_ui_commands_decomposition: .metasystem_ui_menu_decomposition
+(*
+	-> ui_menu_na_view_kb;;
+	-> ui_menu_na_keynodes;;
+*);;
