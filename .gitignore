@@ -14,6 +14,7 @@ cmake-build-release
 *.scs~
 ostis-web-platform
 kb.bin
+kb.bin-tests
 secret.txt
 
 __pycache__

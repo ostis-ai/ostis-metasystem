@@ -14,5 +14,6 @@ fi
 stage "Install OSTIS Metasystem"
 
 "${PLATFORM_PATH}/scripts/install_platform.sh"
+source "${CURRENT_DIR}/install_py_sc_server_deps.sh"
 
-stage "OSTIS Metasystem installed successfully"
+stage "OSTIS Metasystem is installed successfully"
