@@ -31,10 +31,9 @@ jobs:
         with:
           key: ${{ github.job }}
 
-      - name: Preparing platform
+      - name: Install Metasystem
         env:
           TERM: linux
         run: |
           cd scripts
-          ./set_vars.sh
           ./install_metasystem.sh
