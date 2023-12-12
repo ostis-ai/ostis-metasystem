@@ -1,3 +1,6 @@
 [submodule "ostis-web-platform"]
 	path = ostis-web-platform
 	url = https://github.com/ostis-ai/ostis-web-platform
+[submodule "docs/scn"]
+	path = docs/scn
+	url = https://github.com/ostis-ai/scn-latex-plugin
