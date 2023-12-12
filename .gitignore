@@ -14,6 +14,7 @@ cmake-build-release
 *.scs~
 ostis-web-platform
 kb.bin
+secret.txt
 
 __pycache__
 
@@ -34,4 +35,3 @@ sc-server.log
 *.synctex.gz
 
 *.db
-*.txt
