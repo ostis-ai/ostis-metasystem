@@ -3,5 +3,5 @@ ostis_metasystem
 => nrel_main_idtf:
 	[Метасистема OSTIS]
 	(* <- lang_ru;; *);
-	[ostis-metasystem]
+	[OSTIS Metasystem]
 	(* <- lang_en;; *);;

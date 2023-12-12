@@ -2,17 +2,17 @@
 
 [![license](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-This repository is a metasystem of the [OSTIS Project](https://github.com/ostis-ai/ostis-project).
+This repository is a storage of the Metasystem of the [OSTIS Project](https://github.com/ostis-ai/ostis-project).
 
-ostis-metasystem contains:
+OSTIS Metasystem contains:
 
-1. [ostis-web-platfrom](https://github.com/ostis-ai/ostis-web-platfrom) to interpret sc-models
-2. sc-models of the Metasystem
-   1. Metasystem knowledge base
-   2. Metasystem problem solver
-   3. Metasystem user interface
+1. [OSTIS Platform](https://github.com/ostis-ai/ostis-web-platfrom) to interpret sc-models
+2. sc-models of the OSTIS Metasystem
+   1. OSTIS Metasystem knowledge base
+   2. OSTIS Metasystem problem solver
+   3. OSTIS Metasystem user interface
 
-To learn more about the Metasystem, check out our [documentation](https://libeldoc.bsuir.by/handle/123456789/51151).
+To learn more about the OSTIS Metasystem, check out our [documentation](https://libeldoc.bsuir.by/handle/123456789/51151).
 
 ## Installation
 

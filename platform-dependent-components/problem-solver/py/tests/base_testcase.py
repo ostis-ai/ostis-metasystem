@@ -1,3 +1,9 @@
+"""
+This source file is part of an OSTIS project. For the latest info, see http://ostis.net
+Distributed under the MIT License
+(See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
+"""
+
 import logging
 from unittest import TestCase
 
@@ -10,6 +16,7 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s | %(name)s | %(message)s", datefmt="[%d-%b-%y %H:%M:%S]"
 )
 SC_SERVER_URL = "ws://localhost:8091/ws_json"
+
 
 class BaseTestCase(TestCase):
     def setUp(self) -> None:
