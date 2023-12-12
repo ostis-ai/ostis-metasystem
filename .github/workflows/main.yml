@@ -36,4 +36,5 @@ jobs:
           TERM: linux
         run: |
           cd scripts
+          ./set_vars.sh
           ./install_metasystem.sh
