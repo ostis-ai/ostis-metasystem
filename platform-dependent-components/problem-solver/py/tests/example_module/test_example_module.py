@@ -15,7 +15,7 @@ from sc_kpm.identifiers import CommonIdentifiers, QuestionStatus
 WAIT_TIME = 5
 
 
-class WeatherAgentTestCase(BaseTestCase):
+class ExampleAgentTestCase(BaseTestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.tests_structures_dir_path = str(
@@ -39,7 +39,7 @@ class WeatherAgentTestCase(BaseTestCase):
         )
         self.assertTrue(execute_agent(**kwargs)[1])
 
-    def test_message_is_not_about_weather(self):
+    def test_example_agent(self):
         self.load_scs(
             Path(
                 self.tests_structures_dir_path,
