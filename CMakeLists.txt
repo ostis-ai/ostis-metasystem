@@ -28,11 +28,4 @@ macro(subdir_list result current_dir)
 	set(${result} ${dirlist})
 endmacro()
 
-set(SUBSYSTEMS_PATH "${CMAKE_CURRENT_LIST_DIR}/subsystems")
-subdir_list(SUBDIRS ${SUBSYSTEMS_PATH})
-
-foreach(SUBDIR ${SUBDIRS})
-	add_subdirectory(${SUBSYSTEMS_PATH}/${SUBDIR}/problem-solver)
-endforeach()
-
 add_subdirectory(platform-dependent-components/problem-solver)
