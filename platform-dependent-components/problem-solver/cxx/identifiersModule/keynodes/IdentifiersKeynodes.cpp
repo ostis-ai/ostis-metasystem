@@ -4,12 +4,12 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "ExampleKeynodes.hpp"
+#include "IdentifiersKeynodes.hpp"
 
 #include "sc-memory/sc_memory.hpp"
 
-namespace exampleModule
+namespace identifiersModule
 {
-ScAddr ExampleKeynodes::action_example;
+ScAddr IdentifiersKeynodes::action_find_identifiers;
 
-}  // namespace exampleModule
+}  // namespace identifiersModule

@@ -1,1 +1,1 @@
-add_subdirectory(exampleModule)
+add_subdirectory(identifiersModule)
