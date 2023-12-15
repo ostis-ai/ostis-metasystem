@@ -1,1 +1,1 @@
-action_find_identifiers <- sc_node_not_relation;;
+action_find_identifiers <- sc_node_class;;

@@ -86,6 +86,7 @@ std::string FindIdentifiersAgent::get_str_ScType(ScAddr const & node)
 
 bool FindIdentifiersAgent::write_in_file(std::string& str_idtfs)
 {
+    SC_LOG_ERROR(IDENTIFIERS_MODULE_PATH);
   try
   {
     std::ofstream file(IDENTIFIERS_MODULE_PATH "identifiers.txt");

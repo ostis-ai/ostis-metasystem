@@ -37,7 +37,7 @@ class FindIdentifiersAgent : public ScAgent
       {ScType::NodeStruct, "sc_node_struct"},
       {ScType::NodeTuple, "sc_node_tuple"},
       {ScType::NodeRole, "sc_node_role_relation"},
-      {ScType::NodeNoRole, "sc_node_norole_relatione"},
+      {ScType::NodeNoRole, "sc_node_norole_relation"},
       {ScType::NodeClass, "sc_node_not_relation"},
       {ScType::NodeAbstract, "sc_node_abstract"},
       {ScType::NodeMaterial, "sc_node_material"},
