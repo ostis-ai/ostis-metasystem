@@ -7,7 +7,7 @@
 #include "IdentifiersModule.hpp"
 
 #include "keynodes/IdentifiersKeynodes.hpp"
-#include "agent/FindIdentifiersAgent.hpp"
+#include "agent/TranslateMainSystemIdtfsFromScToFileAgent.hpp"
 
 using namespace identifiersModule;
 
@@ -28,14 +28,14 @@ sc_result IdentifiersModule::InitializeImpl()
   }
   else
   {
-    SC_AGENT_REGISTER(FindIdentifiersAgent);
+    SC_AGENT_REGISTER(TranslateMainSystemIdtfsFromScToFileAgent);
   }
 
   return SC_RESULT_OK;
 }
 sc_result IdentifiersModule::ShutdownImpl()
 {
-  SC_AGENT_UNREGISTER(FindIdentifiersAgent);
+  SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent);
 
   return SC_RESULT_OK;
 }

@@ -15,7 +15,7 @@ if(${SC_CLANG_FORMAT_CODE})
     target_clangformat_setup(identifiers)
 endif()
 
-add_definitions(-DIDENTIFIERS_MODULE_PATH="${PROBLEM_SOLVER_PATH}/cxx/identifiersModule/")
+add_definitions(-DIDENTIFIERS_MODULE_PATH="${CMAKE_CURRENT_LIST_DIR}/")
 
 if(${SC_BUILD_TESTS})
     include(${CMAKE_CURRENT_LIST_DIR}/test/tests.cmake)

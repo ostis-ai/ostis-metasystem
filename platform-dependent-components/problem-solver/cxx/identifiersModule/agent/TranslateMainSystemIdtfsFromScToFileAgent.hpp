@@ -9,11 +9,11 @@
 #include "sc-memory/kpm/sc_agent.hpp"
 #include "sc-agents-common/keynodes/coreKeynodes.hpp"
 
-#include "FindIdentifiersAgent.generated.hpp"
+#include "TranslateMainSystemIdtfsFromScToFileAgent.generated.hpp"
 
 namespace identifiersModule
 {
-class FindIdentifiersAgent : public ScAgent
+class TranslateMainSystemIdtfsFromScToFileAgent : public ScAgent
 {
   SC_CLASS(Agent, Event(scAgentsCommon::CoreKeynodes::question_initiated, ScEvent::Type::AddOutputEdge))
   SC_GENERATED_BODY()
@@ -38,15 +38,15 @@ class FindIdentifiersAgent : public ScAgent
       {ScType::NodeTuple, "sc_node_tuple"},
       {ScType::NodeRole, "sc_node_role_relation"},
       {ScType::NodeNoRole, "sc_node_norole_relation"},
-      {ScType::NodeClass, "sc_node_not_relation"},
-      {ScType::NodeAbstract, "sc_node_abstract"},
+      {ScType::NodeClass, "sc_node_class"},
+      {ScType::NodeAbstract, "sc_node"},
       {ScType::NodeMaterial, "sc_node_material"},
 
       {ScType::NodeConstStruct, "sc_node_struct"},
       {ScType::NodeConstTuple, "sc_node_tuple"},
       {ScType::NodeConstRole, "sc_node_role_relation"},
       {ScType::NodeConstNoRole, "sc_node_norole_relation"},
-      {ScType::NodeConstClass, "sc_node_not_relation"},
+      {ScType::NodeConstClass, "sc_node_class"},
       {ScType::NodeConstAbstract, "sc_node"},
       {ScType::NodeConstMaterial, "sc_node_material"},
 
@@ -54,11 +54,12 @@ class FindIdentifiersAgent : public ScAgent
       {ScType::NodeVarTuple, "sc_node_tuple"},
       {ScType::NodeVarRole, "sc_node_role_relation"},
       {ScType::NodeVarNoRole, "sc_node_norole_relation"},
-      {ScType::NodeVarClass, "sc_node_not_relation"},
+      {ScType::NodeVarClass, "sc_node_class"},
       {ScType::NodeVarAbstract, "sc_node"},
       {ScType::NodeVarMaterial, "sc_node_material"}};
 
   std::map<ScType, std::string> edges = {
+
       {ScType::EdgeUCommon, "sc_edge"},
       {ScType::EdgeDCommon, "sc_edge_common"},
 
@@ -86,7 +87,7 @@ class FindIdentifiersAgent : public ScAgent
 private:
   bool checkAction(ScAddr const & actionAddr);
   std::string get_str_ScType(ScAddr const & node);
-  bool write_in_file(std::string&);
+  bool write_in_file(std::string const&);
 };
 
 }  // namespace identifiersModule
