@@ -14,7 +14,7 @@ using namespace scAgentsCommon;
 
 SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
 {
-    ScAddr const &actionAddr = otherAddr;
+    ScAddr const & actionAddr = otherAddr;
 
     if (!checkAction(actionAddr)) {
         return SC_RESULT_OK;
