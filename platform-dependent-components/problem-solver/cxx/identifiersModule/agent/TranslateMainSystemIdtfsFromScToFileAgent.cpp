@@ -4,11 +4,7 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "sc-agents-common/utils/AgentUtils.hpp"
 #include "sc-agents-common/utils/CommonUtils.hpp"
-#include "sc-agents-common/keynodes/coreKeynodes.hpp"
-#include "sc-memory/kpm/sc_agent.hpp"
-#include "../../sc-machine/sc-kpm/sc-ui/uiKeynodes.h"
 
 #include "keynodes/IdentifiersKeynodes.hpp"
 #include "TranslateMainSystemIdtfsFromScToFileAgent.hpp"
@@ -27,47 +23,47 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
     SC_LOG_DEBUG("TranslateMainSystemIdtfsFromScToFileAgent started");
 
     // TODO: replace by CoreKeynodes::nrel_system_identifier after release
-    ScAddr node_nrel_system_idtf = ms_context->HelperFindBySystemIdtf("nrel_system_identifier");
+    ScAddr const & nrelSystemIdtf = ms_context->HelperFindBySystemIdtf("nrel_system_identifier");
 
-    std::stringstream stream_idtfs;
+    std::stringstream streamIdtfs;
 
     ScIterator3Ptr it = ms_context->Iterator3(
-            node_nrel_system_idtf,
+            nrelSystemIdtf,
             ScType::EdgeAccessConstPosPerm,
             ScType::EdgeDCommonConst
             );
 
     while (it->Next()) {
-        ScAddr edge_nrel_system_idtf = it->Get(2);
-        ScAddr node = ms_context->GetEdgeSource(edge_nrel_system_idtf);
-        ScAddr node_idtf = ms_context->GetEdgeTarget(edge_nrel_system_idtf);
+        ScAddr edgeNrelSystemIdtf = it->Get(2);
+        ScAddr node = ms_context->GetEdgeSource(edgeNrelSystemIdtf);
+        ScAddr nodeSystemIdtf = ms_context->GetEdgeTarget(edgeNrelSystemIdtf);
 
-        std::string system_idtf;
-        ms_context->GetLinkContent(node_idtf, system_idtf);
+        std::string systemIdtf;
+        ms_context->GetLinkContent(nodeSystemIdtf, systemIdtf);
 
-        std::string main_idtf =
+        std::string mainIdtf =
                 utils::CommonUtils::getMainIdtf(
                         &m_memoryCtx,
                         node,
                         {scAgentsCommon::CoreKeynodes::lang_ru}
                         );
 
-        std::string str_type = get_str_ScType(node);
+        std::string strType = getStrScType(node);
 
-        if (!main_idtf.empty()) {
-            stream_idtfs << "{\"" << main_idtf << "\", "
-                         << "{\"" << system_idtf << "\", \""
-                         << str_type << "\"} },\n";
+        if (!mainIdtf.empty() && !strType.empty()) {
+            streamIdtfs << "{\"" << mainIdtf << "\", "
+                        << "{\"" << systemIdtf << "\", \""
+                        << strType << "\"} },\n";
         }
     }
 
-    string str_idtfs(stream_idtfs.str());
-    str_idtfs.pop_back();
-    str_idtfs.pop_back();
+    string strIdtfs(streamIdtfs.str());
+    strIdtfs.pop_back();
+    strIdtfs.pop_back();
 
-    bool result_of_write = write_in_file(str_idtfs);
+    bool resultOfWrite = writeInFile(strIdtfs);
 
-    if (result_of_write) {
+    if (resultOfWrite) {
         SC_LOG_DEBUG("File has been created");
     } else {
         SC_LOG_ERROR("File hasn't been created");
@@ -85,22 +81,22 @@ bool TranslateMainSystemIdtfsFromScToFileAgent::checkAction(ScAddr const & actio
             );
 }
 
-std::string TranslateMainSystemIdtfsFromScToFileAgent::get_str_ScType(ScAddr const & node) {
-    std::string str_type = "";
+std::string TranslateMainSystemIdtfsFromScToFileAgent::getStrScType(ScAddr const & node) {
+    std::string strType;
     ScType type = ms_context->GetElementType(node);
     if (nodes.count(type)) {
-        str_type = nodes[type];
+        strType = nodes[type];
     } else if (edges.count(type)) {
-        str_type = edges[type];
+        strType = edges[type];
     }
-    return str_type;
+    return strType;
 }
 
-bool TranslateMainSystemIdtfsFromScToFileAgent::write_in_file(std::string const& str_idtfs) {
+bool TranslateMainSystemIdtfsFromScToFileAgent::writeInFile(std::string const & strIdtfs) {
     try {
         std::ofstream file(IDENTIFIERS_MODULE_PATH "identifiers.txt");
         if (file.is_open()) {
-            file << str_idtfs;
+            file << strIdtfs;
         }
         file.close();
     }
