@@ -1,16 +1,23 @@
+\makeatletter
+\def\input@path{{scn//}}
+\makeatother
+
+
 \documentclass{scndocument}
 
 \usepackage{import}
 \usepackage{scn}
+\usepackage[english,main=russian]{babel}
 
 \addbibresource{bibliography/biblio.bib}
 
 \begin{document}
 
+\selectlanguage{russian}
+
 \DeactivateBG
 \title{\centering
 Документация Метасистемы OSTIS}
-\author{}
 \maketitle
 
 \normalsize
