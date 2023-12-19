@@ -1,0 +1,7 @@
+test_action_node
+	<- action_find_identifiers;
+	<- question;;
+
+knowledge
+	<- sc_node_class;
+	=> nrel_main_idtf: [знание] (* <- lang_ru;; *);;
