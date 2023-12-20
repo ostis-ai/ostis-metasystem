@@ -27,28 +27,28 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
 
     std::stringstream streamIdtfs;
 
-    ScIterator3Ptr it = ms_context->Iterator3(
+    ScIterator3Ptr Iterator3PtrEdgeBelongToNrelSystemIdtf = ms_context->Iterator3(
             nrelSystemIdtf,
             ScType::EdgeAccessConstPosPerm,
             ScType::EdgeDCommonConst
             );
 
-    while (it->Next()) {
-        ScAddr edgeNrelSystemIdtf = it->Get(2);
-        ScAddr node = ms_context->GetEdgeSource(edgeNrelSystemIdtf);
-        ScAddr nodeSystemIdtf = ms_context->GetEdgeTarget(edgeNrelSystemIdtf);
+    ScAddr edgeNrelSystemIdtf;
+    ScAddr node;
+    ScAddr nodeSystemIdtf;
 
-        std::string systemIdtf;
+    std::string systemIdtf;
+    std::string mainIdtf;
+    std::string strType;
+
+    while (Iterator3PtrEdgeBelongToNrelSystemIdtf->Next()) {
+        edgeNrelSystemIdtf = Iterator3PtrEdgeBelongToNrelSystemIdtf->Get(2);
+        node = ms_context->GetEdgeSource(edgeNrelSystemIdtf);
+        nodeSystemIdtf = ms_context->GetEdgeTarget(edgeNrelSystemIdtf);
+
         ms_context->GetLinkContent(nodeSystemIdtf, systemIdtf);
-
-        std::string mainIdtf =
-                utils::CommonUtils::getMainIdtf(
-                        &m_memoryCtx,
-                        node,
-                        {scAgentsCommon::CoreKeynodes::lang_ru}
-                        );
-
-        std::string strType = getStrScType(node);
+        mainIdtf = utils::CommonUtils::getMainIdtf(&m_memoryCtx, node,{scAgentsCommon::CoreKeynodes::lang_ru});
+        strType = getStrScType(node);
 
         if (!mainIdtf.empty() && !strType.empty()) {
             streamIdtfs << "{\"" << mainIdtf << "\", "
@@ -58,10 +58,11 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
     }
 
     string strIdtfs(streamIdtfs.str());
+    // Remove last symbols "," and "\n"
     strIdtfs.pop_back();
     strIdtfs.pop_back();
 
-    bool resultOfWrite = writeInFile(strIdtfs);
+    bool const & resultOfWrite = writeInFile(strIdtfs);
 
     if (resultOfWrite) {
         SC_LOG_DEBUG("File has been created");
@@ -83,11 +84,11 @@ bool TranslateMainSystemIdtfsFromScToFileAgent::checkAction(ScAddr const & actio
 
 std::string TranslateMainSystemIdtfsFromScToFileAgent::getStrScType(ScAddr const & node) {
     std::string strType;
-    ScType type = ms_context->GetElementType(node);
-    if (nodes.count(type)) {
-        strType = nodes[type];
-    } else if (edges.count(type)) {
-        strType = edges[type];
+    ScType const & type = ms_context->GetElementType(node);
+    if (ScTypesOfNodesWithSCsClasses.count(type)) {
+        strType = ScTypesOfNodesWithSCsClasses[type];
+    } else if (ScTypesOfEdgesWithSCsClasses.count(type)) {
+        strType = ScTypesOfEdgesWithSCsClasses[type];
     }
     return strType;
 }
@@ -100,7 +101,7 @@ bool TranslateMainSystemIdtfsFromScToFileAgent::writeInFile(std::string const & 
         }
         file.close();
     }
-    catch (const std::exception &err) {
+    catch (std::exception const & err) {
         SC_LOG_ERROR(err.what());
         return false;
     }

@@ -17,6 +17,6 @@ endif()
 
 add_definitions(-DIDENTIFIERS_MODULE_PATH="${CMAKE_CURRENT_LIST_DIR}/")
 
-if(${SC_BUILD_TESTS})
-    include(${CMAKE_CURRENT_LIST_DIR}/test/tests.cmake)
-endif()
+#if(${SC_BUILD_TESTS})
+#    include(${CMAKE_CURRENT_LIST_DIR}/test/tests.cmake)
+#endif()

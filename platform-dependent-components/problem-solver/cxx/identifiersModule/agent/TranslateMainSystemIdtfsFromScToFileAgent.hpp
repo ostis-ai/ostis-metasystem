@@ -18,7 +18,7 @@ class TranslateMainSystemIdtfsFromScToFileAgent : public ScAgent
   SC_CLASS(Agent, Event(scAgentsCommon::CoreKeynodes::question_initiated, ScEvent::Type::AddOutputEdge))
   SC_GENERATED_BODY()
 
-  std::map<ScType, std::string> nodes = {
+  std::map<ScType, std::string> ScTypesOfNodesWithSCsClasses = {
       {ScType::Const, "sc_node"},
       {ScType::Var, "sc_node"},
 
@@ -57,7 +57,7 @@ class TranslateMainSystemIdtfsFromScToFileAgent : public ScAgent
       {ScType::NodeVarAbstract, "sc_node"},
       {ScType::NodeVarMaterial, "sc_node_material"}};
 
-  std::map<ScType, std::string> edges = {
+  std::map<ScType, std::string> ScTypesOfEdgesWithSCsClasses = {
       {ScType::EdgeUCommon, "sc_edge"},
       {ScType::EdgeDCommon, "sc_edge_common"},
 
@@ -85,7 +85,7 @@ class TranslateMainSystemIdtfsFromScToFileAgent : public ScAgent
 private:
   bool checkAction(ScAddr const & actionAddr);
   std::string getStrScType(ScAddr const & node);
-  bool writeInFile(std::string const & strIdtfs);
+  static bool writeInFile(std::string const & strIdtfs);
 };
 
 }  // namespace identifiersModule

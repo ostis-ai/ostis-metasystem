@@ -5,3 +5,16 @@ test_action_node
 knowledge
 	<- sc_node_class;
 	=> nrel_main_idtf: [знание] (* <- lang_ru;; *);;
+
+space
+	<- sc_node_class;
+	=> nrel_main_idtf: [пространство] (* <- lang_ru;; *);
+	=> nrel_main_idtf: [space] (* <- lang_en;; *);;
+
+query
+	<- sc_node;
+	=> nrel_main_idtf: [query] (* <- lang_en;; *);;
+
+...
+    <- sc_node;
+	=> nrel_main_idtf: [no_name] (* <- lang_en;; *);;
