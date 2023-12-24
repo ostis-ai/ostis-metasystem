@@ -1,0 +1,24 @@
+test_action_node
+	<- action_find_identifiers;
+	<- question;;
+
+Knowledge
+	<- sc_node_class;
+    => nrel_main_idtf: [знание] (* <- lang_ru;; *);
+	=> nrel_main_idtf: [знание2] (* <- lang_ru;; *);
+	=> nrel_main_idtf: [knowledge] (* <- lang_en;; *);;
+
+Space
+	<- sc_node_class;
+	=> nrel_main_idtf: [пространство] (* <- lang_ru;; *);
+	=> nrel_main_idtf: [пространство] (* <- lang_ru;; *);;
+
+Query
+	<- sc_node;
+	=> nrel_main_idtf: [очередь] (* <- lang_ru;; *);
+	=> nrel_main_idtf: [очередь2] (* <- lang_ru;; *);;
+
+...
+    => nrel_system_identifier: [No_name];
+	=> nrel_main_idtf: [No_name] (* <- lang_en;; *);
+	=> nrel_main_idtf: [Переменная] (* <- lang_ru;; *);;

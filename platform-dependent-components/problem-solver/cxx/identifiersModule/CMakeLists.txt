@@ -1,4 +1,10 @@
-file(GLOB_RECURSE SOURCES "*.cpp" "*.hpp")
+set(IDENTIFIERS_MODULE_SRC "${PROBLEM_SOLVER_PATH}/cxx/identifiersModule")
+
+set(SOURCES
+        "agent/TranslateMainSystemIdtfsFromScToFileAgent.cpp" "agent/TranslateMainSystemIdtfsFromScToFileAgent.hpp"
+        "keynodes/IdentifiersKeynodes.cpp" "keynodes/IdentifiersKeynodes.hpp"
+        "IdentifiersModule.cpp" "IdentifiersModule.hpp"
+)
 
 include_directories(
     ${CMAKE_CURRENT_LIST_DIR}
@@ -16,3 +22,7 @@ if(${SC_CLANG_FORMAT_CODE})
 endif()
 
 add_definitions(-DIDENTIFIERS_MODULE_PATH="${CMAKE_CURRENT_LIST_DIR}/")
+
+if(${SC_BUILD_TESTS})
+    include(${CMAKE_CURRENT_LIST_DIR}/test/tests.cmake)
+endif()
