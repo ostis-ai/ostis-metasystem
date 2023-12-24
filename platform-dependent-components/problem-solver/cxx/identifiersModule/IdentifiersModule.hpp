@@ -8,9 +8,11 @@
 
 #include "sc-memory/sc_module.hpp"
 
-#include "ExampleModule.generated.hpp"
+#include "IdentifiersModule.generated.hpp"
 
-class ExampleModule : public ScModule
+namespace identifiersModule
+{
+class IdentifiersModule : public ScModule
 {
   SC_CLASS(LoadOrder(100))
   SC_GENERATED_BODY()
@@ -19,3 +21,5 @@ class ExampleModule : public ScModule
 
   sc_result ShutdownImpl() override;
 };
+ 
+}  // namespace identifiersModule

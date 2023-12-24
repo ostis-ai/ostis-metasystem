@@ -9,19 +9,19 @@
 #include "sc-memory/sc_addr.hpp"
 #include "sc-memory/sc_object.hpp"
 
-#include "ExampleKeynodes.generated.hpp"
+#include "IdentifiersKeynodes.generated.hpp"
 
-namespace exampleModule
+namespace identifiersModule
 {
-class ExampleKeynodes : public ScObject
+class IdentifiersKeynodes : public ScObject
 {
   SC_CLASS()
   SC_GENERATED_BODY()
 
 public:
-  SC_PROPERTY(Keynode("action_example"), ForceCreate)
-  static ScAddr action_example;
+  SC_PROPERTY(Keynode("action_find_identifiers"), ForceCreate)
+  static ScAddr action_find_identifiers;
 
 };
 
-}  // namespace exampleModule
+}  // namespace identifiersModule
