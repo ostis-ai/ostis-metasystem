@@ -18,7 +18,7 @@ query
 	=> nrel_main_idtf: [очередь] (* <- lang_ru;; *);;
 
 ...
-    <- sc_node;
-    => nrel_system_identifier: [no_name];
+	<- sc_node;
+	=> nrel_system_identifier: [no_name];
 	=> nrel_main_idtf: [no_name] (* <- lang_en;; *);
 	=> nrel_main_idtf: [переменная] (* <- lang_ru;; *);;

@@ -4,7 +4,7 @@ test_action_node
 
 Knowledge
 	<- sc_node_class;
-    => nrel_main_idtf: [знание] (* <- lang_ru;; *);
+	=> nrel_main_idtf: [знание] (* <- lang_ru;; *);
 	=> nrel_main_idtf: [знание2] (* <- lang_ru;; *);
 	=> nrel_main_idtf: [knowledge] (* <- lang_en;; *);;
 
@@ -19,6 +19,6 @@ Query
 	=> nrel_main_idtf: [очередь2] (* <- lang_ru;; *);;
 
 ...
-    => nrel_system_identifier: [No_name];
+	=> nrel_system_identifier: [No_name];
 	=> nrel_main_idtf: [No_name] (* <- lang_en;; *);
 	=> nrel_main_idtf: [Переменная] (* <- lang_ru;; *);;

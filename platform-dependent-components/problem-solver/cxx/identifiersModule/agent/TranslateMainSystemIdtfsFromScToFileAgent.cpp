@@ -5,11 +5,11 @@
  */
 
 #include "sc-agents-common/utils/CommonUtils.hpp"
+#include "sc-agents-common/utils/AgentUtils.hpp"
 #include "keynodes/IdentifiersKeynodes.hpp"
 #include "TranslateMainSystemIdtfsFromScToFileAgent.hpp"
 
 using namespace identifiersModule;
-using namespace scAgentsCommon;
 
 SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
 {
@@ -34,51 +34,31 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
 
     ScAddr edgeBelongsToNrelSystemIdtf;
     ScAddr sourceOfEdgeBelongsToNrelSystemIdtf;
-    ScAddr targetOfEdgeBelongsToNrelSystemIdtf;
 
-    std::string systemIdtf;
-    std::string mainIdtf;
-    std::string strType;
+    std::string systemIdentifier;
+    std::string mainIdentifier;
+    std::string stringType;
 
     while (iterator3PtrEdgeBelongsToNrelSystemIdtf->Next()) {
         edgeBelongsToNrelSystemIdtf = iterator3PtrEdgeBelongsToNrelSystemIdtf->Get(2);
         sourceOfEdgeBelongsToNrelSystemIdtf = ms_context->GetEdgeSource(edgeBelongsToNrelSystemIdtf);
-        targetOfEdgeBelongsToNrelSystemIdtf = ms_context->GetEdgeTarget(edgeBelongsToNrelSystemIdtf);
+        try {
+            systemIdentifier = getSystemIdtfAndVerifyNode(sourceOfEdgeBelongsToNrelSystemIdtf);
+            mainIdentifier = getMainIdtfAndVerifyNode(sourceOfEdgeBelongsToNrelSystemIdtf);
+            stringType = getStrScType(sourceOfEdgeBelongsToNrelSystemIdtf);
 
-        bool isOneSystemIdtf = isOneEdgeFromNodeToLinkUnderRel(
-                sourceOfEdgeBelongsToNrelSystemIdtf,
-                nrelSystemIdtf);
-        bool isOneMainRuIdtf = isOneEdgeFromNodeToLinkUnderRel(
-                sourceOfEdgeBelongsToNrelSystemIdtf,
-                scAgentsCommon::CoreKeynodes::nrel_main_idtf);
-
-        //try{
-            if (isOneSystemIdtf && isOneMainRuIdtf) {
-                ms_context->GetLinkContent(targetOfEdgeBelongsToNrelSystemIdtf, systemIdtf);
-                mainIdtf = utils::CommonUtils::getMainIdtf(
-                        &m_memoryCtx,
-                        sourceOfEdgeBelongsToNrelSystemIdtf,
-                        {scAgentsCommon::CoreKeynodes::lang_ru});
-                strType = getStrScType(sourceOfEdgeBelongsToNrelSystemIdtf);
-
-                if (!mainIdtf.empty() && !strType.empty()) {
-                    streamIdtfs << "{\"" << mainIdtf << "\", "
-                                << "{\"" << systemIdtf << "\", \""
-                                << strType << "\"} },\n";
-                }
+            if (!systemIdentifier.empty() && !mainIdentifier.empty() && !stringType.empty()) {
+                streamIdtfs << "{\"" << mainIdentifier << "\", "
+                            << "{\"" << systemIdentifier << "\", \""
+                            << stringType << "\"} },\n";
             }
-//            else {
-//                ms_context->GetLinkContent(targetOfEdgeBelongsToNrelSystemIdtf, systemIdtf);
-//                SC_THROW_EXCEPTION(utils::ScException,
-//                                   "You have mistakes in the formalisation of " + systemIdtf);
-//            }
-//        }
-//        catch (utils::ScException & exception)
-//        {
-//            SC_LOG_ERROR(exception.Description());
-//            return SC_RESULT_ERROR;
-//        }
         }
+        catch (utils::ScException const & exception) {
+            SC_LOG_ERROR(exception.Description());
+            utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
+            return SC_RESULT_ERROR;
+        }
+    }
 
         string strIdtfs(streamIdtfs.str());
         // Remove last symbols "," and "\n"
@@ -92,19 +72,11 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
         bool const & resultOfWrite = writeInFile(strIdtfs);
 
         if (resultOfWrite) {
-            ms_context->CreateEdge(ScType::EdgeAccessConstPosPerm,
-                                   scAgentsCommon::CoreKeynodes::question_finished_successfully,
-                                   actionAddr);
             SC_LOG_DEBUG("File has been created");
         } else {
-            ms_context->CreateEdge(ScType::EdgeAccessConstPosPerm,
-                                   scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully,
-                                   actionAddr);
             SC_LOG_ERROR("File hasn't been created");
         }
-        ms_context->CreateEdge(ScType::EdgeAccessConstPosPerm,
-                               scAgentsCommon::CoreKeynodes::question_finished,
-                               actionAddr);
+        utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, resultOfWrite);
         SC_LOG_DEBUG("TranslateMainSystemIdtfsFromScToFileAgent finished");
         return SC_RESULT_OK;
 }
@@ -117,43 +89,60 @@ bool TranslateMainSystemIdtfsFromScToFileAgent::checkAction(ScAddr const & actio
             );
 }
 
-bool TranslateMainSystemIdtfsFromScToFileAgent::isOneEdgeFromNodeToLinkUnderRel(ScAddr const & node, ScAddr const & nodeRelation) {
+std::string TranslateMainSystemIdtfsFromScToFileAgent::getSystemIdtfAndVerifyNode(ScAddr const & node) {
+    std::string identifier;
+    ScAddr identifierLink;
     ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf = ms_context->Iterator5(
             node,
             ScType::EdgeDCommonConst,
-            ScType::Link,
+            ScType::LinkConst,
             ScType::EdgeAccessConstPosPerm,
-            nodeRelation
+            ms_context->HelperFindBySystemIdtf("nrel_system_identifier")
     );
 
-    if(nodeRelation == CoreKeynodes::nrel_main_idtf){
-        bool const numberOfRuLinks = countLinkWithLang(iterator5PtrCheckOnlyOneIdtf, scAgentsCommon::CoreKeynodes::lang_ru);
-        return numberOfRuLinks;
+    if(iterator5PtrCheckOnlyOneIdtf->Next()) {
+        identifierLink = iterator5PtrCheckOnlyOneIdtf->Get(2);
+        if (iterator5PtrCheckOnlyOneIdtf->Next()) {
+            SC_THROW_EXCEPTION(utils::ScException, "You have more than one system identifier for " + identifier);
+        }
+        ms_context->GetLinkContent(identifierLink, identifier);
     }
-
-    int times = 0;
-    while(iterator5PtrCheckOnlyOneIdtf->Next()){
-        times++;
-    }
-    if (times == ONE) {
-        return true;
-    }
-    return false;
+    return identifier;
 }
 
-int TranslateMainSystemIdtfsFromScToFileAgent::countLinkWithLang(ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf, ScAddr const & lang) {
-    int times = 0;
-    while(iterator5PtrCheckOnlyOneIdtf->Next()){
-        ScAddr link = iterator5PtrCheckOnlyOneIdtf->Get(2);
-        bool is_lang = ms_context->HelperCheckEdge(lang, link, ScType::EdgeAccessConstPosPerm);
-        if (is_lang) {
-            times++;
+std::string TranslateMainSystemIdtfsFromScToFileAgent::getMainIdtfAndVerifyNode(ScAddr const & node) {
+    std::string identifier;
+    ScAddr mainIdentifierLink;
+    ScAddr mainAnotherIdentifierLink;
+    ScIterator5Ptr const &iterator5PtrCheckOnlyOneIdtf = ms_context->Iterator5(
+            node,
+            ScType::EdgeDCommonConst,
+            ScType::LinkConst,
+            ScType::EdgeAccessConstPosPerm,
+            scAgentsCommon::CoreKeynodes::nrel_main_idtf
+    );
+
+    bool isLangRu;
+    while (iterator5PtrCheckOnlyOneIdtf->Next()) {
+        mainIdentifierLink = iterator5PtrCheckOnlyOneIdtf->Get(2);
+        isLangRu = ms_context->HelperCheckEdge(scAgentsCommon::CoreKeynodes::lang_ru,
+                                               mainIdentifierLink,
+                                               ScType::EdgeAccessConstPosPerm);
+        if (isLangRu) {
+            while (iterator5PtrCheckOnlyOneIdtf->Next()) {
+                mainAnotherIdentifierLink = iterator5PtrCheckOnlyOneIdtf->Get(2);
+                isLangRu = ms_context->HelperCheckEdge(scAgentsCommon::CoreKeynodes::lang_ru,
+                                                       mainAnotherIdentifierLink,
+                                                       ScType::EdgeAccessConstPosPerm);
+                if (isLangRu) {
+                    return identifier;
+                }
+            }
+            ms_context->GetLinkContent(mainIdentifierLink, identifier);
+            break;
         }
     }
-    if (times == ONE) {
-        return true;
-    }
-    return false;
+    return identifier;
 }
 
 std::string TranslateMainSystemIdtfsFromScToFileAgent::getStrScType(ScAddr const & node) {
@@ -175,8 +164,8 @@ bool TranslateMainSystemIdtfsFromScToFileAgent::writeInFile(std::string const & 
         }
         file.close();
     }
-    catch (std::exception const & err) {
-        SC_LOG_ERROR(err.what());
+    catch (std::exception const & exception) {
+        SC_LOG_ERROR(exception.what());
         return false;
     }
     return true;

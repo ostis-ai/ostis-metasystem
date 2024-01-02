@@ -18,8 +18,6 @@ class TranslateMainSystemIdtfsFromScToFileAgent : public ScAgent
   SC_CLASS(Agent, Event(scAgentsCommon::CoreKeynodes::question_initiated, ScEvent::Type::AddOutputEdge))
   SC_GENERATED_BODY()
 
-  static const int ONE = 1;
-
   std::map<ScType, std::string> ScTypesOfNodesWithSCsClasses = {
       {ScType::Const, "sc_node"},
       {ScType::Var, "sc_node"},
@@ -87,8 +85,8 @@ class TranslateMainSystemIdtfsFromScToFileAgent : public ScAgent
 private:
   bool checkAction(ScAddr const & actionAddr);
   std::string getStrScType(ScAddr const & node);
-  static bool isOneEdgeFromNodeToLinkUnderRel(ScAddr const & node, ScAddr const & relation);
-  static int countLinkWithLang(ScIterator5Ptr const & iterator5PtrCheckOnlyOneMainIdtf, ScAddr const & lang);
+  static std::string getSystemIdtfAndVerifyNode(ScAddr const & node);
+  static std::string getMainIdtfAndVerifyNode(ScAddr const & node);
   static bool writeInFile(std::string const & strIdtfs);
 };
 
