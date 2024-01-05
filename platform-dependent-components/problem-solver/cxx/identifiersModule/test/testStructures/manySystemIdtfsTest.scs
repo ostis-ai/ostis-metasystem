@@ -1,0 +1,18 @@
+test_action_node
+	<- action_find_identifiers;
+	<- question;;
+
+Knowledge
+	<- sc_node_class;
+	=> nrel_system_identifier: [knowledge];
+	=> nrel_main_idtf: [знание] (* <- lang_ru;; *);
+	=> nrel_main_idtf: [знание2] (* <- lang_ru;; *);
+	=> nrel_main_idtf: [knowledge] (* <- lang_en;; *);;
+
+truth
+	<- sc_node_class;
+	=> nrel_system_identifier: [truth];
+	=> nrel_system_identifier: [Truth];
+	=> nrel_system_identifier: [class_truth];
+	=> nrel_main_idtf: [Правда] (* <- lang_ru;; *);
+	=> nrel_main_idtf: [Truth] (* <- lang_en;; *);;
