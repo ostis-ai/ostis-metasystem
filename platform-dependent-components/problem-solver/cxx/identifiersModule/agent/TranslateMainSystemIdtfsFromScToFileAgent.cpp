@@ -22,11 +22,11 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
     SC_LOG_DEBUG("TranslateMainSystemIdtfsFromScToFileAgent started");
 
     // TODO: replace by CoreKeynodes::nrel_system_identifier after release
-    ScAddr const & nrelSystemIdtf = ms_context->HelperFindBySystemIdtf("nrel_system_identifier");
+    ScAddr const & nrelSystemIdtf = m_memoryCtx.HelperFindBySystemIdtf("nrel_system_identifier");
 
     std::stringstream streamIdtfs;
 
-    ScIterator3Ptr const & iterator3PtrEdgeBelongsToNrelSystemIdtf = ms_context->Iterator3(
+    ScIterator3Ptr const & iterator3PtrEdgeBelongsToNrelSystemIdtf = m_memoryCtx.Iterator3(
             nrelSystemIdtf,
             ScType::EdgeAccessConstPosPerm,
             ScType::EdgeDCommonConst
@@ -41,10 +41,10 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
 
     while (iterator3PtrEdgeBelongsToNrelSystemIdtf->Next()) {
         edgeBelongsToNrelSystemIdtf = iterator3PtrEdgeBelongsToNrelSystemIdtf->Get(2);
-        sourceOfEdgeBelongsToNrelSystemIdtf = ms_context->GetEdgeSource(edgeBelongsToNrelSystemIdtf);
+        sourceOfEdgeBelongsToNrelSystemIdtf = m_memoryCtx.GetEdgeSource(edgeBelongsToNrelSystemIdtf);
         try {
-            systemIdentifier = getSystemIdtfAndVerifyNode(sourceOfEdgeBelongsToNrelSystemIdtf);
-            mainIdentifier = getMainIdtfAndVerifyNode(sourceOfEdgeBelongsToNrelSystemIdtf);
+            systemIdentifier = getSystemIdtfAndVerifyNode(m_memoryCtx, sourceOfEdgeBelongsToNrelSystemIdtf);
+            mainIdentifier = getMainIdtfAndVerifyNode(m_memoryCtx, sourceOfEdgeBelongsToNrelSystemIdtf);
             stringType = getStrScType(sourceOfEdgeBelongsToNrelSystemIdtf);
 
             if (!systemIdentifier.empty() && !mainIdentifier.empty() && !stringType.empty()) {
@@ -60,7 +60,7 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
         }
     }
 
-        string strIdtfs(streamIdtfs.str());
+        std::string strIdtfs(streamIdtfs.str());
         // Remove last symbols "," and "\n"
         if(!strIdtfs.empty()) {
             strIdtfs.pop_back();
@@ -89,15 +89,15 @@ bool TranslateMainSystemIdtfsFromScToFileAgent::checkAction(ScAddr const & actio
             );
 }
 
-std::string TranslateMainSystemIdtfsFromScToFileAgent::getSystemIdtfAndVerifyNode(ScAddr const & node) {
+std::string TranslateMainSystemIdtfsFromScToFileAgent::getSystemIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node) {
     std::string identifier;
     ScAddr identifierLink;
-    ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf = ms_context->Iterator5(
+    ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf = m_memoryCtx.Iterator5(
             node,
             ScType::EdgeDCommonConst,
             ScType::LinkConst,
             ScType::EdgeAccessConstPosPerm,
-            ms_context->HelperFindBySystemIdtf("nrel_system_identifier")
+            m_memoryCtx.HelperFindBySystemIdtf("nrel_system_identifier")
     );
 
     if(iterator5PtrCheckOnlyOneIdtf->Next()) {
@@ -105,16 +105,16 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::getSystemIdtfAndVerifyNod
         if (iterator5PtrCheckOnlyOneIdtf->Next()) {
             SC_THROW_EXCEPTION(utils::ScException, "You have more than one system identifier for " + identifier);
         }
-        ms_context->GetLinkContent(identifierLink, identifier);
+        m_memoryCtx.GetLinkContent(identifierLink, identifier);
     }
     return identifier;
 }
 
-std::string TranslateMainSystemIdtfsFromScToFileAgent::getMainIdtfAndVerifyNode(ScAddr const & node) {
+std::string TranslateMainSystemIdtfsFromScToFileAgent::getMainIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node) {
     std::string identifier;
     ScAddr mainIdentifierLink;
     ScAddr mainAnotherIdentifierLink;
-    ScIterator5Ptr const &iterator5PtrCheckOnlyOneIdtf = ms_context->Iterator5(
+    ScIterator5Ptr const &iterator5PtrCheckOnlyOneIdtf = m_memoryCtx.Iterator5(
             node,
             ScType::EdgeDCommonConst,
             ScType::LinkConst,
@@ -125,20 +125,20 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::getMainIdtfAndVerifyNode(
     bool isLangRu;
     while (iterator5PtrCheckOnlyOneIdtf->Next()) {
         mainIdentifierLink = iterator5PtrCheckOnlyOneIdtf->Get(2);
-        isLangRu = ms_context->HelperCheckEdge(scAgentsCommon::CoreKeynodes::lang_ru,
+        isLangRu = m_memoryCtx.HelperCheckEdge(scAgentsCommon::CoreKeynodes::lang_ru,
                                                mainIdentifierLink,
                                                ScType::EdgeAccessConstPosPerm);
         if (isLangRu) {
             while (iterator5PtrCheckOnlyOneIdtf->Next()) {
                 mainAnotherIdentifierLink = iterator5PtrCheckOnlyOneIdtf->Get(2);
-                isLangRu = ms_context->HelperCheckEdge(scAgentsCommon::CoreKeynodes::lang_ru,
+                isLangRu = m_memoryCtx.HelperCheckEdge(scAgentsCommon::CoreKeynodes::lang_ru,
                                                        mainAnotherIdentifierLink,
                                                        ScType::EdgeAccessConstPosPerm);
                 if (isLangRu) {
                     return identifier;
                 }
             }
-            ms_context->GetLinkContent(mainIdentifierLink, identifier);
+            m_memoryCtx.GetLinkContent(mainIdentifierLink, identifier);
             break;
         }
     }
@@ -147,7 +147,7 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::getMainIdtfAndVerifyNode(
 
 std::string TranslateMainSystemIdtfsFromScToFileAgent::getStrScType(ScAddr const & node) {
     std::string strType;
-    ScType const & type = ms_context->GetElementType(node);
+    ScType const & type = m_memoryCtx.GetElementType(node);
     if (ScTypesOfNodesWithSCsClasses.count(type)) {
         strType = ScTypesOfNodesWithSCsClasses[type];
     } else if (ScTypesOfEdgesWithSCsClasses.count(type)) {

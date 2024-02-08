@@ -9,6 +9,8 @@ export METASYSTEM_PATH="${METASYSTEM_PATH:-${APP_ROOT_PATH}}"
 export CONFIG_PATH="${CONFIG_PATH:-${METASYSTEM_PATH}/ostis-metasystem.ini}"
 export REPO_PATH_FILE="${REPO_PATH_FILE:-${METASYSTEM_PATH}/repo.path}"
 export PLATFORM_PATH="${PLATFORM_PATH:-${METASYSTEM_PATH}/ostis-web-platform}"
+export BINARY_PATH="${BINARY_PATH:-${ROOT_CMAKE_PATH}/bin}"
+export BUILD_PATH="${BUILD_PATH:-${ROOT_CMAKE_PATH}/build}"
 export PROBLEM_SOLVER_PATH="${METASYSTEM_PATH}/platform-dependent-components/problem-solver"
 
 if [[ -d "${PLATFORM_PATH}" ]];
