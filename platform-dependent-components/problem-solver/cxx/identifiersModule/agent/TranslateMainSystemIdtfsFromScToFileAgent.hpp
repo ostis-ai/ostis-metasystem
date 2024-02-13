@@ -85,8 +85,8 @@ class TranslateMainSystemIdtfsFromScToFileAgent : public ScAgent
 private:
   bool checkAction(ScAddr const & actionAddr);
   std::string getStrScType(ScAddr const & node);
-  static std::string getSystemIdtfAndVerifyNode(ScAddr const & node);
-  static std::string getMainIdtfAndVerifyNode(ScAddr const & node);
+  static std::string getSystemIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node);
+  static std::string getMainIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node);
   static bool writeInFile(std::string const & strIdtfs);
 };
 

@@ -74,7 +74,7 @@ namespace ModuleTest
                 scAgentsCommon::CoreKeynodes::question_initiated,
                 testActionNode);
 
-        utils::AgentUtils::waitAgentResult(&context, testActionNode, WAIT_TIME);
+        utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
 
         EXPECT_TRUE(context.HelperCheckEdge(
                 scAgentsCommon::CoreKeynodes::question_finished_successfully,
@@ -103,7 +103,7 @@ namespace ModuleTest
                 scAgentsCommon::CoreKeynodes::question_initiated,
                 testActionNode);
 
-        utils::AgentUtils::waitAgentResult(&context, testActionNode, WAIT_TIME);
+        utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
 
         EXPECT_TRUE(context.HelperCheckEdge(
                 scAgentsCommon::CoreKeynodes::question_finished_successfully,
@@ -142,7 +142,7 @@ namespace ModuleTest
                 scAgentsCommon::CoreKeynodes::question_initiated,
                 testActionNode);
 
-        utils::AgentUtils::waitAgentResult(&context, testActionNode, WAIT_TIME);
+        utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
 
         EXPECT_TRUE(context.HelperCheckEdge(
                 scAgentsCommon::CoreKeynodes::question_finished_successfully,
@@ -183,7 +183,7 @@ namespace ModuleTest
                 scAgentsCommon::CoreKeynodes::question_initiated,
                 testActionNode);
 
-        utils::AgentUtils::waitAgentResult(&context, testActionNode, WAIT_TIME);
+        utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
 
         bool result = context.HelperCheckEdge(
                 scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully,
