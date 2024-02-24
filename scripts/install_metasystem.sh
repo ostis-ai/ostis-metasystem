@@ -16,4 +16,8 @@ stage "Install OSTIS Metasystem"
 "${PLATFORM_PATH}/scripts/install_platform.sh"
 source "${CURRENT_DIR}/install_py_sc_server_deps.sh"
 
+"${CURRENT_DIR}/build_problem_solver.sh"
+"${CURRENT_DIR}/build_kb.sh"
+"${CURRENT_DIR}/build_sc_web.sh"
+
 stage "OSTIS Metasystem is installed successfully"
