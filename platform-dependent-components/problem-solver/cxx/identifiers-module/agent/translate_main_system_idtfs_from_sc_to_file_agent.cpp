@@ -6,8 +6,8 @@
 
 #include "sc-agents-common/utils/CommonUtils.hpp"
 #include "sc-agents-common/utils/AgentUtils.hpp"
-#include "keynodes/IdentifiersKeynodes.hpp"
-#include "TranslateMainSystemIdtfsFromScToFileAgent.hpp"
+#include "keynodes/identifiers_keynodes.hpp"
+#include "translate_main_system_idtfs_from_sc_to_file_agent.hpp"
 
 using namespace identifiersModule;
 
@@ -15,7 +15,7 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
 {
     ScAddr const & actionAddr = otherAddr;
 
-    if (!checkAction(actionAddr)) {
+    if (!CheckAction(actionAddr)) {
         return SC_RESULT_OK;
     }
 
@@ -43,9 +43,9 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
         edgeBelongsToNrelSystemIdtf = iterator3PtrEdgeBelongsToNrelSystemIdtf->Get(2);
         sourceOfEdgeBelongsToNrelSystemIdtf = m_memoryCtx.GetEdgeSource(edgeBelongsToNrelSystemIdtf);
         try {
-            systemIdentifier = getSystemIdtfAndVerifyNode(m_memoryCtx, sourceOfEdgeBelongsToNrelSystemIdtf);
-            mainIdentifier = getMainIdtfAndVerifyNode(m_memoryCtx, sourceOfEdgeBelongsToNrelSystemIdtf);
-            stringType = getStrScType(sourceOfEdgeBelongsToNrelSystemIdtf);
+            systemIdentifier = GetSystemIdtfAndVerifyNode(m_memoryCtx, sourceOfEdgeBelongsToNrelSystemIdtf);
+            mainIdentifier = GetMainIdtfAndVerifyNode(m_memoryCtx, sourceOfEdgeBelongsToNrelSystemIdtf);
+            stringType = GetStrScType(sourceOfEdgeBelongsToNrelSystemIdtf);
 
             if (!systemIdentifier.empty() && !mainIdentifier.empty() && !stringType.empty()) {
                 streamIdtfs << "{\"" << mainIdentifier << "\", "
@@ -69,7 +69,7 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
             }
         }
 
-        bool const & resultOfWrite = writeInFile(strIdtfs);
+        bool const & resultOfWrite = WriteInFile(strIdtfs);
 
         if (resultOfWrite) {
             SC_LOG_DEBUG("File has been created");
@@ -81,7 +81,7 @@ SC_AGENT_IMPLEMENTATION(TranslateMainSystemIdtfsFromScToFileAgent)
         return SC_RESULT_OK;
 }
 
-bool TranslateMainSystemIdtfsFromScToFileAgent::checkAction(ScAddr const & actionAddr) {
+bool TranslateMainSystemIdtfsFromScToFileAgent::CheckAction(ScAddr const & actionAddr) {
     return m_memoryCtx.HelperCheckEdge(
             IdentifiersKeynodes::action_find_identifiers,
             actionAddr,
@@ -89,7 +89,7 @@ bool TranslateMainSystemIdtfsFromScToFileAgent::checkAction(ScAddr const & actio
             );
 }
 
-std::string TranslateMainSystemIdtfsFromScToFileAgent::getSystemIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node) {
+std::string TranslateMainSystemIdtfsFromScToFileAgent::GetSystemIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node) {
     std::string identifier;
     ScAddr identifierLink;
     ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf = m_memoryCtx.Iterator5(
@@ -110,7 +110,7 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::getSystemIdtfAndVerifyNod
     return identifier;
 }
 
-std::string TranslateMainSystemIdtfsFromScToFileAgent::getMainIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node) {
+std::string TranslateMainSystemIdtfsFromScToFileAgent::GetMainIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node) {
     std::string identifier;
     ScAddr mainIdentifierLink;
     ScAddr mainAnotherIdentifierLink;
@@ -145,7 +145,7 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::getMainIdtfAndVerifyNode(
     return identifier;
 }
 
-std::string TranslateMainSystemIdtfsFromScToFileAgent::getStrScType(ScAddr const & node) {
+std::string TranslateMainSystemIdtfsFromScToFileAgent::GetStrScType(ScAddr const & node) {
     std::string strType;
     ScType const & type = m_memoryCtx.GetElementType(node);
     if (ScTypesOfNodesWithSCsClasses.count(type)) {
@@ -156,7 +156,7 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::getStrScType(ScAddr const
     return strType;
 }
 
-bool TranslateMainSystemIdtfsFromScToFileAgent::writeInFile(std::string const & strIdentifiers) {
+bool TranslateMainSystemIdtfsFromScToFileAgent::WriteInFile(std::string const & strIdentifiers) {
     try {
         std::ofstream file(IDENTIFIERS_MODULE_PATH "identifiers.txt");
         if (file.is_open()) {
