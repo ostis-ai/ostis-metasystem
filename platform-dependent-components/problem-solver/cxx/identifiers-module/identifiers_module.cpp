@@ -4,10 +4,10 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "IdentifiersModule.hpp"
+#include "identifiers_module.hpp"
 
-#include "keynodes/IdentifiersKeynodes.hpp"
-#include "agent/TranslateMainSystemIdtfsFromScToFileAgent.hpp"
+#include "keynodes/identifiers_keynodes.hpp"
+#include "agent/translate_main_system_idtfs_from_sc_to_file_agent.hpp"
 
 using namespace identifiersModule;
 

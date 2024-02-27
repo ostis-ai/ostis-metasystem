@@ -1,0 +1,3 @@
+{"переменная", {"no_name", "sc_node"} },
+{"очередь", {"query", "sc_node"} },
+{"знание", {"knowledge", "sc_node_class"} }
