@@ -3,6 +3,7 @@ project(ostis-metasystem)
 set(CMAKE_CXX_STANDARD 17)
 
 option(SC_BUILD_TESTS "Flag to build unit tests" OFF)
+option(SC_CLANG_FORMAT_CODE "Flag to add clangformat and clangformat_check targets" OFF)
 
 if(NOT SC_BIN_PATH)
     set(SC_BIN_PATH "${CMAKE_BINARY_DIR}/../bin")
@@ -16,6 +17,10 @@ set(SC_MACHINE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ostis-web-platform/sc-machine")
 set(CMAKE_MODULE_PATH "${SC_MACHINE_PATH}/cmake")
 include("${CMAKE_MODULE_PATH}/codegen.cmake")
 
+if(${SC_CLANG_FORMAT_CODE})
+    include(${CMAKE_MODULE_PATH}/ClangFormat.cmake)
+endif()
+
 set(SC_MEMORY_SRC "${SC_MACHINE_PATH}/sc-memory/")
 set(SC_KPM_SRC "${SC_MACHINE_PATH}/sc-kpm/")
 set(SC_TOOLS_SRC "${SC_MACHINE_PATH}/sc-tools/")
@@ -27,9 +32,9 @@ sc_target_dependencies()
 
 # for multi-config builds (e.g. msvc)
 foreach(OUTPUT_CONFIG ${CMAKE_CONFIGURATION_TYPES})
-    string(TOUPPER ${OUTPUTCONFIG} OUTPUT_CONFIG)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${SC_BIN_PATH})
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${SC_BIN_PATH})
+    string(TOUPPER ${OUTPUT_CONFIG} OUTPUT_CONFIG)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUT_CONFIG} ${SC_EXTENSIONS_DIRECTORY})
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUT_CONFIG} ${SC_EXTENSIONS_DIRECTORY})
 endforeach(OUTPUT_CONFIG)
 
 if(${SC_BUILD_TESTS})
