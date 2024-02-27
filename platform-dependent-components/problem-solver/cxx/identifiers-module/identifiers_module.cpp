@@ -33,6 +33,7 @@ sc_result IdentifiersModule::InitializeImpl()
 
   return SC_RESULT_OK;
 }
+
 sc_result IdentifiersModule::ShutdownImpl()
 {
   SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent);

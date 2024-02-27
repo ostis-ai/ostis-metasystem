@@ -1,5 +1,5 @@
 #include "scs_loader.hpp"
-#include "sc_wait.hpp"
+#include "sc-memory/sc_wait.hpp"
 #include "sc_test.hpp"
 #include "sc-agents-common/utils/CommonUtils.hpp"
 #include "sc-agents-common/utils/AgentUtils.hpp"
@@ -10,196 +10,163 @@
 using namespace identifiersModule;
 using AgentTest = ScMemoryTest;
 
-namespace ModuleTest
+namespace moduleTest
 {
-  ScsLoader loader;
-  std::string const TEST_FILES_DIR_PATH = MODULE_TEST_SRC_PATH "/test-structures/";
+ScsLoader loader;
+std::string const TEST_FILES_DIR_PATH = MODULE_TEST_SRC_PATH "/test-structures/";
 
-  int const WAIT_TIME = 1000;
+int const WAIT_TIME = 1000;
 
-  void Initialize()
+void InitializeKeynodes()
+{
+  scAgentsCommon::CoreKeynodes::InitGlobal();
+  IdentifiersKeynodes::InitGlobal();
+}
+
+std::string GetFileContent()
+{
+  char fileName[] = IDENTIFIERS_MODULE_PATH "identifiers.txt";
+  std::ifstream file(fileName);
+  std::stringstream fileContent;
+  std::string line;
+  try
   {
-    scAgentsCommon::CoreKeynodes::InitGlobal();
-    IdentifiersKeynodes::InitGlobal();
-  }
-
-  void Shutdown()
-  {
-    SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent);
-  }
-
-  std::string GetFileContent()
-  {
-    char fileName[] = IDENTIFIERS_MODULE_PATH "identifiers.txt";
-    std::ifstream file(fileName);
-    std::stringstream fileContent;
-    std::string line;
-    try
+    if (file.is_open())
     {
-      if (file.is_open())
-      {
-        while (std::getline(file, line))
-          fileContent << line;
-        file.close();
-        std::remove(fileName);
-      }
-      else
-      {
-        SC_THROW_EXCEPTION(utils::ScException, "Cant find file with identifiers");
-      }
+      while (std::getline(file, line))
+        fileContent << line;
+      file.close();
+      std::remove(fileName);
     }
-    catch (utils::ScException const & exception)
+    else
     {
-      SC_LOG_ERROR(exception.Description());
+      SC_THROW_EXCEPTION(utils::ScException, "Cant find file with identifiers");
     }
-    return fileContent.str();
   }
-
-  bool IsSubstringOfFile(std::vector<std::string> const & input, std::string const & content)
+  catch (utils::ScException const & exception)
   {
-    return std::all_of(begin(input), end(input),
-         [&](std::string const & el)
-         {
-            return content.find(el) != std::string::npos;
-         });
+    SC_LOG_ERROR(exception.Description());
   }
+  return fileContent.str();
+}
 
-  TEST_F(AgentTest, VoidTest)
-  {
-    ScMemoryContext & context = *m_ctx;
+bool IsSubstringOfFile(std::vector<std::string> const & input, std::string const & content)
+{
+  return std::all_of(
+      std::begin(input),
+      std::end(input),
+      [&](std::string const & el)
+      {
+        return content.find(el) != std::string::npos;
+      });
+}
 
-    loader.loadScsFile(context, TEST_FILES_DIR_PATH + "void_test.scs");
-    ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+TEST_F(AgentTest, VoidTest)
+{
+  ScMemoryContext & context = *m_ctx;
 
-    ScAgentInit(true);
-    Initialize();
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "void_test.scs");
+  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
 
-    SC_AGENT_REGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
+  ScAgentInit(true);
+  InitializeKeynodes();
 
-    context.CreateEdge(
-            ScType::EdgeAccessConstPosPerm,
-            scAgentsCommon::CoreKeynodes::question_initiated,
-            testActionNode);
+  SC_AGENT_REGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
 
-    utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
+  EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
 
-    EXPECT_TRUE(context.HelperCheckEdge(
-            scAgentsCommon::CoreKeynodes::question_finished_successfully,
-            testActionNode,
-            ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.HelperCheckEdge(
+      scAgentsCommon::CoreKeynodes::question_finished_successfully, testActionNode, ScType::EdgeAccessConstPosPerm));
 
-    std::string const fileContent = GetFileContent();
+  std::string const fileContent = GetFileContent();
 
-    EXPECT_TRUE(fileContent.empty());
+  EXPECT_TRUE(fileContent.empty());
 
-    SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
-  }
+  SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
+}
 
-  TEST_F(AgentTest, CorrectTest)
-  {
-    ScMemoryContext & context = *m_ctx;
-    loader.loadScsFile(context, TEST_FILES_DIR_PATH + "correct_test.scs");
-    ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+TEST_F(AgentTest, CorrectTest)
+{
+  ScMemoryContext & context = *m_ctx;
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "correct_test.scs");
+  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
 
-    ScAgentInit(true);
-    Initialize();
-    SC_AGENT_REGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
+  ScAgentInit(true);
+  InitializeKeynodes();
+  SC_AGENT_REGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
 
-    context.CreateEdge(
-            ScType::EdgeAccessConstPosPerm,
-            scAgentsCommon::CoreKeynodes::question_initiated,
-            testActionNode);
+  EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
 
-    utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
+  EXPECT_TRUE(context.HelperCheckEdge(
+      scAgentsCommon::CoreKeynodes::question_finished_successfully, testActionNode, ScType::EdgeAccessConstPosPerm));
 
-    EXPECT_TRUE(context.HelperCheckEdge(
-            scAgentsCommon::CoreKeynodes::question_finished_successfully,
-            testActionNode,
-            ScType::EdgeAccessConstPosPerm));
+  std::string const & space = R"({"space", "sc_node_class"})";
+  std::string const & knowledge = R"({"знание", {"knowledge", "sc_node_class"}})";
+  std::string const & variable = R"({"переменная", {"no_name", "sc_node"}})";
+  std::string const & query = R"({"очередь", {"query", "sc_node"}})";
 
-    std::string const & space = R"({"space", "sc_node_class"})";
-    std::string const & knowledge = R"({"знание", {"knowledge", "sc_node_class"}})";
-    std::string const & variable = R"({"переменная", {"no_name", "sc_node"}})";
-    std::string const & query = R"({"очередь", {"query", "sc_node"}})";
+  std::vector<std::string> const trueInput{knowledge, variable, query};
+  std::vector<std::string> const falseInput{space};
 
-    std::vector<std::string> const trueInput{knowledge, variable, query};
-    std::vector<std::string> const falseInput{space};
+  std::string const fileContent = GetFileContent();
 
-    std::string const fileContent = GetFileContent();
+  bool const trueResult = IsSubstringOfFile(trueInput, fileContent);
+  bool const falseResult = IsSubstringOfFile(falseInput, fileContent);
 
-    bool const trueResult = IsSubstringOfFile(trueInput, fileContent);
-    bool const falseResult = IsSubstringOfFile(falseInput, fileContent);
+  EXPECT_TRUE(!falseResult && trueResult);
+  SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
+}
 
-    EXPECT_TRUE(!falseResult && trueResult);
-    SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
-  }
+TEST_F(AgentTest, IncorrectTest)
+{
+  ScMemoryContext & context = *m_ctx;
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "incorrect_test.scs");
+  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
 
-  TEST_F(AgentTest, IncorrectTest)
-  {
-    ScMemoryContext & context = *m_ctx;
-    loader.loadScsFile(context, TEST_FILES_DIR_PATH + "incorrect_test.scs");
-    ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAgentInit(true);
+  InitializeKeynodes();
+  SC_AGENT_REGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
 
-    ScAgentInit(true);
-    Initialize();
-    SC_AGENT_REGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
+  EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
 
-    context.CreateEdge(
-            ScType::EdgeAccessConstPosPerm,
-            scAgentsCommon::CoreKeynodes::question_initiated,
-            testActionNode);
+  EXPECT_TRUE(context.HelperCheckEdge(
+      scAgentsCommon::CoreKeynodes::question_finished_successfully, testActionNode, ScType::EdgeAccessConstPosPerm));
 
-    utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
+  std::string const fileContent = GetFileContent();
 
-    EXPECT_TRUE(context.HelperCheckEdge(
-            scAgentsCommon::CoreKeynodes::question_finished_successfully,
-            testActionNode,
-            ScType::EdgeAccessConstPosPerm));
+  std::string const & incorrectVariable = R"({"переменная", {"no_name", "sc_node"}})";
+  std::string const & correctVariable = R"({"Переменная", {"No_name", "sc_node"}})";
+  std::string const & knowledge = R"({"знание", {"knowledge", "sc_node_class"}})";
+  std::string const & space = R"({"пространство", {"space", "sc_node_class"}})";
+  std::string const & query = R"({"очередь", {"query", "sc_node"}})";
 
-    std::string const fileContent = GetFileContent();
+  std::vector<std::string> const falseInput = {knowledge, space, query, incorrectVariable};
+  std::vector<std::string> const trueInput = {correctVariable};
 
-    std::string const & incorrectVariable = R"({"переменная", {"no_name", "sc_node"}})";
-    std::string const & correctVariable = R"({"Переменная", {"No_name", "sc_node"}})";
-    std::string const & knowledge = R"({"знание", {"knowledge", "sc_node_class"}})";
-    std::string const & space = R"({"пространство", {"space", "sc_node_class"}})";
-    std::string const & query = R"({"очередь", {"query", "sc_node"}})";
+  bool const trueResult = IsSubstringOfFile(trueInput, fileContent);
+  bool const falseResult = IsSubstringOfFile(falseInput, fileContent);
 
-    std::vector<std::string> const falseInput = {knowledge, space, query, incorrectVariable};
-    std::vector<std::string> const trueInput = {correctVariable};
+  EXPECT_TRUE(!falseResult && trueResult);
 
-    bool const trueResult = IsSubstringOfFile(trueInput, fileContent);
-    bool const falseResult = IsSubstringOfFile(falseInput, fileContent);
+  SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
+}
 
-    EXPECT_TRUE(!falseResult && trueResult);
+TEST_F(AgentTest, ManySystemIdtfsTest)
+{
+  ScMemoryContext & context = *m_ctx;
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "many_system_idtfs_test.scs");
+  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
 
-    SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
-  }
+  ScAgentInit(true);
+  InitializeKeynodes();
+  SC_AGENT_REGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
 
-  TEST_F(AgentTest, manySystemIdtfsTest)
-  {
-    ScMemoryContext & context = *m_ctx;
-    loader.loadScsFile(context, TEST_FILES_DIR_PATH + "many_system_idtfs_test.scs");
-    ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
 
-    ScAgentInit(true);
-    Initialize();
-    SC_AGENT_REGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
+  EXPECT_TRUE(context.HelperCheckEdge(
+      scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully, testActionNode, ScType::EdgeAccessConstPosPerm));
 
-    context.CreateEdge(
-            ScType::EdgeAccessConstPosPerm,
-            scAgentsCommon::CoreKeynodes::question_initiated,
-            testActionNode);
+  SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
+}
 
-    utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
-
-    bool result = context.HelperCheckEdge(
-            scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully,
-            testActionNode,
-            ScType::EdgeAccessConstPosPerm);
-
-    EXPECT_TRUE(result);
-
-    SC_AGENT_UNREGISTER(TranslateMainSystemIdtfsFromScToFileAgent)
-  }
-
-}  // namespace ModuleTest
+}  // namespace moduleTest

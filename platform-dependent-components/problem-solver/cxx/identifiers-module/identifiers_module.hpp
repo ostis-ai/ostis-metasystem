@@ -12,6 +12,7 @@
 
 namespace identifiersModule
 {
+
 class IdentifiersModule : public ScModule
 {
   SC_CLASS(LoadOrder(100))
@@ -21,5 +22,5 @@ class IdentifiersModule : public ScModule
 
   sc_result ShutdownImpl() override;
 };
- 
+
 }  // namespace identifiersModule
