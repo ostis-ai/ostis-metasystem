@@ -4,20 +4,22 @@ set -eo pipefail
 CURRENT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)
 source "${CURRENT_DIR}/formats.sh"
 
-cd "${CURRENT_DIR}/.." && git submodule update --init --recursive
+stage "Install OSTIS Platform"
 
-if [[ -z "${PLATFORM_PATH}" || -z "${METASYSTEM_PATH}" ]];
-then
-  source "${CURRENT_DIR}/set_vars.sh"
-fi
+METASYSTEM_PATH="${CURRENT_DIR}/.."
+cd "${METASYSTEM_PATH}" && git submodule update --init --recursive
+
+"${PLATFORM_PATH}/scripts/install_submodules.sh"
+"${PLATFORM_PATH}/scripts/install_dependencies.sh"
+"${PLATFORM_PATH}/scripts/build_platform.sh"
+
+stage "OSTIS Platform is installed successfully"
 
 stage "Install OSTIS Metasystem"
 
-"${PLATFORM_PATH}/scripts/install_platform.sh"
-source "${CURRENT_DIR}/install_py_sc_server_deps.sh"
-
-"${CURRENT_DIR}/build_problem_solver.sh"
+"${CURRENT_DIR}/install_py_ps_deps.sh"
+"${CURRENT_DIR}/build_ps.sh"
 "${CURRENT_DIR}/build_kb.sh"
-"${CURRENT_DIR}/build_sc_web.sh"
+"${CURRENT_DIR}/build_ui.sh"
 
 stage "OSTIS Metasystem is installed successfully"
