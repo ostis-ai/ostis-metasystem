@@ -10,10 +10,10 @@ then
   source "${CURRENT_DIR}/set_vars.sh"
 fi
 
-stage "Build cxx problem solver"
+stage "Build CXX problem solver"
 
 BUILD_SCRIPTS="${SC_MACHINE_PATH}/scripts/build-scripts"
 "${BUILD_SCRIPTS}/build_cxx_project.sh" -p "${METASYSTEM_CMAKE_PATH}" -s "${METASYSTEM_CXX_SOURCES_PATH}" \
   -b "${METASYSTEM_BUILD_PATH}" --cmake-arg "-DSC_BIN_PATH=${BINARY_PATH}" "$@"
 
-stage "CXX problem solver is built"
+stage "CXX problem solver is built successfully"
