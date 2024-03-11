@@ -27,7 +27,7 @@ set(SC_TOOLS_SRC "${SC_MACHINE_PATH}/sc-tools/")
 include_directories(${SC_MEMORY_SRC} ${SC_KPM_SRC} ${SC_TOOLS_SRC})
 
 if(${WIN32})
-    message(SEND_ERROR "OSTIS Metasystem isn't supported on Windows OS.")
+    message(SEND_ERROR "ostis-metasystem isn't supported on Windows OS.")
 endif(${WIN32})
 
 # for multi-config builds (e.g. msvc)

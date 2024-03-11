@@ -31,11 +31,11 @@ To learn more about the OSTIS Metasystem, check out our [documentation](https://
 - Native
 
   ```sh
-  # Launch knowledge processing machine
-  ./scripts/run_sc_server.sh
+  # Launch cxx problem solver
+  ./scripts/run_cxx_ps.sh
   # *in another terminal*
-  # Launch semantic web interface at localhost:8000
-  ./scripts/run_sc_web.sh
+  # Launch user interface at localhost:8000
+  ./scripts/run_ui.sh
   ```
 
 ## Documentation
