@@ -5,7 +5,7 @@ source "$(cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)/../set_v
 
 if ( ! python3 "${PLATFORM_PATH}/sc-machine/scripts/healthcheck.py" --port 8091 )
 then
-    echo "sc-server for python tests is not running. Execute ./run_sc_server_py_tests.sh"
+    echo "CXX problem solver for python tests is not running. Execute ./run_cxx_ps_for_py_ps_tests.sh"
     exit 1
 fi
 

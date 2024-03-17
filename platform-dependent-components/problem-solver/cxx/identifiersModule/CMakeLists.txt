@@ -1,9 +1,12 @@
 set(IDENTIFIERS_MODULE_SRC "${PROBLEM_SOLVER_PATH}/cxx/identifiersModule")
 
 set(SOURCES
-        "agent/TranslateMainSystemIdtfsFromScToFileAgent.cpp" "agent/TranslateMainSystemIdtfsFromScToFileAgent.hpp"
-        "keynodes/IdentifiersKeynodes.cpp" "keynodes/IdentifiersKeynodes.hpp"
-        "IdentifiersModule.cpp" "IdentifiersModule.hpp"
+    "agent/TranslateMainSystemIdtfsFromScToFileAgent.cpp"
+    "agent/TranslateMainSystemIdtfsFromScToFileAgent.hpp"
+    "keynodes/IdentifiersKeynodes.cpp"
+    "keynodes/IdentifiersKeynodes.hpp"
+    "IdentifiersModule.cpp"
+    "IdentifiersModule.hpp"
 )
 
 include_directories(

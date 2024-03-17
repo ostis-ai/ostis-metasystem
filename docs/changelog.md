@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Base structure of the Metasystem
-- SC-component-manager paths for components
+- sc-component-manager paths for components
 - Script `sc-component-manager.sh`
 - Added build of sc-machine and manager in `install_metasystem.sh`
 
