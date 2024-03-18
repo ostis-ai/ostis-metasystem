@@ -19,6 +19,7 @@ stage "ostis-platform is installed successfully"
 
 stage "Install ostis-metasystem"
 
+"${CURRENT_DIR}/install_react_sc_web.sh"
 "${CURRENT_DIR}/install_py_ps_deps.sh"
 "${CURRENT_DIR}/build_ps.sh"
 "${CURRENT_DIR}/build_kb.sh"

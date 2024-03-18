@@ -15,6 +15,13 @@ export REPO_PATH_FILE="${REPO_PATH_FILE:-${METASYSTEM_PATH}/repo.path}"
 
 export PLATFORM_PATH="${PLATFORM_PATH:-${METASYSTEM_PATH}/ostis-web-platform}"
 
+export SC_WEB_BRANCH="${SC_WEB_BRANCH:-feature/add-scg-iframe}"
+
+export REACT_SC_WEB_REPO="${REACT_SC_WEB_REPO:-https://github.com/ostis-ai/react-sc-web}"
+export REACT_SC_WEB_PATH="${REACT_SC_WEB_PATH:-${METASYSTEM_PATH}/platform-dependent-components/interface/react-sc-web}"
+export REACT_SC_WEB_BRANCH="${REACT_SC_WEB_BRANCH:-main}"
+export REACT_SC_WEB_COMMIT="${REACT_SC_WEB_REPO:-""}"
+
 if [[ -d "${PLATFORM_PATH}" ]];
 then
   source "${PLATFORM_PATH}/scripts/set_vars.sh"
