@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.11.0)
 project(ostis-metasystem)
 set(CMAKE_CXX_STANDARD 17)
 
@@ -12,19 +12,11 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${SC_EXTENSIONS_DIRECTORY})
 link_directories(${SC_BIN_PATH} ${SC_EXTENSIONS_DIRECTORY})
 
 set(SC_MACHINE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ostis-web-platform/sc-machine")
-set(SC_CODEGEN_TOOL "${SC_BIN_PATH}/sc-code-generator")
-set(CMAKE_MODULE_PATH "${SC_MACHINE_PATH}/cmake")
-include("${SC_MACHINE_PATH}/cmake/codegen.cmake")
+include(${SC_MACHINE_PATH}/CMakeLists.txt)
 
 if(${SC_BUILD_TESTS})
     include(${CMAKE_MODULE_PATH}/tests.cmake)
 endif()
-
-set(SC_MEMORY_SRC "${SC_MACHINE_PATH}/sc-memory/")
-set(SC_KPM_SRC "${SC_MACHINE_PATH}/sc-kpm/")
-set(SC_TOOLS_SRC "${SC_MACHINE_PATH}/sc-tools/")
-
-include_directories(${SC_MEMORY_SRC} ${SC_KPM_SRC} ${SC_TOOLS_SRC})
 
 if(${WIN32})
     message(SEND_ERROR "ostis-metasystem isn't supported on Windows OS.")
