@@ -20,7 +20,7 @@ export SC_WEB_BRANCH="${SC_WEB_BRANCH:-feature/add-scg-iframe}"
 export REACT_SC_WEB_REPO="${REACT_SC_WEB_REPO:-https://github.com/ostis-ai/react-sc-web}"
 export REACT_SC_WEB_PATH="${REACT_SC_WEB_PATH:-${METASYSTEM_PATH}/platform-dependent-components/interface/react-sc-web}"
 export REACT_SC_WEB_BRANCH="${REACT_SC_WEB_BRANCH:-main}"
-export REACT_SC_WEB_COMMIT="${REACT_SC_WEB_REPO:-""}"
+export REACT_SC_WEB_COMMIT="${REACT_SC_WEB_COMMIT:-""}"
 
 if [[ -d "${PLATFORM_PATH}" ]];
 then
