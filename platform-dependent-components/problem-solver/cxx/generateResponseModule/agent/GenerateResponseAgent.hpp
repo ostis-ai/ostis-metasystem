@@ -20,6 +20,9 @@ class GenerateResponseAgent : public ScAgent
 private:
   bool checkAction(ScAddr const & actionAddr);
 
+  ScAddr getMessageClassAddr(ScAddr const & messageAddr);
+
+  ScAddrVector getMessageParameters(ScAddr const & messageAddr);
 };
 
 }  // namespace generateResponseModule
