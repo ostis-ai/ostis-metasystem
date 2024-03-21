@@ -14,11 +14,7 @@ link_directories(${SC_BIN_PATH} ${SC_EXTENSIONS_DIRECTORY})
 set(SC_MACHINE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ostis-web-platform/sc-machine")
 set(SC_CODEGEN_TOOL "${SC_BIN_PATH}/sc-code-generator")
 set(CMAKE_MODULE_PATH "${SC_MACHINE_PATH}/cmake")
-include("${SC_MACHINE_PATH}/cmake/codegen.cmake")
-
-if(${SC_BUILD_TESTS})
-    include(${CMAKE_MODULE_PATH}/tests.cmake)
-endif()
+include("${CMAKE_MODULE_PATH}/codegen.cmake")
 
 set(SC_MEMORY_SRC "${SC_MACHINE_PATH}/sc-memory/")
 set(SC_KPM_SRC "${SC_MACHINE_PATH}/sc-kpm/")
@@ -36,5 +32,10 @@ foreach(OUTPUT_CONFIG ${CMAKE_CONFIGURATION_TYPES})
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${SC_BIN_PATH})
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${SC_BIN_PATH})
 endforeach(OUTPUT_CONFIG)
+
+if(${SC_BUILD_TESTS})
+    include(${CMAKE_MODULE_PATH}/tests.cmake)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
+endif()
 
 add_subdirectory(platform-dependent-components/problem-solver)
