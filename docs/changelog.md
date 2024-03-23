@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- ClangFormat for code refactoring
 - Base structure of the Metasystem
 - sc-component-manager paths for components
 - Script `sc-component-manager.sh`
