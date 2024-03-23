@@ -9,14 +9,16 @@ set(SOURCES
     "identifiers_module.hpp"
 )
 
-include_directories(
-    ${CMAKE_CURRENT_LIST_DIR}
-    ${SC_MEMORY_SRC}
-    ${SC_KPM_SRC}
-)
-
 add_library(identifiers SHARED ${SOURCES})
-target_link_libraries(identifiers sc-core sc-memory sc-agents-common)
+target_link_libraries(identifiers
+    LINK_PUBLIC sc-memory
+    LINK_PUBLIC sc-agents-common
+)
+target_include_directories(identifiers
+    PRIVATE ${CMAKE_CURRENT_LIST_DIR}
+    PUBLIC ${SC_MEMORY_SRC}
+    PUBLIC ${SC_KPM_SRC}
+)
 
 sc_codegen_ex(identifiers ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/generated)
 
