@@ -9,10 +9,11 @@
 #include "sc-memory/sc_addr.hpp"
 #include "sc-memory/sc_object.hpp"
 
-#include "IdentifiersKeynodes.generated.hpp"
+#include "identifiers_keynodes.generated.hpp"
 
 namespace identifiersModule
 {
+
 class IdentifiersKeynodes : public ScObject
 {
   SC_CLASS()
@@ -21,7 +22,6 @@ class IdentifiersKeynodes : public ScObject
 public:
   SC_PROPERTY(Keynode("action_find_identifiers"), ForceCreate)
   static ScAddr action_find_identifiers;
-
 };
 
 }  // namespace identifiersModule

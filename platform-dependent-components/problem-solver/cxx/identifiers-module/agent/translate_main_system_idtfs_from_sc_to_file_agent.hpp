@@ -9,7 +9,7 @@
 #include "sc-memory/kpm/sc_agent.hpp"
 #include "sc-agents-common/keynodes/coreKeynodes.hpp"
 
-#include "TranslateMainSystemIdtfsFromScToFileAgent.generated.hpp"
+#include "translate_main_system_idtfs_from_sc_to_file_agent.generated.hpp"
 
 namespace identifiersModule
 {
@@ -83,11 +83,11 @@ class TranslateMainSystemIdtfsFromScToFileAgent : public ScAgent
       {ScType::EdgeAccessVarFuzTemp, "sc_edge_main"}};
 
 private:
-  bool checkAction(ScAddr const & actionAddr);
-  std::string getStrScType(ScAddr const & node);
-  static std::string getSystemIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node);
-  static std::string getMainIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node);
-  static bool writeInFile(std::string const & strIdtfs);
+  bool CheckAction(ScAddr const & actionAddr);
+  std::string GetStrScType(ScAddr const & node);
+  static std::string GetSystemIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node);
+  static std::string GetMainIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node);
+  static bool WriteInFile(std::string const & strIdtfs);
 };
 
 }  // namespace identifiersModule
