@@ -8,11 +8,11 @@ if(NOT SC_BIN_PATH)
     set(SC_BIN_PATH "${CMAKE_BINARY_DIR}/../bin")
 endif()
 set(SC_EXTENSIONS_DIRECTORY "${SC_BIN_PATH}/extensions")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${SC_BIN_PATH})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${SC_EXTENSIONS_DIRECTORY})
 link_directories(${SC_BIN_PATH} ${SC_EXTENSIONS_DIRECTORY})
 
 set(SC_MACHINE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ostis-web-platform/sc-machine")
-set(SC_CODEGEN_TOOL "${SC_BIN_PATH}/sc-code-generator")
 set(CMAKE_MODULE_PATH "${SC_MACHINE_PATH}/cmake")
 include("${CMAKE_MODULE_PATH}/codegen.cmake")
 
@@ -22,9 +22,8 @@ set(SC_TOOLS_SRC "${SC_MACHINE_PATH}/sc-tools/")
 
 include_directories(${SC_MEMORY_SRC} ${SC_KPM_SRC} ${SC_TOOLS_SRC})
 
-if(${WIN32})
-    message(SEND_ERROR "ostis-metasystem isn't supported on Windows OS.")
-endif(${WIN32})
+include("${CMAKE_CURRENT_SOURCE_DIR}/dependencies.cmake")
+sc_target_dependencies()
 
 # for multi-config builds (e.g. msvc)
 foreach(OUTPUT_CONFIG ${CMAKE_CONFIGURATION_TYPES})
