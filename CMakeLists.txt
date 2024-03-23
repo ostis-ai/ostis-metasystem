@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.11)
 project(ostis-metasystem)
 set(CMAKE_CXX_STANDARD 17)
 
@@ -24,8 +24,6 @@ endif()
 set(SC_MEMORY_SRC "${SC_MACHINE_PATH}/sc-memory/")
 set(SC_KPM_SRC "${SC_MACHINE_PATH}/sc-kpm/")
 set(SC_TOOLS_SRC "${SC_MACHINE_PATH}/sc-tools/")
-
-include_directories(${SC_MEMORY_SRC} ${SC_KPM_SRC} ${SC_TOOLS_SRC})
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/dependencies.cmake")
 sc_target_dependencies()
