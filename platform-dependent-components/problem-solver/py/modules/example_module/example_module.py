@@ -5,7 +5,7 @@ Distributed under the MIT License
 """
 
 from sc_kpm import ScModule
-from .ExampleAgent import ExampleAgent
+from .example_agent import ExampleAgent
 
 
 class ExampleModule(ScModule):

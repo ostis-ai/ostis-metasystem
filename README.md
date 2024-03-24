@@ -1,6 +1,7 @@
 # ostis-metasystem
 
 [![license](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![codecov](https://codecov.io/gh/ostis-ai/ostis-metasystem/graph/badge.svg?token=0TUT6M05Z7)](https://codecov.io/gh/ostis-ai/ostis-metasystem)
 
 This repository is a storage of the Metasystem of the [OSTIS Project](https://github.com/ostis-ai/ostis-project).
 

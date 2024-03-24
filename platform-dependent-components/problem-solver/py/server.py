@@ -6,9 +6,7 @@ Distributed under the MIT License
 
 import argparse
 from sc_kpm import ScServer
-from modules.exampleModule.ExampleModule import ExampleModule
-
-from pathlib import Path
+from modules.example_module.example_module import ExampleModule
 
 SC_SERVER_PROTOCOL = "protocol"
 SC_SERVER_HOST = "host"
