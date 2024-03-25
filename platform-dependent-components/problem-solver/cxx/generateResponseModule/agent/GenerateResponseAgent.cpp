@@ -47,7 +47,7 @@ SC_AGENT_IMPLEMENTATION(GenerateResponseAgent)
 
     ScAddr messageAnswer = AgentUtils::applyActionAndGetResultIfExists(
         &m_memoryCtx, 
-        Keynodes::action_generate_response, 
+        messageActionAddr, 
         getMessageParameters(messageAddr));
 
     bool isSuccess = false;
