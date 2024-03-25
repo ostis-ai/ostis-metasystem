@@ -6,6 +6,7 @@
 #include "sc-agents-common/keynodes/coreKeynodes.hpp"
 #include "agent/GenerateResponseAgent.hpp"
 #include "test/agent/OneParameterTestAgent.hpp"
+#include "test/agent/ZeroParameterTestAgent.hpp"
 #include "test/keynodes/TestKeynodes.hpp"
 #include "keynodes/Keynodes.hpp"
 
@@ -59,6 +60,39 @@ namespace generateResponseModuleTest
         ScAddr test_entity = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
         EXPECT_TRUE(context.HelperGetSystemIdtf(test_entity) == "test_entity");
+        
+        SC_AGENT_UNREGISTER(OneParameterTestAgent);
+    }
+
+    TEST_F(AgentTest, ZeroParameterTestAgent)
+    {
+        ScMemoryContext & context = *m_ctx;
+        loadScsFile(context, "baseConcepts.scs");
+        loadScsFile(context, "zeroParameterTest.scs");
+
+        ScAgentInit(true);
+        initialize();
+
+        SC_AGENT_REGISTER(ZeroParameterTestAgent);
+        SC_AGENT_REGISTER(generateResponseModule::GenerateResponseAgent);
+
+        ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+        ScAddr const & message = context.HelperFindBySystemIdtf("message");
+        
+        utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
+
+        EXPECT_TRUE(context.HelperCheckEdge(
+                scAgentsCommon::CoreKeynodes::question_finished_successfully,
+                testActionNode,
+                ScType::EdgeAccessConstPosPerm));
+
+        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_response);
+
+        EXPECT_TRUE(messageAnswer.IsValid());
+
+        ScAddr test_success = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
+
+        EXPECT_TRUE(context.HelperGetSystemIdtf(test_success) == "test_success");
         
         SC_AGENT_UNREGISTER(OneParameterTestAgent);
     }
