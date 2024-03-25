@@ -96,4 +96,47 @@ namespace generateResponseModuleTest
         
         SC_AGENT_UNREGISTER(OneParameterTestAgent);
     }
+
+    TEST_F(AgentTest, InvalidCallTest)
+    {
+        ScMemoryContext & context = *m_ctx;
+        loadScsFile(context, "baseConcepts.scs");
+        loadScsFile(context, "invalidTest.scs");
+
+        ScAgentInit(true);
+        initialize();
+
+        SC_AGENT_REGISTER(OneParameterTestAgent);
+        SC_AGENT_REGISTER(generateResponseModule::GenerateResponseAgent);
+
+        ScAddr const & testActionNode1 = context.HelperFindBySystemIdtf("test_action_node1");
+        ScAddr const & message1 = context.HelperFindBySystemIdtf("message1");
+        utils::AgentUtils::applyAction(&context, testActionNode1, WAIT_TIME);
+        EXPECT_TRUE(context.HelperCheckEdge(
+                scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully,
+                testActionNode1,
+                ScType::EdgeAccessConstPosPerm));
+        ScAddr messageAnswer1 = utils::IteratorUtils::getAnyByOutRelation(&context, message1, generateResponseModule::Keynodes::nrel_response);
+        EXPECT_FALSE(messageAnswer1.IsValid());
+
+
+        ScAddr const & testActionNode2 = context.HelperFindBySystemIdtf("test_action_node2");
+        ScAddr const & message2 = context.HelperFindBySystemIdtf("message2");
+        utils::AgentUtils::applyAction(&context, testActionNode2, WAIT_TIME);
+        EXPECT_TRUE(context.HelperCheckEdge(
+                scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully,
+                testActionNode2,
+                ScType::EdgeAccessConstPosPerm));
+        ScAddr messageAnswer2 = utils::IteratorUtils::getAnyByOutRelation(&context, message1, generateResponseModule::Keynodes::nrel_response);
+        EXPECT_FALSE(messageAnswer2.IsValid());
+
+
+        ScAddr const & testActionNode3 = context.HelperFindBySystemIdtf("test_action_node3");
+        utils::AgentUtils::applyAction(&context, testActionNode3, WAIT_TIME);
+        EXPECT_TRUE(context.HelperCheckEdge(
+                scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully,
+                testActionNode3,
+                ScType::EdgeAccessConstPosPerm));
+        SC_AGENT_UNREGISTER(OneParameterTestAgent);
+    }
 }
