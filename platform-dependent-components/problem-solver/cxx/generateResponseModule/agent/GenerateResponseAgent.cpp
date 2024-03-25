@@ -28,12 +28,16 @@ SC_AGENT_IMPLEMENTATION(GenerateResponseAgent)
     if (!messageAddr.IsValid()) 
     {
         SC_LOG_ERROR("GenerateResponseAgent: parameter 'messageAddr' is not valid");
+        utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
+        return SC_RESULT_ERROR;
     }
     
     ScAddr messageClassAddr = getMessageClassAddr(messageAddr);
     if (!messageClassAddr.IsValid())
     {
         SC_LOG_ERROR("GenerateResponseAgent: message class is not supported");
+        utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
+        return SC_RESULT_ERROR;
     }
 
     ScAddr messageActionAddr = IteratorUtils::getAnyByOutRelation(
@@ -43,6 +47,8 @@ SC_AGENT_IMPLEMENTATION(GenerateResponseAgent)
     if (!messageActionAddr.IsValid())
     {
         SC_LOG_ERROR("GenerateResponseAgent: message class is not supported");
+        utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
+        return SC_RESULT_ERROR;
     }
 
     ScAddr messageAnswer = AgentUtils::applyActionAndGetResultIfExists(
