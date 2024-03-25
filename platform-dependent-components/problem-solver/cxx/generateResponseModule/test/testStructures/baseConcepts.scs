@@ -1,0 +1,21 @@
+concept_ask_ai_message
+  <- sc_node_class;;
+
+nrel_response_action
+  <- sc_node_norole_relation;;
+
+nrel_response
+  <- sc_node_norole_relation;;
+
+rrel_entity
+  <- sc_node_role_relation;;
+
+test_question
+  <- sc_node_class;
+  <- concept_ask_ai_message;;
+
+test_action
+  <- sc_node_class;
+  <- actions_class;
+  <- atomic_action_class;
+  <= nrel_response_action: test_question;;
