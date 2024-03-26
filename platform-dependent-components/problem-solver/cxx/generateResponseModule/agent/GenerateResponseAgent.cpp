@@ -23,11 +23,19 @@ SC_AGENT_IMPLEMENTATION(GenerateResponseAgent)
 
     SC_LOG_DEBUG("GenerateResponseAgent started");
 
-    ScAddr messageAddr = IteratorUtils::getAnyFromSet(&m_memoryCtx, otherAddr);
+    ScAddr messageAddr = IteratorUtils::getAnyByOutRelation(&m_memoryCtx, otherAddr, scAgentsCommon::CoreKeynodes::rrel_1);
+    ScAddr answerAddr = IteratorUtils::getAnyByOutRelation(&m_memoryCtx, otherAddr, scAgentsCommon::CoreKeynodes::rrel_2);
 
     if (!messageAddr.IsValid()) 
     {
         SC_LOG_ERROR("GenerateResponseAgent: parameter 'messageAddr' is not valid");
+        utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
+        return SC_RESULT_ERROR;
+    }
+
+    if (!answerAddr.IsValid()) 
+    {
+        SC_LOG_ERROR("GenerateResponseAgent: parameter 'answerAddr' is not valid");
         utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
         return SC_RESULT_ERROR;
     }
@@ -65,6 +73,8 @@ SC_AGENT_IMPLEMENTATION(GenerateResponseAgent)
             ScType::EdgeAccessConstPosPerm, 
             Keynodes::nrel_response, 
             edgeBetweenMessageAndMessageAnswer);
+
+        m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, answerAddr, messageAnswer);
     }
 
     utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, isSuccess);
