@@ -45,6 +45,7 @@ namespace generateResponseModuleTest
 
         ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
         ScAddr const & message = context.HelperFindBySystemIdtf("message");
+        ScAddr const & answer = context.HelperFindBySystemIdtf("_answer");
         
         utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
 
@@ -60,6 +61,8 @@ namespace generateResponseModuleTest
         ScAddr test_entity = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
         EXPECT_TRUE(context.HelperGetSystemIdtf(test_entity) == "test_entity");
+
+        EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosTemp));
         
         SC_AGENT_UNREGISTER(OneParameterTestAgent);
     }
@@ -78,6 +81,7 @@ namespace generateResponseModuleTest
 
         ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
         ScAddr const & message = context.HelperFindBySystemIdtf("message");
+        ScAddr const & answer = context.HelperFindBySystemIdtf("_answer");
         
         utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
 
@@ -93,7 +97,9 @@ namespace generateResponseModuleTest
         ScAddr test_success = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
         EXPECT_TRUE(context.HelperGetSystemIdtf(test_success) == "test_success");
-        
+
+        EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosTemp));
+
         SC_AGENT_UNREGISTER(OneParameterTestAgent);
     }
 
