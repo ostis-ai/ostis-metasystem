@@ -35,6 +35,7 @@ jobs:
         env:
           TERM: linux
         run: |
+          git submodule update --init --recursive
           cd scripts
           ./install_metasystem.sh
 
