@@ -2,12 +2,11 @@
 \def\input@path{{scn//}}
 \makeatother
 
-
 \documentclass{scndocument}
 
+\usepackage[english,main=russian]{babel}
 \usepackage{import}
 \usepackage{scn}
-\usepackage[english,main=russian]{babel}
 
 \addbibresource{bibliography/biblio.bib}
 
@@ -28,6 +27,7 @@
 \begin{SCn}
 \input{ostis_metasystem}
 \input{translateMainSystemIdtfFromScToFileAgent}
+\input{generateResponseAgent.tex}
 \input{bibliography/biblio}
 \end{SCn}
 \end{document}
