@@ -10,7 +10,8 @@ message1
 test_action_node2
   <-question;
   <-action_generate_response;
-  -> rrel_1:message2;;
+  -> rrel_1:message2;
+  -> rrel_2:rrel_dynamic_argument: _answer;;
 
 
 test_question2
@@ -25,7 +26,9 @@ test_action2
 
 message2
   <- test_question2;
-  -> rrel_entity: test_entity;;
+  -> rrel_entity: test_entity;
+  -> rrel_2:rrel_dynamic_argument: _answer;;
+
 
 test_action_node3
   <-question;
