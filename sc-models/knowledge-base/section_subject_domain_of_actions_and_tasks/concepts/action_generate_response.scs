@@ -1,4 +1,4 @@
-action_reply_to_message
+action_generate_response
 <- sc_node_class;
 => nrel_main_idtf:
 	[действие. получить ответ на сообщение](* <- lang_ru;; *);
