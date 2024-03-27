@@ -16,7 +16,7 @@ include_directories(
 )
 
 add_library(identifiers SHARED ${SOURCES})
-target_link_libraries(identifiers sc-memory sc-agents-common)
+target_link_libraries(identifiers sc-core sc-memory sc-agents-common)
 
 sc_codegen_ex(identifiers ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/generated)
 

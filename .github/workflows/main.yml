@@ -37,3 +37,10 @@ jobs:
         run: |
           cd scripts
           ./install_metasystem.sh
+
+      - name: Run cxx tests
+        run: |
+          cd scripts
+          ./build_ps.sh -t
+          ./tests/run_cxx_ps_tests.sh
+          ./run_cxx_ps.sh -t
