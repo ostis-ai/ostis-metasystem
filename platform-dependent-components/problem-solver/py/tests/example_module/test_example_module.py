@@ -6,7 +6,7 @@ Distributed under the MIT License
 
 from pathlib import Path
 
-from modules.exampleModule.ExampleModule import ExampleModule
+from modules.example_module.example_module import ExampleModule
 from sc_kpm.utils.action_utils import execute_agent
 from tests.base_testcase import BaseTestCase
 
@@ -19,7 +19,7 @@ class ExampleAgentTestCase(BaseTestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.tests_structures_dir_path = str(
-            Path(Path(__file__).resolve().parent, "test_structures"))
+            Path(Path(__file__).resolve().parent, "test-structures"))
         
     def setUp(self):
         super().setUp()

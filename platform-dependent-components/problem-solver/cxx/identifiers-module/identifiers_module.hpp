@@ -4,12 +4,23 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "IdentifiersKeynodes.hpp"
+#pragma once
 
-#include "sc-memory/sc_memory.hpp"
+#include "sc-memory/sc_module.hpp"
+
+#include "identifiers_module.generated.hpp"
 
 namespace identifiersModule
 {
-ScAddr IdentifiersKeynodes::action_find_identifiers;
+
+class IdentifiersModule : public ScModule
+{
+  SC_CLASS(LoadOrder(100))
+  SC_GENERATED_BODY()
+
+  sc_result InitializeImpl() override;
+
+  sc_result ShutdownImpl() override;
+};
 
 }  // namespace identifiersModule
