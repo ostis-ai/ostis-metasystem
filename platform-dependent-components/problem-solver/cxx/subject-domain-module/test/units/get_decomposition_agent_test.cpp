@@ -54,7 +54,7 @@ TEST_F(AddSectionDomainTest, successful_decomposition)
   ScMemoryContext & context = *m_ctx;
   initialize();
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_successful_decomposition.scs");
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const testActionNode = context.HelperFindBySystemIdtf("test_action_node");
 
   utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
   ScIterator5Ptr it5 = context.Iterator5(
@@ -63,21 +63,18 @@ TEST_F(AddSectionDomainTest, successful_decomposition)
       ScType::Unknown,
       ScType::EdgeAccessConstPosPerm,
       scAgentsCommon::CoreKeynodes::nrel_answer);
-  if (it5->Next())
-  {
-    ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::Link);
-    if (it3->Next())
-    {
-      std::string decompositionContent;
-      context.GetLinkContent(it3->Get(2), decompositionContent);
-      json decomposition = json::parse(decompositionContent);
-      json temp;
-      std::string idtf = decomposition.begin().value()["idtf"];
-      temp[idtf] = GetDecompositionIdList(decomposition.begin().value()["decomposition"]);
-      json testJson = GetTestJSON();
-      EXPECT_EQ(temp, GetTestJSON());
-    }
-  }
+  EXPECT_TRUE(it5->Next());
+
+  ScIterator3Ptr const it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::Link);
+  EXPECT_TRUE(it3->Next());
+  std::string decompositionContent;
+  context.GetLinkContent(it3->Get(2), decompositionContent);
+  json decomposition = json::parse(decompositionContent);
+  json temp;
+  std::string idtf = decomposition.begin().value()["idtf"];
+  temp[idtf] = GetDecompositionIdList(decomposition.begin().value()["decomposition"]);
+  json testJson = GetTestJSON();
+  EXPECT_EQ(temp, GetTestJSON());
 
   shutdown();
 }
@@ -87,31 +84,28 @@ TEST_F(AddSectionDomainTest, successful_decomposition_with_level)
   ScMemoryContext & context = *m_ctx;
   initialize();
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_successful_decomposition.scs");
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node2");
+  ScAddr const testActionNode = context.HelperFindBySystemIdtf("test_action_node2");
 
   context.CreateEdge(ScType::EdgeAccessConstPosPerm, scAgentsCommon::CoreKeynodes::question_initiated, testActionNode);
   EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
-  ScIterator5Ptr it5 = context.Iterator5(
+  ScIterator5Ptr const it5 = context.Iterator5(
       testActionNode,
       ScType::EdgeDCommon,
       ScType::Unknown,
       ScType::EdgeAccessConstPosPerm,
       scAgentsCommon::CoreKeynodes::nrel_answer);
-  if (it5->Next())
-  {
-    ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::Link);
-    if (it3->Next())
-    {
-      std::string decompositionText;
-      context.GetLinkContent(it3->Get(2), decompositionText);
-      json decomposition = json::parse(decompositionText);
-      json temp;
-      std::string idtf = decomposition.begin().value()["idtf"];
-      temp[idtf] = GetDecompositionIdList(decomposition.begin().value()["decomposition"], 2);
-      json testJson = GetTestJSON(2);
-      EXPECT_EQ(temp, GetTestJSON(2));
-    }
-  }
+  EXPECT_TRUE(it5->Next());
+  ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::Link);
+
+  EXPECT_TRUE(it3->Next());
+  std::string decompositionText;
+  context.GetLinkContent(it3->Get(2), decompositionText);
+  json decomposition = json::parse(decompositionText);
+  json temp;
+  std::string idtf = decomposition.begin().value()["idtf"];
+  temp[idtf] = GetDecompositionIdList(decomposition.begin().value()["decomposition"], 2);
+  json testJson = GetTestJSON(2);
+  EXPECT_EQ(temp, GetTestJSON(2));
 
   shutdown();
 }
