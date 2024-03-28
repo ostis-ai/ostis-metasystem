@@ -1,1 +1,3 @@
+add_subdirectory(commonModule)
 add_subdirectory(identifiers-module)
+add_subdirectory(subjectDomainModule)
