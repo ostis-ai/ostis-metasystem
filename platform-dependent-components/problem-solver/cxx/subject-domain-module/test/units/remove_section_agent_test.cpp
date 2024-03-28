@@ -35,7 +35,7 @@ TEST_F(AddSectionDomainTest, successful_remove_section_from_decomposition)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
-  subject_domain_keynodes::InitGlobal();
+  SubjectDomainKeynodes::InitGlobal();
   SC_AGENT_REGISTER(RemoveSectionAgent)
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_remove_section.scs");
@@ -60,7 +60,7 @@ TEST_F(AddSectionDomainTest, successful_remove_section_from_decomposition)
   EXPECT_TRUE(it3->Next());
 
   EXPECT_TRUE(
-      context.HelperCheckEdge(subject_domain_keynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
+      context.HelperCheckEdge(SubjectDomainKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
   EXPECT_EQ(decompositionSize - utils::CommonUtils::getSetPower(&context, decompositionTupleAddr), 1u);
 
   SC_AGENT_UNREGISTER(RemoveSectionAgent)
@@ -70,7 +70,7 @@ TEST_F(AddSectionDomainTest, successful_remove_section_from_decomposition_2)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
-  subject_domain_keynodes::InitGlobal();
+  SubjectDomainKeynodes::InitGlobal();
 
   SC_AGENT_REGISTER(RemoveSectionAgent)
   ScsLoader loader;
@@ -98,12 +98,12 @@ TEST_F(AddSectionDomainTest, successful_remove_section_from_decomposition_2)
       ScType::EdgeDCommonVar,
       parentSectionAddr,
       ScType::EdgeAccessVarPosPerm,
-      subject_domain_keynodes::nrel_entity_decomposition);
+      SubjectDomainKeynodes::nrel_entity_decomposition);
   ScTemplateSearchResult searchResult;
   context.HelperSearchTemplate(scTemplate, searchResult);
   EXPECT_TRUE(searchResult.IsEmpty());
   EXPECT_TRUE(
-      context.HelperCheckEdge(subject_domain_keynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
+      context.HelperCheckEdge(SubjectDomainKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
   SC_AGENT_UNREGISTER(RemoveSectionAgent)
 }
 
@@ -111,7 +111,7 @@ TEST_F(AddSectionDomainTest, remove_section_invalid_parameters_1)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
-  subject_domain_keynodes::InitGlobal();
+  SubjectDomainKeynodes::InitGlobal();
 
   SC_AGENT_REGISTER(RemoveSectionAgent)
   ScsLoader loader;
@@ -129,7 +129,7 @@ TEST_F(AddSectionDomainTest, remove_section_without_parent)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
-  subject_domain_keynodes::InitGlobal();
+  SubjectDomainKeynodes::InitGlobal();
 
   SC_AGENT_REGISTER(RemoveSectionAgent)
   ScsLoader loader;
@@ -140,14 +140,14 @@ TEST_F(AddSectionDomainTest, remove_section_without_parent)
   context.CreateEdge(ScType::EdgeAccessConstPosPerm, scAgentsCommon::CoreKeynodes::question_initiated, testActionNode);
   EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
   EXPECT_TRUE(
-      context.HelperCheckEdge(subject_domain_keynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
+      context.HelperCheckEdge(SubjectDomainKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
   ScTemplate scTemplate;
   scTemplate.Quintuple(
       ScType::NodeVarTuple >> subject_domain_aliases::DECOMPOSITION_TUPLE,
       ScType::EdgeDCommonVar,
       ScType::NodeVar,
       ScType::EdgeAccessVarPosPerm,
-      subject_domain_keynodes::nrel_entity_decomposition);
+      SubjectDomainKeynodes::nrel_entity_decomposition);
   scTemplate.Triple(subject_domain_aliases::DECOMPOSITION_TUPLE, ScType::EdgeAccessVarPosPerm, sectionAddr);
   ScTemplateSearchResult searchResult;
   context.HelperSearchTemplate(scTemplate, searchResult);

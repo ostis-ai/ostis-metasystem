@@ -42,7 +42,7 @@ using AddSectionDomainTest = ScMemoryTest;
 void initialize()
 {
   scAgentsCommon::CoreKeynodes::InitGlobal();
-  subject_domain_keynodes::InitGlobal();
+  SubjectDomainKeynodes::InitGlobal();
 
   SC_AGENT_REGISTER(GetDecompositionAgent)
 }

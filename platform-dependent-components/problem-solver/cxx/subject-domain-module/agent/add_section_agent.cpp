@@ -75,7 +75,7 @@ SC_AGENT_IMPLEMENTATION(AddSectionAgent)
 bool AddSectionAgent::CheckActionClass(ScAddr const & actionNode)
 {
   return m_memoryCtx.HelperCheckEdge(
-      subject_domain_keynodes::action_add_section, actionNode, ScType::EdgeAccessConstPosPerm);
+      SubjectDomainKeynodes::action_add_section, actionNode, ScType::EdgeAccessConstPosPerm);
 }
 
 ScAddr AddSectionAgent::GenerateSection(
@@ -108,7 +108,7 @@ ScAddr AddSectionAgent::GenerateSection(
         ScType::EdgeAccessConstPosPerm,
         lastSection,
         ScType::EdgeAccessConstPosTemp,
-        subject_domain_keynodes::rrel_last);
+        SubjectDomainKeynodes::rrel_last);
     if (lastSectionIterator->Next())
     {
       ScAddr previousSectionArc = lastSectionIterator->Get(1);
@@ -117,19 +117,19 @@ ScAddr AddSectionAgent::GenerateSection(
 
       utils::GenerationUtils::generateRelationBetween(
           &m_memoryCtx, previousSectionArc, newSectionArc, CoreKeynodes::nrel_basic_sequence);
-      m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, subject_domain_keynodes::rrel_last, newSectionArc);
+      m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, SubjectDomainKeynodes::rrel_last, newSectionArc);
     }
   }
   else
   {
     SC_LOG_DEBUG("AddSectionAgent: added section is new.");
     m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, CoreKeynodes::rrel_1, newSectionArc);
-    m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, subject_domain_keynodes::rrel_last, newSectionArc);
+    m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, SubjectDomainKeynodes::rrel_last, newSectionArc);
   }
 
-  subjectDomainModule::SetUtils::AddToSets(&m_memoryCtx, parentSection, {subject_domain_keynodes::non_atomic_section});
-  subjectDomainModule::SetUtils::RemoveFromSets(&m_memoryCtx, parentSection, {subject_domain_keynodes::atomic_section});
-  subjectDomainModule::SetUtils::RemoveFromSets(&m_memoryCtx, newSection, {subject_domain_keynodes::removed_section});
+  subjectDomainModule::SetUtils::AddToSets(&m_memoryCtx, parentSection, {SubjectDomainKeynodes::non_atomic_section});
+  subjectDomainModule::SetUtils::RemoveFromSets(&m_memoryCtx, parentSection, {SubjectDomainKeynodes::atomic_section});
+  subjectDomainModule::SetUtils::RemoveFromSets(&m_memoryCtx, newSection, {SubjectDomainKeynodes::removed_section});
   return newSection;
 }
 
@@ -139,7 +139,7 @@ ScAddr AddSectionAgent::GenerateSection(std::string const & sectionName, ScAddr 
   if (!m_memoryCtx.IsElement(section))
     section = subject_domain_generator::GenerateSection(&m_memoryCtx, sectionName, lang, true);
   else
-    subjectDomainModule::SetUtils::RemoveFromSets(&m_memoryCtx, section, {subject_domain_keynodes::removed_section});
+    subjectDomainModule::SetUtils::RemoveFromSets(&m_memoryCtx, section, {SubjectDomainKeynodes::removed_section});
   return section;
 }
 

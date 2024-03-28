@@ -10,15 +10,15 @@
 
 namespace subjectDomainModule
 {
-ScAddr subject_domain_keynodes::action_get_decomposition;
-ScAddr subject_domain_keynodes::action_add_section;
-ScAddr subject_domain_keynodes::action_remove_section;
-ScAddr subject_domain_keynodes::nrel_section_decomposition;
-ScAddr subject_domain_keynodes::nrel_entity_decomposition;
-ScAddr subject_domain_keynodes::removed_section;
-ScAddr subject_domain_keynodes::section;
-ScAddr subject_domain_keynodes::not_enough_formed_structure;
-ScAddr subject_domain_keynodes::atomic_section;
-ScAddr subject_domain_keynodes::non_atomic_section;
-ScAddr subject_domain_keynodes::rrel_last;
+ScAddr SubjectDomainKeynodes::action_get_decomposition;
+ScAddr SubjectDomainKeynodes::action_add_section;
+ScAddr SubjectDomainKeynodes::action_remove_section;
+ScAddr SubjectDomainKeynodes::nrel_section_decomposition;
+ScAddr SubjectDomainKeynodes::nrel_entity_decomposition;
+ScAddr SubjectDomainKeynodes::removed_section;
+ScAddr SubjectDomainKeynodes::section;
+ScAddr SubjectDomainKeynodes::not_enough_formed_structure;
+ScAddr SubjectDomainKeynodes::atomic_section;
+ScAddr SubjectDomainKeynodes::non_atomic_section;
+ScAddr SubjectDomainKeynodes::rrel_last;
 }  // namespace subjectDomainModule

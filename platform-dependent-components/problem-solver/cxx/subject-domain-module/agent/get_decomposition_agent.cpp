@@ -4,7 +4,6 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "constants/sc_search_aliases.hpp"
 #include "sc-agents-common/utils/AgentUtils.hpp"
 #include "sc-agents-common/utils/CommonUtils.hpp"
 #include "sc-agents-common/utils/IteratorUtils.hpp"
@@ -12,6 +11,7 @@
 #include "keynodes/subject_domain_keynodes.hpp"
 
 #include "get_decomposition_agent.hpp"
+#include "constants/subject_domain_aliases.hpp"
 
 using namespace utils;
 
@@ -51,7 +51,7 @@ SC_AGENT_IMPLEMENTATION(GetDecompositionAgent)
   }
   if (!m_memoryCtx.IsElement(decompositionAddr))
   {
-    decompositionAddr = subjectDomainModule::subject_domain_keynodes::nrel_section_decomposition;
+    decompositionAddr = SubjectDomainKeynodes::nrel_section_decomposition;
     SC_LOG_DEBUG(
         "GetDecompositionAgent: decomposition relation node not found. By default, "
         << m_memoryCtx.HelperGetSystemIdtf(decompositionAddr) << " is used.");
@@ -80,7 +80,7 @@ SC_AGENT_IMPLEMENTATION(GetDecompositionAgent)
 bool GetDecompositionAgent::CheckActionClass(ScAddr const & actionNode)
 {
   return m_memoryCtx.HelperCheckEdge(
-        subject_domain_keynodes::action_get_decomposition, actionNode, ScType::EdgeAccessConstPosPerm);
+        SubjectDomainKeynodes::action_get_decomposition, actionNode, ScType::EdgeAccessConstPosPerm);
 }
 
 ScAddrVector GetDecompositionAgent::GetDecomposition(ScAddr const & subjDomainAddr, ScAddr const & decompositionAddr)
@@ -90,23 +90,23 @@ ScAddrVector GetDecompositionAgent::GetDecomposition(ScAddr const & subjDomainAd
 
   ScTemplate decompositionTemplate;
   decompositionTemplate.Quintuple(
-      ScType::NodeVar >> sc_search_aliases::DECOMPOSITION_TUPLE,
+      ScType::NodeVar >> subject_domain_aliases::DECOMPOSITION_TUPLE,
       ScType::EdgeDCommonVar,
       subjDomainAddr,
       ScType::EdgeAccessVarPosPerm,
       decompositionAddr);
   decompositionTemplate.Quintuple(
-      sc_search_aliases::DECOMPOSITION_TUPLE,
+        subject_domain_aliases::DECOMPOSITION_TUPLE,
       ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVar >> sc_search_aliases::SECTION_NODE,
+      ScType::NodeVar >> subject_domain_aliases::SECTION_NODE,
       ScType::EdgeAccessVarPosPerm,
       scAgentsCommon::CoreKeynodes::rrel_1);
   ScTemplateSearchResult result;
   m_memoryCtx.HelperSearchTemplate(decompositionTemplate, result);
   if (!result.IsEmpty())
   {
-    ScAddr tupleNode = result[0][sc_search_aliases::DECOMPOSITION_TUPLE];
-    ScAddr subSection = result[0][sc_search_aliases::SECTION_NODE];
+    ScAddr tupleNode = result[0][subject_domain_aliases::DECOMPOSITION_TUPLE];
+    ScAddr subSection = result[0][subject_domain_aliases::SECTION_NODE];
     SC_LOG_DEBUG("GetDecompositionAgent: subsection is " << m_memoryCtx.HelperGetSystemIdtf(subSection) << ".");
     decomposition.push_back(subSection);
 

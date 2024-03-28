@@ -12,7 +12,7 @@ namespace subjectDomainModule
 {
 ScAddr subject_domain_utils::GetLastSubSection(ScMemoryContext * context, ScAddr const & tuple)
 {
-  ScAddr lastSection = utils::IteratorUtils::getAnyByOutRelation(context, tuple, subject_domain_keynodes::rrel_last);
+  ScAddr lastSection = utils::IteratorUtils::getAnyByOutRelation(context, tuple, SubjectDomainKeynodes::rrel_last);
 
   return lastSection;
 }
@@ -25,7 +25,7 @@ ScAddr subject_domain_utils::GetSectionDecompositionTuple(ScMemoryContext * cont
       ScType::EdgeDCommonVar,
       sectionAddr,
       ScType::EdgeAccessVarPosPerm,
-      subject_domain_keynodes::nrel_entity_decomposition);
+      SubjectDomainKeynodes::nrel_entity_decomposition);
   ScTemplateSearchResult searchResult;
   context->HelperSearchTemplate(scTemplate, searchResult);
   if (!searchResult.IsEmpty())

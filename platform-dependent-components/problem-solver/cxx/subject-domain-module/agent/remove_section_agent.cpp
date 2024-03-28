@@ -59,7 +59,7 @@ SC_AGENT_IMPLEMENTATION(RemoveSectionAgent)
 bool RemoveSectionAgent::CheckActionClass(ScAddr const & actionNode)
 {
   return m_memoryCtx.HelperCheckEdge(
-      subject_domain_keynodes::action_remove_section, actionNode, ScType::EdgeAccessConstPosPerm);
+      SubjectDomainKeynodes::action_remove_section, actionNode, ScType::EdgeAccessConstPosPerm);
 }
 
 bool RemoveSectionAgent::RemoveSection(ScAddr const & section, ScAddr const & parentSection)
@@ -76,7 +76,7 @@ bool RemoveSectionAgent::RemoveSection(ScAddr const & section, ScAddr const & pa
   {
     HandleSection(searchResult[0], section);
     HandleParentSection(searchResult[0], parentSection);
-    subjectDomainModule::SetUtils::AddToSets(&m_memoryCtx, section, {subject_domain_keynodes::removed_section});
+    subjectDomainModule::SetUtils::AddToSets(&m_memoryCtx, section, {SubjectDomainKeynodes::removed_section});
 
     return true;
   }
@@ -101,12 +101,12 @@ bool RemoveSectionAgent::RemoveSection(ScAddr const & section)
       HandleSection(searchResult[i], section);
       HandleParentSection(searchResult[i], parentSection);
     }
-    subjectDomainModule::SetUtils::AddToSets(&m_memoryCtx, section, {subject_domain_keynodes::removed_section});
+    subjectDomainModule::SetUtils::AddToSets(&m_memoryCtx, section, {SubjectDomainKeynodes::removed_section});
 
     return true;
   }
   ScAddr edge =
-      m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, subject_domain_keynodes::removed_section, section);
+      m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, SubjectDomainKeynodes::removed_section, section);
   return m_memoryCtx.IsElement(edge);
 }
 
@@ -126,9 +126,9 @@ void RemoveSectionAgent::HandleParentSection(
   if (CommonUtils::getSetPower(&m_memoryCtx, tuple) == 0)
   {
     m_memoryCtx.EraseElement(tuple);
-    subjectDomainModule::SetUtils::AddToSets(&m_memoryCtx, parentSection, {subject_domain_keynodes::atomic_section});
+    subjectDomainModule::SetUtils::AddToSets(&m_memoryCtx, parentSection, {SubjectDomainKeynodes::atomic_section});
     subjectDomainModule::SetUtils::RemoveFromSets(
-        &m_memoryCtx, parentSection, {subject_domain_keynodes::non_atomic_section});
+        &m_memoryCtx, parentSection, {SubjectDomainKeynodes::non_atomic_section});
   }
 }
 
@@ -190,7 +190,7 @@ void RemoveSectionAgent::HandleNeighboringSections(ScAddr const & tuple, ScAddr 
   // If current element is the last
   if (m_memoryCtx.IsElement(previousSection) && !m_memoryCtx.IsElement(nextSection))
   {
-    m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, subject_domain_keynodes::rrel_last, previousSectionEdge);
+    m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, SubjectDomainKeynodes::rrel_last, previousSectionEdge);
   }
 
   // If current element is the first
