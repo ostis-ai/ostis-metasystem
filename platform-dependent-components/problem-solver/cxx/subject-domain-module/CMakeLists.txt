@@ -33,15 +33,15 @@ include_directories(
 
 
 find_package(nlohmann_json 3.2.0 REQUIRED)
-add_library(subjectDomainModule SHARED ${SOURCES} ${HEADERS})
-target_link_libraries(subjectDomainModule sc-memory sc-agents-common nlohmann_json::nlohmann_json)
+add_library(subject-domain-module SHARED ${SOURCES} ${HEADERS})
+target_link_libraries(subject-domain-module sc-memory sc-agents-common nlohmann_json::nlohmann_json)
 
-sc_codegen_ex(subjectDomainModule ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/generated)
+sc_codegen_ex(subject-domain-module ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/generated)
 
 if (${SC_BUILD_TESTS})
     include(${CMAKE_CURRENT_LIST_DIR}/test/tests.cmake)
 endif ()
 
 if (${SC_CLANG_FORMAT_CODE})
-    target_clangformat_setup(subjectDomainModule)
+    target_clangformat_setup(subject-domain-module)
 endif ()
