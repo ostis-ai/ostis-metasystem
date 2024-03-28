@@ -53,15 +53,14 @@ TEST_F(AddSectionDomainTest, successful_add_section_to_decomposition)
       ScType::Unknown,
       ScType::EdgeAccessConstPosPerm,
       scAgentsCommon::CoreKeynodes::nrel_answer);
-  if (it5->Next())
-  {
-    ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::Unknown);
-    if (it3->Next())
-    {
-      EXPECT_TRUE(context.IsElement(it3->Get(2)));
-      EXPECT_EQ(utils::CommonUtils::getSetPower(&context, decompositionTupleAddr) - decompositionSize, 1u);
-    }
-  }
+  EXPECT_TRUE(it5->Next());
+
+  ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::Unknown);
+  EXPECT_TRUE(it3->Next());
+
+  EXPECT_TRUE(context.IsElement(it3->Get(2)));
+  EXPECT_EQ(utils::CommonUtils::getSetPower(&context, decompositionTupleAddr) - decompositionSize, 1u);
+
   SC_AGENT_UNREGISTER(AddSectionAgent)
 }
 
@@ -85,16 +84,14 @@ TEST_F(AddSectionDomainTest, successful_add_section_empty_decomposition)
       ScType::Unknown,
       ScType::EdgeAccessConstPosPerm,
       scAgentsCommon::CoreKeynodes::nrel_answer);
-  if (it5->Next())
-  {
-    ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
-    if (it3->Next())
-    {
-      EXPECT_TRUE(context.IsElement(it3->Get(2)));
-      ScAddr decompositionTupleAddr = subject_domain_utils::GetSectionDecompositionTuple(&context, parentSectionAddr);
-      EXPECT_EQ((int)utils::CommonUtils::getSetPower(&context, decompositionTupleAddr), 1);
-    }
-  }
+  EXPECT_TRUE(it5->Next());
+
+  ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+  EXPECT_TRUE(it3->Next());
+
+  EXPECT_TRUE(context.IsElement(it3->Get(2)));
+  ScAddr decompositionTupleAddr = subject_domain_utils::GetSectionDecompositionTuple(&context, parentSectionAddr);
+  EXPECT_EQ(utils::CommonUtils::getSetPower(&context, decompositionTupleAddr), 1u);
 
   SC_AGENT_UNREGISTER(AddSectionAgent)
 }
@@ -111,7 +108,8 @@ TEST_F(AddSectionDomainTest, add_section_invalid_parameters_1)
   ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node3");
 
   EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
-  EXPECT_TRUE(context.HelperCheckEdge(scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully, testActionNode, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.HelperCheckEdge(
+      scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully, testActionNode, ScType::EdgeAccessConstPosPerm));
 
   SC_AGENT_UNREGISTER(AddSectionAgent)
 }
@@ -128,7 +126,8 @@ TEST_F(AddSectionDomainTest, add_section_invalid_parameters_3)
   ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node4");
 
   EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
-  EXPECT_TRUE(context.HelperCheckEdge(scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully, testActionNode, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.HelperCheckEdge(
+      scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully, testActionNode, ScType::EdgeAccessConstPosPerm));
 
   SC_AGENT_UNREGISTER(AddSectionAgent)
 }
@@ -153,19 +152,18 @@ TEST_F(AddSectionDomainTest, add_section_without_parent)
       ScType::Unknown,
       ScType::EdgeAccessConstPosPerm,
       scAgentsCommon::CoreKeynodes::nrel_answer);
-  if (it5->Next())
-  {
-    ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
-    if (it3->Next())
-    {
-      EXPECT_TRUE(context.IsElement(it3->Get(2)));
-      std::string sectionName;
-      context.GetLinkContent(sectionNameAddr, sectionName);
-      ScAddr sectionAddr = subject_domain_utils::FindSectionByName(&context, sectionName);
-      EXPECT_TRUE(context.IsElement(sectionAddr));
-      EXPECT_EQ(it3->Get(2), sectionAddr);
-    }
-  }
+  EXPECT_TRUE(it5->Next());
+
+  ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+  EXPECT_TRUE(it3->Next());
+
+  EXPECT_TRUE(context.IsElement(it3->Get(2)));
+  std::string sectionName;
+  context.GetLinkContent(sectionNameAddr, sectionName);
+  ScAddr sectionAddr = subject_domain_utils::FindSectionByName(&context, sectionName);
+  EXPECT_TRUE(context.IsElement(sectionAddr));
+  EXPECT_EQ(it3->Get(2), sectionAddr);
+
   SC_AGENT_UNREGISTER(AddSectionAgent)
 }
 }  // namespace subjDomainTest

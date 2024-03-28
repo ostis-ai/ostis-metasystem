@@ -45,7 +45,7 @@ TEST_F(AddSectionDomainTest, successful_remove_section_from_decomposition)
   ScAddr parentSectionAddr =
       utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, scAgentsCommon::CoreKeynodes::rrel_2);
   ScAddr decompositionTupleAddr = subject_domain_utils::GetSectionDecompositionTuple(&context, parentSectionAddr);
-  int decompositionSize = (int)utils::CommonUtils::getSetPower(&context, decompositionTupleAddr);
+  size_t decompositionSize = utils::CommonUtils::getSetPower(&context, decompositionTupleAddr);
 
   context.CreateEdge(ScType::EdgeAccessConstPosPerm, scAgentsCommon::CoreKeynodes::question_initiated, testActionNode);
   utils::AgentUtils::applyAction(&context, testActionNode, 1000);
@@ -57,12 +57,12 @@ TEST_F(AddSectionDomainTest, successful_remove_section_from_decomposition)
       scAgentsCommon::CoreKeynodes::nrel_answer);
   EXPECT_TRUE(it5->Next());
   ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::Unknown);
-  if (it3->Next())
-  {
-    EXPECT_TRUE(
-        context.HelperCheckEdge(subject_domain_keynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
-    EXPECT_EQ(decompositionSize - (int)utils::CommonUtils::getSetPower(&context, decompositionTupleAddr), 1);
-  }
+  EXPECT_TRUE(it3->Next());
+
+  EXPECT_TRUE(
+      context.HelperCheckEdge(subject_domain_keynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
+  EXPECT_EQ(decompositionSize - utils::CommonUtils::getSetPower(&context, decompositionTupleAddr), 1u);
+
   SC_AGENT_UNREGISTER(RemoveSectionAgent)
 }
 
@@ -119,7 +119,8 @@ TEST_F(AddSectionDomainTest, remove_section_invalid_parameters_1)
   ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node3");
 
   EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
-  EXPECT_TRUE(context.HelperCheckEdge(scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully, testActionNode, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.HelperCheckEdge(
+      scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully, testActionNode, ScType::EdgeAccessConstPosPerm));
 
   SC_AGENT_UNREGISTER(RemoveSectionAgent)
 }
