@@ -13,6 +13,7 @@ namespace subjectDomainModule
 ScAddr subject_domain_keynodes::action_get_decomposition;
 ScAddr subject_domain_keynodes::action_add_section;
 ScAddr subject_domain_keynodes::action_remove_section;
+ScAddr subject_domain_keynodes::nrel_section_decomposition;
 ScAddr subject_domain_keynodes::nrel_entity_decomposition;
 ScAddr subject_domain_keynodes::removed_section;
 ScAddr subject_domain_keynodes::section;

@@ -28,6 +28,9 @@ public:
   SC_PROPERTY(Keynode("action_remove_section"), ForceCreate)
   static ScAddr action_remove_section;
 
+  SC_PROPERTY(Keynode("nrel_section_decomposition"), ForceCreate)
+  static ScAddr nrel_section_decomposition;
+
   SC_PROPERTY(Keynode("nrel_entity_decomposition"), ForceCreate)
   static ScAddr nrel_entity_decomposition;
 
