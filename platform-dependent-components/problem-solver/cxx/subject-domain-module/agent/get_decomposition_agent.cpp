@@ -9,6 +9,8 @@
 #include "sc-agents-common/utils/CommonUtils.hpp"
 #include "sc-agents-common/utils/IteratorUtils.hpp"
 
+#include "keynodes/subject_domain_keynodes.hpp"
+
 #include "get_decomposition_agent.hpp"
 
 using namespace utils;
@@ -49,7 +51,7 @@ SC_AGENT_IMPLEMENTATION(GetDecompositionAgent)
   }
   if (!m_memoryCtx.IsElement(decompositionAddr))
   {
-    decompositionAddr = scAgentsCommon::CoreKeynodes::nrel_section_decomposition;
+    decompositionAddr = subjectDomainModule::subject_domain_keynodes::nrel_section_decomposition;
     SC_LOG_DEBUG(
         "GetDecompositionAgent: decomposition relation node not found. By default, "
         << m_memoryCtx.HelperGetSystemIdtf(decompositionAddr) << " is used.");
@@ -78,7 +80,7 @@ SC_AGENT_IMPLEMENTATION(GetDecompositionAgent)
 bool GetDecompositionAgent::CheckActionClass(ScAddr const & actionNode)
 {
   return m_memoryCtx.HelperCheckEdge(
-      scAgentsCommon::CoreKeynodes::action_get_decomposition, actionNode, ScType::EdgeAccessConstPosPerm);
+        subject_domain_keynodes::action_get_decomposition, actionNode, ScType::EdgeAccessConstPosPerm);
 }
 
 ScAddrVector GetDecompositionAgent::GetDecomposition(ScAddr const & subjDomainAddr, ScAddr const & decompositionAddr)
