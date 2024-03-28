@@ -36,7 +36,7 @@ TEST_F(AddSectionDomainTest, successful_add_section_to_decomposition)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
-  subject_domain_keynodes::InitGlobal();
+  SubjectDomainKeynodes::InitGlobal();
   SC_AGENT_REGISTER(AddSectionAgent)
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_add_section.scs");
@@ -68,7 +68,7 @@ TEST_F(AddSectionDomainTest, successful_add_section_empty_decomposition)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
-  subject_domain_keynodes::InitGlobal();
+  SubjectDomainKeynodes::InitGlobal();
 
   SC_AGENT_REGISTER(AddSectionAgent)
   ScsLoader loader;
@@ -100,7 +100,7 @@ TEST_F(AddSectionDomainTest, add_section_invalid_parameters_1)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
-  subject_domain_keynodes::InitGlobal();
+  SubjectDomainKeynodes::InitGlobal();
 
   SC_AGENT_REGISTER(AddSectionAgent)
   ScsLoader loader;
@@ -118,7 +118,7 @@ TEST_F(AddSectionDomainTest, add_section_invalid_parameters_3)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
-  subject_domain_keynodes::InitGlobal();
+  SubjectDomainKeynodes::InitGlobal();
 
   SC_AGENT_REGISTER(AddSectionAgent)
   ScsLoader loader;
@@ -136,7 +136,7 @@ TEST_F(AddSectionDomainTest, add_section_without_parent)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
-  subject_domain_keynodes::InitGlobal();
+  SubjectDomainKeynodes::InitGlobal();
 
   SC_AGENT_REGISTER(AddSectionAgent)
   ScsLoader loader;

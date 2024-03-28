@@ -13,7 +13,7 @@
 
 namespace subjectDomainModule
 {
-class subject_domain_keynodes : public ScObject
+class SubjectDomainKeynodes : public ScObject
 {
   SC_CLASS()
   SC_GENERATED_BODY()

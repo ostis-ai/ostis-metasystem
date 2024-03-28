@@ -23,7 +23,7 @@ void subject_domain_builder::buildDecompositionTupleTemplate(
       ScType::EdgeDCommonVar,
       parentSection,
       ScType::EdgeAccessVarPosPerm,
-      subject_domain_keynodes::nrel_entity_decomposition);
+      SubjectDomainKeynodes::nrel_entity_decomposition);
   scTemplate.Triple(
       subject_domain_aliases::DECOMPOSITION_TUPLE,
       ScType::EdgeAccessVarPosPerm >> subject_domain_aliases::EDGE_TO_DELETE,
@@ -37,7 +37,7 @@ void subject_domain_builder::buildDecompositionTupleTemplate(ScTemplate & scTemp
       ScType::EdgeDCommonVar,
       ScType::NodeVar >> subject_domain_aliases::PARENT_SECTION,
       ScType::EdgeAccessVarPosPerm,
-      subject_domain_keynodes::nrel_entity_decomposition);
+      SubjectDomainKeynodes::nrel_entity_decomposition);
   scTemplate.Triple(
       subject_domain_aliases::DECOMPOSITION_TUPLE,
       ScType::EdgeAccessVarPosPerm >> subject_domain_aliases::EDGE_TO_DELETE,

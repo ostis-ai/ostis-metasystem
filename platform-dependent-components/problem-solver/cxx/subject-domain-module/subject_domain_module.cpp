@@ -18,7 +18,7 @@ SC_IMPLEMENT_MODULE(SubjectDomainModule)
 
 sc_result SubjectDomainModule::InitializeImpl()
 {
-  if (!subjectDomainModule::subject_domain_keynodes::InitGlobal())
+  if (!subjectDomainModule::SubjectDomainKeynodes::InitGlobal())
     return SC_RESULT_ERROR;
 
   SC_AGENT_REGISTER(GetDecompositionAgent)

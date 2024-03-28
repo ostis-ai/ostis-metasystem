@@ -23,12 +23,12 @@ ScAddr subject_domain_generator::GenerateSection(
   utils::CommonUtils::setMainIdtf(context, section, sectionName, {lang});
 
   ScTemplate sectionTemplate;
-  sectionTemplate.Triple(subject_domain_keynodes::section, ScType::EdgeAccessVarPosPerm, section);
+  sectionTemplate.Triple(SubjectDomainKeynodes::section, ScType::EdgeAccessVarPosPerm, section);
   if (isAtomic)
-    sectionTemplate.Triple(subject_domain_keynodes::atomic_section, ScType::EdgeAccessVarPosPerm, section);
+    sectionTemplate.Triple(SubjectDomainKeynodes::atomic_section, ScType::EdgeAccessVarPosPerm, section);
   else
-    sectionTemplate.Triple(subject_domain_keynodes::non_atomic_section, ScType::EdgeAccessVarPosPerm, section);
-  sectionTemplate.Triple(subject_domain_keynodes::not_enough_formed_structure, ScType::EdgeAccessVarPosPerm, section);
+    sectionTemplate.Triple(SubjectDomainKeynodes::non_atomic_section, ScType::EdgeAccessVarPosPerm, section);
+  sectionTemplate.Triple(SubjectDomainKeynodes::not_enough_formed_structure, ScType::EdgeAccessVarPosPerm, section);
   ScTemplateGenResult genResult;
   context->HelperGenTemplate(sectionTemplate, genResult);
 
