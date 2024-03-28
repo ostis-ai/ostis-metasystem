@@ -11,7 +11,6 @@ from sc_client.constants import sc_types
 from sc_kpm import ScAgentClassic, ScResult
 from sc_kpm.utils import (
     create_link,
-    get_system_idtf,
 )
 from sc_kpm.utils.action_utils import (
     create_action_answer,
