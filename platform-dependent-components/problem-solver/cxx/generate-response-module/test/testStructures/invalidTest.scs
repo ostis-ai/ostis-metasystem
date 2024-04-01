@@ -33,8 +33,3 @@ message2
 test_action_node3
   <-question;
   <-action_generate_response;;
-
-
-
-
-

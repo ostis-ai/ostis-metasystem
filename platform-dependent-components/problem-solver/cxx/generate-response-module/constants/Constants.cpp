@@ -4,22 +4,16 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#pragma once
+#include "Constants.hpp"
 
-#include "sc-memory/sc_module.hpp"
-
-#include "GenerateResponseModule.generated.hpp"
+#include "sc-memory/sc_memory.hpp"
 
 namespace generateResponseModule
 {
-class GenerateResponseModule : public ScModule
-{
-  SC_CLASS(LoadOrder(100))
-  SC_GENERATED_BODY()
+std::string const Constants::generateAnswerAgentClassName = "GenerateAnswerAgent";
 
-  sc_result InitializeImpl() override;
+std::string const Constants::messageAddrParamName = "messageAddr";
 
-  sc_result ShutdownImpl() override;
-};
+std::string const Constants::answerAddrParamName = "answerAddr";
 
 }  // namespace generateResponseModule

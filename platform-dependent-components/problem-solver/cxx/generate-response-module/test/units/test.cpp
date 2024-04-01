@@ -96,7 +96,8 @@ namespace generateResponseModuleTest
 
         ScAddr test_success = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
-        EXPECT_TRUE(context.HelperGetSystemIdtf(test_success) == "test_success");
+        ScAddr correctTestSuccess = context.HelperFindBySystemIdtf("test_success");
+        EXPECT_TRUE(correctTestSuccess.IsValid() && test_success == correctTestSuccess);
 
         EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosTemp));
 

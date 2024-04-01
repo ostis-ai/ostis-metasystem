@@ -26,7 +26,7 @@ public:
   static ScAddr nrel_response_action;
 
   SC_PROPERTY(Keynode("concept_ask_ai_message"), ForceCreate)
-  static ScAddr concept_ask_ai_message;
+  static ScAddr concept_ask_ai_message_class;
 
   SC_PROPERTY(Keynode("rrel_entity"), ForceCreate)
   static ScAddr rrel_entity;
