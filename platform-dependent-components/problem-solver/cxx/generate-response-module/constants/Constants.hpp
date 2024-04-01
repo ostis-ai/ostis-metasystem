@@ -6,20 +6,19 @@
 
 #pragma once
 
-#include "sc-memory/sc_module.hpp"
-
-#include "GenerateResponseModule.generated.hpp"
+#include "sc-memory/sc_addr.hpp"
+#include "sc-memory/sc_object.hpp"
 
 namespace generateResponseModule
 {
-class GenerateResponseModule : public ScModule
+class Constants : public ScObject
 {
-  SC_CLASS(LoadOrder(100))
-  SC_GENERATED_BODY()
+public:
+  static std::string const generateAnswerAgentClassName;
 
-  sc_result InitializeImpl() override;
+  static std::string const messageAddrParamName;
 
-  sc_result ShutdownImpl() override;
+  static std::string const answerAddrParamName;
 };
 
 }  // namespace generateResponseModule

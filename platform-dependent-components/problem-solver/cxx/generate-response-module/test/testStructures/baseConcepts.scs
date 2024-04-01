@@ -19,3 +19,4 @@ test_action
   <- actions_class;
   <- atomic_action_class;
   <= nrel_response_action: test_question;;
+  

@@ -1,4 +1,4 @@
-concept_ask_ai_message
+concept_ask_ai_message_class
 <- sc_node_class;
 => nrel_main_idtf:
 	[cообщение ask-ai](* <- lang_ru;; *);

@@ -5,6 +5,8 @@ set(SOURCES
     "agent/GenerateResponseAgent.hpp"
     "keynodes/Keynodes.cpp"
     "keynodes/Keynodes.hpp"
+    "constants/Constants.hpp"
+    "constants/Constants.cpp"
     "GenerateResponseModule.cpp"
     "GenerateResponseModule.hpp"
 )

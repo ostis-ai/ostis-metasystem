@@ -22,7 +22,17 @@ private:
 
   ScAddr getMessageClassAddr(ScAddr const & messageAddr);
 
+  ScAddr getMessageActionAddr(ScAddr const & messageAddr);
+
   ScAddrVector getMessageParameters(ScAddr const & messageAddr);
+
+  bool attachAnswer(ScAddr const & messageAnswer, ScAddr const & messageAddr, ScAddr const & answerAddr);
+
+  void validateAddrWithInvalidParamException(ScAddr const & addr, std::string const & paramName);
+
+  void validateAddrWithItemNotFoundException(ScAddr const & addr, std::string const & message);
+
+  void finishWorkWithMessage(std::string const & message, ScAddr const & questionNode, bool isSuccess);
 };
 
 }  // namespace generateResponseModule

@@ -33,6 +33,7 @@ sc_result GenerateResponseModule::InitializeImpl()
 
   return SC_RESULT_OK;
 }
+
 sc_result GenerateResponseModule::ShutdownImpl()
 {
   SC_AGENT_UNREGISTER(GenerateResponseAgent);

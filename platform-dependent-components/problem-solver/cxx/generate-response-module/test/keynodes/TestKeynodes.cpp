@@ -7,4 +7,3 @@ namespace generateResponseModuleTest
 ScAddr TestKeynodes::test_action;
 
 }  // namespace generateResponseModuleTest
-
