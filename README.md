@@ -23,7 +23,6 @@ To learn more about the OSTIS Metasystem, check out our [documentation](https://
   ```sh
   git clone https://github.com/ostis-ai/ostis-metasystem
   cd ostis-metasystem
-  git checkout demo
   ./scripts/install_metasystem.sh
   ```
 
