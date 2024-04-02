@@ -36,3 +36,5 @@ sc-server.log
 *.synctex.gz
 
 *.db
+
+platform-dependent-components/interface/react-sc-web

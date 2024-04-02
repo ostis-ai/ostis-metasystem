@@ -34,8 +34,11 @@ To learn more about the OSTIS Metasystem, check out our [documentation](https://
   # Launch cxx problem solver
   ./scripts/run_cxx_ps.sh
   # *in another terminal*
-  # Launch user interface at localhost:8000
-  ./scripts/run_ui.sh
+  # Launch sc-web user interface at localhost:8000
+  ./scripts/run_sc_web.sh
+  # *in another terminal*
+  # Launch react-sc-web user interface at localhost:3000
+  ./scripts/run_react_sc_web.sh
   ```
 
 ## Documentation
