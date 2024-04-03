@@ -18,7 +18,7 @@ include_directories(
 )
 
 add_library(generate_response SHARED ${SOURCES})
-target_link_libraries(generate_response sc-memory sc-agents-common)
+target_link_libraries(generate_response sc-core sc-memory sc-agents-common)
 
 sc_codegen_ex(generate_response ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/generated)
 

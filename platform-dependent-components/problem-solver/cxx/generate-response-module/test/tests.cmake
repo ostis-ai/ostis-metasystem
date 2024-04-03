@@ -11,7 +11,7 @@ target_link_libraries(
 
 make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/units
     NAME generate_response_module_test_starter
-    DEPENDS generate_response_test_agents sc-builder-lib sc-core
+    DEPENDS generate_response_test_agents sc-builder-lib
     INCLUDES ${SC_MEMORY_SRC}/tests/sc-memory/_test ${CMAKE_CURRENT_LIST_DIR}/.. ${SC_TOOLS_SRC}/sc-builder/src ${SC_MEMORY_SRC}/sc-memory
 )
 
