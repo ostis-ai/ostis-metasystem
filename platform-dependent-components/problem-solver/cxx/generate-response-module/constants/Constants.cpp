@@ -6,8 +6,6 @@
 
 #include "Constants.hpp"
 
-#include "sc-memory/sc_memory.hpp"
-
 namespace generateResponseModule
 {
 std::string const Constants::generateAnswerAgentClassName = "GenerateAnswerAgent";

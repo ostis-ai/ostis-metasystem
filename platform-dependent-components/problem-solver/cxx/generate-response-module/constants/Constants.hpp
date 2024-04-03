@@ -5,13 +5,11 @@
  */
 
 #pragma once
-
-#include "sc-memory/sc_addr.hpp"
-#include "sc-memory/sc_object.hpp"
+#include <string>
 
 namespace generateResponseModule
 {
-class Constants : public ScObject
+class Constants
 {
 public:
   static std::string const generateAnswerAgentClassName;
