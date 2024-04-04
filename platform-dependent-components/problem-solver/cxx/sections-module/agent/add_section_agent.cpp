@@ -74,8 +74,7 @@ SC_AGENT_IMPLEMENTATION(AddSectionAgent)
 
 bool AddSectionAgent::CheckActionClass(ScAddr const & actionNode)
 {
-  return m_memoryCtx.HelperCheckEdge(
-        SectionsKeynodes::action_add_section, actionNode, ScType::EdgeAccessConstPosPerm);
+  return m_memoryCtx.HelperCheckEdge(SectionsKeynodes::action_add_section, actionNode, ScType::EdgeAccessConstPosPerm);
 }
 
 ScAddr AddSectionAgent::GenerateSection(
@@ -104,11 +103,11 @@ ScAddr AddSectionAgent::GenerateSection(
     SC_LOG_DEBUG(
         "AddSectionAgent: last section system idtf is \"" + m_memoryCtx.HelperGetSystemIdtf(lastSection) + "\".");
     ScIterator5Ptr lastSectionIterator = m_memoryCtx.Iterator5(
-          decompositionTuple,
-          ScType::EdgeAccessConstPosPerm,
-          lastSection,
-          ScType::EdgeAccessConstPosTemp,
-          SectionsKeynodes::rrel_last);
+        decompositionTuple,
+        ScType::EdgeAccessConstPosPerm,
+        lastSection,
+        ScType::EdgeAccessConstPosTemp,
+        SectionsKeynodes::rrel_last);
     if (lastSectionIterator->Next())
     {
       ScAddr previousSectionArc = lastSectionIterator->Get(1);
@@ -127,9 +126,9 @@ ScAddr AddSectionAgent::GenerateSection(
     m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, SectionsKeynodes::rrel_last, newSectionArc);
   }
 
-  sectionsModule::SetUtils::AddToSets(&m_memoryCtx, parentSection, { SectionsKeynodes::non_atomic_section});
-  sectionsModule::SetUtils::RemoveFromSets(&m_memoryCtx, parentSection, { SectionsKeynodes::atomic_section});
-  sectionsModule::SetUtils::RemoveFromSets(&m_memoryCtx, newSection, { SectionsKeynodes::removed_section});
+  sectionsModule::SetUtils::AddToSets(&m_memoryCtx, parentSection, {SectionsKeynodes::non_atomic_section});
+  sectionsModule::SetUtils::RemoveFromSets(&m_memoryCtx, parentSection, {SectionsKeynodes::atomic_section});
+  sectionsModule::SetUtils::RemoveFromSets(&m_memoryCtx, newSection, {SectionsKeynodes::removed_section});
   return newSection;
 }
 
@@ -139,8 +138,8 @@ ScAddr AddSectionAgent::GenerateSection(std::string const & sectionName, ScAddr 
   if (!m_memoryCtx.IsElement(section))
     section = sections_generator::GenerateSection(&m_memoryCtx, sectionName, lang, true);
   else
-    sectionsModule::SetUtils::RemoveFromSets(&m_memoryCtx, section, { SectionsKeynodes::removed_section});
+    sectionsModule::SetUtils::RemoveFromSets(&m_memoryCtx, section, {SectionsKeynodes::removed_section});
   return section;
 }
 
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

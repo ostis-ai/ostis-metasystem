@@ -27,4 +27,4 @@ private:
   ScAddr GenerateSection(std::string const & sectionName, ScAddr const & lang);
 };
 
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

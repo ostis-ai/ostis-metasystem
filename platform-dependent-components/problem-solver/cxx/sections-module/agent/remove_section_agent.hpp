@@ -33,4 +33,4 @@ private:
   void HandleNeighboringSections(ScAddr const &, ScAddr const &);
 };
 
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

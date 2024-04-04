@@ -53,4 +53,4 @@ public:
   static ScAddr rrel_last;
 };
 
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

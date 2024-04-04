@@ -17,4 +17,4 @@ class sections_generator
 public:
   static ScAddr GenerateSection(ScMemoryContext *, std::string const &, ScAddr const &, bool);
 };
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

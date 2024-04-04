@@ -31,4 +31,4 @@ private:
   ScAddrVector GetDecomposition(ScAddr const &, ScAddr const &);
 };
 
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

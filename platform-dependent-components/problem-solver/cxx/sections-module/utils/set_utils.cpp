@@ -66,4 +66,4 @@ void SetUtils::RemoveBaseEdgesFromSet(ScMemoryContext * context, ScAddr const & 
   }
 }
 
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

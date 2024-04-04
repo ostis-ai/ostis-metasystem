@@ -21,11 +21,11 @@ ScAddr sections_utils::GetSectionDecompositionTuple(ScMemoryContext * context, S
 {
   ScTemplate scTemplate;
   scTemplate.Quintuple(
-        ScType::NodeVar >> sections_aliases::DECOMPOSITION_TUPLE,
-        ScType::EdgeDCommonVar,
-        sectionAddr,
-        ScType::EdgeAccessVarPosPerm,
-        SectionsKeynodes::nrel_entity_decomposition);
+      sectionAddr,
+      ScType::EdgeDCommonVar,
+      ScType::NodeVar >> sections_aliases::DECOMPOSITION_TUPLE,
+      ScType::EdgeAccessVarPosPerm,
+      SectionsKeynodes::nrel_entity_decomposition);
   ScTemplateSearchResult searchResult;
   context->HelperSearchTemplate(scTemplate, searchResult);
   if (!searchResult.IsEmpty())
@@ -57,4 +57,4 @@ ScAddr sections_utils::FindSectionByName(ScMemoryContext * context, std::string 
   return sectionAddr;
 }
 
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule
