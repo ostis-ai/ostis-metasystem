@@ -30,9 +30,9 @@ std::string const TEST_FILES_DIR_PATH = SUBJECT_DOMAIN_MODULE_TEST_SRC_PATH "/te
 
 int const WAIT_TIME = 1000;
 
-using AddSectionDomainTest = ScMemoryTest;
+using AddSectionTest = ScMemoryTest;
 
-TEST_F(AddSectionDomainTest, successful_add_section_to_decomposition)
+TEST_F(AddSectionTest, successful_add_section_to_decomposition)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
@@ -64,7 +64,7 @@ TEST_F(AddSectionDomainTest, successful_add_section_to_decomposition)
   SC_AGENT_UNREGISTER(AddSectionAgent)
 }
 
-TEST_F(AddSectionDomainTest, successful_add_section_empty_decomposition)
+TEST_F(AddSectionTest, successful_add_section_empty_decomposition)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
@@ -96,7 +96,7 @@ TEST_F(AddSectionDomainTest, successful_add_section_empty_decomposition)
   SC_AGENT_UNREGISTER(AddSectionAgent)
 }
 
-TEST_F(AddSectionDomainTest, add_section_invalid_parameters_1)
+TEST_F(AddSectionTest, add_section_invalid_parameters_1)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
@@ -114,7 +114,7 @@ TEST_F(AddSectionDomainTest, add_section_invalid_parameters_1)
   SC_AGENT_UNREGISTER(AddSectionAgent)
 }
 
-TEST_F(AddSectionDomainTest, add_section_invalid_parameters_3)
+TEST_F(AddSectionTest, add_section_invalid_parameters_3)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
@@ -132,7 +132,7 @@ TEST_F(AddSectionDomainTest, add_section_invalid_parameters_3)
   SC_AGENT_UNREGISTER(AddSectionAgent)
 }
 
-TEST_F(AddSectionDomainTest, add_section_without_parent)
+TEST_F(AddSectionTest, add_section_without_parent)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
