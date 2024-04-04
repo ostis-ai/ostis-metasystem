@@ -21,4 +21,4 @@ public:
 
   static void RemoveBaseEdgesFromSet(ScMemoryContext * context, ScAddr const & set);
 };
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

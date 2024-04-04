@@ -29,4 +29,4 @@ public:
   static ScAddr GetSectionDecompositionTuple(ScMemoryContext *, ScAddr const &);
 };
 
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

@@ -21,4 +21,4 @@ ScAddr SectionsKeynodes::not_enough_formed_structure;
 ScAddr SectionsKeynodes::atomic_section;
 ScAddr SectionsKeynodes::non_atomic_section;
 ScAddr SectionsKeynodes::rrel_last;
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

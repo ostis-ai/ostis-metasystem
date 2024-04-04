@@ -21,4 +21,4 @@ public:
 
   static void buildPreviousSectionTemplate(ScTemplate &, ScAddr const &, ScAddr const &);
 };
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

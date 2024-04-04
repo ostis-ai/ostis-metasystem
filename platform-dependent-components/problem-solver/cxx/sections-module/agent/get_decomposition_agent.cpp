@@ -80,7 +80,7 @@ SC_AGENT_IMPLEMENTATION(GetDecompositionAgent)
 bool GetDecompositionAgent::CheckActionClass(ScAddr const & actionNode)
 {
   return m_memoryCtx.HelperCheckEdge(
-        SectionsKeynodes::action_get_decomposition, actionNode, ScType::EdgeAccessConstPosPerm);
+      SectionsKeynodes::action_get_decomposition, actionNode, ScType::EdgeAccessConstPosPerm);
 }
 
 ScAddrVector GetDecompositionAgent::GetDecomposition(ScAddr const & subjDomainAddr, ScAddr const & decompositionAddr)
@@ -90,17 +90,17 @@ ScAddrVector GetDecompositionAgent::GetDecomposition(ScAddr const & subjDomainAd
 
   ScTemplate decompositionTemplate;
   decompositionTemplate.Quintuple(
-      ScType::NodeVar >> sections_aliases::DECOMPOSITION_TUPLE,
-      ScType::EdgeDCommonVar,
       subjDomainAddr,
+      ScType::EdgeDCommonVar,
+      ScType::NodeVar >> sections_aliases::DECOMPOSITION_TUPLE,
       ScType::EdgeAccessVarPosPerm,
       decompositionAddr);
   decompositionTemplate.Quintuple(
-        sections_aliases::DECOMPOSITION_TUPLE,
-        ScType::EdgeAccessVarPosPerm,
-        ScType::NodeVar >> sections_aliases::SECTION_NODE,
-        ScType::EdgeAccessVarPosPerm,
-        scAgentsCommon::CoreKeynodes::rrel_1);
+      sections_aliases::DECOMPOSITION_TUPLE,
+      ScType::EdgeAccessVarPosPerm,
+      ScType::NodeVar >> sections_aliases::SECTION_NODE,
+      ScType::EdgeAccessVarPosPerm,
+      scAgentsCommon::CoreKeynodes::rrel_1);
   ScTemplateSearchResult result;
   m_memoryCtx.HelperSearchTemplate(decompositionTemplate, result);
   if (!result.IsEmpty())
@@ -144,4 +144,4 @@ json GetDecompositionAgent::GetJSONDecomposition(
 
   return decompositionJSON;
 }
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

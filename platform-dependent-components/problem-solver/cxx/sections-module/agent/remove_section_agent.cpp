@@ -59,7 +59,7 @@ SC_AGENT_IMPLEMENTATION(RemoveSectionAgent)
 bool RemoveSectionAgent::CheckActionClass(ScAddr const & actionNode)
 {
   return m_memoryCtx.HelperCheckEdge(
-        SectionsKeynodes::action_remove_section, actionNode, ScType::EdgeAccessConstPosPerm);
+      SectionsKeynodes::action_remove_section, actionNode, ScType::EdgeAccessConstPosPerm);
 }
 
 bool RemoveSectionAgent::RemoveSection(ScAddr const & section, ScAddr const & parentSection)
@@ -76,7 +76,7 @@ bool RemoveSectionAgent::RemoveSection(ScAddr const & section, ScAddr const & pa
   {
     HandleSection(searchResult[0], section);
     HandleParentSection(searchResult[0], parentSection);
-    sectionsModule::SetUtils::AddToSets(&m_memoryCtx, section, { SectionsKeynodes::removed_section});
+    sectionsModule::SetUtils::AddToSets(&m_memoryCtx, section, {SectionsKeynodes::removed_section});
 
     return true;
   }
@@ -85,7 +85,7 @@ bool RemoveSectionAgent::RemoveSection(ScAddr const & section, ScAddr const & pa
 
 bool RemoveSectionAgent::RemoveSection(ScAddr const & section)
 {
-  SC_LOG_DEBUG("RemoveSectionAgent: section system idtf is " + m_memoryCtx.HelperGetSystemIdtf(section) + ".");
+  SC_LOG_DEBUG("RemoveSectionAgent: section system idtf is " << m_memoryCtx.HelperGetSystemIdtf(section) << ".");
   ScTemplate scTemplate;
   sections_builder::buildDecompositionTupleTemplate(scTemplate, section);
   ScTemplateSearchResult searchResult;
@@ -97,16 +97,16 @@ bool RemoveSectionAgent::RemoveSection(ScAddr const & section)
     {
       ScAddr parentSection = searchResult[i][sections_aliases::PARENT_SECTION];
       SC_LOG_DEBUG(
-          "RemoveSectionAgent: parent section system idtf is " + m_memoryCtx.HelperGetSystemIdtf(parentSection) + ".");
+          "RemoveSectionAgent: parent section system idtf is " << m_memoryCtx.HelperGetSystemIdtf(parentSection)
+                                                               << ".");
       HandleSection(searchResult[i], section);
       HandleParentSection(searchResult[i], parentSection);
     }
-    sectionsModule::SetUtils::AddToSets(&m_memoryCtx, section, { SectionsKeynodes::removed_section});
+    sectionsModule::SetUtils::AddToSets(&m_memoryCtx, section, {SectionsKeynodes::removed_section});
 
     return true;
   }
-  ScAddr edge =
-      m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, SectionsKeynodes::removed_section, section);
+  ScAddr edge = m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, SectionsKeynodes::removed_section, section);
   return m_memoryCtx.IsElement(edge);
 }
 
@@ -126,9 +126,8 @@ void RemoveSectionAgent::HandleParentSection(
   if (CommonUtils::getSetPower(&m_memoryCtx, tuple) == 0)
   {
     m_memoryCtx.EraseElement(tuple);
-    sectionsModule::SetUtils::AddToSets(&m_memoryCtx, parentSection, { SectionsKeynodes::atomic_section});
-    sectionsModule::SetUtils::RemoveFromSets(
-        &m_memoryCtx, parentSection, { SectionsKeynodes::non_atomic_section});
+    sectionsModule::SetUtils::AddToSets(&m_memoryCtx, parentSection, {SectionsKeynodes::atomic_section});
+    sectionsModule::SetUtils::RemoveFromSets(&m_memoryCtx, parentSection, {SectionsKeynodes::non_atomic_section});
   }
 }
 
@@ -200,4 +199,4 @@ void RemoveSectionAgent::HandleNeighboringSections(ScAddr const & tuple, ScAddr 
   }
 }
 
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

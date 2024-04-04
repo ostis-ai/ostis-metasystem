@@ -35,4 +35,4 @@ ScAddr sections_generator::GenerateSection(
   return section;
 }
 
-}  // namespace subjectDomainModule
+}  // namespace sectionsModule

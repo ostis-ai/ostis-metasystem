@@ -127,18 +127,12 @@ json GetDecompositionIdList(json const & answerDecomposition, int level)
 json GetTestJSON(int level)
 {
   json result;
-  result["База знаний IMS"] = {
-      {"context_technology_OSTIS_and_Metasystem_IMS_in_the_Global_knowledge_base", {}},
-      {"section_OSTIS_technology", {}},
-      {"section_project_OSTIS_perspectives_current_state_history_of_evolution_and_use", {}}};
+  result["База знаний IMS"] = {{"section_2", {}}, {"section_1", {}}, {"section_3", {}}};
   if (level == 2)
   {
     for (auto it = result["База знаний IMS"].begin(); it != result["База знаний IMS"].end(); it++)
     {
-      result["База знаний IMS"][it.key()] = {
-          {"doc_IMS", {}},
-          {"history_and_current_processes_of_use_IMS", {}},
-          {"section_project_IMS_history_and_development_programme", {}}};
+      result["База знаний IMS"][it.key()] = {{"section_1_1", {}}, {"section_1_2", {}}, {"section_1_3", {}}};
     }
   }
   return result;
