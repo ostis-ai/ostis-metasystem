@@ -29,9 +29,9 @@ const std::string TEST_FILES_DIR_PATH = SUBJECT_DOMAIN_MODULE_TEST_SRC_PATH "/te
 
 int const WAIT_TIME = 1000;
 
-using AddSectionDomainTest = ScMemoryTest;
+using RemoveSectionTest = ScMemoryTest;
 
-TEST_F(AddSectionDomainTest, successful_remove_section_from_decomposition)
+TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
@@ -66,7 +66,7 @@ TEST_F(AddSectionDomainTest, successful_remove_section_from_decomposition)
   SC_AGENT_UNREGISTER(RemoveSectionAgent)
 }
 
-TEST_F(AddSectionDomainTest, successful_remove_section_from_decomposition_2)
+TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition_2)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
@@ -107,7 +107,7 @@ TEST_F(AddSectionDomainTest, successful_remove_section_from_decomposition_2)
   SC_AGENT_UNREGISTER(RemoveSectionAgent)
 }
 
-TEST_F(AddSectionDomainTest, remove_section_invalid_parameters_1)
+TEST_F(RemoveSectionTest, remove_section_invalid_parameters_1)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
@@ -125,7 +125,7 @@ TEST_F(AddSectionDomainTest, remove_section_invalid_parameters_1)
   SC_AGENT_UNREGISTER(RemoveSectionAgent)
 }
 
-TEST_F(AddSectionDomainTest, remove_section_without_parent)
+TEST_F(RemoveSectionTest, remove_section_without_parent)
 {
   ScMemoryContext & context = *m_ctx;
   scAgentsCommon::CoreKeynodes::InitGlobal();
@@ -137,7 +137,7 @@ TEST_F(AddSectionDomainTest, remove_section_without_parent)
   ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node4");
   ScAddr sectionAddr =
       utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, scAgentsCommon::CoreKeynodes::rrel_1);
-  context.CreateEdge(ScType::EdgeAccessConstPosPerm, scAgentsCommon::CoreKeynodes::question_initiated, testActionNode);
+
   EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
   EXPECT_TRUE(
       context.HelperCheckEdge(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));

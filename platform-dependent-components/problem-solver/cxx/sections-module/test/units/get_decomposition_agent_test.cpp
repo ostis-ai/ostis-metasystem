@@ -37,7 +37,7 @@ std::string const TEST_FILES_DIR_PATH = SUBJECT_DOMAIN_MODULE_TEST_SRC_PATH "/te
 
 int const WAIT_TIME = 1000;
 
-using AddSectionDomainTest = ScMemoryTest;
+using GetSectionDecompositionTest = ScMemoryTest;
 
 void initialize()
 {
@@ -49,7 +49,7 @@ void initialize()
 
 void shutdown(){SC_AGENT_UNREGISTER(GetDecompositionAgent)}
 
-TEST_F(AddSectionDomainTest, successful_decomposition)
+TEST_F(GetSectionDecompositionTest, successful_decomposition)
 {
   ScMemoryContext & context = *m_ctx;
   initialize();
@@ -79,7 +79,7 @@ TEST_F(AddSectionDomainTest, successful_decomposition)
   shutdown();
 }
 
-TEST_F(AddSectionDomainTest, successful_decomposition_with_level)
+TEST_F(GetSectionDecompositionTest, successful_decomposition_with_level)
 {
   ScMemoryContext & context = *m_ctx;
   initialize();
