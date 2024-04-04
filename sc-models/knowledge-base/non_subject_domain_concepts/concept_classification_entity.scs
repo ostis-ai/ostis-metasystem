@@ -1,0 +1,5 @@
+concept_classification_entity
+<- sc_node_class;
+=>nrel_main_idtf:
+  [отношение, поддерживаемое классификатором] (* <- lang_ru;; *);
+  [relation supported by the classifier] (* <- lang_en;; *);;

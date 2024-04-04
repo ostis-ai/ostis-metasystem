@@ -16,7 +16,7 @@ test_action_node2
 
 test_question2
   <- sc_node_class;
-  <- concept_ask_ai_message;;
+  <- concept_intent_possible_class;;
 
 test_action2
   <- sc_node_class;
