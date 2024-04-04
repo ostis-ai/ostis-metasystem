@@ -12,7 +12,9 @@ rrel_entity
 	(* <- lang_ru;; *);
 	[entity']
 	(* <- lang_en;; *);
-=> nrel_first_domain: concept_ask_ai_message;
+=> nrel_wit_ai_idtf:
+    [rrel_entity];
+=> nrel_first_domain: concept_atomic_message;
 => nrel_second_domain: sc_node;
 => nrel_definitional_domain:
 	...
