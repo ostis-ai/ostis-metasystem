@@ -6,4 +6,4 @@ then
   source "$(cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)/../set_vars.sh"
 fi
 
-(cd "${METASYSTEM_BUILD_PATH}" && ctest -C Debug -V -R 'starter' --timeout 30)
+(cd "${METASYSTEM_BUILD_PATH}" && ctest --rerun-failed --output-on-failure -C Debug -V -R 'starter' --timeout 30)
