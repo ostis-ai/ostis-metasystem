@@ -1,0 +1,79 @@
+nrel_section_base_order
+<- sc_node_norole_relation;;
+
+test_action_node <- question; action_get_decomposition;
+-> rrel_1: root_section;
+-> rrel_3: lang_ru;
+-> rrel_4: nrel_entity_decomposition;;
+
+test_action_node2 <- question; action_get_decomposition;
+-> rrel_1: root_section;
+-> rrel_2: [2];
+-> rrel_3: lang_ru;
+-> rrel_4: nrel_entity_decomposition;;
+
+root_section
+=> nrel_main_idtf:
+    [База знаний IMS]
+    (* <- lang_ru;; *);
+=> nrel_main_idtf:
+    [Knowledge base IMS]
+    (* <- lang_en;; *);
+
+<- not_enough_formed_structure;
+<- sc_model_of_knowledge_base;
+
+=> nrel_entity_decomposition: root_section_decomposition;;
+
+@arc1 = (root_section_decomposition -> rrel_1: section_1);;
+@arc2 = (root_section_decomposition -> section_2);;
+@arc1 => nrel_basic_sequence: @arc2;;
+@arc3 = (root_section_decomposition -> section_3);;
+@arc2 => nrel_basic_sequence: @arc3;;
+rrel_last ~> @arc3;;
+
+section_1 => nrel_entity_decomposition: section_1_decomposition;;
+
+@arc4 = (section_1_decomposition -> rrel_1: section_1_1);;
+@arc5 = (section_1_decomposition -> section_1_2);;
+@arc4 => nrel_basic_sequence: @arc5;;
+@arc6 = (section_1_decomposition -> section_1_3);;
+@arc5 => nrel_basic_sequence: @arc6;;
+rrel_last ~> @arc6;;
+
+section_2 => nrel_entity_decomposition: section_2_decomposition;;
+
+@arc7 = (section_2_decomposition -> rrel_1: section_1_1);;
+@arc8 = (section_2_decomposition -> section_1_2);;
+@arc7 => nrel_basic_sequence: @arc8;;
+@arc9 = (section_2_decomposition -> section_1_3);;
+@arc8 => nrel_basic_sequence: @arc9;;
+rrel_last ~> @arc9;;
+
+section_3 => nrel_entity_decomposition: section_3_decomposition;;
+
+@arc10 = (section_3_decomposition -> rrel_1: section_1_1);;
+@arc11 = (section_3_decomposition -> section_1_2);;
+@arc10 => nrel_basic_sequence: @arc11;;
+@arc12 = (section_3_decomposition -> section_1_3);;
+@arc11 => nrel_basic_sequence: @arc12;;
+rrel_last ~> @arc12;;
+
+section_1
+	=> nrel_main_idtf: [section_1]
+						(* <- lang_ru;; *);;
+section_1_1
+	=> nrel_main_idtf: [section_1_1]
+						(* <- lang_ru;; *);;
+section_1_2
+	=> nrel_main_idtf: [section_1_2]
+						(* <- lang_ru;; *);;
+section_1_3
+	=> nrel_main_idtf: [section_1_3]
+						(* <- lang_ru;; *);;
+section_2
+	=> nrel_main_idtf: [section_2]
+						(* <- lang_ru;; *);;
+section_3
+	=> nrel_main_idtf: [section_3]
+						(* <- lang_ru;; *);;
