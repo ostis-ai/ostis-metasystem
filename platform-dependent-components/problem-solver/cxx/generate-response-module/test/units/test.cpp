@@ -54,7 +54,7 @@ namespace generateResponseModuleTest
                 testActionNode,
                 ScType::EdgeAccessConstPosPerm));
 
-        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_response);
+        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_reply);
 
         EXPECT_TRUE(messageAnswer.IsValid());
 
@@ -90,7 +90,7 @@ namespace generateResponseModuleTest
                 testActionNode,
                 ScType::EdgeAccessConstPosPerm));
 
-        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_response);
+        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_reply);
 
         EXPECT_TRUE(messageAnswer.IsValid());
 
@@ -123,7 +123,7 @@ namespace generateResponseModuleTest
                 scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully,
                 testActionNode1,
                 ScType::EdgeAccessConstPosPerm));
-        ScAddr messageAnswer1 = utils::IteratorUtils::getAnyByOutRelation(&context, message1, generateResponseModule::Keynodes::nrel_response);
+        ScAddr messageAnswer1 = utils::IteratorUtils::getAnyByOutRelation(&context, message1, generateResponseModule::Keynodes::nrel_reply);
         EXPECT_FALSE(messageAnswer1.IsValid());
 
 
@@ -134,7 +134,7 @@ namespace generateResponseModuleTest
                 scAgentsCommon::CoreKeynodes::question_finished_unsuccessfully,
                 testActionNode2,
                 ScType::EdgeAccessConstPosPerm));
-        ScAddr messageAnswer2 = utils::IteratorUtils::getAnyByOutRelation(&context, message1, generateResponseModule::Keynodes::nrel_response);
+        ScAddr messageAnswer2 = utils::IteratorUtils::getAnyByOutRelation(&context, message1, generateResponseModule::Keynodes::nrel_reply);
         EXPECT_FALSE(messageAnswer2.IsValid());
 
 

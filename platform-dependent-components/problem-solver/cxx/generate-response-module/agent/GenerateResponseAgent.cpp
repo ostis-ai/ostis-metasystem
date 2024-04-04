@@ -111,7 +111,7 @@ ScAddr GenerateResponseAgent::getMessageClassAddr(ScAddr const & messageAddr)
   {
     ScAddr messageClassAddr = classIterator->Get(0);
     bool isMessageClass = m_memoryCtx.HelperCheckEdge(
-        Keynodes::concept_ask_ai_message_class, messageClassAddr, ScType::EdgeAccessConstPosPerm);
+        Keynodes::concept_intent_possible_class, messageClassAddr, ScType::EdgeAccessConstPosPerm);
     if (isMessageClass)
       return messageClassAddr;
   }
@@ -129,7 +129,7 @@ bool GenerateResponseAgent::attachAnswer(
 
   ScAddr edgeBetweenMessageAndMessageAnswer =
       m_memoryCtx.CreateEdge(ScType::EdgeDCommonConst, messageAddr, messageAnswer);
-  m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, Keynodes::nrel_response, edgeBetweenMessageAndMessageAnswer);
+  m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, Keynodes::nrel_reply, edgeBetweenMessageAndMessageAnswer);
 
   m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, answerAddr, messageAnswer);
 
@@ -138,12 +138,45 @@ bool GenerateResponseAgent::attachAnswer(
 
 ScAddrVector GenerateResponseAgent::getMessageParameters(ScAddr const & messageAddr)
 {
-  // TODO: implement receiving several parameters from a message
-  ScAddr messageParameter = utils::IteratorUtils::getAnyByOutRelation(&m_memoryCtx, messageAddr, Keynodes::rrel_entity);
+  static ScTemplate templ;
+  templ.Clear();
+  templ.Triple(
+      Keynodes::concept_entity_possible_class,
+      ScType::EdgeAccessVarPosPerm,
+      ScType::NodeVarClass >> "_message_entity_class");
+  templ.Quintuple(
+      "_message_entity_class",
+      ScType::EdgeDCommonVar,
+      ScType::NodeVarRole >> Constants::roleRelationVarName,
+      ScType::EdgeAccessVarPosPerm,
+      Keynodes::nrel_entity_possible_role);
+  templ.Quintuple(
+      messageAddr,
+      ScType::EdgeAccessVarPosPerm,
+      ScType::NodeVar >> Constants::messageParamVarName,
+      ScType::EdgeAccessVarPosPerm,
+      Constants::roleRelationVarName);
+
+  ScTemplateSearchResult result;
+  m_memoryCtx.HelperSearchTemplate(templ, result);
+
+  if (result.IsEmpty())
+  {
+    SC_LOG_WARNING(Constants::generateAnswerAgentClassName + ": no params founded");
+    return {};
+  }
 
   ScAddrVector parameters;
+
+  ScAddr messageParameter = result[0][Constants::messageParamVarName];
+  ScAddr roleRelation = result[0][Constants::roleRelationVarName];
   if (messageParameter.IsValid())
+  {
+    SC_LOG_DEBUG(
+        Constants::generateAnswerAgentClassName + ": parameter with relation '"
+        + m_memoryCtx.HelperGetSystemIdtf(roleRelation) + "' founded");
     parameters.emplace_back(messageParameter);
+  }
 
   return parameters;
 }

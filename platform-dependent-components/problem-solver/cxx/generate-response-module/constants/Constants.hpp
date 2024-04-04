@@ -17,6 +17,10 @@ public:
   static std::string const messageAddrParamName;
 
   static std::string const answerAddrParamName;
+
+  static std::string const roleRelationVarName;
+
+  static std::string const messageParamVarName;
 };
 
 }  // namespace generateResponseModule

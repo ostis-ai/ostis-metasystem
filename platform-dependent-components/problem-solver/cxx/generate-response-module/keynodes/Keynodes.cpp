@@ -14,10 +14,14 @@ ScAddr Keynodes::action_generate_response;
 
 ScAddr Keynodes::nrel_response_action;
 
-ScAddr Keynodes::concept_ask_ai_message_class;
+ScAddr Keynodes::concept_entity_possible_class;
+
+ScAddr Keynodes::concept_intent_possible_class;
+
+ScAddr Keynodes::nrel_entity_possible_role;
 
 ScAddr Keynodes::rrel_entity;
 
-ScAddr Keynodes::nrel_response;
+ScAddr Keynodes::nrel_reply;
 
 }  // namespace generateResponseModule

@@ -18,6 +18,16 @@ class GenerateResponseAgent : public ScAgent
   SC_CLASS(Agent, Event(scAgentsCommon::CoreKeynodes::question_initiated, ScEvent::Type::AddOutputEdge))
   SC_GENERATED_BODY()
 private:
+  class MessageParametersTemplate
+  {
+  public:
+    MessageParametersTemplate();
+    operator ScTemplate const &() const;
+
+  private:
+    ScTemplate templ;
+  };
+
   bool checkAction(ScAddr const & actionAddr);
 
   ScAddr getMessageClassAddr(ScAddr const & messageAddr);
