@@ -17,4 +17,6 @@ std::string const Constants::answerAddrParamName = "answerAddr";
 std::string const Constants::roleRelationVarName = "_role";
 
 std::string const Constants::messageParamVarName = "_param";
+
+std::string const Constants::messageEntityClassVarName = "_message_entity_class";
 }  // namespace generateResponseModule

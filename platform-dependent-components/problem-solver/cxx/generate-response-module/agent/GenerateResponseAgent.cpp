@@ -94,7 +94,7 @@ void GenerateResponseAgent::finishWorkWithMessage(
     bool isSuccess)
 {
   SC_LOG_ERROR(Constants::generateAnswerAgentClassName + ": " + message);
-  utils::AgentUtils::finishAgentWork(&m_memoryCtx, questionNode, false);
+  utils::AgentUtils::finishAgentWork(&m_memoryCtx, questionNode, isSuccess);
 }
 
 bool GenerateResponseAgent::checkAction(ScAddr const & actionAddr)
@@ -143,9 +143,9 @@ ScAddrVector GenerateResponseAgent::getMessageParameters(ScAddr const & messageA
   templ.Triple(
       Keynodes::concept_entity_possible_class,
       ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVarClass >> "_message_entity_class");
+      ScType::NodeVarClass >> Constants::messageEntityClassVarName);
   templ.Quintuple(
-      "_message_entity_class",
+      Constants::messageEntityClassVarName,
       ScType::EdgeDCommonVar,
       ScType::NodeVarRole >> Constants::roleRelationVarName,
       ScType::EdgeAccessVarPosPerm,
@@ -157,26 +157,21 @@ ScAddrVector GenerateResponseAgent::getMessageParameters(ScAddr const & messageA
       ScType::EdgeAccessVarPosPerm,
       Constants::roleRelationVarName);
 
-  ScTemplateSearchResult result;
-  m_memoryCtx.HelperSearchTemplate(templ, result);
-
-  if (result.IsEmpty())
-  {
-    SC_LOG_WARNING(Constants::generateAnswerAgentClassName + ": no params founded");
-    return {};
-  }
-
   ScAddrVector parameters;
 
-  ScAddr const & messageParameter = result[0][Constants::messageParamVarName];
-  ScAddr const & roleRelation = result[0][Constants::roleRelationVarName];
-  if (messageParameter.IsValid())
-  {
-    SC_LOG_DEBUG(
-        Constants::generateAnswerAgentClassName + ": parameter with relation '"
-        + m_memoryCtx.HelperGetSystemIdtf(roleRelation) + "' founded");
-    parameters.emplace_back(messageParameter);
-  }
+  m_memoryCtx.HelperSmartSearchTemplate(
+      templ,
+      [this, &parameters](ScTemplateResultItem const & resultItem)
+      {
+        ScAddr const & messageParameter = resultItem[Constants::messageParamVarName];
+        ScAddr const & roleRelation = resultItem[Constants::roleRelationVarName];
+
+        SC_LOG_DEBUG(
+            Constants::generateAnswerAgentClassName + ": parameter with relation '"
+            + m_memoryCtx.HelperGetSystemIdtf(roleRelation) + "' found");
+        parameters.emplace_back(messageParameter);
+        return ScTemplateSearchRequest::STOP;
+      });
 
   return parameters;
 }
