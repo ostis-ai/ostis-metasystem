@@ -5,6 +5,7 @@
 #include "agent/MessageTopicClassificationAgent.hpp"
 #include "keynodes/MessageClassificationKeynodes.hpp"
 #include "keynodes/Keynodes.hpp"
+#include "keynodes/LocalKeynodes.hpp"
 #include "utils/ActionUtils.hpp"
 #include "client/WitAiClient.hpp"
 #include "WitAiCkientMock.hpp"
@@ -25,6 +26,7 @@ void initialize()
   scAgentsCommon::CoreKeynodes::InitGlobal();
   MessageClassificationKeynodes::InitGlobal();
   commonModule::Keynodes::InitGlobal();
+  commonModule::LocalKeynodes::InitGlobal();
 }
 
 void shutdown()

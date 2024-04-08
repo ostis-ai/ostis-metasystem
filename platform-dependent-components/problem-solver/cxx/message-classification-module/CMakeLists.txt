@@ -5,14 +5,10 @@ set(SOURCES
     "classifier/MessageTopicClassifier.cpp"
     "client/WitAiClient.cpp"
     "keynodes/MessageClassificationKeynodes.cpp"
-    "keynodes/Keynodes.cpp"
     "keynodes/MessageKeynodes.cpp"
     "manager/MessageTopicClassificationManager.cpp"
     "constants/MessageClassificationConstants.cpp"
-    "http/sc_http_request.cpp"
-    "http/sc_http_response.cpp"
     "searcher/MessageSearcher.cpp"
-    "utils/ActionUtils.cpp"
 )
 
 set(HEADERS
@@ -22,15 +18,11 @@ set(HEADERS
     "classifier/MessageTopicClassifier.hpp"
     "client/WitAiClient.hpp"
     "keynodes/MessageClassificationKeynodes.hpp"
-    "keynodes/Keynodes.hpp"
     "keynodes/MessageKeynodes.hpp"
     "manager/MessageTopicClassificationManager.hpp"
     "client/WitAiClientInterface.hpp"
     "constants/MessageClassificationConstants.hpp"
-    "http/sc_http_request.hpp"
-    "http/sc_http_response.hpp"
     "searcher/MessageSearcher.hpp"
-    "utils/ActionUtils.hpp"
 )
 
 find_package(PkgConfig REQUIRED)
@@ -42,12 +34,16 @@ include_directories(
     ${SC_MEMORY_SRC}
     ${SC_KPM_SRC}
     ${SC_TOOLS_SRC}/sc-config-utils
+    ${LOCAL_COMMON_MODULE_PATH}
+    ${COMMON_MODULE_PATH}
     ${GLIB2_INCLUDE_DIRS}
 )
 
 add_library(messageClassification SHARED ${SOURCES} ${HEADERS})
 target_link_libraries(
     messageClassification
+    local-common
+    common
     sc-memory
     sc-agents-common
     sc-config-utils

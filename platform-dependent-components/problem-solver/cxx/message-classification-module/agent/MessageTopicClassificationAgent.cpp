@@ -4,6 +4,8 @@
 #include "keynodes/MessageClassificationKeynodes.hpp"
 
 #include "client/WitAiClient.hpp"
+#include "keynodes/Keynodes.hpp"
+
 #include "MessageTopicClassificationAgent.hpp"
 
 using namespace messageClassificationModule;

@@ -9,7 +9,6 @@
 
 using namespace messageClassificationModule;
 
-
 SC_IMPLEMENT_MODULE(MessageClassificationModule)
 
 sc_result MessageClassificationModule::InitializeImpl()
@@ -18,7 +17,8 @@ sc_result MessageClassificationModule::InitializeImpl()
     return SC_RESULT_ERROR;
 
   ScMemoryContext ctx;
-  if (ActionUtils::isActionDeactivated(&ctx, MessageClassificationKeynodes::action_message_topic_classification))
+  if (commonModule::ActionUtils::isActionDeactivated(
+          &ctx, MessageClassificationKeynodes::action_message_topic_classification))
     SC_LOG_ERROR("action_message_topic_classification is deactivated");
   else
     SC_AGENT_REGISTER(MessageTopicClassificationAgent)

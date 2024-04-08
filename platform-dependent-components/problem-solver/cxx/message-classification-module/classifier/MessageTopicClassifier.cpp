@@ -5,7 +5,7 @@
 
 #include "constants/MessageClassificationConstants.hpp"
 #include "keynodes/MessageClassificationKeynodes.hpp"
-#include "keynodes/Keynodes.hpp"
+#include "keynodes/LocalKeynodes.hpp"
 #include "searcher/MessageSearcher.hpp"
 
 namespace messageClassificationModule
@@ -391,7 +391,7 @@ ScAddrVector MessageTopicClassifier::processEntities(
     ScAddr const & createdEntity = context->CreateLink();
     context->SetLinkContent(createdEntity, notFoundEntitiesIdtf);
     ScAddr const & createdEntityEdge =
-        context->CreateEdge(ScType::EdgeAccessConstPosPerm, commonModule::Keynodes::lang_en, createdEntity);
+        context->CreateEdge(ScType::EdgeAccessConstPosPerm, commonModule::LocalKeynodes::lang_en, createdEntity);
     ScAddr const & messageEntityEdge = context->CreateEdge(ScType::EdgeAccessConstPosPerm, messageAddr, createdEntity);
     ScAddr const & entityRole = context->HelperResolveSystemIdtf(notFoundEntitiesRoles, ScType::NodeConstRole);
     ScAddr const & messageEntityRoleEdge =
@@ -405,7 +405,7 @@ ScAddrVector MessageTopicClassifier::processEntities(
     messageEntitiesElements.push_back(messageEntityEdge);
     messageEntitiesElements.push_back(messageEntityRoleEdge);
     messageEntitiesElements.push_back(entityRole);
-    messageEntitiesElements.push_back(commonModule::Keynodes::lang_en);
+    messageEntitiesElements.push_back(commonModule::LocalKeynodes::lang_en);
   }
 
   return messageEntitiesElements;
