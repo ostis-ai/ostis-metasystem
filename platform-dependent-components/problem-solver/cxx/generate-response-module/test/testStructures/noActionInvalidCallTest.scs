@@ -1,0 +1,19 @@
+test_action_node
+  <-question;
+  <-action_generate_response;
+  -> rrel_1:message;
+  -> rrel_2:rrel_dynamic_argument: _answer;;
+
+test_question_other
+  <- sc_node_class;
+  <- concept_intent_possible_class;;
+
+test_action_other
+  <- sc_node_class;
+  <- actions_class;
+  <- atomic_action_class;
+  <= nrel_response_action: test_question;;
+
+message
+  <- test_question_other;
+  -> rrel_entity: test_entity;;

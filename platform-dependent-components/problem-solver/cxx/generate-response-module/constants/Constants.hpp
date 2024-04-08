@@ -21,6 +21,8 @@ public:
   static std::string const roleRelationVarName;
 
   static std::string const messageParamVarName;
+
+  static std::string const messageEntityClassVarName;
 };
 
 }  // namespace generateResponseModule
