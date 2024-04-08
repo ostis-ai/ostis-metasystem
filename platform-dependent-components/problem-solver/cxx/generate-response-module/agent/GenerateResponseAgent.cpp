@@ -26,9 +26,9 @@ SC_AGENT_IMPLEMENTATION(GenerateResponseAgent)
 
   SC_LOG_DEBUG(Constants::generateAnswerAgentClassName + " started");
 
-  ScAddr messageAddr =
+  ScAddr const & messageAddr =
       utils::IteratorUtils::getAnyByOutRelation(&m_memoryCtx, otherAddr, scAgentsCommon::CoreKeynodes::rrel_1);
-  ScAddr answerAddr =
+  ScAddr const & answerAddr =
       utils::IteratorUtils::getAnyByOutRelation(&m_memoryCtx, otherAddr, scAgentsCommon::CoreKeynodes::rrel_2);
 
   try
@@ -53,7 +53,7 @@ SC_AGENT_IMPLEMENTATION(GenerateResponseAgent)
     return SC_RESULT_ERROR;
   }
 
-  ScAddr messageAnswer = utils::AgentUtils::applyActionAndGetResultIfExists(
+  ScAddr const & messageAnswer = utils::AgentUtils::applyActionAndGetResultIfExists(
       &m_memoryCtx, messageActionAddr, getMessageParameters(messageAddr));
 
   bool isSuccess = attachAnswer(messageAnswer, messageAddr, answerAddr);
@@ -65,10 +65,10 @@ SC_AGENT_IMPLEMENTATION(GenerateResponseAgent)
 
 ScAddr GenerateResponseAgent::getMessageActionAddr(ScAddr const & messageAddr)
 {
-  ScAddr messageClassAddr = getMessageClassAddr(messageAddr);
+  ScAddr const & messageClassAddr = getMessageClassAddr(messageAddr);
   validateAddrWithItemNotFoundException(messageClassAddr, "message class is not supported or not found");
 
-  ScAddr messageActionAddr =
+  ScAddr const & messageActionAddr =
       utils::IteratorUtils::getAnyByOutRelation(&m_memoryCtx, messageClassAddr, Keynodes::nrel_response_action);
   validateAddrWithItemNotFoundException(messageActionAddr, "action corresponding to message class not found");
 
@@ -109,7 +109,7 @@ ScAddr GenerateResponseAgent::getMessageClassAddr(ScAddr const & messageAddr)
 
   while (classIterator->Next())
   {
-    ScAddr messageClassAddr = classIterator->Get(0);
+    ScAddr const & messageClassAddr = classIterator->Get(0);
     bool isMessageClass = m_memoryCtx.HelperCheckEdge(
         Keynodes::concept_intent_possible_class, messageClassAddr, ScType::EdgeAccessConstPosPerm);
     if (isMessageClass)
@@ -127,7 +127,7 @@ bool GenerateResponseAgent::attachAnswer(
   if (!messageAnswer.IsValid())
     return false;
 
-  ScAddr edgeBetweenMessageAndMessageAnswer =
+  ScAddr const & edgeBetweenMessageAndMessageAnswer =
       m_memoryCtx.CreateEdge(ScType::EdgeDCommonConst, messageAddr, messageAnswer);
   m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, Keynodes::nrel_reply, edgeBetweenMessageAndMessageAnswer);
 
@@ -168,8 +168,8 @@ ScAddrVector GenerateResponseAgent::getMessageParameters(ScAddr const & messageA
 
   ScAddrVector parameters;
 
-  ScAddr messageParameter = result[0][Constants::messageParamVarName];
-  ScAddr roleRelation = result[0][Constants::roleRelationVarName];
+  ScAddr const & messageParameter = result[0][Constants::messageParamVarName];
+  ScAddr const & roleRelation = result[0][Constants::roleRelationVarName];
   if (messageParameter.IsValid())
   {
     SC_LOG_DEBUG(
