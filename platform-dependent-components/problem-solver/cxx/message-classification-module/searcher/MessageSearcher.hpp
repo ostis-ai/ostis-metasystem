@@ -3,7 +3,7 @@
 #include "sc-memory/sc_addr.hpp"
 #include "sc-memory/sc_memory.hpp"
 
-namespace dialogControlModule
+namespace messageClassificationModule
 {
 class MessageSearcher
 {
@@ -25,4 +25,4 @@ public:
 private:
   ScMemoryContext * context;
 };
-}  // namespace dialogControlModule
+}  // namespace messageClassificationModule

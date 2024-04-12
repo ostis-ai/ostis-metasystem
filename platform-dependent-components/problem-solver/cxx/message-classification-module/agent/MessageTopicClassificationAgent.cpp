@@ -3,9 +3,6 @@
 
 #include "keynodes/MessageClassificationKeynodes.hpp"
 
-#include "client/WitAiClient.hpp"
-#include "keynodes/Keynodes.hpp"
-
 #include "MessageTopicClassificationAgent.hpp"
 
 using namespace messageClassificationModule;
@@ -26,15 +23,13 @@ SC_AGENT_IMPLEMENTATION(MessageTopicClassificationAgent)
 
   try
   {
-    if (!messageAddr.IsValid())
-      SC_THROW_EXCEPTION(utils::ExceptionInvalidParams, "Invalid message node.");
-
+    SC_CHECK_PARAM(messageAddr, "MessageTopicClassificationAgent: invalid message node");
     answerElements = manager->manage({messageAddr});
   }
   catch (utils::ScException & exception)
   {
     SC_LOG_ERROR(exception.Description());
-    utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, answerElements, false);
+    utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
     SC_LOG_DEBUG("MessageTopicClassificationAgent finished");
     return SC_RESULT_ERROR;
   }
@@ -46,7 +41,6 @@ SC_AGENT_IMPLEMENTATION(MessageTopicClassificationAgent)
 
 void MessageTopicClassificationAgent::initFields()
 {
-  std::unique_ptr<WitAiClient> client = std::make_unique<WitAiClient>();
   this->manager = std::make_unique<MessageTopicClassificationManager>(&m_memoryCtx);
 }
 

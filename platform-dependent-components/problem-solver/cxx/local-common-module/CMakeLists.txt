@@ -1,4 +1,5 @@
 set(SOURCES
+    "LocalCommonModule.cpp"
     "http/sc_http_request.cpp"
     "http/sc_http_response.cpp"
     "http/sc_http.cpp"
@@ -6,6 +7,7 @@ set(SOURCES
 )
 
 set(HEADERS
+    "LocalCommonModule.hpp"
     "http/sc_http_request.hpp"
     "http/sc_http_response.hpp"
     "http/sc_http.hpp"

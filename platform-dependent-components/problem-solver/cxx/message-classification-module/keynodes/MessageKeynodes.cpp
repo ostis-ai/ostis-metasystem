@@ -2,7 +2,7 @@
 
 #include "sc-memory/sc_memory.hpp"
 
-namespace dialogControlModule
+namespace messageClassificationModule
 {
 ScAddr MessageKeynodes::action_phrase_generation;
 ScAddr MessageKeynodes::action_standard_message_reply;
@@ -24,4 +24,4 @@ ScAddr MessageKeynodes::rrel_entity;
 ScAddr MessageKeynodes::nrel_semantic_equivalent;
 ScAddr MessageKeynodes::answer_structure;
 
-}  // namespace dialogControlModule
+}  // namespace messageClassificationModule

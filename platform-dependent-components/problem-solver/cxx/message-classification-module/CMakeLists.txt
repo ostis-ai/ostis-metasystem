@@ -43,7 +43,7 @@ add_library(messageClassification SHARED ${SOURCES} ${HEADERS})
 target_link_libraries(
     messageClassification
     local-common
-    common
+    common-ps-lib
     sc-memory
     sc-agents-common
     sc-config-utils
@@ -51,7 +51,7 @@ target_link_libraries(
 
 sc_codegen_ex(messageClassification ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/generated)
 
-add_definitions(-DMESSAGE_CLASSIFICATION_CONFIG_PATH="${CMAKE_CURRENT_LIST_DIR}/ostis-metasystem.ini")
+add_definitions(-DMESSAGE_CLASSIFICATION_CONFIG_PATH="${CMAKE_SOURCE_DIR}/ostis-metasystem.ini")
 
 if(${SC_BUILD_TESTS})
     include(${CMAKE_CURRENT_LIST_DIR}/test/tests.cmake)

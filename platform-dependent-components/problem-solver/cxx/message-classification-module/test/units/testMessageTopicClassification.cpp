@@ -6,8 +6,6 @@
 #include "keynodes/MessageClassificationKeynodes.hpp"
 #include "keynodes/Keynodes.hpp"
 #include "keynodes/LocalKeynodes.hpp"
-#include "utils/ActionUtils.hpp"
-#include "client/WitAiClient.hpp"
 #include "WitAiCkientMock.hpp"
 
 using namespace messageClassificationModule;
@@ -27,10 +25,6 @@ void initialize()
   MessageClassificationKeynodes::InitGlobal();
   commonModule::Keynodes::InitGlobal();
   commonModule::LocalKeynodes::InitGlobal();
-}
-
-void shutdown()
-{
 }
 
 TEST_F(MessageTopicClassificationTest, connectionTest)
@@ -78,8 +72,6 @@ TEST_F(MessageTopicClassificationTest, classifyMessageWithoutEntityTest)
 
   bool isMessageClassified = context.HelperCheckEdge(greetingMessageClass, messageAddr, ScType::EdgeAccessConstPosPerm);
   EXPECT_TRUE(isMessageClassified);
-
-  shutdown();
 }
 
 TEST_F(MessageTopicClassificationTest, classifyMessageWithEntityTest)
@@ -125,8 +117,6 @@ TEST_F(MessageTopicClassificationTest, classifyMessageWithEntityTest)
   ScTemplateSearchResult classificationTemplateResult;
   context.HelperSearchTemplate(classificationTemplate, classificationTemplateResult);
   EXPECT_TRUE(classificationTemplateResult.Size() == 1);
-
-  shutdown();
 }
 
 TEST_F(MessageTopicClassificationTest, classifyMessageWithTwoEntitiesTest)
@@ -176,16 +166,22 @@ TEST_F(MessageTopicClassificationTest, classifyMessageWithTwoEntitiesTest)
   classificationTemplate.Triple(weatherMessageClass, ScType::EdgeAccessVarPosPerm, messageAddr);
   classificationTemplate.Triple(neutralMessageClass, ScType::EdgeAccessVarPosPerm, messageAddr);
   classificationTemplate.Quintuple(
-      messageAddr, ScType::EdgeAccessVarPosPerm, entityContactAddr, ScType::EdgeAccessVarPosPerm, rrelContactAddr);
+      messageAddr, 
+      ScType::EdgeAccessVarPosPerm, 
+      entityContactAddr, 
+      ScType::EdgeAccessVarPosPerm, 
+      rrelContactAddr);
   classificationTemplate.Quintuple(
-      messageAddr, ScType::EdgeAccessVarPosPerm, entitySeasonAddr, ScType::EdgeAccessVarPosPerm, rrelSeasonAddr);
+      messageAddr, 
+      ScType::EdgeAccessVarPosPerm, 
+      entitySeasonAddr, 
+      ScType::EdgeAccessVarPosPerm, 
+      rrelSeasonAddr);
 
   ScTemplateSearchResult classificationTemplateResult;
   context.HelperSearchTemplate(classificationTemplate, classificationTemplateResult);
 
   EXPECT_TRUE(classificationTemplateResult.Size() == 1);
-
-  shutdown();
 }
 
 TEST_F(MessageTopicClassificationTest, classifyMessageWithTwoEntitiesSameRoleTest)
@@ -239,9 +235,8 @@ TEST_F(MessageTopicClassificationTest, classifyMessageWithTwoEntitiesSameRoleTes
   ScTemplateSearchResult classificationTemplateResult;
   context.HelperSearchTemplate(entitiesTemplate, classificationTemplateResult);
 
+  SC_LOG_DEBUG(classificationTemplateResult.Size());
   EXPECT_TRUE(classificationTemplateResult.Size() == 1);
-
-  shutdown();
 }
 
 }  // namespace messageTopicClassificationTest

@@ -5,7 +5,7 @@
 
 #include "MessageKeynodes.generated.hpp"
 
-namespace dialogControlModule
+namespace messageClassificationModule
 {
 class MessageKeynodes : public ScObject
 {
@@ -71,4 +71,4 @@ public:
   static ScAddr answer_structure;
 };
 
-}  // namespace dialogControlModule
+}  // namespace messageClassificationModule

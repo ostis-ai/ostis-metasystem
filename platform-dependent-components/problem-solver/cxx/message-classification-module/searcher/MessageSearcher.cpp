@@ -6,8 +6,7 @@
 #include "keynodes/MessageKeynodes.hpp"
 #include <algorithm>
 
-using namespace scAgentsCommon;
-using namespace dialogControlModule;
+using namespace messageClassificationModule;
 
 MessageSearcher::MessageSearcher(ScMemoryContext * ms_context)
 {
@@ -30,18 +29,20 @@ ScAddr MessageSearcher::getFirstMessage(ScAddr const & nonAtomicMessageNode)
       ScType::EdgeAccessVarPosPerm,
       ScType::NodeVar >> VAR_MESSAGE,
       ScType::EdgeAccessVarPosPerm,
-      CoreKeynodes::rrel_1);
-
-  ScTemplateSearchResult result;
-  context->HelperSearchTemplate(templ, result);
+      scAgentsCommon::CoreKeynodes::rrel_1);
 
   ScAddr resultMessageNode;
-  if (result.Size() == 1)
-  {
-    resultMessageNode = result[0][VAR_MESSAGE];
-    SC_LOG_DEBUG("MessageSearcher: the first message node found");
-  }
-  else
+
+  context->HelperSmartSearchTemplate(
+      templ,
+      [&resultMessageNode, &VAR_MESSAGE](ScTemplateResultItem const & resultItem)
+      {
+        resultMessageNode = resultItem[VAR_MESSAGE];
+        SC_LOG_DEBUG("MessageSearcher: the first message node found");
+        return ScTemplateSearchRequest::STOP;
+      });
+
+  if (!resultMessageNode.IsValid())
   {
     SC_LOG_DEBUG("MessageSearcher: the first message node not found");
   }
@@ -51,8 +52,12 @@ ScAddr MessageSearcher::getFirstMessage(ScAddr const & nonAtomicMessageNode)
 
 ScAddr MessageSearcher::getNextMessage(ScAddr const & messageNode)
 {
-  std::string const VAR_TUPLE = "_tuple", VAR_EDGE_1 = "_edge_1", VAR_EDGE_2 = "_edge_2",
-                    VAR_D_COMMON_EDGE = "_d_common_edge", VAR_MESSAGE = "_message";
+  std::string const VAR_TUPLE = "_tuple";
+  std::string const VAR_EDGE_1 = "_edge_1";
+  std::string const VAR_EDGE_2 = "_edge_2";
+  std::string const VAR_D_COMMON_EDGE = "_d_common_edge";
+  std::string const VAR_MESSAGE = "_message";
+
   ScTemplate templ;
   templ.Triple(ScType::NodeVarTuple >> VAR_TUPLE, ScType::EdgeAccessVarPosPerm >> VAR_EDGE_1, messageNode);
   templ.Quintuple(
@@ -63,16 +68,17 @@ ScAddr MessageSearcher::getNextMessage(ScAddr const & messageNode)
       MessageKeynodes::nrel_message_sequence);
   templ.Triple(VAR_TUPLE, VAR_EDGE_2, ScType::NodeVar >> VAR_MESSAGE);
 
-  ScTemplateSearchResult result;
-  context->HelperSearchTemplate(templ, result);
-
   ScAddr resultMessageNode;
-  if (result.Size() > 0)
-  {
-    resultMessageNode = result[0][VAR_MESSAGE];
-    SC_LOG_DEBUG("MessageSearcher: next message node found");
-  }
-  else
+  context->HelperSmartSearchTemplate(
+      templ,
+      [&resultMessageNode, &VAR_MESSAGE](ScTemplateResultItem const & resultItem)
+      {
+        resultMessageNode = resultItem[VAR_MESSAGE];
+        SC_LOG_DEBUG("MessageSearcher: next message node found");
+        return ScTemplateSearchRequest::STOP;
+      });
+
+  if (!resultMessageNode.IsValid())
   {
     SC_LOG_DEBUG("MessageSearcher: next message node not found");
   }
@@ -91,16 +97,18 @@ ScAddr MessageSearcher::getMessageAuthor(ScAddr const & messageNode)
       ScType::EdgeAccessVarPosPerm,
       MessageKeynodes::nrel_authors);
 
-  ScTemplateSearchResult result;
-  context->HelperSearchTemplate(templ, result);
-
   ScAddr resultAuthorNode;
-  if (result.Size() > 0)
-  {
-    resultAuthorNode = result[0][VAR_AUTHOR];
-    SC_LOG_DEBUG("MessageSearcher: author set node found");
-  }
-  else
+  context->HelperSmartSearchTemplate(
+      templ,
+      [&resultAuthorNode, &VAR_AUTHOR](ScTemplateResultItem const & resultItem)
+      {
+        resultAuthorNode = resultItem[VAR_AUTHOR];
+        SC_LOG_DEBUG("MessageSearcher: author set node found");
+
+        return ScTemplateSearchRequest::STOP;
+      });
+
+  if (!resultAuthorNode.IsValid())
   {
     SC_LOG_DEBUG("MessageSearcher: author set node not found");
   }
@@ -119,16 +127,18 @@ ScAddr MessageSearcher::getMessageTheme(ScAddr const & messageNode)
       ScType::EdgeAccessVarPosPerm,
       MessageKeynodes::rrel_message_theme);
 
-  ScTemplateSearchResult result;
-  context->HelperSearchTemplate(templ, result);
-
   ScAddr resultThemeNode;
-  if (result.Size() > 0)
-  {
-    resultThemeNode = result[0][VAR_THEME];
-    SC_LOG_DEBUG("MessageSearcher: message theme node found");
-  }
-  else
+  context->HelperSmartSearchTemplate(
+      templ,
+      [&resultThemeNode, &VAR_THEME](ScTemplateResultItem const & resultItem)
+      {
+        resultThemeNode = resultItem[VAR_THEME];
+        SC_LOG_DEBUG("MessageSearcher: message theme node found");
+
+        return ScTemplateSearchRequest::STOP;
+      });
+
+  if (!resultThemeNode.IsValid())
   {
     SC_LOG_DEBUG("MessageSearcher: message theme node not found");
   }
@@ -139,8 +149,8 @@ ScAddr MessageSearcher::getMessageTheme(ScAddr const & messageNode)
 ScAddrVector MessageSearcher::getMessageLinks(ScAddr const & message, ScAddrVector const & linkClasses)
 {
   ScAddrVector messageLinks;
-  ScAddr const translationNode =
-      utils::IteratorUtils::getAnyByInRelation(context, message, CoreKeynodes::nrel_sc_text_translation);
+  ScAddr const translationNode = utils::IteratorUtils::getAnyByInRelation(
+      context, message, scAgentsCommon::CoreKeynodes::nrel_sc_text_translation);
   if (!translationNode.IsValid())
   {
     SC_LOG_WARNING("MessageSearcher: text translation node not found");

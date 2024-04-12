@@ -7,24 +7,24 @@ namespace messageClassificationModule
 class WitAiConstants
 {
 public:
-  static std::string const INTENTS;
-  static std::string const TRAITS;
-  static std::string const ENTITIES;
-  static std::string const NAME;
-  static std::string const VALUE;
-  static std::string const BODY;
+  static std::string const intents;
+  static std::string const traits;
+  static std::string const entities;
+  static std::string const name;
+  static std::string const value;
+  static std::string const body;
 };
 
 class MessageClassificationAliasConstants
 {
 public:
-  static std::string const SET_OF_TRAITS_CLASS_ALIAS;
-  static std::string const TRAIT_INCLUDED_CLASS_LINK_ALIAS;
-  static std::string const SET_OF_TRAITS_CLASS_LINK_ALIAS;
-  static std::string const ENTITY_ROLE_ALIAS;
-  static std::string const ENTITY_SET_ALIAS;
-  static std::string const ENTITY_ROLE_LINK_ALIAS;
-  static std::string const ENTITY_CLASS_LINK_ALIAS;
+  static std::string const setOfTraitsClassAlias;
+  static std::string const traitIncludedClassLinkAlias;
+  static std::string const setOfTraitsClassLinkAlias;
+  static std::string const entityRoleAlias;
+  static std::string const entitySetAlias;
+  static std::string const entityRoleLinkAlias;
+  static std::string const entityClassLinkAlias;
 };
 
 }  // namespace messageClassificationModule

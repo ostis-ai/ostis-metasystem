@@ -3,9 +3,9 @@
 #include "sc-memory/sc_addr.hpp"
 #include "sc-memory/sc_memory.hpp"
 
-#include "client/WitAiClient.hpp"
 #include "client/WitAiClientInterface.hpp"
 #include "searcher/MessageSearcher.hpp"
+#include "keynodes/MessageClassificationKeynodes.hpp"
 #include "sc-agents-common/keynodes/coreKeynodes.hpp"
 
 namespace messageClassificationModule
@@ -17,16 +17,18 @@ public:
 
   ScAddrVector classifyMessage(ScAddr const & messageAddr);
 
-protected:
+private:
   ScMemoryContext * context;
 
-  ScAddrVector relationsToFindEntity{
-      scAgentsCommon::CoreKeynodes::nrel_main_idtf,
-      scAgentsCommon::CoreKeynodes::nrel_idtf};
-
-  std::unique_ptr<dialogControlModule::MessageSearcher> messageSearcher;
+  std::unique_ptr<MessageSearcher> messageSearcher;
 
   std::unique_ptr<WitAiClientInterface> client;
+
+  ScAddrVector const relationsToIdtf = {
+      scAgentsCommon::CoreKeynodes::nrel_idtf,
+      scAgentsCommon::CoreKeynodes::nrel_main_idtf,
+      scAgentsCommon::CoreKeynodes::nrel_system_identifier,
+      MessageClassificationKeynodes::nrel_wit_ai_idtf};
 
   std::string getMessageText(ScAddr const & messageAddr);
 
@@ -52,13 +54,24 @@ protected:
 
   static json getMessageEntities(json const & witResponse);
 
-  static void buildEntityTemplate(ScTemplate & entityTemplate, ScAddr const & possibleEntityClass);
-
   ScAddrVector processEntities(
       ScIterator3Ptr & possibleEntityIterator,
       json const & messageEntity,
-      ScAddrVector & messageEntitiesElements,
       ScAddr const & messageAddr);
+
+  ScAddr findEntityByIdtf(std::string const & idtf, ScType const & entityType = ScType::Unknown);
+
+  bool processAsFoundEntity(
+      std::string const & entityIdtf,
+      ScAddr const & entityRoleAddr,
+      ScAddr const & messageAddr,
+      ScAddrVector & result);
+
+  void processAsNotFoundEntity(
+      std::string const & entityIdtf,
+      ScAddr const & entityRoleAddr,
+      ScAddr const & messageAddr,
+      ScAddrVector & result);
 };
 
 }  // namespace messageClassificationModule
