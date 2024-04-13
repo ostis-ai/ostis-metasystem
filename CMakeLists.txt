@@ -42,4 +42,5 @@ if(${SC_BUILD_TESTS})
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
 endif()
 
+add_subdirectory(ostis-web-platform/sc-component-manager)
 add_subdirectory(platform-dependent-components/problem-solver)

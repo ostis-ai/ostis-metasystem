@@ -1,6 +1,6 @@
 make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/units
     NAME identifiers-module-test-starter
-    DEPENDS sc-agents-common identifiers sc-builder-lib
+    DEPENDS sc-agents-common identifiers sc-builder-lib gtest_main
     INCLUDES ${SC_MEMORY_SRC}/tests/sc-memory/_test ${CMAKE_CURRENT_LIST_DIR}/.. ${SC_TOOLS_SRC}/sc-builder/src ${SC_MEMORY_SRC}/sc-memory
 )
 
