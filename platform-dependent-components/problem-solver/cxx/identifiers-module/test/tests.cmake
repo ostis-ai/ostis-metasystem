@@ -1,7 +1,7 @@
 make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/units
     NAME identifiers-module-test-starter
-    DEPENDS sc-core sc-agents-common identifiers sc-builder-lib
-    INCLUDES ${SC_MEMORY_SRC} ${SC_MEMORY_SRC}/tests/sc-memory/_test ${CMAKE_CURRENT_LIST_DIR}/.. ${SC_TOOLS_SRC}/sc-builder/src
+    DEPENDS sc-memory sc-core sc-builder-lib identifiers-module
+    INCLUDES ${SC_MEMORY_SRC}/tests/sc-memory/_test ${SC_TOOLS_SRC}
 )
 
 add_definitions(-DMODULE_TEST_SRC_PATH="${CMAKE_CURRENT_LIST_DIR}")
