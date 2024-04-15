@@ -53,7 +53,6 @@ class AuthoriseUserAgent(ScAgentClassic):
     def run(self, action_node: ScAddr) -> ScResult:
         self.logger.info("AuthoriseUserAgent started")
 
-        # Получение введенных почты и пароля
         [email_link_addr, password_link_addr] = get_action_arguments(action_node, 2)
         email = get_link_content_data(email_link_addr)
         password = get_link_content_data(password_link_addr)
@@ -100,7 +99,6 @@ class AuthoriseUserAgent(ScAgentClassic):
             self.logger.error('AuthoriseUserAgent: There is no user with such password in kb.')
             return ScResult.ERROR
         
-        # Добавление пользователя в класс авторизированных пользователей
         create_edge(sc_types.EDGE_ACCESS_CONST_POS_PERM, ScKeynodes['concept_authorised_user'], user_addr)
         
         
