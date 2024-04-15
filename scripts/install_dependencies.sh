@@ -10,6 +10,7 @@ then
   source "${CURRENT_DIR}/set_vars.sh"
 fi
 
+"${CURRENT_DIR}/install_platform_dependencies.sh" "$@"
 "${CURRENT_DIR}/install_react_sc_web_dependencies.sh"
 "${CURRENT_DIR}/install_py_ps_dependencies.sh"
 

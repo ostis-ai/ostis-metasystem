@@ -10,8 +10,6 @@ info "Install ostis-metasystem"
 "${CURRENT_DIR}/install_submodules.sh"
 "${CURRENT_DIR}/install_dependencies.sh" --dev
 "${CURRENT_DIR}/build_platform.sh"
-"${CURRENT_DIR}/install_react_sc_web.sh"
-"${CURRENT_DIR}/install_py_ps_deps.sh"
 "${CURRENT_DIR}/build_ps.sh"
 "${CURRENT_DIR}/build_kb.sh"
 "${CURRENT_DIR}/build_ui.sh"

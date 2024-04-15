@@ -17,6 +17,6 @@ info "Clone submodules"
 cd "${METASYSTEM_PATH}" && git submodule update --init --recursive
 
 "${SUBMODULE_SCRIPTS_DIR}/install_minimal_platform.sh"
-"${SUBMODULE_SCRIPTS_DIR}/install_standard.sh"
+"${SUBMODULE_SCRIPTS_DIR}/install_react_sc_web.sh"
 
 info "Submodules cloned successfully"
