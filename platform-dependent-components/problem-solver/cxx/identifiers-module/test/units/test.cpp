@@ -1,4 +1,4 @@
-#include "scs_loader.hpp"
+#include "sc-builder/src/scs_loader.hpp"
 #include "sc-memory/sc_wait.hpp"
 #include "sc_test.hpp"
 #include "sc-agents-common/utils/CommonUtils.hpp"

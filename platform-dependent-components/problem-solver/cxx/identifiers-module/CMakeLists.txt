@@ -1,4 +1,4 @@
-set(IDENTIFIERS_MODULE_SRC "${PROBLEM_SOLVER_PATH}/cxx/identifiers-module")
+set(IDENTIFIERS_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
 
 set(SOURCES
     "agent/translate_main_system_idtfs_from_sc_to_file_agent.cpp"
@@ -9,22 +9,24 @@ set(SOURCES
     "identifiers_module.hpp"
 )
 
-include_directories(
-    ${CMAKE_CURRENT_LIST_DIR}
-    ${SC_MEMORY_SRC}
-    ${SC_KPM_SRC}
+add_library(identifiers-module SHARED ${SOURCES})
+target_link_libraries(identifiers-module
+    LINK_PUBLIC sc-memory
+    LINK_PUBLIC sc-agents-common
+)
+target_include_directories(identifiers-module
+    PUBLIC ${IDENTIFIERS_MODULE_SRC}
+    PUBLIC ${SC_MEMORY_SRC}
+    PUBLIC ${SC_KPM_SRC}
 )
 
-add_library(identifiers SHARED ${SOURCES})
-target_link_libraries(identifiers sc-core sc-memory sc-agents-common)
-
-sc_codegen_ex(identifiers ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/generated)
+sc_codegen_ex(identifiers-module ${IDENTIFIERS_MODULE_SRC} ${IDENTIFIERS_MODULE_SRC}/generated)
 
 if(${SC_CLANG_FORMAT_CODE})
-    target_clangformat_setup(identifiers)
+    target_clangformat_setup(identifiers-module)
 endif()
 
 add_definitions(-DIDENTIFIERS_MODULE_PATH="${CMAKE_CURRENT_LIST_DIR}/")
 if(${SC_BUILD_TESTS})
-    include(${CMAKE_CURRENT_LIST_DIR}/test/tests.cmake)
+    include(${IDENTIFIERS_MODULE_SRC}/test/tests.cmake)
 endif()
