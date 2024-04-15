@@ -1,0 +1,50 @@
+ui_button
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Кнопка] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Button] 
+    (* <- lang_en;; *);
+=> note:
+    [компонент ПИ, который служит для создания sc-конструкций в базе знаний (как для
+    вызова агентов, так и нет) (шаблон по отношению ims: обобщенная формулировка команды
+    пользовательского интерфейса*).]
+    (* <- lang_ru;; *);
+=> note:
+    [может быть как атомарным компонентом, так и неатомарным]
+    (* <- lang_ru;; *);
+    
+=> nrel_decomposition:
+button_with_focus;
+button_without_focus;
+pressed_button;
+unpressed_button;
+	
+=> nrel_term_of_use:
+    [Нажимаемую кнопку можно применять для запуска какой-либо функции системы.]
+    (* <- lang_ru;; *);;
+	
+button_with_focus
+<- sc_node_not_relation;
+=> nrel_main_idtf:
+	[Кнопка с фокусом](* <- lang_ru;; *);
+	[Button with focus](* <- lang_en;; *);;
+	
+button_without_focus
+<- sc_node_not_relation;
+=> nrel_main_idtf:
+	[Кнопка без фокуса](* <- lang_ru;; *);
+	[Button without focus](* <- lang_en;; *);;
+	
+pressed_button
+<- sc_node_not_relation;
+=> nrel_main_idtf:
+	[Нажатая кнопка](* <- lang_ru;; *);
+	[Pressed button](* <- lang_en;; *);;
+	
+unpressed_button
+<- sc_node_not_relation;
+=> nrel_main_idtf:
+	[Не нажатая кнопка](* <- lang_ru;; *);
+	[Unpressed_button](* <- lang_en;; *);;

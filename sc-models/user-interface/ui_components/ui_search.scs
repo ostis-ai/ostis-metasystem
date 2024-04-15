@@ -1,0 +1,119 @@
+ui_search
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Навигация по базе знаний] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Knowledge base navigation] 
+    (* <- lang_en;; *);
+=> nrel_description_for_developer_mode:
+		ui_search_text_input_field;;
+		
+		
+ui_search_text_input_field
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Текстовое поле ввода для навигации по базе знаний] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Text input field for knowledge base navigation] 
+    (* <- lang_en;; *);
+<-ui_text_input_field;
+=> nrel_decomposition: 
+ui_search_text_input_field_with_focus;
+ui_search_text_input_field_without_focus;;
+	
+
+ui_search_text_input_field_with_focus
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Текстовое поле ввода для навигации по базе знаний с фокусом] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Text input field for knowledge base navigation with focus] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[415px] (* <- lang_ru;; *);
+	[415px] (* <- lang_en;; *);
+=> nrel_height: 
+	[40px] (* <- lang_ru;; *);
+	[40px] (* <- lang_en;; *);
+=> nrel_border_radius: 
+	[10px] (* <- lang_ru;; *);
+	[10px] (* <- lang_en;; *);
+=> nrel_padding: 
+	[8px] (* <- lang_ru;; *);
+	[8px] (* <- lang_en;; *);
+=> nrel_gap: 
+	[8px] (* <- lang_ru;; *);
+	[8px] (* <- lang_en;; *);
+=> nrel_content: 
+	[Поиск...] (* <- lang_ru;; *);
+	[Search...] (* <- lang_en;; *);
+=> nrel_font: 
+	[Roboto] (* <- lang_ru;; *);
+	[Roboto] (* <- lang_en;; *);
+=> nrel_font_color: 
+	[#737373] (* <- lang_ru;; *);
+	[#737373] (* <- lang_en;; *);
+=> nrel_font_size: 
+	[20px] (* <- lang_ru;; *);
+	[20px] (* <- lang_en;; *);
+=> nrel_font_weight: 
+	[300] (* <- lang_ru;; *);
+	[300] (* <- lang_en;; *);
+=> nrel_border: 
+	[2px] (* <- lang_ru;; *);
+	[2px] (* <- lang_en;; *);
+=> nrel_border_color: 
+	[#ebebeb] (* <- lang_ru;; *);
+	[#ebebeb] (* <- lang_en;; *);
+=> nrel_photo: "file://img/search_text_input_field_with_focus.png" (* => nrel_format: format_png;; *);
+<-text_input_field_with_focus;;									
+
+ui_search_text_input_field_without_focus
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Текстовое поле ввода для навигации по базе знаний без фокуса] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Text input field for knowledge base navigation without focus] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[415px] (* <- lang_ru;; *);
+	[415px] (* <- lang_en;; *);
+=> nrel_height: 
+	[40px] (* <- lang_ru;; *);
+	[40px] (* <- lang_en;; *);
+=> nrel_border_radius: 
+	[10px] (* <- lang_ru;; *);
+	[10px] (* <- lang_en;; *);
+=> nrel_padding: 
+	[8px] (* <- lang_ru;; *);
+	[8px] (* <- lang_en;; *);
+=> nrel_gap: 
+	[8px] (* <- lang_ru;; *);
+	[8px] (* <- lang_en;; *);
+=> nrel_content: 
+	[Поиск...] (* <- lang_ru;; *);
+	[Search...] (* <- lang_en;; *);
+=> nrel_font: 
+	[Roboto] (* <- lang_ru;; *);
+	[Roboto] (* <- lang_en;; *);
+=> nrel_font_color: 
+	[#737373] (* <- lang_ru;; *);
+	[#737373] (* <- lang_en;; *);
+=> nrel_font_size: 
+	[20px] (* <- lang_ru;; *);
+	[20px] (* <- lang_en;; *);
+=> nrel_font_weight: 
+	[300] (* <- lang_ru;; *);
+	[300] (* <- lang_en;; *);
+=> nrel_border: 
+	[1px] (* <- lang_ru;; *);
+	[1px] (* <- lang_en;; *);
+=> nrel_border_color: 
+	[#ffffff] (* <- lang_ru;; *);
+	[#ffffff] (* <- lang_en;; *);
+=> nrel_photo: "file://img/search_text_input_field_without_focus.png" (* => nrel_format: format_png;; *);
+<-text_input_field_without_focus;;	
