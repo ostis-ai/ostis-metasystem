@@ -1,4 +1,4 @@
-name: CI
+name: Minimal install
 
 on:
   pull_request:
@@ -35,8 +35,9 @@ jobs:
         env:
           TERM: linux
         run: |
+          git submodule update --init --recursive
           cd scripts
-          ./install_metasystem.sh
+          ./install_minimal_metasystem.sh
 
       - name: Run cxx tests
         run: |

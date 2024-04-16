@@ -24,6 +24,7 @@ To learn more about the OSTIS Metasystem, check out our [documentation](https://
   git clone https://github.com/ostis-ai/ostis-metasystem
   cd ostis-metasystem
   git checkout demo
+  git submodule update --init --recursive
   ./scripts/install_metasystem.sh
   ```
 
