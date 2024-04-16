@@ -18,7 +18,6 @@ ui_scn_page_button
 => nrel_main_idtf: 
     [Button to switch to SCn mode page] 
     (* <- lang_en;; *);
-<-ui_button;
 => nrel_decomposition: 
 ui_scn_page_button_with_focus;
 ui_scn_page_button_without_focus;;

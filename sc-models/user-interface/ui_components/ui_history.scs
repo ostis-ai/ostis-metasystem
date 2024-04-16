@@ -18,7 +18,6 @@ ui_history_dropdown_list
 => nrel_main_idtf: 
     [Dropdown list of history] 
     (* <- lang_en;; *);
-<-ui_dropdown_list;
 => nrel_width: 
 	[121px] (* <- lang_ru;; *);
 	[121px] (* <- lang_en;; *);

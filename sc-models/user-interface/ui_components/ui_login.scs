@@ -18,7 +18,6 @@ ui_login_button
 => nrel_main_idtf: 
     [OSTIS Metasystem login button] 
     (* <- lang_en;; *);
-<-ui_button;
 => nrel_decomposition: 
 ui_login_button_with_focus;
 ui_login_button_without_focus;;

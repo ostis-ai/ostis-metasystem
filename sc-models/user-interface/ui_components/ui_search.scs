@@ -18,7 +18,6 @@ ui_search_text_input_field
 => nrel_main_idtf: 
     [Text input field for knowledge base navigation] 
     (* <- lang_en;; *);
-<-ui_text_input_field;
 => nrel_decomposition: 
 ui_search_text_input_field_with_focus;
 ui_search_text_input_field_without_focus;;
