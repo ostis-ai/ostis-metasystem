@@ -60,7 +60,9 @@ OSTIS_Metasystem_Corporate_knowledge_base
 	(* <- lang_ru;; *);
 	[OSTIS Metasystem Corporate Knowledge Base]
 	(* <- lang_en;; *);
-<- not_enough_formed_structure;;
+<- not_enough_formed_structure; 
+-> ostis_discrete_mathematics;
+-> ostis_geometry;;
 
 faq_ostis_metasystem
 => nrel_main_idtf:
