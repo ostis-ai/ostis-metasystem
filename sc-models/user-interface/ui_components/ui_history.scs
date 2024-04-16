@@ -42,5 +42,4 @@ ui_history_dropdown_list
 	[20px] (* <- lang_en;; *);
 => nrel_font_weight: 
 	[600] (* <- lang_ru;; *);
-	[600] (* <- lang_en;; *);
-=> nrel_photo: "file://img/history.png" (* => nrel_format: format_png;; *);;								
+	[600] (* <- lang_en;; *);;							

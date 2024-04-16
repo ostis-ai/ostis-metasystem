@@ -67,9 +67,7 @@ ui_login_button_with_focus
 	[22px] (* <- lang_en;; *);
 => nrel_font_weight: 
 	[500] (* <- lang_ru;; *);
-	[500] (* <- lang_en;; *);
-=> nrel_photo: "file://img/login_button_with_focus.png" (* => nrel_format: format_png;; *);
-<-button_with_focus;;						
+	[500] (* <- lang_en;; *);;					
 
 
 ui_login_button_without_focus
@@ -109,6 +107,4 @@ ui_login_button_without_focus
 	[22px] (* <- lang_en;; *);
 => nrel_font_weight: 
 	[500] (* <- lang_ru;; *);
-	[500] (* <- lang_en;; *);
-=> nrel_photo: "file://img/login_button_without_focus.png" (* => nrel_format: format_png;; *);
-<-button_without_focus;;
+	[500] (* <- lang_en;; *);;

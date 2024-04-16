@@ -26,6 +26,4 @@ ui_logo_button
 	[40px] (* <- lang_en;; *);
 => nrel_gap: 
 	[4px] (* <- lang_ru;; *);
-	[4px] (* <- lang_en;; *);
-=> nrel_photo: "file://img/logo_button.png" (* => nrel_format: format_png;; *);
-<-ui_button;;
+	[4px] (* <- lang_en;; *);;

@@ -67,10 +67,8 @@ ui_search_text_input_field_with_focus
 	[2px] (* <- lang_en;; *);
 => nrel_border_color: 
 	[#ebebeb] (* <- lang_ru;; *);
-	[#ebebeb] (* <- lang_en;; *);
-=> nrel_photo: "file://img/search_text_input_field_with_focus.png" (* => nrel_format: format_png;; *);
-<-text_input_field_with_focus;;									
-
+	[#ebebeb] (* <- lang_en;; *);;
+	
 ui_search_text_input_field_without_focus
 <- sc_node_not_relation;
 => nrel_main_idtf: 
@@ -114,6 +112,4 @@ ui_search_text_input_field_without_focus
 	[1px] (* <- lang_en;; *);
 => nrel_border_color: 
 	[#ffffff] (* <- lang_ru;; *);
-	[#ffffff] (* <- lang_en;; *);
-=> nrel_photo: "file://img/search_text_input_field_without_focus.png" (* => nrel_format: format_png;; *);
-<-text_input_field_without_focus;;	
+	[#ffffff] (* <- lang_en;; *);;	

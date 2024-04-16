@@ -43,8 +43,7 @@ ui_disabled_dev_mode_button
 	[35px] (* <- lang_en;; *);
 =>nrel_background_color:
 	[#F2F2F2] (* <- lang_ru;; *);
-	[#F2F2F2] (* <- lang_en;; *);
-=> nrel_photo: "file://img/disabled_dev_mode_button.png" (* => nrel_format: format_png;; *);;
+	[#F2F2F2] (* <- lang_en;; *);;
 
 ui_enabled_dev_mode_button
 <- sc_node_not_relation;
@@ -65,5 +64,4 @@ ui_enabled_dev_mode_button
 	[35px] (* <- lang_en;; *);
 =>nrel_background_color:
 	[#F2F2F2] (* <- lang_ru;; *);
-	[#F2F2F2] (* <- lang_en;; *);
-=> nrel_photo: "file://img/enabled_dev_mode_button.png" (* => nrel_format: format_png;; *);;
+	[#F2F2F2] (* <- lang_en;; *);;
