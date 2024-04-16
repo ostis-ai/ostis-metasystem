@@ -10,4 +10,5 @@ then
 fi
 
 "${SUBMODULE_SCRIPTS_DIR}/install_submodule.sh" --repo "${PLATFORM_REPO}" --path "${PLATFORM_PATH}" --branch "${PLATFORM_BRANCH}" --commit "${PLATFORM_COMMIT}"
-"${PLATFORM_PATH}/scripts/install_submodules.sh"
+"${PLATFORM_PATH}/scripts/install_minimal_submodules.sh"
+"${PLATFORM_PATH}/scripts/submodule-scripts/install_sc_web.sh"
