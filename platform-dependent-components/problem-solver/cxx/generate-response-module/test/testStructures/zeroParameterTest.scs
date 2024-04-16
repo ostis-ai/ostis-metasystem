@@ -1,0 +1,8 @@
+message
+  <- test_question;;
+
+test_action_node
+  <-question;
+  <-action_generate_response;
+  -> rrel_1:message;
+  -> rrel_2:rrel_dynamic_argument: _answer;;

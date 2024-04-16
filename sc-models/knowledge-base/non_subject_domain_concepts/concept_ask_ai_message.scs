@@ -1,0 +1,21 @@
+concept_ask_ai_message_class
+<- sc_node_class;
+=> nrel_main_idtf:
+	[cообщение ask-ai](* <- lang_ru;; *);
+	[ask-ai message](* <- lang_en;; *);
+<- rrel_key_sc_element:
+	...
+	(*
+	<- explanation;;
+	<= nrel_sc_text_translation:
+		...
+		(*
+			-> rrel_example:
+				[Сообщение Ask-AI - сообщение, поддерживаемое Ask-AI](* <- lang_ru;;	*);;
+		*);
+		...
+		(*
+			-> rrel_example:
+				[Ask-AI message is a message supported by Ask-AI](* <- lang_en;; *);;
+		*);;
+	*);;

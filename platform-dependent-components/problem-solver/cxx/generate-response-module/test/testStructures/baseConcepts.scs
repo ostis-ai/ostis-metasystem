@@ -1,0 +1,32 @@
+concept_intent_possible_class
+<- sc_node_class;;
+
+concept_entity_possible_class
+<- sc_node_class;
+-> concept_test_entity;;
+
+concept_test_entity
+<- sc_node_class;
+=> nrel_entity_possible_role: rrel_entity;;
+
+nrel_entity_possible_role
+<- sc_node_norole_relation;;
+
+nrel_response_action
+<- sc_node_norole_relation;;
+
+nrel_response
+<- sc_node_norole_relation;;
+
+rrel_entity
+<- sc_node_role_relation;;
+
+test_question
+<- sc_node_class;
+<- concept_intent_possible_class;;
+
+test_action
+<- sc_node_class;
+<- actions_class;
+<- atomic_action_class;
+<= nrel_response_action: test_question;;

@@ -1,0 +1,37 @@
+\scnheader{Агент поиска ответа на сообщение}
+
+\scnidtf{sc-агент поиска ответа на сообщение в sc-памяти}
+\begin{scnrelfromvector}{задачи}
+  \scnitem{поиск ответного действия для класса сообщения}
+  \scnitem{вызов найденного агента}
+  \scnitem{запись результата вызова найденного агента как ответа на сообщение}
+\end{scnrelfromvector}
+
+\begin{scnrelfromvector}{аргументы агента}
+  \scnitem{сообщение}
+\end{scnrelfromvector}
+
+\begin{scnrelfromvector}{алгоритм}
+  \scnfileitem{Поиск класса сообщения}
+  \scnfileitem{Проверка принадлежности класса сообщения на принадлежность классу \textit{concept\_ask\_ai\_message\_class}}
+  \scnfileitem{Если условиe не выполняeтся, происходит завершение работы агента}
+  \scnfileitem{Поиск соответствующего классу сообщения класса действий с помощью следующей конструкции}
+  \begin{scnindent}
+    \begin{scnrelfrom}{пример}
+      {\scnfileimage[30em]{images/generate-response-agent/algo.png}}
+    \end{scnrelfrom}
+  \end{scnindent}
+  \scnfileitem{Если такой конструкции нет, то происходит завершение работы агента}
+  \scnfileitem{Вызов агента, соответстующего классу действий с параметрами, полученными из сообщения}
+  \scnfileitem{Ожидание завершения работы вызванного агента}
+  \scnfileitem{Если агент завершил работу успешно, то его ответ прикрепляется к сообщению отношением \textit{nrel\_response}}
+  \scnfileitem {Если агент завершил работу неуспешно, то происходит завершение работы текущего агента}
+\end{scnrelfromvector}
+
+\scntext{ответ}{В результате агент не выдаёт никакого ответа, однако прикрепляет полученный им ответ другого агента к сообщению}
+
+\scnrelfrom{пример входной конструкции}{\scnfileimage[30em]{images/generate-response-agent/input.png}}
+
+\scnrelfrom{пример выходной конструкции}{\scnfileimage[30em]{images/generate-response-agent/output.png}}
+
+
