@@ -61,9 +61,7 @@ ui_pressed_english_language_button
 	[20px] (* <- lang_en;; *);
 => nrel_font_weight: 
 	[500] (* <- lang_ru;; *);
-	[500] (* <- lang_en;; *);
-=> nrel_photo: "file://img/pressed_english_button.png" (* => nrel_format: format_png;; *);
-<-pressed_button;;									
+	[500] (* <- lang_en;; *);;									
 
 ui_unpressed_english_language_button
 <- sc_node_not_relation;
@@ -102,6 +100,4 @@ ui_unpressed_english_language_button
 	[20px] (* <- lang_en;; *);
 => nrel_font_weight: 
 	[400] (* <- lang_ru;; *);
-	[400] (* <- lang_en;; *);
-=> nrel_photo: "file://img/unpressed_english_button.png" (* => nrel_format: format_png;; *);
-<-unpressed_button;;
+	[400] (* <- lang_en;; *);;
