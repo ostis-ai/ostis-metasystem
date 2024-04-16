@@ -1,0 +1,65 @@
+knowledge_base_Metasystem
+=> nrel_main_idtf:
+	[База знаний Метасистемы OSTIS]
+	(* <- lang_ru;; *);
+	[Knowledge base OSTIS Metasystem]
+	(* <- lang_en;; *);
+<- not_enough_formed_structure;
+
+=> nrel_section_decomposition: ..kb_metasystem_decomposition (* <- sc_node_tuple;; *);;
+
+@arc1 = (..kb_metasystem_decomposition -> rrel_1: ostis_standard);;
+
+@arc2 = (..kb_metasystem_decomposition -> history_current_state_and_prospects_of_the_OSTIS_Metasystem_development);;
+@arc1 => nrel_basic_sequence: @arc2;;
+
+@arc3 = (..kb_metasystem_decomposition -> knowledge_base_of_the_OSTIS_Metasystem_Library);;
+@arc2 => nrel_basic_sequence: @arc3;;
+
+@arc4 = (..kb_metasystem_decomposition -> OSTIS_Metasystem_Corporate_knowledge_base);;
+@arc3 => nrel_basic_sequence: @arc4;;
+
+@arc5 = (..kb_metasystem_decomposition -> section_faq_ostis_metasystem);;
+@arc4 => nrel_basic_sequence: @arc5;;
+rrel_last ~> @arc5;;
+
+history_current_state_and_prospects_of_the_OSTIS_Metasystem_development
+=> nrel_main_idtf:
+	[История, текущее состояние и перспективы развития Метасистемы OSTIS]
+	(* <- lang_ru;; *);
+	[The history, current state and prospects of the OSTIS Metasystem development]
+	(* <- lang_en;; *);
+<- not_enough_formed_structure;;
+
+knowledge_base_of_the_OSTIS_Metasystem_Library
+=> nrel_main_idtf:
+	[База знаний Библиотеки Метасистемы OSTIS]
+	(* <- lang_ru;; *);
+	[Knowledge base of the OSTIS Metasystem Library]
+	(* <- lang_en;; *);
+// => nrel_inclusion: 
+// sc_web_specification;
+// knowledge_base_ims_specification;
+// ostis_standard_specification;
+// part_1_specification;
+// part_2_specification;
+// part_3_specification;
+// part_4_specification;
+// part_5_specification;
+// part_6_specification;
+// part_7_specification;
+// part_methods_tools_specification;
+// part_platform_specification;
+// part_ui_specification;
+// cat_reusable_component_specification;
+<- not_enough_formed_structure;;
+
+OSTIS_Metasystem_Corporate_knowledge_base
+=> nrel_main_idtf:
+	[Корпоративная база знаний Метасистемы OSTIS]
+	(* <- lang_ru;; *);
+	[OSTIS Metasystem Corporate Knowledge Base]
+	(* <- lang_en;; *);
+<- not_enough_formed_structure; 
+-> ostis_discrete_mathematics;
+-> ostis_geometry;;
