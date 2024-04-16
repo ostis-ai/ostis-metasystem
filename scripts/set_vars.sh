@@ -41,7 +41,7 @@ export IMS_KB_COMMIT="${IMS_KB_COMMIT:-""}"
 export STANDARD_REPO="${STANDARD_REPO:-https://github.com/ostis-ai/ostis-standard.git}"
 export STANDARD_BRANCH="${STANDARD_BRANCH:-main}"
 export STANDARD_COMMIT="${STANDARD_COMMIT:-""}"
-export STANDARD_PATH="${STANDARD_PATH:-${METASYSTEM_PATH}/sc-models/kb/ostis-standard}"
+export STANDARD_PATH="${STANDARD_PATH:-${METASYSTEM_PATH}/sc-models/knowledge-base/ostis-standard}"
 
 export REACT_SC_WEB_REPO="${REACT_SC_WEB_REPO:-https://github.com/ostis-ai/react-sc-web}"
 export REACT_SC_WEB_BRANCH="${REACT_SC_WEB_BRANCH:-main}"
