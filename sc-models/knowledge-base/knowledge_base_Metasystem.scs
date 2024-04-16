@@ -19,7 +19,7 @@ knowledge_base_Metasystem
 @arc4 = (..kb_metasystem_decomposition -> OSTIS_Metasystem_Corporate_knowledge_base);;
 @arc3 => nrel_basic_sequence: @arc4;;
 
-@arc5 = (..kb_metasystem_decomposition -> faq_ostis_metasystem);;
+@arc5 = (..kb_metasystem_decomposition -> section_faq_ostis_metasystem);;
 @arc4 => nrel_basic_sequence: @arc5;;
 rrel_last ~> @arc5;;
 
@@ -63,11 +63,3 @@ OSTIS_Metasystem_Corporate_knowledge_base
 <- not_enough_formed_structure; 
 -> ostis_discrete_mathematics;
 -> ostis_geometry;;
-
-faq_ostis_metasystem
-=> nrel_main_idtf:
-	[Часто задаваемые вопросы]
-	(* <- lang_ru;; *);
-	[Frequently Asked Questions]
-	(* <- lang_en;; *);
-<- not_enough_formed_structure;;
