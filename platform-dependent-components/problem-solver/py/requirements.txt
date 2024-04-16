@@ -1,4 +1,2 @@
 py-sc-kpm==0.2.0
 py-sc-client==0.3.0
-requests==2.31.0
-wikipedia

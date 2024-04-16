@@ -19,8 +19,9 @@ class ExampleAgentTestCase(BaseTestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.tests_structures_dir_path = str(
-            Path(Path(__file__).resolve().parent, "test-structures"))
-        
+            Path(Path(__file__).resolve().parent, "test-structures")
+        )
+
     def setUp(self):
         super().setUp()
         self.load_scs(

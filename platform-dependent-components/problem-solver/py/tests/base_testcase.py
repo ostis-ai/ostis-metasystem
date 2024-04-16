@@ -11,7 +11,9 @@ from sc_client.client import create_elements_by_scs
 from sc_kpm import ScServer
 
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s | %(name)s | %(message)s", datefmt="[%d-%b-%y %H:%M:%S]"
+    level=logging.INFO,
+    format="%(asctime)s | %(name)s | %(message)s",
+    datefmt="[%d-%b-%y %H:%M:%S]",
 )
 SC_SERVER_URL = "ws://localhost:8091/ws_json"
 
