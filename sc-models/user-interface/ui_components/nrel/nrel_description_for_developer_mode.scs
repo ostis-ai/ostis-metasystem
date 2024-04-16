@@ -1,5 +1,5 @@
 nrel_description_for_developer_mode
 <- sc_node_norole_relation;
 => nrel_main_idtf:
-	[описание для режима разработчика*](* <- lang_ru;; *);
-	[description for developer mode*](* <- lang_en;; *);;
+	[описание компонента пользовательского интерфейса для режима разработчика*](* <- lang_ru;; *);
+	[description of the user interface component for developer mode*](* <- lang_en;; *);;

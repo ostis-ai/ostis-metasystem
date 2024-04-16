@@ -1,10 +1,10 @@
 ui_login
 <- sc_node_not_relation;
 => nrel_main_idtf: 
-    [Вход в Метасистему OSTIS IMS] 
+    [Вход в Метасистему OSTIS] 
     (* <- lang_ru;; *);
 => nrel_main_idtf: 
-    [Logging in to the OSTIS IMS metasystem] 
+    [Log in to the OSTIS Metasystem] 
     (* <- lang_en;; *);
 => nrel_description_for_developer_mode:
 		ui_login_button;;
@@ -13,10 +13,10 @@ ui_login
 ui_login_button
 <- sc_node_not_relation;
 => nrel_main_idtf: 
-    [Кнопка входа в Метасистему OSTIS IMS] 
+    [Кнопка входа в Метасистему OSTIS] 
     (* <- lang_ru;; *);
 => nrel_main_idtf: 
-    [OSTIS IMS Metasystem login button] 
+    [OSTIS Metasystem login button] 
     (* <- lang_en;; *);
 <-ui_button;
 => nrel_decomposition: 
@@ -27,10 +27,10 @@ ui_login_button_without_focus;;
 ui_login_button_with_focus
 <- sc_node_not_relation;
 => nrel_main_idtf: 
-    [Кнопка входа в Метасистему OSTIS IMS с фокусом] 
+    [Кнопка входа в Метасистему OSTIS с фокусом] 
     (* <- lang_ru;; *);
 => nrel_main_idtf: 
-    [OSTIS IMS Metasystem login button with focus] 
+    [OSTIS Metasystem login button with focus] 
     (* <- lang_en;; *);
 => nrel_width: 
 	[108px] (* <- lang_ru;; *);
@@ -73,10 +73,10 @@ ui_login_button_with_focus
 ui_login_button_without_focus
 <- sc_node_not_relation;
 => nrel_main_idtf: 
-    [Кнопка входа в Метасистему OSTIS IMS без фокуса] 
+    [Кнопка входа в Метасистему OSTIS без фокуса] 
     (* <- lang_ru;; *);
 => nrel_main_idtf: 
-    [OSTIS IMS Metasystem login button without focus] 
+    [OSTIS Metasystem login button without focus] 
     (* <- lang_en;; *);
 => nrel_width: 
 	[108px] (* <- lang_ru;; *);
