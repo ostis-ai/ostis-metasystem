@@ -18,41 +18,6 @@ ui_dev_mode_button
 => nrel_main_idtf: 
     [Developer mode switch button] 
     (* <- lang_en;; *);
-<-ui_button;
-=> nrel_decomposition: 
-ui_disabled_dev_mode_button;
-ui_enabled_dev_mode_button;;
-
-
-ui_disabled_dev_mode_button
-<- sc_node_not_relation;
-=> nrel_main_idtf: 
-    [Выключенный режим разработчика] 
-    (* <- lang_ru;; *);
-=> nrel_main_idtf: 
-    [Developer mode disabled] 
-    (* <- lang_en;; *);
-=> nrel_width: 
-	[69px] (* <- lang_ru;; *);
-	[69px] (* <- lang_en;; *);
-=> nrel_height: 
-	[36px] (* <- lang_ru;; *);
-	[36px] (* <- lang_en;; *);
-=> nrel_border_radius: 
-	[35px] (* <- lang_ru;; *);
-	[35px] (* <- lang_en;; *);
-=>nrel_background_color:
-	[#F2F2F2] (* <- lang_ru;; *);
-	[#F2F2F2] (* <- lang_en;; *);;
-
-ui_enabled_dev_mode_button
-<- sc_node_not_relation;
-=> nrel_main_idtf: 
-    [Включенный режим разработчика] 
-    (* <- lang_ru;; *);
-=> nrel_main_idtf: 
-    [Developer mode enabled] 
-    (* <- lang_en;; *);
 => nrel_width: 
 	[69px] (* <- lang_ru;; *);
 	[69px] (* <- lang_en;; *);
