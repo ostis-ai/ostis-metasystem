@@ -1,0 +1,18 @@
+quasybinary_relation
+-> nrel_section_decomposition;
+-> nrel_basic_decomposition;
+-> nrel_decomposition;
+-> nrel_subdividing;
+-> nrel_combination;
+-> nrel_intersection;
+-> nrel_ostis_system_decomposition;;
+
+sc_node_norole_relation
+-> nrel_section_decomposition;
+-> nrel_basic_decomposition;
+-> nrel_decomposition;
+-> nrel_subdividing;
+-> nrel_combination;
+-> nrel_intersection;
+-> nrel_ostis_system_decomposition;;
+

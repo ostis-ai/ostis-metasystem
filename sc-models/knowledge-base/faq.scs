@@ -96,7 +96,7 @@ nrel_answer
 
 ..q8
 => nrel_main_idtf:[Где можно познакомиться с Метасистемой OSTIS?](*<- lang_ru;;*);
-=> nrel_main_idtf:[Whe OSTIS Myself is?](*<- lang_en;;*);
+=> nrel_main_idtf:[Whe OSTIS Metasystem is?](*<- lang_en;;*);
 => nrel_answer:
 	[Метасистема OSTIS доступна по ссылке "http://ims.ostis.net"]
 	(*
