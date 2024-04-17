@@ -1,0 +1,64 @@
+ui_scg_page
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Переход на страницу SCg режима] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Switch to the SCg mode page] 
+    (* <- lang_en;; *);
+=> nrel_description_for_developer_mode:
+		ui_scg_page_button;;
+		
+		
+ui_scg_page_button
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Кнопка перехода на страницу SCg режима] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Button to switch to SCg mode page] 
+    (* <- lang_en;; *);
+=> nrel_decomposition: 
+ui_scg_page_button_with_focus;
+ui_scg_page_button_without_focus;;
+	
+
+ui_scg_page_button_with_focus
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Кнопка перехода на страницу SCg режима с фокусом] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Button to switch to SCg mode page with focus] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[36px] (* <- lang_ru;; *);
+	[36px] (* <- lang_en;; *);
+=> nrel_height: 
+	[36px] (* <- lang_ru;; *);
+	[36px] (* <- lang_en;; *);
+=> nrel_border_radius: 
+	[4px] (* <- lang_ru;; *);
+	[4px] (* <- lang_en;; *);
+=> nrel_background_color: 
+	[#F5F5F5] (* <- lang_ru;; *);
+	[#F5F5F5] (* <- lang_en;; *);;					
+
+
+ui_scg_page_button_without_focus
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Кнопка перехода на страницу SCg режима без фокуса] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Button to switch to SCg mode page without focus] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[36px] (* <- lang_ru;; *);
+	[36px] (* <- lang_en;; *);
+=> nrel_height: 
+	[36px] (* <- lang_ru;; *);
+	[36px] (* <- lang_en;; *);
+=> nrel_border_radius: 
+	[4px] (* <- lang_ru;; *);
+	[4px] (* <- lang_en;; *);;

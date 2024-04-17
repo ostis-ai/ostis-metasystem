@@ -1,0 +1,109 @@
+ui_login
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Вход в Метасистему OSTIS] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Log in to the OSTIS Metasystem] 
+    (* <- lang_en;; *);
+=> nrel_description_for_developer_mode:
+		ui_login_button;;
+		
+		
+ui_login_button
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Кнопка входа в Метасистему OSTIS] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [OSTIS Metasystem login button] 
+    (* <- lang_en;; *);
+=> nrel_decomposition: 
+ui_login_button_with_focus;
+ui_login_button_without_focus;;
+	
+
+ui_login_button_with_focus
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Кнопка входа в Метасистему OSTIS с фокусом] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [OSTIS Metasystem login button with focus] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[108px] (* <- lang_ru;; *);
+	[108px] (* <- lang_en;; *);
+=> nrel_height: 
+	[42px] (* <- lang_ru;; *);
+	[42px] (* <- lang_en;; *);
+=> nrel_border: 
+	[2px] (* <- lang_ru;; *);
+	[2px] (* <- lang_en;; *);
+=> nrel_border_color: 
+	[#DBDBDB] (* <- lang_ru;; *);
+	[#DBDBDB] (* <- lang_en;; *);
+=> nrel_border_radius: 
+	[10px] (* <- lang_ru;; *);
+	[10px] (* <- lang_en;; *);
+=> nrel_padding: 
+	[8px, 16px, 8px, 16px] (* <- lang_ru;; *);
+	[8px, 16px, 8px, 16px] (* <- lang_en;; *);
+=> nrel_gap: 
+	[8px] (* <- lang_ru;; *);
+	[8px] (* <- lang_en;; *);
+=> nrel_content: 
+	[Войти] (* <- lang_ru;; *);
+	[Login] (* <- lang_en;; *);
+=> nrel_font: 
+	[Roboto] (* <- lang_ru;; *);
+	[Roboto] (* <- lang_en;; *);
+=> nrel_font_color: 
+	[#5896C0] (* <- lang_ru;; *);
+	[#5896C0] (* <- lang_en;; *);
+=> nrel_font_size: 
+	[22px] (* <- lang_ru;; *);
+	[22px] (* <- lang_en;; *);
+=> nrel_font_weight: 
+	[500] (* <- lang_ru;; *);
+	[500] (* <- lang_en;; *);;					
+
+
+ui_login_button_without_focus
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Кнопка входа в Метасистему OSTIS без фокуса] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [OSTIS Metasystem login button without focus] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[108px] (* <- lang_ru;; *);
+	[108px] (* <- lang_en;; *);
+=> nrel_height: 
+	[42px] (* <- lang_ru;; *);
+	[42px] (* <- lang_en;; *);
+=> nrel_border_radius: 
+	[10px] (* <- lang_ru;; *);
+	[10px] (* <- lang_en;; *);
+=> nrel_padding: 
+	[8px, 16px, 8px, 16px] (* <- lang_ru;; *);
+	[8px, 16px, 8px, 16px] (* <- lang_en;; *);
+=> nrel_gap: 
+	[8px] (* <- lang_ru;; *);
+	[8px] (* <- lang_en;; *);
+=> nrel_content: 
+	[Войти] (* <- lang_ru;; *);
+	[Login] (* <- lang_en;; *);
+=> nrel_font: 
+	[Roboto] (* <- lang_ru;; *);
+	[Roboto] (* <- lang_en;; *);
+=> nrel_font_color: 
+	[#5896C0] (* <- lang_ru;; *);
+	[#5896C0] (* <- lang_en;; *);
+=> nrel_font_size: 
+	[22px] (* <- lang_ru;; *);
+	[22px] (* <- lang_en;; *);
+=> nrel_font_weight: 
+	[500] (* <- lang_ru;; *);
+	[500] (* <- lang_en;; *);;

@@ -1,0 +1,44 @@
+ui_history
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Сворачивание или разворачивание истории] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Collapse or expand a history] 
+    (* <- lang_en;; *);
+=> nrel_description_for_developer_mode:
+		ui_history_dropdown_list;;
+		
+		
+ui_history_dropdown_list
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Выпадающий список истории] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Dropdown list of history] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[121px] (* <- lang_ru;; *);
+	[121px] (* <- lang_en;; *);
+=> nrel_height: 
+	[24px] (* <- lang_ru;; *);
+	[24px] (* <- lang_en;; *);
+=> nrel_gap:
+	[4px] (* <- lang_ru;; *);
+	[4px] (* <- lang_en;; *);
+=> nrel_content: 
+	[История] (* <- lang_ru;; *);
+	[History] (* <- lang_en;; *);
+=> nrel_font: 
+	[Roboto] (* <- lang_ru;; *);
+	[Roboto] (* <- lang_en;; *);
+=> nrel_font_color: 
+	[#949494] (* <- lang_ru;; *);
+	[#949494] (* <- lang_en;; *);
+=> nrel_font_size: 
+	[20px] (* <- lang_ru;; *);
+	[20px] (* <- lang_en;; *);
+=> nrel_font_weight: 
+	[600] (* <- lang_ru;; *);
+	[600] (* <- lang_en;; *);;							

@@ -1,0 +1,102 @@
+ui_russian_language
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Смена языка на русский язык] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Change language to Russian] 
+    (* <- lang_en;; *);
+=> nrel_description_for_developer_mode:
+		ui_russian_language_button;;
+		
+		
+ui_russian_language_button
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Кнопка смены языка на русский] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Button to change language to Russian] 
+    (* <- lang_en;; *);
+=> nrel_decomposition: 
+ui_pressed_russian_language_button;
+ui_unpressed_russian_language_button;;
+	
+
+ui_pressed_russian_language_button
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Нажатая кнопка смены языка на русский] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Pressed button to change language to Russian] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[40px] (* <- lang_ru;; *);
+	[40px] (* <- lang_en;; *);
+=> nrel_height: 
+	[31px] (* <- lang_ru;; *);
+	[31px] (* <- lang_en;; *);
+=> nrel_border_radius: 
+	[4px] (* <- lang_ru;; *);
+	[4px] (* <- lang_en;; *);
+=> nrel_padding: 
+	[4px, 8px, 4px, 8px] (* <- lang_ru;; *);
+	[4px, 8px, 4px, 8px] (* <- lang_en;; *);
+=> nrel_gap: 
+	[10px] (* <- lang_ru;; *);
+	[10px] (* <- lang_en;; *);
+=> nrel_content: 
+	[Ru] (* <- lang_ru;; *);
+	[Ru] (* <- lang_en;; *);
+=> nrel_font: 
+	[Roboto] (* <- lang_ru;; *);
+	[Roboto] (* <- lang_en;; *);
+=> nrel_font_color: 
+	[#323232] (* <- lang_ru;; *);
+	[#323232] (* <- lang_en;; *);
+=> nrel_font_size: 
+	[20px] (* <- lang_ru;; *);
+	[20px] (* <- lang_en;; *);
+=> nrel_font_weight: 
+	[500] (* <- lang_ru;; *);
+	[500] (* <- lang_en;; *);;								
+
+ui_unpressed_russian_language_button
+<- sc_node_not_relation;
+=> nrel_main_idtf: 
+    [Не нажатая кнопка смены языка на русский] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Unpressed button to change language to Russian] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[40px] (* <- lang_ru;; *);
+	[40px] (* <- lang_en;; *);
+=> nrel_height: 
+	[31px] (* <- lang_ru;; *);
+	[31px] (* <- lang_en;; *);
+=> nrel_border_radius: 
+	[4px] (* <- lang_ru;; *);
+	[4px] (* <- lang_en;; *);
+=> nrel_padding: 
+	[4px, 8px, 4px, 8px] (* <- lang_ru;; *);
+	[4px, 8px, 4px, 8px] (* <- lang_en;; *);
+=> nrel_gap: 
+	[10px] (* <- lang_ru;; *);
+	[10px] (* <- lang_en;; *);
+=> nrel_content: 
+	[Ru] (* <- lang_ru;; *);
+	[Ru] (* <- lang_en;; *);
+=> nrel_font: 
+	[Roboto] (* <- lang_ru;; *);
+	[Roboto] (* <- lang_en;; *);
+=> nrel_font_color: 
+	[#C0C0C0] (* <- lang_ru;; *);
+	[#C0C0C0] (* <- lang_en;; *);
+=> nrel_font_size: 
+	[20px] (* <- lang_ru;; *);
+	[20px] (* <- lang_en;; *);
+=> nrel_font_weight: 
+	[400] (* <- lang_ru;; *);
+	[400] (* <- lang_en;; *);;
