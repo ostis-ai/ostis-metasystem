@@ -12,6 +12,3 @@
 	path = platform-dependent-components/problem-solver/reusable-components
 	url = https://github.com/ostis-ai/ostis-ps-lib
 	branch = feature/non_atomic_action_interpeter_agent
-[submodule "sc-models/knowledge-base/ostis-standard"]
-	path = sc-models/knowledge-base/ostis-standard
-	url = https://github.com/ostis-ai/ostis-standard
