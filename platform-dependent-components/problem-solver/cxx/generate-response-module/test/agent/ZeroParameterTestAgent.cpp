@@ -29,7 +29,7 @@ SC_AGENT_IMPLEMENTATION(ZeroParameterTestAgent)
 bool ZeroParameterTestAgent::checkAction(ScAddr const & actionAddr) 
 {
     return m_memoryCtx.HelperCheckEdge(
-            TestKeynodes::test_action,
+            TestKeynodes::action_zero_param,
             actionAddr,
             ScType::EdgeAccessConstPosPerm
             );

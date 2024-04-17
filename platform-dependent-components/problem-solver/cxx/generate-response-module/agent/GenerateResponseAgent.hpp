@@ -18,15 +18,7 @@ class GenerateResponseAgent : public ScAgent
   SC_CLASS(Agent, Event(scAgentsCommon::CoreKeynodes::question_initiated, ScEvent::Type::AddOutputEdge))
   SC_GENERATED_BODY()
 private:
-  class MessageParametersTemplate
-  {
-  public:
-    MessageParametersTemplate();
-    operator ScTemplate const &() const;
-
-  private:
-    ScTemplate templ;
-  };
+  using ScAddrSet = std::set<ScAddr, ScAddrLessFunc>;
 
   bool checkAction(ScAddr const & actionAddr);
 
@@ -35,6 +27,21 @@ private:
   ScAddr getMessageActionAddr(ScAddr const & messageAddr);
 
   ScAddrVector getMessageParameters(ScAddr const & messageAddr);
+
+  ScAddr createActionNode(ScAddr const & message);
+
+  ScAddr findResponseAction(ScAddr const & message);
+
+  void processParamsFromMessage(
+      ScAddr const & message,
+      ScAddr const & action,
+      ScAddr const & actionNode,
+      ScAddrSet & mappedRelations);
+
+  void processParamsWithDefaultArgValue(
+      ScAddr const & action,
+      ScAddr const & actionNode,
+      ScAddrSet const & mappedRelations);
 
   bool attachAnswer(ScAddr const & messageAnswer, ScAddr const & messageAddr, ScAddr const & answerAddr);
 

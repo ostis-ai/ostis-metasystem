@@ -1,8 +1,12 @@
-message
-  <- test_question;;
+concept_message_with_zero_param
+<- sc_node_class;
+<- concept_intent_possible_class;
+=> nrel_response_action: action_zero_param;;
 
-test_action_node
-  <-question;
-  <-action_generate_response;
+message
+  <- concept_message_with_zero_param;;
+
+zero_param_action_node
+  <- action_generate_response;
   -> rrel_1:message;
   -> rrel_2:rrel_dynamic_argument: _answer;;
