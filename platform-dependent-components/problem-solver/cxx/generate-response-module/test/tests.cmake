@@ -16,3 +16,4 @@ make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/units
 )
 
 add_definitions(-DMODULE_TEST_SRC_PATH="${CMAKE_CURRENT_LIST_DIR}")
+add_definitions(-DGENERATE_RESPONSE_TEMPLATE_PATH="${CMAKE_SOURCE_DIR}/sc-models/problem-solver/generate_response/templates/")

@@ -1,0 +1,28 @@
+role_relation_mapping_search_template = [*
+  _concept 
+  _<- concept_intent_possible_class;
+  _=> nrel_response_action:: _action;
+  _=> nrel_contained_role:: .._contained_role_tuple;
+  _-> _message;;
+  _action
+  _=> nrel_required_arg_role:: .._required_arg_tuple;;
+
+  @edge1 = (.._contained_role_tuple _-> _source_role);;
+  @edge2 = (.._required_arg_tuple _-> _target_role);;
+
+  @edge1 _=> nrel_corresponding_role::@edge2;;
+
+  concept_entity_possible_class _-> _message_entity_class;;
+  _message_entity_class _=> nrel_entity_possible_role::.._possible_role_tuple(* _-> _source_role;; *);;
+  _message _-> _source_role::_param;; 
+*];;
+
+.._contained_role_tuple <- sc_node_tuple;;
+.._required_arg_tuple <- sc_node_tuple;;
+.._possible_role_tuple <- sc_node_tuple;;
+
+_source_role <- sc_node_role_relation;;
+_target_role <- sc_node_role_relation;;
+
+_concept <- sc_node_class;;
+_message_entity_class <- sc_node_class;;

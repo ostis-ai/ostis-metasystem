@@ -4,6 +4,7 @@
 
 namespace generateResponseModuleTest
 {
-ScAddr TestKeynodes::test_action;
+ScAddr TestKeynodes::action_one_param;
+ScAddr TestKeynodes::action_zero_param;
 
 }  // namespace generateResponseModuleTest
