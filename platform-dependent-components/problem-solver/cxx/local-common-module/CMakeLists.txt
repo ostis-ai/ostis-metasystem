@@ -14,15 +14,19 @@ set(HEADERS
     "keynodes/LocalKeynodes.hpp"
 )
 
-include_directories(
-    ${CMAKE_CURRENT_LIST_DIR}
-    ${SC_MEMORY_SRC}
-    ${SC_KPM_SRC}
-    ${SC_TOOLS_SRC})
-
 add_library(local-common SHARED ${SOURCES} ${HEADERS})
 
-target_link_libraries(local-common sc-memory sc-agents-common)
+find_package(CURL REQUIRED)
+
+target_include_directories(local-common
+    PUBLIC ${CMAKE_CURRENT_LIST_DIR}
+    PUBLIC ${SC_MEMORY_SRC}
+    PUBLIC ${SC_KPM_SRC}
+    PUBLIC ${SC_TOOLS_SRC}
+    PUBLIC ${CURL_INCLUDE_DIRS}
+)
+
+target_link_libraries(local-common sc-memory sc-agents-common ${CURL_LIBRARIES})
 
 sc_codegen_ex(local-common ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/generated)
 

@@ -12,3 +12,6 @@
 	path = platform-dependent-components/problem-solver/reusable-components
 	url = https://github.com/ostis-ai/ostis-ps-lib
 	branch = feature/non_atomic_action_interpeter_agent
+[submodule "platform-dependent-components/problem-solver/nlp-translators"]
+	path = platform-dependent-components/problem-solver/nlp-translators
+	url = git@github.com:ostis-ai/ostis-ps-lib
