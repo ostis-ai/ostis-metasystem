@@ -22,6 +22,6 @@ ScAddr Keynodes::nrel_entity_possible_role;
 
 ScAddr Keynodes::rrel_entity;
 
-ScAddr Keynodes::nrel_reply;
+ScAddr Keynodes::nrel_reply_structure;
 
 }  // namespace generateResponseModule

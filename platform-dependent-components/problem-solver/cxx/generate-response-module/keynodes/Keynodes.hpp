@@ -37,8 +37,8 @@ public:
   SC_PROPERTY(Keynode("rrel_entity"), ForceCreate)
   static ScAddr rrel_entity;
 
-  SC_PROPERTY(Keynode("nrel_reply"), ForceCreate)
-  static ScAddr nrel_reply;
+  SC_PROPERTY(Keynode("nrel_reply_structure"), ForceCreate)
+  static ScAddr nrel_reply_structure;
 };
 
 }  // namespace generateResponseModule
