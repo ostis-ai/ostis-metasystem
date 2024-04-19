@@ -88,7 +88,8 @@ bool GenerateResponseAgent::attachAnswer(
 
   ScAddr const & edgeBetweenMessageAndMessageAnswer =
       m_memoryCtx.CreateEdge(ScType::EdgeDCommonConst, messageAddr, messageAnswer);
-  m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, Keynodes::nrel_reply_structure, edgeBetweenMessageAndMessageAnswer);
+  m_memoryCtx.CreateEdge(
+      ScType::EdgeAccessConstPosPerm, Keynodes::nrel_reply_structure, edgeBetweenMessageAndMessageAnswer);
 
   m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, answerAddr, messageAnswer);
 

@@ -62,7 +62,7 @@ namespace generateResponseModuleTest
                 testActionNode,
                 ScType::EdgeAccessConstPosPerm));
 
-        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_reply);
+        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_reply_structure);
 
         EXPECT_TRUE(messageAnswer.IsValid());
 
@@ -98,7 +98,7 @@ namespace generateResponseModuleTest
                 testActionNode,
                 ScType::EdgeAccessConstPosPerm));
 
-        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_reply);
+        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_reply_structure);
 
         EXPECT_TRUE(messageAnswer.IsValid());
 

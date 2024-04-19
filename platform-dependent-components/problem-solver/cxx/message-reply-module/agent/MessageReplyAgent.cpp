@@ -69,6 +69,18 @@ SC_AGENT_IMPLEMENTATION(MessageReplyAgent)
         MessageReplyKeynodes::nrel_reply);
     ScTemplateSearchResult searchResult;
     m_memoryCtx.HelperSearchTemplate(replySearchTemplate, searchResult);
+
+    ScTemplate answerGenTemplate;
+    answerGenTemplate.Quintuple(
+        actionAddr,
+        ScType::EdgeDCommonVar,
+        answerAddr,
+        ScType::EdgeAccessVarPosPerm,
+        scAgentsCommon::CoreKeynodes::nrel_answer);
+    ScTemplateGenResult genResult;
+    m_memoryCtx.HelperGenTemplate(answerGenTemplate, genResult);
+    if (genResult.Size() != 1) 
+      throw std::runtime_error("");
   }
   catch (std::runtime_error & exception)
   {
@@ -77,9 +89,8 @@ SC_AGENT_IMPLEMENTATION(MessageReplyAgent)
     return SC_RESULT_ERROR;
   }
 
-  ScAddrVector answerAddrVector = {answerAddr};
   SC_LOG_DEBUG("MessageReplyAgent finished");
-  utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, answerAddrVector, true);
+  utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, true);
   return SC_RESULT_OK;
 }
 
@@ -147,7 +158,7 @@ ScAddr MessageReplyAgent::generateAnswer(ScAddr const & messageAddr)
   replySearchTemplate.Quintuple(
       messageAddr,
       ScType::EdgeDCommonVar >> REPLY_MESSAGE_RELATION_PAIR_ARC_ALIAS,
-      ScType::NodeVar >> REPLY_MESSAGE_ALIAS,
+      ScType::LinkVar >> REPLY_MESSAGE_ALIAS,
       ScType::EdgeAccessVarPosPerm >> REPLY_MESSAGE_RELATION_ACCESS_ARC_ALIAS,
       MessageReplyKeynodes::nrel_reply);
   ScTemplateSearchResult searchResult;
@@ -157,7 +168,6 @@ ScAddr MessageReplyAgent::generateAnswer(ScAddr const & messageAddr)
     throw std::runtime_error("Reply message not generated.");
   }
 
-  m_memoryCtx.CreateNode(ScType::NodeConstStruct);
   ScTemplate answerGenerationTemplate;
   answerGenerationTemplate.Triple(ScType::NodeVarStruct >> ANSWER_ALIAS, ScType::EdgeAccessVarPosPerm, messageAddr);
   answerGenerationTemplate.Triple(
@@ -209,7 +219,7 @@ bool MessageReplyAgent::textLinkIsValid(ScAddr const & linkAddr)
 {
   ScTemplate textLinkTemplate;
   textLinkTemplate.Triple(MessageReplyKeynodes::concept_text_file, ScType::EdgeAccessVarPosPerm, linkAddr);
-  
+
   ScTemplateSearchResult searchResult;
   m_memoryCtx.HelperSearchTemplate(textLinkTemplate, searchResult);
   return searchResult.Size() == 1;
