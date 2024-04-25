@@ -3,4 +3,4 @@ ostis-web-platform/repo.path
 
 # metasystem kb
 sc-models
-sc-models/user-interface
+!sc-models/knowledge-base/ostis-metasystem-components-specification.scs

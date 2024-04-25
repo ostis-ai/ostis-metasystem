@@ -37,22 +37,8 @@ knowledge_base_of_the_OSTIS_Metasystem_Library
 	(* <- lang_ru;; *);
 	[Knowledge base of the OSTIS Metasystem Library]
 	(* <- lang_en;; *);
-// => nrel_inclusion: 
-// sc_web_specification;
-// knowledge_base_ims_specification;
-// ostis_standard_specification;
-// part_1_specification;
-// part_2_specification;
-// part_3_specification;
-// part_4_specification;
-// part_5_specification;
-// part_6_specification;
-// part_7_specification;
-// part_methods_tools_specification;
-// part_platform_specification;
-// part_ui_specification;
-// cat_reusable_component_specification;
-<- not_enough_formed_structure;;
+=> nrel_inclusion:
+	concept_reusable_component;;
 
 OSTIS_Metasystem_Corporate_knowledge_base
 => nrel_main_idtf:
