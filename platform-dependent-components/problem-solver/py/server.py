@@ -9,6 +9,7 @@ import argparse
 from modules.clean_text_generation_module.clean_text_generation_module import \
     CleanTextGenerationModule
 from modules.example_module.example_module import ExampleModule
+from modules.authorise_module.authorise_module import AuthoriseModule
 from sc_kpm import ScServer
 
 SC_SERVER_PROTOCOL = "protocol"
@@ -27,6 +28,7 @@ def main(args: dict):
     with server.connect():
         modules = [
             ExampleModule(),
+            AuthoriseModule(),
             CleanTextGenerationModule(),
         ]
         server.add_modules(*modules)
