@@ -1,6 +1,5 @@
 """
-This code creates some test agent and registers until the user stops the process.
-For this we wait for SIGINT.
+This code creates authorise agent to handle authorise request from other sources.
 """
 
 import logging
@@ -31,7 +30,7 @@ logging.basicConfig(
 class AuthoriseUserAgent(ScAgentClassic):
     def __init__(self):
         super().__init__("action_authorise_user")
-        self.logger.info("AuthoriseUserAgent Open %s")
+        self.logger.info("AuthoriseUserAgent Created")
 
     def on_event(
         self, event_element: ScAddr, event_edge: ScAddr, action_element: ScAddr
@@ -51,6 +50,10 @@ class AuthoriseUserAgent(ScAgentClassic):
         [email_link_addr, password_link_addr] = get_action_arguments(action_node, 2)
         email = get_link_content_data(email_link_addr)
         password = get_link_content_data(password_link_addr)
+
+        if self._validate_input_args(email, password) != 1:
+            self.logger.error("Error: input args are invalid")
+            return ScResult.ERROR_INVALID_PARAMS
 
         [links_with_email] = get_links_by_content(email)
         user_addr = ScAddr(0)
@@ -106,3 +109,10 @@ class AuthoriseUserAgent(ScAgentClassic):
 
         create_action_answer(action_node, user_addr)
         return ScResult.OK
+
+    def _validate_input_args(self, email: str, password: str) -> int:
+        # TODO: validate using regexp
+        if email == "" or password == "":
+            return 0
+
+        return 1
