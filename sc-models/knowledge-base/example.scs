@@ -1,7 +1,0 @@
-// It is an example file just to push something in the directory
-ostis_metasystem
-=> nrel_main_idtf:
-	[Метасистема OSTIS]
-	(* <- lang_ru;; *);
-	[OSTIS Metasystem]
-	(* <- lang_en;; *);;
