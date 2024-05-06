@@ -1,4 +1,5 @@
-check2 = [*concept_message_about_subdividing
+check2 = [*
+concept_message_about_subdividing
 => nrel_response_action: action_get_decomposition;
 => nrel_contained_role: ..contained_role_tuple(* <- sc_node_tuple;; *);;
 
@@ -7,11 +8,5 @@ action_get_decomposition
 
 @edge1 = (..contained_role_tuple -> rrel_entity);;
 @edge2 = (..required_arg_tuple -> rrel_1);;
-@edge3 = (..required_arg_tuple -> rrel_2);;
-@edge4 = (..required_arg_tuple -> rrel_3);;
-@edge5 = (..required_arg_tuple -> rrel_4);;
-
 @edge1 => nrel_corresponding_role: @edge2;;
-@edge3 => nrel_default_arg_value: [1];;
-@edge4 => nrel_default_arg_value: lang_ru;;
-@edge5 => nrel_default_arg_value: nrel_section_decomposition;;*];;
+*];;

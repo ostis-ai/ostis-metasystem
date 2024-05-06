@@ -1,6 +1,0 @@
-find_corresponding_action_template = [*
-  _concept 
-  _<- concept_intent_possible_class;
-  _=> nrel_response_action:: _action;
-  _-> _message;;
-*];;

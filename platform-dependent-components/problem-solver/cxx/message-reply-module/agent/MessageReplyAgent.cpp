@@ -1,6 +1,7 @@
 #include "sc-agents-common/utils/CommonUtils.hpp"
 #include "sc-agents-common/utils/AgentUtils.hpp"
 #include "sc-agents-common/utils/IteratorUtils.hpp"
+#include "sc-agents-common/utils/GenerationUtils.hpp"
 #include "sc-agents-common/keynodes/coreKeynodes.hpp"
 #include "keynodes/MessageReplyKeynodes.hpp"
 #include "MessageReplyAgent.hpp"
@@ -39,9 +40,9 @@ SC_AGENT_IMPLEMENTATION(MessageReplyAgent)
   {
     messageAddr = generateMessage(linkAddr);
   }
-  catch (std::runtime_error & exception)
+  catch (utils::ScException & exception)
   {
-    SC_LOG_ERROR(exception.what());
+    SC_LOG_ERROR(exception.Description() << exception.Message());
     utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
     return SC_RESULT_ERROR;
   }
@@ -59,32 +60,11 @@ SC_AGENT_IMPLEMENTATION(MessageReplyAgent)
   try
   {
     answerAddr = generateAnswer(messageAddr);
-
-    ScTemplate replySearchTemplate;
-    replySearchTemplate.Quintuple(
-        messageAddr,
-        ScType::EdgeDCommonVar,
-        ScType::NodeVar >> "_reply_message",
-        ScType::EdgeAccessVarPosPerm,
-        MessageReplyKeynodes::nrel_reply);
-    ScTemplateSearchResult searchResult;
-    m_memoryCtx.HelperSearchTemplate(replySearchTemplate, searchResult);
-
-    ScTemplate answerGenTemplate;
-    answerGenTemplate.Quintuple(
-        actionAddr,
-        ScType::EdgeDCommonVar,
-        answerAddr,
-        ScType::EdgeAccessVarPosPerm,
-        scAgentsCommon::CoreKeynodes::nrel_answer);
-    ScTemplateGenResult genResult;
-    m_memoryCtx.HelperGenTemplate(answerGenTemplate, genResult);
-    if (genResult.Size() != 1) 
-      throw std::runtime_error("");
+    utils::GenerationUtils::generateRelationBetween(&m_memoryCtx, actionAddr, answerAddr, scAgentsCommon::CoreKeynodes::nrel_answer);
   }
-  catch (std::runtime_error & exception)
+  catch (utils::ScException & exception)
   {
-    SC_LOG_ERROR(exception.what());
+    SC_LOG_ERROR(exception.Description() << exception.Message());
     utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
     return SC_RESULT_ERROR;
   }
@@ -123,8 +103,9 @@ ScAddr MessageReplyAgent::generateMessage(ScAddr const & linkAddr)
   ScTemplateGenResult templateGenResult;
   if (!m_memoryCtx.HelperGenTemplate(userMessageTemplate, templateGenResult))
   {
-    throw std::runtime_error("Unable to generate message");
+    SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "Unable to generate message");
   }
+
   return templateGenResult[USER_MESSAGE_ALIAS];
 }
 
@@ -142,7 +123,7 @@ ScAddr MessageReplyAgent::generateNonAtomicActionArgsSet(ScAddr const & messageA
   ScTemplateGenResult templateGenResult;
   if (!m_memoryCtx.HelperGenTemplate(argsSetTemplate, templateGenResult))
   {
-    throw std::runtime_error("Unable to generate arguments set for interpreter agent action");
+    SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "Unable to generate arguments set for interpreter agent action");
   }
   return templateGenResult[ARGS_SET_ALIAS];
 }
@@ -158,14 +139,14 @@ ScAddr MessageReplyAgent::generateAnswer(ScAddr const & messageAddr)
   replySearchTemplate.Quintuple(
       messageAddr,
       ScType::EdgeDCommonVar >> REPLY_MESSAGE_RELATION_PAIR_ARC_ALIAS,
-      ScType::LinkVar >> REPLY_MESSAGE_ALIAS,
+      ScType::NodeVar >> REPLY_MESSAGE_ALIAS, // TODO: check why there was LinkVar
       ScType::EdgeAccessVarPosPerm >> REPLY_MESSAGE_RELATION_ACCESS_ARC_ALIAS,
       MessageReplyKeynodes::nrel_reply);
   ScTemplateSearchResult searchResult;
   m_memoryCtx.HelperSearchTemplate(replySearchTemplate, searchResult);
   if (searchResult.Size() != 1)
   {
-    throw std::runtime_error("Reply message not generated.");
+    SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Reply message not generated.");
   }
 
   ScTemplate answerGenerationTemplate;
@@ -196,31 +177,32 @@ ScAddr MessageReplyAgent::generateAnswer(ScAddr const & messageAddr)
   ScTemplateGenResult templateGenResult;
   if (!m_memoryCtx.HelperGenTemplate(answerGenerationTemplate, templateGenResult))
   {
-    throw std::runtime_error("Unable to generate answer.");
+    SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Unable to generate answer.");
   }
   return templateGenResult[ANSWER_ALIAS];
 }
 
 bool MessageReplyAgent::linkIsValid(ScAddr const & linkAddr)
 {
-  if (utils::CommonUtils::checkType(&m_memoryCtx, linkAddr, ScType::LinkConst))
+  if (!utils::CommonUtils::checkType(&m_memoryCtx, linkAddr, ScType::LinkConst))
   {
-    bool isTextValid = textLinkIsValid(linkAddr);
-    if (isTextValid)
-    {
-      SC_LOG_DEBUG("Text link is found");
-      return true;
-    }
+    SC_LOG_ERROR("LinkAddr is not LinkConst.");
+    return false;
   }
-  return false;
-}
 
-bool MessageReplyAgent::textLinkIsValid(ScAddr const & linkAddr)
-{
-  ScTemplate textLinkTemplate;
-  textLinkTemplate.Triple(MessageReplyKeynodes::concept_text_file, ScType::EdgeAccessVarPosPerm, linkAddr);
+  ScIterator3Ptr const conceptTextFileIterator = m_memoryCtx.Iterator3(
+      MessageReplyKeynodes::concept_text_file, ScType::EdgeAccessConstPosPerm, linkAddr);
+  if (!conceptTextFileIterator->Next())
+  {
+    SC_LOG_ERROR("LinkAddr doesn't belong concept_text_file class.");
+    return false;
+  }
+  if (conceptTextFileIterator->Next())
+  {
+    SC_LOG_ERROR("LinkAddr belongs concept_text_file class multiple times.");
+    return false;
+  }
 
-  ScTemplateSearchResult searchResult;
-  m_memoryCtx.HelperSearchTemplate(textLinkTemplate, searchResult);
-  return searchResult.Size() == 1;
+  SC_LOG_DEBUG("Text link is found");
+  return true;
 }

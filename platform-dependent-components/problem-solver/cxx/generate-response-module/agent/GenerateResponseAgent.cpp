@@ -6,6 +6,7 @@
 
 #include "sc-agents-common/utils/CommonUtils.hpp"
 #include "sc-agents-common/utils/IteratorUtils.hpp"
+#include "sc-agents-common/utils/GenerationUtils.hpp"
 #include "sc-agents-common/utils/AgentUtils.hpp"
 
 #include "keynodes/Keynodes.hpp"
@@ -32,31 +33,25 @@ SC_AGENT_IMPLEMENTATION(GenerateResponseAgent)
       utils::IteratorUtils::getAnyByOutRelation(&m_memoryCtx, otherAddr, scAgentsCommon::CoreKeynodes::rrel_2);
 
   ScAddr messageAnswer;
+  ScAddr const actionToApply = createActionNode(messageAddr);
   try
   {
     validateAddrWithInvalidParamException(messageAddr, Constants::messageAddrParamName);
     validateAddrWithInvalidParamException(answerAddr, Constants::answerAddrParamName);
-    messageAnswer = utils::AgentUtils::applyActionAndGetResultIfExists(&m_memoryCtx, createActionNode(messageAddr));
+    messageAnswer = utils::AgentUtils::applyActionAndGetResultIfExists(&m_memoryCtx, actionToApply);
   }
-  catch (utils::ScException const & ex)
+  catch (utils::ScException const & exception)
   {
-    finishWorkWithMessage(ex.Message(), actionAddr, false);
+    SC_LOG_ERROR(Constants::generateAnswerAgentClassName << ": " << exception.Message());
+    utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, false);
     return SC_RESULT_ERROR;
-  };
+  }
 
-  bool isSuccess = attachAnswer(messageAnswer, messageAddr, answerAddr);
+  attachAnswer(messageAnswer, messageAddr, answerAddr);
 
-  utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, isSuccess);
-  SC_LOG_DEBUG(Constants::generateAnswerAgentClassName + " finished");
+  utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, true);
+  SC_LOG_DEBUG(Constants::generateAnswerAgentClassName << " finished");
   return SC_RESULT_OK;
-}
-
-void GenerateResponseAgent::validateAddrWithItemNotFoundException(ScAddr const & addr, std::string const & message)
-{
-  if (addr.IsValid())
-    return;
-
-  SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, message);
 }
 
 void GenerateResponseAgent::validateAddrWithInvalidParamException(ScAddr const & addr, std::string const & paramName)
@@ -64,76 +59,65 @@ void GenerateResponseAgent::validateAddrWithInvalidParamException(ScAddr const &
   SC_CHECK_PARAM(addr, "parameter '" + paramName + "' is not valid");
 }
 
-void GenerateResponseAgent::finishWorkWithMessage(
-    std::string const & message,
-    ScAddr const & questionNode,
-    bool isSuccess)
-{
-  SC_LOG_ERROR(Constants::generateAnswerAgentClassName + ": " + message);
-  utils::AgentUtils::finishAgentWork(&m_memoryCtx, questionNode, isSuccess);
-}
-
 bool GenerateResponseAgent::checkAction(ScAddr const & actionAddr)
 {
   return m_memoryCtx.HelperCheckEdge(Keynodes::action_generate_response, actionAddr, ScType::EdgeAccessConstPosPerm);
 }
 
-bool GenerateResponseAgent::attachAnswer(
+void GenerateResponseAgent::attachAnswer(
     ScAddr const & messageAnswer,
     ScAddr const & messageAddr,
     ScAddr const & answerAddr)
 {
-  if (!messageAnswer.IsValid())
-    return false;
-
-  ScAddr const & edgeBetweenMessageAndMessageAnswer =
-      m_memoryCtx.CreateEdge(ScType::EdgeDCommonConst, messageAddr, messageAnswer);
-  m_memoryCtx.CreateEdge(
-      ScType::EdgeAccessConstPosPerm, Keynodes::nrel_reply_structure, edgeBetweenMessageAndMessageAnswer);
-
+  utils::GenerationUtils::generateRelationBetween(&m_memoryCtx, messageAddr, messageAnswer, Keynodes::nrel_reply_structure);
   m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosTemp, answerAddr, messageAnswer);
-
-  return true;
 }
 
 ScAddr GenerateResponseAgent::createActionNode(ScAddr const & message)
 {
-  ScAddr const action = findResponseAction(message);
-
+  ScAddr const actionClass = FindResponseActionClass(message);
   ScAddr const actionNode = m_memoryCtx.CreateNode(ScType::NodeConst);
-  m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, action, actionNode);
+  m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, actionClass, actionNode);
 
   ScAddrSet mappedRelations;
 
-  processParamsFromMessage(message, action, actionNode, mappedRelations);
-
-  processParamsWithDefaultArgValue(action, actionNode, mappedRelations);
+  processParamsFromMessage(message, actionClass, actionNode, mappedRelations);
 
   return actionNode;
 }
 
-ScAddr GenerateResponseAgent::findResponseAction(ScAddr const & message)
+ScAddr GenerateResponseAgent::FindResponseActionClass(ScAddr const & message)
 {
-  ScTemplateParams params;
-  params.Add(Constants::messageVarName, message);
-  ScTemplate templ;
-  m_memoryCtx.HelperBuildTemplate(
-      templ, m_memoryCtx.HelperFindBySystemIdtf(Constants::findResponseActionTemplateName), params);
+  ScAddr actionClass;
 
-  ScAddr action;
+  ScTemplate responseActionTemplate;
+  responseActionTemplate.Triple(
+      Keynodes::concept_intent_possible_class,
+      ScType::EdgeAccessVarPosPerm,
+      ScType::NodeVarClass >> Constants::messageClassVarName);
+  responseActionTemplate.Quintuple(
+      Constants::messageClassVarName,
+      ScType::EdgeDCommonVar,
+      ScType::NodeVar >> Constants::actionClassVarName,
+      ScType::EdgeAccessVarPosPerm,
+      Keynodes::nrel_response_action);
+  responseActionTemplate.Triple(
+      Constants::messageClassVarName,
+      ScType::EdgeAccessVarPosPerm,
+      message);
 
   m_memoryCtx.HelperSmartSearchTemplate(
-      templ,
-      [&action](ScTemplateResultItem const & resultItem)
-      {
-        action = resultItem[Constants::actionVarName];
-        return ScTemplateSearchRequest::STOP;
-      });
+  responseActionTemplate,
+  [&actionClass](ScTemplateResultItem const & resultItem) -> ScTemplateSearchRequest
+  {
+    actionClass = resultItem[Constants::actionClassVarName];
+    return ScTemplateSearchRequest::STOP;
+  });
 
-  if (!action.IsValid())
+  if (!m_memoryCtx.IsElement(actionClass))
     SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "response action class not found");
 
-  return action;
+  return actionClass;
 }
 
 void GenerateResponseAgent::processParamsFromMessage(
@@ -144,7 +128,7 @@ void GenerateResponseAgent::processParamsFromMessage(
 {
   ScTemplateParams params;
   params.Add(Constants::messageVarName, message);
-  params.Add(Constants::actionVarName, action);
+  params.Add(Constants::actionClassVarName, action);
 
   SC_LOG_DEBUG(m_memoryCtx.HelperGetSystemIdtf(action));
 
@@ -163,32 +147,5 @@ void GenerateResponseAgent::processParamsFromMessage(
         m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, targetRole, actionNodeToParamEdge);
 
         mappedRelations.insert(targetRole);
-      });
-}
-
-void GenerateResponseAgent::processParamsWithDefaultArgValue(
-    ScAddr const & action,
-    ScAddr const & actionNode,
-    ScAddrSet const & mappedRelations)
-{
-  ScTemplateParams params;
-  params.Add(Constants::actionVarName, action);
-
-  ScTemplate templ;
-  m_memoryCtx.HelperBuildTemplate(
-      templ, m_memoryCtx.HelperFindBySystemIdtf(Constants::roleRelationDefaultArgValueTemplateName), params);
-
-  m_memoryCtx.HelperSearchTemplate(
-      templ,
-      [this, &actionNode, &mappedRelations](ScTemplateResultItem const & resultItem)
-      {
-        ScAddr const defaultArg = resultItem[Constants::defaultArgVarName];
-        ScAddr const relation = resultItem[Constants::rrelWithDefaultArgVarName];
-
-        if (mappedRelations.find(relation) != mappedRelations.end())
-          return;
-
-        ScAddr actionNodeToParamEdge = m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, actionNode, defaultArg);
-        m_memoryCtx.CreateEdge(ScType::EdgeAccessConstPosPerm, relation, actionNodeToParamEdge);
       });
 }

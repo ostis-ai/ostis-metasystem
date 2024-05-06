@@ -19,7 +19,7 @@ namespace generateResponseModuleTest
 
     const int WAIT_TIME = 1000;
 
-    using AgentTest = ScMemoryTest;
+    using GenerateRsponseAgentTest = ScMemoryTest;
 
     ScsLoader loader;
     void loadScsFile(ScMemoryContext & context, std::string const & filename)
@@ -29,27 +29,33 @@ namespace generateResponseModuleTest
 
     void initialize(ScMemoryContext & context)
     {
+        ScAgentInit(true);
         scAgentsCommon::CoreKeynodes::InitGlobal();
         generateResponseModule::Keynodes::InitGlobal();
         TestKeynodes::InitGlobal();
+        SC_AGENT_REGISTER(generateResponseModule::GenerateResponseAgent);
 
         for (auto const & file : std::filesystem::directory_iterator(TEMPLATES_DIR_PATH))
         {
             loader.loadScsFile(context, file.path());
         }
+        loadScsFile(context, "baseConcepts.scs");
     }
 
-    TEST_F(AgentTest, OneParameterAgentTest)
+    void shutdown()
+    {
+      SC_AGENT_UNREGISTER(generateResponseModule::GenerateResponseAgent);
+    }
+
+    TEST_F(GenerateRsponseAgentTest, OneParameterAgentTest)
     {
         ScMemoryContext & context = *m_ctx;
-        loadScsFile(context, "baseConcepts.scs");
+
         loadScsFile(context, "oneParameterTest.scs");
 
-        ScAgentInit(true);
         initialize(context);
 
         SC_AGENT_REGISTER(OneParameterTestAgent);
-        SC_AGENT_REGISTER(generateResponseModule::GenerateResponseAgent);
 
         ScAddr const testActionNode = context.HelperFindBySystemIdtf("one_param_action_node");
         ScAddr const message = context.HelperFindBySystemIdtf("message");
@@ -66,26 +72,24 @@ namespace generateResponseModuleTest
 
         EXPECT_TRUE(messageAnswer.IsValid());
 
-        ScAddr test_entity = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
+        ScAddr testEntity = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
-        EXPECT_TRUE(context.HelperGetSystemIdtf(test_entity) == "test_entity");
+        EXPECT_TRUE(context.HelperGetSystemIdtf(testEntity) == "test_entity");
 
         EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosTemp));
         
         SC_AGENT_UNREGISTER(OneParameterTestAgent);
+        shutdown();
     }
 
-    TEST_F(AgentTest, ZeroParameterTestAgent)
+    TEST_F(GenerateRsponseAgentTest, ZeroParameterTestAgent)
     {
         ScMemoryContext & context = *m_ctx;
-        loadScsFile(context, "baseConcepts.scs");
         loadScsFile(context, "zeroParameterTest.scs");
 
-        ScAgentInit(true);
         initialize(context);
 
         SC_AGENT_REGISTER(ZeroParameterTestAgent);
-        SC_AGENT_REGISTER(generateResponseModule::GenerateResponseAgent);
 
         ScAddr const & testActionNode = context.HelperFindBySystemIdtf("zero_param_action_node");
         ScAddr const & message = context.HelperFindBySystemIdtf("message");
@@ -102,13 +106,14 @@ namespace generateResponseModuleTest
 
         EXPECT_TRUE(messageAnswer.IsValid());
 
-        ScAddr test_success = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
+        ScAddr testSuccess = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
         ScAddr correctTestSuccess = context.HelperFindBySystemIdtf("test_success");
-        EXPECT_TRUE(correctTestSuccess.IsValid() && test_success == correctTestSuccess);
+        EXPECT_TRUE(correctTestSuccess.IsValid() && testSuccess == correctTestSuccess);
 
         EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosTemp));
 
         SC_AGENT_UNREGISTER(OneParameterTestAgent);
+        shutdown();
     }
 }

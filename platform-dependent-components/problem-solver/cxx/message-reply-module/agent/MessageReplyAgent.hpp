@@ -17,7 +17,7 @@ private:
 
   bool checkActionClass(ScAddr const & actionAddr);
 
-  ScAddr getMessageProcessingProgram();
+  static ScAddr getMessageProcessingProgram();
 
   ScAddr generateMessage(ScAddr const & linkAddr);
 

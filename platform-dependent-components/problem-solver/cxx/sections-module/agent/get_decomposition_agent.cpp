@@ -30,7 +30,7 @@ SC_AGENT_IMPLEMENTATION(GetDecompositionAgent)
       IteratorUtils::getAnyByOutRelation(&m_memoryCtx, questionNode, scAgentsCommon::CoreKeynodes::rrel_1);
   ScAddr const levelAddr =
       IteratorUtils::getAnyByOutRelation(&m_memoryCtx, questionNode, scAgentsCommon::CoreKeynodes::rrel_2);
-  ScAddr const langAddr =
+  ScAddr langAddr =
       IteratorUtils::getAnyByOutRelation(&m_memoryCtx, questionNode, scAgentsCommon::CoreKeynodes::rrel_3);
   ScAddr decompositionAddr =
       IteratorUtils::getAnyByOutRelation(&m_memoryCtx, questionNode, scAgentsCommon::CoreKeynodes::rrel_4);
@@ -45,9 +45,8 @@ SC_AGENT_IMPLEMENTATION(GetDecompositionAgent)
     m_memoryCtx.GetLinkContent(levelAddr, level);
   if (!m_memoryCtx.IsElement(langAddr))
   {
-    SC_LOG_ERROR("GetDecompositionAgent: language node not found.");
-    utils::AgentUtils::finishAgentWork(&m_memoryCtx, questionNode, false);
-    return SC_RESULT_ERROR_INVALID_PARAMS;
+    langAddr = scAgentsCommon::CoreKeynodes::lang_ru;
+    SC_LOG_DEBUG("GetDecompositionAgent: language node not found. By default lang_ru is used.");
   }
   if (!m_memoryCtx.IsElement(decompositionAddr))
   {
