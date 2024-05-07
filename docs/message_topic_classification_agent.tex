@@ -1,0 +1,30 @@
+\scnheader{Агент классификации класса сообщения}
+
+\scnidtf{sc-агент классификации класса сообщения в sc-памяти}
+\begin{scnrelfromvector}{задачи}
+  \scnitem{определить класс сообщения}
+\end{scnrelfromvector}
+
+\begin{scnrelfromvector}{аргументы агента}
+  \scnitem{сообщение}
+\end{scnrelfromvector}
+
+\begin{scnrelfromvector}{алгоритм}
+  \scnfileitem{Получение текста сообщения}
+  \scnfileitem{Получение темы сообщения}
+  \scnfileitem{Получение признаков сообщения}
+  \scnfileitem{Получение сущности сообщения}
+  \scnfileitem{Если что-то не получилось получить, то происходит завершение работы агента}
+  \scnfileitem{Если агент завершил работу успешно, то его ответ прикрепляется к сообщению отношением \textit{nrel\_entity}}
+  \scnfileitem {Если агент завершил работу неуспешно, то происходит завершение работы текущего агента}
+\end{scnrelfromvector}
+
+\scnrelfrom{пример входной конструкции}{\scnfileimage[30em]{images/message-topic-classification-agent/input.png}}
+
+\scnrelfrom{пример выходной конструкции}{\scnfileimage[30em]{images/message-topic-classification-agent/output.png}}
+
+\scnrelfrom{Пример структуры, необходимой для классификации сообщения по теме}{\scnfileimage[30em]{images/message-topic-classification-agent/intent.png}}
+
+\scnrelfrom{Пример структуры, необходимой для классификации сообщения по признакам}{\scnfileimage[30em]{images/message-topic-classification-agent/trait.png}}
+
+\scnrelfrom{Пример структуры, необходимой для получения сущностей сообщения}{\scnfileimage[30em]{images/message-topic-classification-agent/entity.png}}
