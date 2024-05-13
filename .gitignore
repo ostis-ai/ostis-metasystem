@@ -13,6 +13,7 @@ cmake-build-release
 
 *.scs~
 ostis-web-platform
+ostis-standard
 kb.bin
 kb.bin-tests
 secret.txt

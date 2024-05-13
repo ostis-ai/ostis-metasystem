@@ -7,19 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+- Native installation with scripts
+- ClangFormat for code refactoring
 - Sections module
 - ClangFormat for code formatting
 - Base structure of the Metasystem
 - sc-component-manager paths for components
-- Script `sc-component-manager.sh`
-- Added build of sc-machine and manager in `install_metasystem.sh`
+- Installation with sc-component-manager
+- Scripts for installation, build and launch
 
 ### Changed
-- Use `build_platform.sh` instead of `build_sc_machine.sh`
-- Update ostis-web-platform to develop-branch
 
-### Fixed 
-- Replaced deprecated options `save_period` and `update_period`
+### Fixed
 
 ### Deprecated
 
