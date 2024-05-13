@@ -1,0 +1,62 @@
+name: Coverage
+
+on:
+  pull_request:
+    branches: [ develop, main, release/** ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  run_coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Update
+        if: startswith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get update
+
+      - name: Restore build caches
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: ${{ github.job }}
+
+      - name: Install Metasystem
+        env:
+          TERM: linux
+        run: |
+          ./scripts/install_metasystem.sh
+
+      - name: Build cxx tests
+        run: |
+          ./scripts/build_ps.sh --cmake-arg "-DSC_COVERAGE=ON" -t
+
+      - name: Prepare coverage
+        run: |
+          ./scripts/ci/prepare_coverage.sh
+
+      - name: Run cxx tests
+        run: |
+          ./scripts/tests/run_cxx_ps_tests.sh
+
+      - name: Export coverage
+        run: |
+          ./scripts/ci/export_coverage.sh
+
+      - name: Upload coverage report to CodeCov
+        uses: codecov/codecov-action@v4
+        with:
+          directory: ${{github.workspace}}/build
+          files: coverage.info
+          flags: unittests
+          fail_ci_if_error: true
+          name: codecov-umbrella
+          verbose: true
