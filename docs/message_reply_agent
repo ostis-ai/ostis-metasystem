@@ -1,0 +1,35 @@
+\scnheader{Агент ответа на сообщение}
+
+\scnidtf{Данный агент генерирует ответное сообщение, связанное с исходным сообщением с помощью отношения nrel\_reply}
+
+\scntext{класс действия}{action\_reply\_to\_message}
+
+\begin{scnrelfromvector}{задачи}
+  \scnitem{найти ответ на сообщение}
+\end{scnrelfromvector}
+
+\begin{scnrelfromvector}{аргументы агента}
+  \scnitem{сообщение}
+  \scntext{пояснение}{linkAddr - sc-ссылка с текстом сообщения пользователя}
+\end{scnrelfromvector}
+
+\begin{scnrelfromvector}{алгоритм}
+  \scnfileitem{Генерирация узла сообщения в базе знаний, идентификация полученного текстового файла как текст этого сообщения}
+  \scnfileitem{Генерирация необходимой конструкции для вызова агента интерпретации неатомарного действия. Пример этой конструкции показан ниже}
+  \scnfileimage[20em]{images/message-reply-agent/gener.png}
+  \scnfileitem{Ожидание завершения работы агента интерпретации и выполнение поиска ответного сообщения, сгенерированное во время работы агента интерпретации}
+  \scnfileitem{Добавление ответного сообщения к ответной структуре}
+\end{scnrelfromvector}
+
+\scnrelfrom{пример входной конструкции}{\scnfileimage[30em]{images/message-reply-agent/input.png}}
+
+\scnrelfrom{пример выходной конструкции}{\scnfileimage[30em]{images/message-reply-agent/output.png}}
+
+\scntext{язык реализации агента}{c++}
+
+\begin{scnrelfromvector}{возможные результаты}
+  \scnitem{SC\_RESULT\_OK}
+  \scntext{пояснение}{ответное сообщение сгенерировано}
+  \scnitem{SC\_RESULT\_ERROR}
+  \scntext{пояснение}{внутренняя ошибка}
+\end{scnrelfromvector}
