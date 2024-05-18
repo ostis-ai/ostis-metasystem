@@ -1,12 +1,26 @@
 \scnheader{Агент классификации класса сообщения}
 
 \scnidtf{sc-агент классификации класса сообщения в sc-памяти}
+
+\scntext{класс действия}{action\_message\_topic\_classificatin}
+
+\begin{scnrelfromvector}{используемые бииблиотеки}
+  \scnitem{Wit.ai}
+  \scntext{пояснение}{для классификации сообщений и получения сущностей}
+\end{scnrelfromvector}
+
+\begin{scnrelfromvector}{комментарии}
+  \scnitem{входное сообщение должно содержать текстовый файл с текстом на русском языке}
+  \scnitem{выделяемая сущность должна быть формализована в базе знаний}
+\end{scnrelfromvector}
+
 \begin{scnrelfromvector}{задачи}
   \scnitem{определить класс сообщения}
 \end{scnrelfromvector}
 
 \begin{scnrelfromvector}{аргументы агента}
   \scnitem{сообщение}
+  \scntext{пояснение}{MessageAddr - элемент класса concept\_message}
 \end{scnrelfromvector}
 
 \begin{scnrelfromvector}{алгоритм}
@@ -28,3 +42,12 @@
 \scnrelfrom{Пример структуры, необходимой для классификации сообщения по признакам}{\scnfileimage[30em]{images/message-topic-classification-agent/trait.png}}
 
 \scnrelfrom{Пример структуры, необходимой для получения сущностей сообщения}{\scnfileimage[30em]{images/message-topic-classification-agent/entity.png}}
+
+\scntext{язык реализации агента}{c++}
+
+\begin{scnrelfromvector}{возможные результаты}
+  \scnitem{SC\_RESULT\_OK}
+  \scntext{пояснение}{сообщение успешно классифицировано (или произошла пустая классификация), или действие не принадлежит action\_message\_topic\_classificatin}
+  \scnitem{SC\_RESULT\_ERROR}
+  \scntext{пояснение}{внутренняя ошибка}
+\end{scnrelfromvector}
