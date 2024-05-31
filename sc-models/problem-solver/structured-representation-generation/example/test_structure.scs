@@ -1,0 +1,30 @@
+test_structure = [*
+  subj_domain_test
+    -> rrel_not_maximum_studied_object_class: number;
+    -> rrel_not_maximum_studied_object_class: concept;;
+  
+  @link1 = [число];;
+  number => nrel_main_idtf:@link1;;
+
+  @link2 = [понятие];;
+  concept 
+    => nrel_main_idtf:@link2;
+    <= nrel_strict_inclusion:class;;
+*];;
+
+test_structure -> rrel_key_sc_element:subj_domain_test;;
+
+lang_ru
+-> @link1;
+-> @link2;;
+
+sc_node_class
+->class;
+->concept;
+->number;;
+
+sc_node_struct
+-> subj_domain_test;;
+
+subject_domain
+->subj_domain_test;;

@@ -4,7 +4,9 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "StructuredRepresentationGenerationModule.hpp"
+#include "structured_representation_generation_module.hpp"
+#include "agent/structured_representation_generation_agent.hpp"
+#include "keynodes/structured_representation_generation_keynodes.hpp"
 
 using namespace structuredRepresentationGenerationModule;
 
@@ -18,16 +20,15 @@ sc_result StructuredRepresentationGenerationModule::InitializeImpl()
     return SC_RESULT_ERROR;
   }
 
-  if (!StructuredRepresentationGenerationModule::InitGlobal())
-  {
-    SC_LOG_ERROR("MessageReplyKeynodes is deactivated");
+  if (!StructuredRepresentationGenerationKeynodes::InitGlobal())
     return SC_RESULT_ERROR;
-  }
 
+  SC_AGENT_REGISTER(StructuredRepresentationGenerationAgent);
   return SC_RESULT_OK;
 }
 
 sc_result StructuredRepresentationGenerationModule::ShutdownImpl()
 {
+  SC_AGENT_UNREGISTER(StructuredRepresentationGenerationAgent);
   return SC_RESULT_OK;
 }

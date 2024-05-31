@@ -1,8 +1,26 @@
 set(STRUCTURED_REPRESENTATION_GENERATION_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
 
 set(SOURCES
-    "StructuredRepresentationGenerationModule.cpp"
-    "StructuredRepresentationGenerationModule.hpp"
+    "structured_representation_generation_module.hpp"
+    "structured_representation_generation_module.cpp"
+
+    "agent/structured_representation_generation_agent.hpp"
+    "agent/structured_representation_generation_agent.cpp"
+    "agent/generation_rule_search_agent.hpp"
+    "agent/generation_rule_search_agent.cpp"
+
+    "constants/structured_representation_generation_constants.hpp"
+
+    "generator/structured_representation_generator.hpp"
+    "generator/structured_representation_generator.cpp"
+
+    "keynodes/structured_representation_generation_keynodes.hpp"
+
+    "manager/structured_representation_generation_manager.hpp"
+    "manager/structured_representation_generation_manager.cpp"
+
+    "utils/template_utils.hpp"
+    "utils/template_utils.cpp"
 )
 
 add_library(structured-representation-generation SHARED ${SOURCES})
@@ -11,7 +29,7 @@ target_link_libraries(structured-representation-generation
     LINK_PUBLIC sc-agents-common
 )
 include_directories(structured-representation-generation
-    PUBLIC ${MESSAGE_REPLY_MODULE_SRC}
+    PUBLIC ${STRUCTURED_REPRESENTATION_GENERATION_MODULE_SRC}
     PUBLIC ${SC_MEMORY_SRC}
     PUBLIC ${SC_KPM_SRC}
 )
