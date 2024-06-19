@@ -11,18 +11,38 @@ metasystem_decomposition
 	[OSTIS Metasystem decomposition]
 	(* <- lang_en;; *);;
 
-@arc1 = (metasystem_decomposition -> rrel_1: knowledge_base_Metasystem);;
+@arc1 = (metasystem_decomposition -> rrel_1: metasystem_knowledge_base);;
 
-@arc2 = (metasystem_decomposition -> .system_element_2290);;
+@arc2 = (metasystem_decomposition -> metasystem_problem_solver);;
 @arc1 => nrel_basic_sequence: @arc2;;
 
-@arc3 = (metasystem_decomposition -> user_interface_Metasystem);;
+@arc3 = (metasystem_decomposition -> metasystem_user_interface);;
 @arc2 => nrel_basic_sequence: @arc3;;
-rrel_last ~> @arc3;;
 
-user_interface_Metasystem
+@arc4 = (metasystem_decomposition -> metasystem_subsystems);;
+@arc3 => nrel_basic_sequence: @arc4;;
+
+rrel_last ~> @arc4;;
+
+metasystem_user_interface
 => nrel_main_idtf:
 	[Пользовательский интерфейс Метасистемы OSTIS]
 	(* <- lang_ru;; *);
 	[OSTIS Metasystem user interface]
 	(* <- lang_en;; *);;
+
+metasystem_user_interface
+<- sc_model_of_interface;
+=> nrel_decomposition: metasystem_user_interface_decomposition;;
+
+metasystem_problem_solver
+<- sc_model_of_problem_solver;
+=> nrel_decomposition: metasystem_problem_solver_decomposition;;
+
+metasystem_knowledge_base
+<- sc_model_of_knowledge_base;
+=> nrel_decomposition: metasystem_knowledge_base_decomposition;;
+
+metasystem_subsystems
+<- concept_subsystems_set;
+=> nrel_decomposition: metasystem_subsystem_decomposition;;
