@@ -1,16 +1,22 @@
 \scnheader{Агент ответа на сообщение}
 
-\scnidtf{Данный агент генерирует ответное сообщение, связанное с исходным сообщением с помощью отношения nrel\_reply}
+\scntext{примечание}{Данный агент генерирует ответное сообщение, связанное с исходным сообщением с помощью отношения nrel\_reply}
 
 \scntext{класс действия}{action\_reply\_to\_message}
 
 \begin{scnrelfromvector}{задачи}
-  \scnitem{найти ответ на сообщение}
+  \scnfileitem{сформировать ответ на сообщение}
 \end{scnrelfromvector}
 
 \begin{scnrelfromvector}{аргументы агента}
-  \scnitem{сообщение}
+  \scnitem{linkAddr}
+  \begin{scnindent}
   \scntext{пояснение}{linkAddr - sc-ссылка с текстом сообщения пользователя}
+  \end{scnindent}
+  \scnitem{processingProgramAddr}
+  \begin{scnindent}
+  \scntext{пояснение}{processingProgramAddr - sc-узел обрабатывающей программы}
+  \end{scnindent}
 \end{scnrelfromvector}
 
 \begin{scnrelfromvector}{алгоритм}
@@ -29,7 +35,11 @@
 
 \begin{scnrelfromvector}{возможные результаты}
   \scnitem{SC\_RESULT\_OK}
+  \begin{scnindent}
   \scntext{пояснение}{ответное сообщение сгенерировано}
+  \end{scnindent}
   \scnitem{SC\_RESULT\_ERROR}
+  \begin{scnindent}
   \scntext{пояснение}{внутренняя ошибка}
+  \end{scnindent}
 \end{scnrelfromvector}

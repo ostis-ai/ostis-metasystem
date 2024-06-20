@@ -1,12 +1,14 @@
 \scnheader{Агент классификации сообщения}
 
-\scnidtf{sc-агент классификации сообщения в sc-памяти}
+\scntext{примечание}{sc-агент классификации сообщения в sc-памяти}
 
 \scntext{класс действия}{action\_message\_topic\_classificatin}
 
 \begin{scnrelfromvector}{используемые бииблиотеки}
   \scnitem{Wit.ai}
-  \scntext{пояснение}{для классификации сообщений и получения сущностей}
+  \begin{scnindent}
+    \scntext{пояснение}{Сервис для классификации сообщений и получения сущностей сообщений.}
+  \end{scnindent}
 \end{scnrelfromvector}
 
 \begin{scnrelfromvector}{комментарии}
@@ -20,7 +22,9 @@
 
 \begin{scnrelfromvector}{аргументы агента}
   \scnitem{сообщение}
-  \scntext{пояснение}{MessageAddr - элемент класса concept\_message}
+  \begin{scnindent}
+    \scntext{пояснение}{MessageAddr - элемент класса concept\_message}
+  \end{scnindent}
 \end{scnrelfromvector}
 
 \begin{scnrelfromvector}{алгоритм}
@@ -30,7 +34,7 @@
   \scnfileitem{Получение сущности сообщения}
   \scnfileitem{Если что-то не получилось получить, то происходит завершение работы агента}
   \scnfileitem{Если агент завершил работу успешно, то его ответ прикрепляется к сообщению отношением \textit{nrel\_entity}}
-  \scnfileitem {Если агент завершил работу неуспешно, то происходит завершение работы текущего агента}
+  \scnfileitem{Если агент завершил работу неуспешно, то происходит завершение работы текущего агента}
 \end{scnrelfromvector}
 
 \scnrelfrom{пример входной конструкции}{\scnfileimage[30em]{images/message-topic-classification-agent/input.png}}
@@ -47,7 +51,11 @@
 
 \begin{scnrelfromvector}{возможные результаты}
   \scnitem{SC\_RESULT\_OK}
-  \scntext{пояснение}{сообщение успешно классифицировано (или произошла пустая классификация), или действие не принадлежит action\_message\_topic\_classificatin}
+  \begin{scnindent}
+    \scntext{пояснение}{сообщение успешно классифицировано (или произошла пустая классификация), или действие не принадлежит action\_message\_topic\_classificatin}
+  \end{scnindent}
   \scnitem{SC\_RESULT\_ERROR}
-  \scntext{пояснение}{внутренняя ошибка}
+  \begin{scnindent}
+    \scntext{пояснение}{внутренняя ошибка}
+  \end{scnindent}
 \end{scnrelfromvector}
