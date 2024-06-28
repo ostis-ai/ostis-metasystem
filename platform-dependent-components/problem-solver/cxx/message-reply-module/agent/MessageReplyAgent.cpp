@@ -139,7 +139,7 @@ ScAddr MessageReplyAgent::generateAnswer(ScAddr const & messageAddr)
   replySearchTemplate.Quintuple(
       messageAddr,
       ScType::EdgeDCommonVar >> REPLY_MESSAGE_RELATION_PAIR_ARC_ALIAS,
-      ScType::NodeVar >> REPLY_MESSAGE_ALIAS, // TODO: check why there was LinkVar
+      ScType::LinkVar >> REPLY_MESSAGE_ALIAS, // TODO: check why there was LinkVar
       ScType::EdgeAccessVarPosPerm >> REPLY_MESSAGE_RELATION_ACCESS_ARC_ALIAS,
       MessageReplyKeynodes::nrel_reply);
   ScTemplateSearchResult searchResult;
