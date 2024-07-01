@@ -27,9 +27,9 @@
   \scnfileitem{Добавление ответного сообщения к ответной структуре}
 \end{scnrelfromvector}
 
-\scnrelfrom{пример входной конструкции}{\scnfileimage[30em]{images/message-reply-agent/input.png}}
+\scnrelfrom{пример входной конструкции}{\scnfileimage[30em]{images/message-reply-agent/message_reply_input.png}}
 
-\scnrelfrom{пример выходной конструкции}{\scnfileimage[30em]{images/message-reply-agent/output.png}}
+\scnrelfrom{пример выходной конструкции}{\scnfileimage[30em]{images/message-reply-agent/message_reply_output.png}}
 
 \scntext{язык реализации агента}{c++}
 
