@@ -22,7 +22,7 @@
 \begin{scnrelfromvector}{алгоритм}
   \scnfileitem{Генерирация узла сообщения в базе знаний, идентификация полученного текстового файла как текст этого сообщения}
   \scnfileitem{Генерирация необходимой конструкции для вызова агента интерпретации неатомарного действия. Пример этой конструкции показан ниже}
-  \scnfileimage[20em]{images/message-reply-agent/gener.png}
+  \scnfileimage[20em]{images/message-reply-agent/message_processing_program_example.png}
   \scnfileitem{Ожидание завершения работы агента интерпретации и выполнение поиска ответного сообщения, сгенерированное во время работы агента интерпретации}
   \scnfileitem{Добавление ответного сообщения к ответной структуре}
 \end{scnrelfromvector}
