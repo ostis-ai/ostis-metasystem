@@ -24,13 +24,13 @@
                 <point x="52" y="598.5"/>
             </points>
         </contour>
+        <node type="node/const/perm/group" idtf="action_reply_to_message" shapeColor="193" id="94097190589312" parent="0" left="0" top="0" right="159.797" bottom="26" textColor="164" text_angle="0" text_font="Times New Roman [Arial]" font_size="10" x="251.5" y="178" haveBus="false" idtf_pos="5">
+            <content type="0" mime_type="" content_visibility="false" file_name=""/>
+        </node>
         <node type="node/const/perm/general" idtf="" shapeColor="0" id="94097191226592" parent="0" x="87.5" y="271" haveBus="false" idtf_pos="0">
             <content type="1" mime_type="content/term" content_visibility="true" file_name=""><![CDATA[что такое множество?]]></content>
         </node>
         <node type="node/const/perm/group" idtf="question_finished_successfully" shapeColor="0" id="94097173692880" parent="0" left="0" top="0" right="195.453" bottom="26" textColor="164" text_angle="0" text_font="Times New Roman [Arial]" font_size="10" x="196" y="177.5" haveBus="false" idtf_pos="4">
-            <content type="0" mime_type="" content_visibility="false" file_name=""/>
-        </node>
-        <node type="node/const/perm/group" idtf="action_interpret_non_atomic_action" shapeColor="0" id="94097190589312" parent="0" left="0" top="0" right="227" bottom="26" textColor="164" text_angle="0" text_font="Times New Roman [Arial]" font_size="10" x="251.5" y="178" haveBus="false" idtf_pos="5">
             <content type="0" mime_type="" content_visibility="false" file_name=""/>
         </node>
         <node type="node/const/perm/group" idtf="question_finished" shapeColor="0" id="94097174863152" parent="0" left="0" top="0" right="117.094" bottom="26" textColor="164" text_angle="0" text_font="Times New Roman [Arial]" font_size="10" x="157" y="220.5" haveBus="false" idtf_pos="4">
