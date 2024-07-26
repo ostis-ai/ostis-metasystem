@@ -38,19 +38,14 @@ class CleanTextGenerationAgent(ScAgentClassic):
     def run(self, action_element: ScAddr) -> ScResult:              
         self.logger.info('Non-official API raw text processor began to run...')
 
-        raw_text_node_structure, language_node, message_node = get_action_arguments(action_element, 3)
-        if not raw_text_node_structure.is_valid() or not language_node.is_valid() or not message_node.is_valid():
+        raw_text_structure, language_node, message_node = get_action_arguments(action_element, 3)
+        if not raw_text_structure.is_valid() or not language_node.is_valid() or not message_node.is_valid():
             self.logger.error('Error: invalid arguments are passed.')
             return ScResult.ERROR_INVALID_PARAMS
 
         raw_text_node_template = ScTemplate()
         raw_text_node_template.triple(
-            raw_text_node_structure,
-            sc_types.EDGE_ACCESS_VAR_POS_TEMP,
-            sc_types.NODE_VAR_STRUCT >> "_link_struct",
-        )
-        raw_text_node_template.triple(
-            "_link_struct",
+            raw_text_structure,
             sc_types.EDGE_ACCESS_VAR_POS_PERM,
             sc_types.LINK_VAR >> "_link",
         )
@@ -71,6 +66,7 @@ class CleanTextGenerationAgent(ScAgentClassic):
         if not isinstance(raw_text, str):
             self.logger.error(f'Error: your raw text link must be string type, but text of yours is {type(raw_text)}')
             return ScResult.ERROR_INVALID_TYPE
+        self.logger.info('Raw text:' + raw_text)
 
         # Trying to get clean text        
         try:
@@ -84,7 +80,7 @@ class CleanTextGenerationAgent(ScAgentClassic):
             self.logger.error(f'Error: Looks like that model {constants.NON_OFFICIAL_API_DEFAULT_MODEL} does not work. Try to change one in configs.')
             return ScResult.ERROR
 
-        self.logger.debug(clean_text)
+        self.logger.debug('Clean text:' + clean_text)
 
         # Creating answer and finishing agent work
         answer_link = create_link(clean_text, ScLinkContentType.STRING)        
@@ -107,12 +103,13 @@ class CleanTextGenerationAgent(ScAgentClassic):
     
     def _get_clean_text(self, raw_text: str, language: str) -> str:
         client = Client()
+        self.logger.info('Language'+ language)
         messages = [{'role': 'user', 'content': constants.PROMPTS[language].format(raw_text)}]
+        self.logger.info('Prompt:' + constants.PROMPTS[language].format(raw_text))
         response = client.chat.completions.create(
             model='gpt-3.5-turbo',
             messages=messages,
             temperature=0,
         )
-        self.logger.info(f'Successfully cleaned text for you\n: {response}')
-        self.logger.info(response.choices[0].message.content)
-        return response.choices[0].message.content      
+        self.logger.info(f'Successfully cleaned text for you\n: {response}\n' + response.choices[0].message.content)
+        return response.choices[0].message.content   

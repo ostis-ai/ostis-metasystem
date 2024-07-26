@@ -30,23 +30,20 @@ message_processing_program = [*
     _<- question;
     _<- action_generate_response;
     _-> rrel_1:: _message;
-    _-> rrel_2:: rrel_dynamic_argument:: _answer_structure;
+    _-> rrel_2:: rrel_dynamic_argument:: _structures_set;
     _=> nrel_then:: .._action_translate_structures_into_natural_language;;
 
     .._action_translate_structures_into_natural_language
     _<- question;
     _<- action_translate_structures_into_natural_language;
-    _-> rrel_1:: _answer_tuple;
+    _-> rrel_1:: _structures_set;
+    _-> rrel_2:: rrel_dynamic_argument:: _translation_node;
     _=> nrel_then:: .._action_get_clean_text;;
-
-    .._answer_tuple
-    _<- sc_node_tuple;
-    _->_answer_structure;;
 
   .._action_get_clean_text
     _<- question;
     _<- action_get_clean_text;
-    _-> rrel_1:: _answer_structure;
+    _-> rrel_1:: _translation_node;
     _-> rrel_2:: lang_ru;
     _-> rrel_3:: _message;;
   *];;
