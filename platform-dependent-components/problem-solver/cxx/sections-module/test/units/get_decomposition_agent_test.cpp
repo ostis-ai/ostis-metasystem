@@ -49,7 +49,6 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition)
   testAction.InitiateAndWait(WAIT_TIME);
   ScStructure result = testAction.GetResult();
 
-
   ScIterator3Ptr const it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Link);
   EXPECT_TRUE(it3->Next());
   std::string decompositionContent;
