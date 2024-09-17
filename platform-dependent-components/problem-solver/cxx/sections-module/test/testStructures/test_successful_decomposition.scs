@@ -1,12 +1,12 @@
 nrel_section_base_order
 <- sc_node_norole_relation;;
 
-test_action_node <- question; action_get_decomposition;
+test_action_node <- action; action_get_decomposition;
 -> rrel_1: root_section;
 -> rrel_3: lang_ru;
 -> rrel_4: nrel_entity_decomposition;;
 
-test_action_node2 <- question; action_get_decomposition;
+test_action_node2 <- action; action_get_decomposition;
 -> rrel_1: root_section;
 -> rrel_2: [2];
 -> rrel_3: lang_ru;
