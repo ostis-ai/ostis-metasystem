@@ -14,25 +14,7 @@
 
 using namespace sectionsModule;
 
-SC_IMPLEMENT_MODULE(SectionsModule)
-
-sc_result SectionsModule::InitializeImpl()
-{
-  if (!sectionsModule::SectionsKeynodes::InitGlobal())
-    return SC_RESULT_ERROR;
-
-  SC_AGENT_REGISTER(GetDecompositionAgent)
-  SC_AGENT_REGISTER(AddSectionAgent)
-  SC_AGENT_REGISTER(RemoveSectionAgent)
-
-  return SC_RESULT_OK;
-}
-
-sc_result SectionsModule::ShutdownImpl()
-{
-  SC_AGENT_UNREGISTER(GetDecompositionAgent)
-  SC_AGENT_UNREGISTER(AddSectionAgent)
-  SC_AGENT_UNREGISTER(RemoveSectionAgent)
-
-  return SC_RESULT_OK;
-}
+SC_MODULE_REGISTER(SectionsModule)
+    ->Agent<GetDecompositionAgent>()
+    ->Agent<AddSectionAgent>()
+    ->Agent<RemoveSectionAgent>();

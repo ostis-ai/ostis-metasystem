@@ -8,14 +8,6 @@
 
 #include "sc-memory/sc_module.hpp"
 
-#include "generated/subject_domain_module.generated.hpp"
-
 class SectionsModule : public ScModule
 {
-  SC_CLASS(LoadOrder(100))
-  SC_GENERATED_BODY()
-
-  virtual sc_result InitializeImpl() override;
-
-  virtual sc_result ShutdownImpl() override;
 };

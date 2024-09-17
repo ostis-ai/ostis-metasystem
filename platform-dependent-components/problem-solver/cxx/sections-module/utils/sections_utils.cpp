@@ -45,8 +45,7 @@ ScAddr sections_utils::FindSectionByName(ScMemoryContext * context, std::string 
   {
     for (ScAddr const & link : links)
     {
-      ScAddr section =
-          utils::IteratorUtils::getAnyByInRelation(context, link, scAgentsCommon::CoreKeynodes::nrel_main_idtf);
+      ScAddr section = utils::IteratorUtils::getAnyByInRelation(context, link, ScKeynodes::nrel_main_idtf);
       if (context->IsElement(section))
       {
         sectionAddr = section;

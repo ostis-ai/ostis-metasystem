@@ -21,7 +21,6 @@ set(SOURCES
     "builder/sections_builder.cpp"
     "constants/sections_aliases.cpp"
     "generator/sections_generator.cpp"
-    "keynodes/sections_keynodes.cpp"
     "utils/set_utils.cpp"
     "utils/sections_utils.cpp"
 )
@@ -36,8 +35,6 @@ target_include_directories(sections-module
     PUBLIC ${SC_MEMORY_SRC}
     PUBLIC ${SC_KPM_SRC}
 )
-
-sc_codegen_ex(sections-module ${SECTIONS_MODULE_SRC} ${SECTIONS_MODULE_SRC}/generated)
 
 if(${SC_CLANG_FORMAT_CODE})
     target_clangformat_setup(sections-module)

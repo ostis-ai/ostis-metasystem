@@ -9,8 +9,6 @@ macro(sc_target_dependencies)
 endmacro()
 
 macro(sc_linux_target_dependencies)
-    set(SC_CODEGEN_TOOL "${SC_BIN_PATH}/sc-code-generator")
-
     find_package(nlohmann_json 3.2.0 REQUIRED)
 
     # for std::thread support
