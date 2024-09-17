@@ -3,7 +3,6 @@ set(IDENTIFIERS_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
 set(SOURCES
     "agent/translate_main_system_idtfs_from_sc_to_file_agent.cpp"
     "agent/translate_main_system_idtfs_from_sc_to_file_agent.hpp"
-    "keynodes/identifiers_keynodes.cpp"
     "keynodes/identifiers_keynodes.hpp"
     "identifiers_module.cpp"
     "identifiers_module.hpp"
@@ -19,8 +18,6 @@ target_include_directories(identifiers-module
     PUBLIC ${SC_MEMORY_SRC}
     PUBLIC ${SC_KPM_SRC}
 )
-
-sc_codegen_ex(identifiers-module ${IDENTIFIERS_MODULE_SRC} ${IDENTIFIERS_MODULE_SRC}/generated)
 
 if(${SC_CLANG_FORMAT_CODE})
     target_clangformat_setup(identifiers-module)

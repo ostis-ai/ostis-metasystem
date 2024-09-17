@@ -6,22 +6,19 @@
 
 #pragma once
 
-#include "sc-memory/kpm/sc_agent.hpp"
-
+#include <sc-memory/sc_agent.hpp>
 #include <nlohmann/json.hpp>
-
-#include "sc-agents-common/keynodes/coreKeynodes.hpp"
-
-#include "generated/get_decomposition_agent.generated.hpp"
 
 using json = nlohmann::json;
 
 namespace sectionsModule
 {
-class GetDecompositionAgent : public ScAgent
+class GetDecompositionAgent : public ScActionInitiatedAgent
 {
-  SC_CLASS(Agent, Event(scAgentsCommon::CoreKeynodes::question_initiated, ScEvent::Type::AddOutputEdge))
-  SC_GENERATED_BODY()
+public:
+  ScAddr GetActionClass() const override;
+
+  ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 
 private:
   bool CheckActionClass(ScAddr const & actionNode);

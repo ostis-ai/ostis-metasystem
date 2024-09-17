@@ -6,17 +6,16 @@
 
 #pragma once
 
-#include "sc-memory/kpm/sc_agent.hpp"
-#include "sc-agents-common/keynodes/coreKeynodes.hpp"
-
-#include "translate_main_system_idtfs_from_sc_to_file_agent.generated.hpp"
+#include <sc-memory/sc_agent.hpp>
 
 namespace identifiersModule
 {
-class TranslateMainSystemIdtfsFromScToFileAgent : public ScAgent
+class TranslateMainSystemIdtfsFromScToFileAgent : public ScActionInitiatedAgent
 {
-  SC_CLASS(Agent, Event(scAgentsCommon::CoreKeynodes::question_initiated, ScEvent::Type::AddOutputEdge))
-  SC_GENERATED_BODY()
+public:
+  ScAddr GetActionClass() const override;
+
+  ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 
   std::map<ScType, std::string> ScTypesOfNodesWithSCsClasses = {
       {ScType::Const, "sc_node"},

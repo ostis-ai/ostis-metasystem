@@ -8,19 +8,11 @@
 
 #include "sc-memory/sc_module.hpp"
 
-#include "identifiers_module.generated.hpp"
-
 namespace identifiersModule
 {
 
 class IdentifiersModule : public ScModule
 {
-  SC_CLASS(LoadOrder(100))
-  SC_GENERATED_BODY()
-
-  sc_result InitializeImpl() override;
-
-  sc_result ShutdownImpl() override;
 };
 
 }  // namespace identifiersModule

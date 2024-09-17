@@ -4,8 +4,6 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "sc-agents-common/keynodes/coreKeynodes.hpp"
-
 #include "constants/sections_aliases.hpp"
 #include "keynodes/sections_keynodes.hpp"
 
@@ -57,7 +55,7 @@ void sections_builder::buildNextSectionTemplate(
       ScType::EdgeDCommonVar >> sections_aliases::BASE_SEQUENCE_EDGE,
       sections_aliases::NEXT_SECTION_ARC,
       ScType::EdgeAccessVarPosPerm,
-      scAgentsCommon::CoreKeynodes::nrel_basic_sequence);
+      ScKeynodes::nrel_basic_sequence);
 }
 
 void sections_builder::buildPreviousSectionTemplate(
@@ -75,7 +73,7 @@ void sections_builder::buildPreviousSectionTemplate(
       ScType::EdgeDCommonVar >> sections_aliases::BASE_SEQUENCE_EDGE,
       sections_aliases::SECTION_EDGE,
       ScType::EdgeAccessVarPosPerm,
-      scAgentsCommon::CoreKeynodes::nrel_basic_sequence);
+      ScKeynodes::nrel_basic_sequence);
 }
 
 }  // namespace sectionsModule
