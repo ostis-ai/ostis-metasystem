@@ -45,10 +45,7 @@ ScResult AddSectionAgent::DoProgram(ScActionInitiatedEvent const & event, ScActi
 
   std::string sectionName;
   m_context.GetLinkContent(sectionNameAddr, sectionName);
-  SC_LOG_DEBUG(
-      R"(AddSectionAgent: new section name is ")"
-      << sectionName <<
-      R"(".)");
+  SC_LOG_DEBUG(R"(AddSectionAgent: new section name is ")" << sectionName << R"(".)");
   ScAddr sectionAddr;
   if (m_context.IsElement(parentSectionAddr))
     sectionAddr = GenerateSection(sectionName, parentSectionAddr, langAddr);
