@@ -1,15 +1,15 @@
-test_action_node <- question; action_remove_section;
+test_action_node <- action; action_remove_section;
 -> rrel_1: section_OSTIS_technology;
 -> rrel_2: knowledge_base_IMS;;
 
-test_action_node2 <- question; action_remove_section;
+test_action_node2 <- action; action_remove_section;
 -> rrel_1: doc_IMS;
 -> rrel_2: section_project_OSTIS_perspectives_current_state_history_of_evolution_and_use;;
 
-test_action_node3 <- question; action_remove_section;
+test_action_node3 <- action; action_remove_section;
 -> rrel_2: section_inner_project_IMS_history_and_development_programme;;
 
-test_action_node4 <- question; action_remove_section;
+test_action_node4 <- action; action_remove_section;
 -> rrel_1: section_inner_project_IMS_history_and_development_programme;;
 
 
