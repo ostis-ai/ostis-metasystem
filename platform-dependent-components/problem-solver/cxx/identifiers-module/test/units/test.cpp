@@ -62,7 +62,7 @@ TEST_F(AgentTest, VoidTest)
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
   std::string const fileContent = GetFileContent();
@@ -80,7 +80,7 @@ TEST_F(AgentTest, CorrectTest)
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
   std::string const & space = R"({"space", "sc_node_class"})";
@@ -109,7 +109,7 @@ TEST_F(AgentTest, IncorrectTest)
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
   std::string const fileContent = GetFileContent();
@@ -125,7 +125,7 @@ TEST_F(AgentTest, IncorrectTest)
 
   bool const trueResult = IsSubstringOfFile(trueInput, fileContent);
   bool const falseResult = IsSubstringOfFile(falseInput, fileContent);
-  SC_LOG_WARNING(fileContent);
+
   EXPECT_TRUE(!falseResult && trueResult);
   context.UnsubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
 }
@@ -138,7 +138,7 @@ TEST_F(AgentTest, ManySystemIdtfsTest)
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedUnsuccessfully());
 
   context.UnsubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();

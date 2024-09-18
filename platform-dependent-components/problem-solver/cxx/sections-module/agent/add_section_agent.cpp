@@ -22,16 +22,7 @@ namespace sectionsModule
 {
 ScResult AddSectionAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  ScAddr const & questionNode = m_context.GetEdgeTarget(event.GetArc());
-  if (!CheckActionClass(questionNode))
-    return action.FinishSuccessfully();
-
-  SC_LOG_DEBUG("AddSectionAgent started");
-
-  ScAddr sectionNameAddr = IteratorUtils::getAnyByOutRelation(&m_context, questionNode, ScKeynodes::rrel_1);
-  ScAddr parentSectionAddr = IteratorUtils::getAnyByOutRelation(&m_context, questionNode, ScKeynodes::rrel_2);
-  ScAddr langAddr = IteratorUtils::getAnyByOutRelation(&m_context, questionNode, ScKeynodes::rrel_3);
-
+  auto const [sectionNameAddr, parentSectionAddr, langAddr] = action.GetArguments<3>();
   if (!m_context.IsElement(sectionNameAddr))
   {
     SC_LOG_ERROR("AddSectionAgent: section identifier link not found.");
@@ -58,10 +49,8 @@ ScResult AddSectionAgent::DoProgram(ScActionInitiatedEvent const & event, ScActi
     return action.FinishUnsuccessfully();
   }
   ScStructure result = m_context.GenerateStructure();
-  for (auto const & identifierNode : (ScAddrVector){sectionAddr})
-    result << identifierNode;
+  result << sectionAddr;
   action.SetResult(result);
-  SC_LOG_DEBUG("AddSectionAgent finished");
   return action.FinishSuccessfully();
 }
 

@@ -46,7 +46,7 @@ TEST_F(AddSectionTest, successful_add_section_to_decomposition)
 
   context.SubscribeAgent<sectionsModule::AddSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
   ScIterator3Ptr it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
@@ -72,7 +72,7 @@ TEST_F(AddSectionTest, successful_add_section_empty_decomposition)
 
   context.SubscribeAgent<sectionsModule::AddSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
 
   ScStructure result = testAction.GetResult();
 
@@ -98,7 +98,7 @@ TEST_F(AddSectionTest, add_section_invalid_parameters_1)
 
   context.SubscribeAgent<sectionsModule::AddSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedUnsuccessfully());
   context.UnsubscribeAgent<sectionsModule::AddSectionAgent>();
 }
@@ -115,7 +115,7 @@ TEST_F(AddSectionTest, add_section_invalid_parameters_3)
 
   context.SubscribeAgent<sectionsModule::AddSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedUnsuccessfully());
   context.UnsubscribeAgent<sectionsModule::AddSectionAgent>();
 }
@@ -132,7 +132,7 @@ TEST_F(AddSectionTest, add_section_without_parent)
 
   context.SubscribeAgent<sectionsModule::AddSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
   ScIterator3Ptr it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);

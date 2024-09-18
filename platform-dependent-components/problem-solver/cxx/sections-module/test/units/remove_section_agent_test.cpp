@@ -46,7 +46,7 @@ TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition)
 
   context.SubscribeAgent<sectionsModule::RemoveSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
   ScIterator3Ptr it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
@@ -73,7 +73,7 @@ TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition_2)
   ScAddr sectionAddr = utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, ScKeynodes::rrel_1);
   ScAddr parentSectionAddr = utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, ScKeynodes::rrel_2);
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
 
   ScStructure result = testAction.GetResult();
 
@@ -106,7 +106,7 @@ TEST_F(RemoveSectionTest, remove_section_invalid_parameters_1)
 
   context.SubscribeAgent<sectionsModule::RemoveSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedUnsuccessfully());
 
   context.UnsubscribeAgent<sectionsModule::RemoveSectionAgent>();
@@ -126,7 +126,7 @@ TEST_F(RemoveSectionTest, remove_section_without_parent)
 
   ScAddr sectionAddr = utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, ScKeynodes::rrel_1);
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
 
   EXPECT_TRUE(context.HelperCheckEdge(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
   ScTemplate scTemplate;

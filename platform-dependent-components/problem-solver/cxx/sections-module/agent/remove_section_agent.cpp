@@ -22,33 +22,25 @@ namespace sectionsModule
 {
 ScResult RemoveSectionAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  ScAddr const & questionNode = m_context.GetEdgeTarget(event.GetArc());
-  if (!CheckActionClass(questionNode))
-    return action.FinishSuccessfully();
-
-  SC_LOG_DEBUG("RemoveSectionAgent started");
-
-  ScAddr sectionAddr = IteratorUtils::getAnyByOutRelation(&m_context, questionNode, ScKeynodes::rrel_1);
-  ScAddr parentSectionAddr = IteratorUtils::getAnyByOutRelation(&m_context, questionNode, ScKeynodes::rrel_2);
+  ScAddr sectionAddr = IteratorUtils::getAnyByOutRelation(&m_context, action, ScKeynodes::rrel_1);
+  ScAddr parentSectionAddr = IteratorUtils::getAnyByOutRelation(&m_context, action, ScKeynodes::rrel_2);
 
   if (!m_context.IsElement(sectionAddr))
   {
-    SC_LOG_ERROR("RemoveSectionAgent: section node not found.");
+    SC_LOG_ERROR("Section node not found.");
     return action.FinishUnsuccessfully();
   }
   bool isSuccess = m_context.IsElement(parentSectionAddr) ? RemoveSection(sectionAddr, parentSectionAddr)
                                                           : RemoveSection(sectionAddr);
   if (!isSuccess)
   {
-    SC_LOG_ERROR("RemoveSectionAgent: error in the section deletion.");
+    SC_LOG_ERROR("Error in the section deletion.");
     return action.FinishUnsuccessfully();
   }
 
   ScStructure result = m_context.GenerateStructure();
-  for (auto const & answerElement : (ScAddrVector){sectionAddr})
-    result << answerElement;
+  result << sectionAddr;
   action.SetResult(result);
-  SC_LOG_DEBUG("RemoveSectionAgent finished");
   return action.FinishSuccessfully();
 }
 
@@ -64,9 +56,8 @@ bool RemoveSectionAgent::CheckActionClass(ScAddr const & actionNode)
 
 bool RemoveSectionAgent::RemoveSection(ScAddr const & section, ScAddr const & parentSection)
 {
-  SC_LOG_DEBUG("RemoveSectionAgent: section system idtf is " + m_context.HelperGetSystemIdtf(section) + ".");
-  SC_LOG_DEBUG(
-      "RemoveSectionAgent: parent section system idtf is " + m_context.HelperGetSystemIdtf(parentSection) + ".");
+  SC_LOG_DEBUG("Section system idtf is " + m_context.HelperGetSystemIdtf(section) + ".");
+  SC_LOG_DEBUG("Parent section system idtf is " + m_context.HelperGetSystemIdtf(parentSection) + ".");
   ScTemplate scTemplate;
   sections_builder::buildDecompositionTupleTemplate(scTemplate, parentSection, section);
   ScTemplateSearchResult searchResult;
@@ -85,7 +76,7 @@ bool RemoveSectionAgent::RemoveSection(ScAddr const & section, ScAddr const & pa
 
 bool RemoveSectionAgent::RemoveSection(ScAddr const & section)
 {
-  SC_LOG_DEBUG("RemoveSectionAgent: section system idtf is " << m_context.HelperGetSystemIdtf(section) << ".");
+  SC_LOG_DEBUG("Section system idtf is " << m_context.HelperGetSystemIdtf(section) << ".");
   ScTemplate scTemplate;
   sections_builder::buildDecompositionTupleTemplate(scTemplate, section);
   ScTemplateSearchResult searchResult;
@@ -96,8 +87,7 @@ bool RemoveSectionAgent::RemoveSection(ScAddr const & section)
     for (size_t i = 0; i < searchResult.Size(); i++)
     {
       ScAddr parentSection = searchResult[i][sections_aliases::PARENT_SECTION];
-      SC_LOG_DEBUG(
-          "RemoveSectionAgent: parent section system idtf is " << m_context.HelperGetSystemIdtf(parentSection) << ".");
+      SC_LOG_DEBUG("Parent section system idtf is " << m_context.HelperGetSystemIdtf(parentSection) << ".");
       HandleSection(searchResult[i], section);
       HandleParentSection(searchResult[i], parentSection);
     }
@@ -145,9 +135,7 @@ void RemoveSectionAgent::HandleNeighboringSections(ScAddr const & tuple, ScAddr 
     previousSection = previousSectionSearchResult[0][sections_aliases::SECTION_NODE];
     previousSectionEdge = previousSectionSearchResult[0][sections_aliases::PREVIOUS_SECTION_ARC];
     currentSectionEdge = previousSectionSearchResult[0][sections_aliases::SECTION_EDGE];
-    SC_LOG_DEBUG(
-        "RemoveSectionAgent: previous neighboring section system idtf is "
-        + m_context.HelperGetSystemIdtf(previousSection) + ".");
+    SC_LOG_DEBUG("Previous neighboring section system idtf is " + m_context.HelperGetSystemIdtf(previousSection) + ".");
   }
 
   ScTemplate nextSectionTemplate;
@@ -162,9 +150,7 @@ void RemoveSectionAgent::HandleNeighboringSections(ScAddr const & tuple, ScAddr 
     nextSection = nextSectionSearchResult[0][sections_aliases::SECTION_NODE];
     nextSectionEdge = nextSectionSearchResult[0][sections_aliases::NEXT_SECTION_ARC];
     currentSectionEdge = nextSectionSearchResult[0][sections_aliases::SECTION_EDGE];
-    SC_LOG_DEBUG(
-        "RemoveSectionAgent: next neighboring section system idtf is " << m_context.HelperGetSystemIdtf(nextSection)
-                                                                       << ".");
+    SC_LOG_DEBUG("Next neighboring section system idtf is " << m_context.HelperGetSystemIdtf(nextSection) << ".");
   }
 
   // If current element is the first and the last

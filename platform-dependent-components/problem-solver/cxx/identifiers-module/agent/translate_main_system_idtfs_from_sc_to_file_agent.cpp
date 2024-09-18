@@ -12,13 +12,6 @@ using namespace identifiersModule;
 
 ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  ScAddr const & actionAddr = event.GetOtherElement();
-
-  if (!CheckAction(actionAddr))
-    return action.FinishSuccessfully();
-
-  SC_LOG_DEBUG("TranslateMainSystemIdtfsFromScToFileAgent started");
-
   // TODO: replace by ScKeynodes::nrel_system_identifier after release
   ScAddr const & nrelSystemIdtf = m_context.HelperFindBySystemIdtf("nrel_system_identifier");
 
@@ -55,14 +48,14 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedE
       SC_LOG_ERROR(exception.Description());
 
       ScStructure result = m_context.GenerateStructure();
-      result << actionAddr;
-      action.SetResult(false);
+      result << action;
+      action.SetResult(result);
       return action.FinishUnsuccessfully();
     }
   }
 
   std::string strIdtfs(streamIdtfs.str());
-  // Remove last symbols "," and "n"
+  // Remove last symbols "," and "\n"
   if (!strIdtfs.empty())
   {
     strIdtfs.pop_back();
@@ -77,13 +70,11 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedE
   if (resultOfWrite)
   {
     SC_LOG_DEBUG("File has been created");
-    SC_LOG_DEBUG("TranslateMainSystemIdtfsFromScToFileAgent finished");
     return action.FinishSuccessfully();
   }
   else
   {
     SC_LOG_ERROR("File hasn't been created");
-    SC_LOG_DEBUG("TranslateMainSystemIdtfsFromScToFileAgent finished");
     return action.FinishUnsuccessfully();
   }
 }
@@ -171,7 +162,6 @@ bool TranslateMainSystemIdtfsFromScToFileAgent::WriteInFile(std::string const & 
 {
   try
   {
-    SC_LOG_INFO(IDENTIFIERS_MODULE_PATH);
     std::ofstream file(IDENTIFIERS_MODULE_PATH "identifiers.txt");
     if (file.is_open())
     {

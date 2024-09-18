@@ -46,7 +46,7 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition)
 
   context.SubscribeAgent<sectionsModule::GetDecompositionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
   ScIterator3Ptr const it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Link);
@@ -73,7 +73,7 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition_with_level)
 
   context.SubscribeAgent<sectionsModule::GetDecompositionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
   ScIterator3Ptr it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Link);
