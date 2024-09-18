@@ -57,12 +57,12 @@ TEST_F(AgentTest, VoidTest)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "void_test.scs");
-  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
   std::string const fileContent = GetFileContent();
@@ -75,12 +75,12 @@ TEST_F(AgentTest, CorrectTest)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "correct_test.scs");
-  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
   std::string const & space = R"({"space", "sc_node_class"})";
@@ -104,12 +104,12 @@ TEST_F(AgentTest, IncorrectTest)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "incorrect_test.scs");
-  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
   std::string const fileContent = GetFileContent();
@@ -125,7 +125,7 @@ TEST_F(AgentTest, IncorrectTest)
 
   bool const trueResult = IsSubstringOfFile(trueInput, fileContent);
   bool const falseResult = IsSubstringOfFile(falseInput, fileContent);
-  SC_LOG_WARNING(fileContent);
+
   EXPECT_TRUE(!falseResult && trueResult);
   context.UnsubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
 }
@@ -134,11 +134,11 @@ TEST_F(AgentTest, ManySystemIdtfsTest)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "many_system_idtfs_test.scs");
-  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedUnsuccessfully());
 
   context.UnsubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();

@@ -22,30 +22,21 @@ namespace sectionsModule
 {
 ScResult AddSectionAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  ScAddr const & questionNode = m_context.GetEdgeTarget(event.GetArc());
-  if (!CheckActionClass(questionNode))
-    return action.FinishSuccessfully();
-
-  SC_LOG_DEBUG("AddSectionAgent started");
-
-  ScAddr sectionNameAddr = IteratorUtils::getAnyByOutRelation(&m_context, questionNode, ScKeynodes::rrel_1);
-  ScAddr parentSectionAddr = IteratorUtils::getAnyByOutRelation(&m_context, questionNode, ScKeynodes::rrel_2);
-  ScAddr langAddr = IteratorUtils::getAnyByOutRelation(&m_context, questionNode, ScKeynodes::rrel_3);
-
+  auto const [sectionNameAddr, parentSectionAddr, langAddr] = action.GetArguments<3>();
   if (!m_context.IsElement(sectionNameAddr))
   {
-    SC_LOG_ERROR("AddSectionAgent: section identifier link not found.");
+    SC_AGENT_LOG_ERROR("Section identifier link not found.");
     return action.FinishUnsuccessfully();
   }
   if (!m_context.IsElement(langAddr))
   {
-    SC_LOG_ERROR("AddSectionAgent: lang node not found.");
+    SC_AGENT_LOG_ERROR("Lang node not found.");
     return action.FinishUnsuccessfully();
   }
 
   std::string sectionName;
   m_context.GetLinkContent(sectionNameAddr, sectionName);
-  SC_LOG_DEBUG(R"(AddSectionAgent: new section name is ")" << sectionName << R"(".)");
+  SC_AGENT_LOG_DEBUG(R"(New section name is ")" << sectionName << R"(".)");
   ScAddr sectionAddr;
   if (m_context.IsElement(parentSectionAddr))
     sectionAddr = GenerateSection(sectionName, parentSectionAddr, langAddr);
@@ -54,25 +45,18 @@ ScResult AddSectionAgent::DoProgram(ScActionInitiatedEvent const & event, ScActi
 
   if (!m_context.IsElement(sectionAddr))
   {
-    SC_LOG_ERROR("AddSectionAgent: section is not generated.");
+    SC_AGENT_LOG_ERROR("Section is not generated.");
     return action.FinishUnsuccessfully();
   }
   ScStructure result = m_context.GenerateStructure();
-  for (auto const & identifierNode : (ScAddrVector){sectionAddr})
-    result << identifierNode;
+  result << sectionAddr;
   action.SetResult(result);
-  SC_LOG_DEBUG("AddSectionAgent finished");
   return action.FinishSuccessfully();
 }
 
 ScAddr AddSectionAgent::GetActionClass() const
 {
   return SectionsKeynodes::action_add_section;
-}
-
-bool AddSectionAgent::CheckActionClass(ScAddr const & actionNode)
-{
-  return m_context.HelperCheckEdge(SectionsKeynodes::action_add_section, actionNode, ScType::EdgeAccessConstPosPerm);
 }
 
 ScAddr AddSectionAgent::GenerateSection(
@@ -89,18 +73,17 @@ ScAddr AddSectionAgent::GenerateSection(
     newSection = sections_generator::GenerateSection(&m_context, sectionName, lang, true);
   else
   {
-    if (m_context.HelperCheckEdge(decompositionTuple, newSection, ScType::EdgeAccessConstPosPerm)
+    if (m_context.CheckConnector(decompositionTuple, newSection, ScType::EdgeAccessConstPosPerm)
         || parentSection == newSection)
       return {};
   }
 
   ScAddr lastSection = sections_utils::GetLastSubSection(&m_context, decompositionTuple);
-  ScAddr newSectionArc = m_context.CreateEdge(ScType::EdgeAccessConstPosPerm, decompositionTuple, newSection);
+  ScAddr newSectionArc = m_context.GenerateConnector(ScType::EdgeAccessConstPosPerm, decompositionTuple, newSection);
   if (m_context.IsElement(lastSection))
   {
-    SC_LOG_DEBUG(
-        "AddSectionAgent: last section system idtf is \"" + m_context.HelperGetSystemIdtf(lastSection) + "\".");
-    ScIterator5Ptr lastSectionIterator = m_context.Iterator5(
+    SC_AGENT_LOG_DEBUG("Last section system idtf is \"" + m_context.GetElementSystemIdentifier(lastSection) + "\".");
+    ScIterator5Ptr lastSectionIterator = m_context.CreateIterator5(
         decompositionTuple,
         ScType::EdgeAccessConstPosPerm,
         lastSection,
@@ -114,14 +97,14 @@ ScAddr AddSectionAgent::GenerateSection(
 
       utils::GenerationUtils::generateRelationBetween(
           &m_context, previousSectionArc, newSectionArc, ScKeynodes::nrel_basic_sequence);
-      m_context.CreateEdge(ScType::EdgeAccessConstPosTemp, SectionsKeynodes::rrel_last, newSectionArc);
+      m_context.GenerateConnector(ScType::EdgeAccessConstPosTemp, SectionsKeynodes::rrel_last, newSectionArc);
     }
   }
   else
   {
-    SC_LOG_DEBUG("AddSectionAgent: added section is new.");
-    m_context.CreateEdge(ScType::EdgeAccessConstPosPerm, ScKeynodes::rrel_1, newSectionArc);
-    m_context.CreateEdge(ScType::EdgeAccessConstPosTemp, SectionsKeynodes::rrel_last, newSectionArc);
+    SC_AGENT_LOG_DEBUG("Added section is new.");
+    m_context.GenerateConnector(ScType::EdgeAccessConstPosPerm, ScKeynodes::rrel_1, newSectionArc);
+    m_context.GenerateConnector(ScType::EdgeAccessConstPosTemp, SectionsKeynodes::rrel_last, newSectionArc);
   }
 
   sectionsModule::SetUtils::AddToSets(&m_context, parentSection, {SectionsKeynodes::non_atomic_section});
