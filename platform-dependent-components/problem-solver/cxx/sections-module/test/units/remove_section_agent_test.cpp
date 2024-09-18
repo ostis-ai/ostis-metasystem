@@ -36,7 +36,7 @@ TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition)
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_remove_section.scs");
 
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   ScAddr sectionAddr = utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, ScKeynodes::rrel_1);
@@ -46,13 +46,13 @@ TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition)
 
   context.SubscribeAgent<sectionsModule::RemoveSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
   EXPECT_TRUE(it3->Next());
 
-  EXPECT_TRUE(context.HelperCheckEdge(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.CheckConnector(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
   EXPECT_EQ(decompositionSize - utils::CommonUtils::getSetPower(&context, decompositionTupleAddr), 1u);
 
   context.UnsubscribeAgent<sectionsModule::RemoveSectionAgent>();
@@ -65,7 +65,7 @@ TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition_2)
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_remove_section.scs");
 
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node2");
+  ScAddr testActionNode = context.SearchElementBySystemIdentifier("test_action_node2");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<sectionsModule::RemoveSectionAgent>();
@@ -73,11 +73,11 @@ TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition_2)
   ScAddr sectionAddr = utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, ScKeynodes::rrel_1);
   ScAddr parentSectionAddr = utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, ScKeynodes::rrel_2);
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
 
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
   EXPECT_TRUE(it3->Next());
   ScTemplate scTemplate;
   scTemplate.Quintuple(
@@ -87,9 +87,9 @@ TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition_2)
       ScType::EdgeAccessVarPosPerm,
       SectionsKeynodes::nrel_entity_decomposition);
   ScTemplateSearchResult searchResult;
-  context.HelperSearchTemplate(scTemplate, searchResult);
+  context.SearchByTemplate(scTemplate, searchResult);
   EXPECT_TRUE(searchResult.IsEmpty());
-  EXPECT_TRUE(context.HelperCheckEdge(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.CheckConnector(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
 
   context.UnsubscribeAgent<sectionsModule::RemoveSectionAgent>();
 }
@@ -101,12 +101,12 @@ TEST_F(RemoveSectionTest, remove_section_invalid_parameters_1)
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_remove_section.scs");
 
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node3");
+  ScAddr testActionNode = context.SearchElementBySystemIdentifier("test_action_node3");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<sectionsModule::RemoveSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedUnsuccessfully());
 
   context.UnsubscribeAgent<sectionsModule::RemoveSectionAgent>();
@@ -119,16 +119,16 @@ TEST_F(RemoveSectionTest, remove_section_without_parent)
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_remove_section.scs");
 
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node4");
+  ScAddr testActionNode = context.SearchElementBySystemIdentifier("test_action_node4");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<sectionsModule::RemoveSectionAgent>();
 
   ScAddr sectionAddr = utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, ScKeynodes::rrel_1);
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
 
-  EXPECT_TRUE(context.HelperCheckEdge(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.CheckConnector(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
   ScTemplate scTemplate;
   scTemplate.Quintuple(
       ScType::NodeVarTuple >> sections_aliases::DECOMPOSITION_TUPLE,
@@ -138,7 +138,7 @@ TEST_F(RemoveSectionTest, remove_section_without_parent)
       SectionsKeynodes::nrel_entity_decomposition);
   scTemplate.Triple(sections_aliases::DECOMPOSITION_TUPLE, ScType::EdgeAccessVarPosPerm, sectionAddr);
   ScTemplateSearchResult searchResult;
-  context.HelperSearchTemplate(scTemplate, searchResult);
+  context.SearchByTemplate(scTemplate, searchResult);
   EXPECT_TRUE(searchResult.IsEmpty());
 
   context.UnsubscribeAgent<sectionsModule::RemoveSectionAgent>();

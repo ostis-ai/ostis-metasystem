@@ -37,7 +37,7 @@ TEST_F(AddSectionTest, successful_add_section_to_decomposition)
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_add_section.scs");
 
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   ScAddr parentSectionAddr = utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, ScKeynodes::rrel_2);
@@ -46,10 +46,10 @@ TEST_F(AddSectionTest, successful_add_section_to_decomposition)
 
   context.SubscribeAgent<sectionsModule::AddSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
   EXPECT_TRUE(it3->Next());
 
   EXPECT_TRUE(context.IsElement(it3->Get(2)));
@@ -65,18 +65,18 @@ TEST_F(AddSectionTest, successful_add_section_empty_decomposition)
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_add_section.scs");
 
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node2");
+  ScAddr testActionNode = context.SearchElementBySystemIdentifier("test_action_node2");
   ScAddr parentSectionAddr = utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, ScKeynodes::rrel_2);
 
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<sectionsModule::AddSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
 
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
   EXPECT_TRUE(it3->Next());
 
   EXPECT_TRUE(context.IsElement(it3->Get(2)));
@@ -92,13 +92,13 @@ TEST_F(AddSectionTest, add_section_invalid_parameters_1)
 
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_add_section.scs");
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node3");
+  ScAddr testActionNode = context.SearchElementBySystemIdentifier("test_action_node3");
 
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<sectionsModule::AddSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedUnsuccessfully());
   context.UnsubscribeAgent<sectionsModule::AddSectionAgent>();
 }
@@ -109,13 +109,13 @@ TEST_F(AddSectionTest, add_section_invalid_parameters_3)
 
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_add_section.scs");
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node4");
+  ScAddr testActionNode = context.SearchElementBySystemIdentifier("test_action_node4");
 
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<sectionsModule::AddSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   EXPECT_TRUE(testAction.IsFinishedUnsuccessfully());
   context.UnsubscribeAgent<sectionsModule::AddSectionAgent>();
 }
@@ -126,16 +126,16 @@ TEST_F(AddSectionTest, add_section_without_parent)
 
   ScsLoader loader;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_add_section.scs");
-  ScAddr testActionNode = context.HelperFindBySystemIdtf("test_action_node5");
+  ScAddr testActionNode = context.SearchElementBySystemIdentifier("test_action_node5");
   ScAddr sectionNameAddr = utils::IteratorUtils::getAnyByOutRelation(&context, testActionNode, ScKeynodes::rrel_1);
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<sectionsModule::AddSectionAgent>();
 
-  testAction.InitiateAndWait(WAIT_TIME);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
   EXPECT_TRUE(it3->Next());
 
   EXPECT_TRUE(context.IsElement(it3->Get(2)));

@@ -27,20 +27,19 @@ ScAddr sections_utils::GetSectionDecompositionTuple(ScMemoryContext * context, S
       ScType::EdgeAccessVarPosPerm,
       SectionsKeynodes::nrel_entity_decomposition);
   ScTemplateSearchResult searchResult;
-  context->HelperSearchTemplate(scTemplate, searchResult);
+  context->SearchByTemplate(scTemplate, searchResult);
   if (!searchResult.IsEmpty())
     return searchResult[0][sections_aliases::DECOMPOSITION_TUPLE];
-  ScTemplateGenResult genResult;
-  ScTemplate::Result result = context->HelperGenTemplate(scTemplate, genResult);
-  if (result)
-    return genResult[sections_aliases::DECOMPOSITION_TUPLE];
-  return {};
+  ScTemplateResultItem genResult;
+  context->GenerateByTemplate(scTemplate, genResult);
+
+  return genResult[sections_aliases::DECOMPOSITION_TUPLE];
 }
 
 ScAddr sections_utils::FindSectionByName(ScMemoryContext * context, std::string const & sectionName)
 {
   ScAddr sectionAddr;
-  ScAddrVector links = context->FindLinksByContent(sectionName);
+  ScAddrSet links = context->SearchLinksByContentSubstring(sectionName);
   if (!links.empty())
   {
     for (ScAddr const & link : links)
