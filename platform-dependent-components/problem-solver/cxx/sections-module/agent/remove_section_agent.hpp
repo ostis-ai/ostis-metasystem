@@ -18,8 +18,6 @@ public:
   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 
 private:
-  bool CheckActionClass(ScAddr const & actionNode);
-
   bool RemoveSection(ScAddr const & section, ScAddr const & parentSection);
 
   bool RemoveSection(ScAddr const & section);

@@ -18,8 +18,6 @@ public:
   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 
 private:
-  bool CheckActionClass(ScAddr const & actionNode);
-
   ScAddr GenerateSection(std::string const & sectionName, ScAddr const & parentSection, ScAddr const & lang);
 
   ScAddr GenerateSection(std::string const & sectionName, ScAddr const & lang);

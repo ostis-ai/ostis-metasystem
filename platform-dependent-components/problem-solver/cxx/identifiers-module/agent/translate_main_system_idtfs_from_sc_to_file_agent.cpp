@@ -12,20 +12,13 @@ using namespace identifiersModule;
 
 ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  ScAddr const & actionAddr = event.GetOtherElement();
-
-  if (!CheckAction(actionAddr))
-    return action.FinishSuccessfully();
-
-  SC_LOG_DEBUG("TranslateMainSystemIdtfsFromScToFileAgent started");
-
   // TODO: replace by ScKeynodes::nrel_system_identifier after release
-  ScAddr const & nrelSystemIdtf = m_context.HelperFindBySystemIdtf("nrel_system_identifier");
+  ScAddr const & nrelSystemIdtf = m_context.SearchElementBySystemIdentifier("nrel_system_identifier");
 
   std::stringstream streamIdtfs;
 
   ScIterator3Ptr const & iterator3PtrEdgeBelongsToNrelSystemIdtf =
-      m_context.Iterator3(nrelSystemIdtf, ScType::EdgeAccessConstPosPerm, ScType::EdgeDCommonConst);
+      m_context.CreateIterator3(nrelSystemIdtf, ScType::EdgeAccessConstPosPerm, ScType::EdgeDCommonConst);
 
   ScAddr edgeBelongsToNrelSystemIdtf;
   ScAddr sourceOfEdgeBelongsToNrelSystemIdtf;
@@ -37,7 +30,7 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedE
   while (iterator3PtrEdgeBelongsToNrelSystemIdtf->Next())
   {
     edgeBelongsToNrelSystemIdtf = iterator3PtrEdgeBelongsToNrelSystemIdtf->Get(2);
-    sourceOfEdgeBelongsToNrelSystemIdtf = m_context.GetEdgeSource(edgeBelongsToNrelSystemIdtf);
+    sourceOfEdgeBelongsToNrelSystemIdtf = m_context.GetArcSourceElement(edgeBelongsToNrelSystemIdtf);
     try
     {
       systemIdentifier = GetSystemIdtfAndVerifyNode(m_context, sourceOfEdgeBelongsToNrelSystemIdtf);
@@ -47,7 +40,7 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedE
       if (!systemIdentifier.empty() && !mainIdentifier.empty() && !stringType.empty())
       {
         streamIdtfs << R"({")" << mainIdentifier << R"(", )"
-                    << R"({")" << systemIdentifier << R"(", ")" << stringType << R"("}},\n)";
+                    << R"({")" << systemIdentifier << R"(", ")" << stringType << R"("}},)" << "\n";
       }
     }
     catch (utils::ScException const & exception)
@@ -55,14 +48,14 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedE
       SC_LOG_ERROR(exception.Description());
 
       ScStructure result = m_context.GenerateStructure();
-      result << actionAddr;
-      action.SetResult(false);
+      result << action;
+      action.SetResult(result);
       return action.FinishUnsuccessfully();
     }
   }
 
   std::string strIdtfs(streamIdtfs.str());
-  // Remove last symbols "," and "n"
+  // Remove last symbols "," and "\n"
   if (!strIdtfs.empty())
   {
     strIdtfs.pop_back();
@@ -76,14 +69,12 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedE
 
   if (resultOfWrite)
   {
-    SC_LOG_DEBUG("File has been created");
-    SC_LOG_DEBUG("TranslateMainSystemIdtfsFromScToFileAgent finished");
+    SC_AGENT_LOG_DEBUG("File has been created");
     return action.FinishSuccessfully();
   }
   else
   {
-    SC_LOG_ERROR("File hasn't been created");
-    SC_LOG_DEBUG("TranslateMainSystemIdtfsFromScToFileAgent finished");
+    SC_AGENT_LOG_ERROR("File hasn't been created");
     return action.FinishUnsuccessfully();
   }
 }
@@ -93,24 +84,18 @@ ScAddr TranslateMainSystemIdtfsFromScToFileAgent::GetActionClass() const
   return IdentifiersKeynodes::action_find_identifiers;
 }
 
-bool TranslateMainSystemIdtfsFromScToFileAgent::CheckAction(ScAddr const & actionAddr)
-{
-  return m_context.HelperCheckEdge(
-      IdentifiersKeynodes::action_find_identifiers, actionAddr, ScType::EdgeAccessConstPosPerm);
-}
-
 std::string TranslateMainSystemIdtfsFromScToFileAgent::GetSystemIdtfAndVerifyNode(
     ScMemoryContext & m_context,
     ScAddr const & node)
 {
   std::string identifier;
   ScAddr identifierLink;
-  ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf = m_context.Iterator5(
+  ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf = m_context.CreateIterator5(
       node,
       ScType::EdgeDCommonConst,
       ScType::LinkConst,
       ScType::EdgeAccessConstPosPerm,
-      m_context.HelperFindBySystemIdtf("nrel_system_identifier"));
+      m_context.SearchElementBySystemIdentifier("nrel_system_identifier"));
 
   if (iterator5PtrCheckOnlyOneIdtf->Next())
   {
@@ -129,14 +114,14 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::GetMainIdtfAndVerifyNode(
   std::string identifier;
   ScAddr mainIdentifierLink;
   ScAddr mainAnotherIdentifierLink;
-  ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf = m_context.Iterator5(
+  ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf = m_context.CreateIterator5(
       node, ScType::EdgeDCommonConst, ScType::LinkConst, ScType::EdgeAccessConstPosPerm, ScKeynodes::nrel_main_idtf);
 
   bool isLangRu;
   while (iterator5PtrCheckOnlyOneIdtf->Next())
   {
     mainIdentifierLink = iterator5PtrCheckOnlyOneIdtf->Get(2);
-    isLangRu = m_context.HelperCheckEdge(ScKeynodes::lang_ru, mainIdentifierLink, ScType::EdgeAccessConstPosPerm);
+    isLangRu = m_context.CheckConnector(ScKeynodes::lang_ru, mainIdentifierLink, ScType::EdgeAccessConstPosPerm);
 
     if (isLangRu)
     {
@@ -144,7 +129,7 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::GetMainIdtfAndVerifyNode(
       {
         mainAnotherIdentifierLink = iterator5PtrCheckOnlyOneIdtf->Get(2);
         isLangRu =
-            m_context.HelperCheckEdge(ScKeynodes::lang_ru, mainAnotherIdentifierLink, ScType::EdgeAccessConstPosPerm);
+            m_context.CheckConnector(ScKeynodes::lang_ru, mainAnotherIdentifierLink, ScType::EdgeAccessConstPosPerm);
 
         if (isLangRu)
           return identifier;
@@ -171,7 +156,6 @@ bool TranslateMainSystemIdtfsFromScToFileAgent::WriteInFile(std::string const & 
 {
   try
   {
-    SC_LOG_INFO(IDENTIFIERS_MODULE_PATH);
     std::ofstream file(IDENTIFIERS_MODULE_PATH "identifiers.txt");
     if (file.is_open())
     {
