@@ -59,11 +59,6 @@ ScAddr AddSectionAgent::GetActionClass() const
   return SectionsKeynodes::action_add_section;
 }
 
-bool AddSectionAgent::CheckActionClass(ScAddr const & actionNode)
-{
-  return m_context.CheckConnector(SectionsKeynodes::action_add_section, actionNode, ScType::EdgeAccessConstPosPerm);
-}
-
 ScAddr AddSectionAgent::GenerateSection(
     std::string const & sectionName,
     ScAddr const & parentSection,

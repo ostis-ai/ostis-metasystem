@@ -84,12 +84,6 @@ ScAddr TranslateMainSystemIdtfsFromScToFileAgent::GetActionClass() const
   return IdentifiersKeynodes::action_find_identifiers;
 }
 
-bool TranslateMainSystemIdtfsFromScToFileAgent::CheckAction(ScAddr const & actionAddr)
-{
-  return m_context.CheckConnector(
-      IdentifiersKeynodes::action_find_identifiers, actionAddr, ScType::EdgeAccessConstPosPerm);
-}
-
 std::string TranslateMainSystemIdtfsFromScToFileAgent::GetSystemIdtfAndVerifyNode(
     ScMemoryContext & m_context,
     ScAddr const & node)

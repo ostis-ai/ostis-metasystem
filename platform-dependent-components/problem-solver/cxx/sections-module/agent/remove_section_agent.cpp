@@ -49,11 +49,6 @@ ScAddr RemoveSectionAgent::GetActionClass() const
   return SectionsKeynodes::action_remove_section;
 }
 
-bool RemoveSectionAgent::CheckActionClass(ScAddr const & actionNode)
-{
-  return m_context.CheckConnector(SectionsKeynodes::action_remove_section, actionNode, ScType::EdgeAccessConstPosPerm);
-}
-
 bool RemoveSectionAgent::RemoveSection(ScAddr const & section, ScAddr const & parentSection)
 {
   SC_AGENT_LOG_DEBUG("Section system idtf is " + m_context.GetElementSystemIdentifier(section) + ".");

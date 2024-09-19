@@ -21,8 +21,6 @@ public:
   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 
 private:
-  bool CheckActionClass(ScAddr const & actionNode);
-
   json GetJSONDecomposition(ScAddrVector const &, size_t, ScAddr const &, ScAddr const &);
 
   ScAddrVector GetDecomposition(ScAddr const &, ScAddr const &);

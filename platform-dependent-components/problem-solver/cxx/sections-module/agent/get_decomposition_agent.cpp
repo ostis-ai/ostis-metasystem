@@ -67,12 +67,6 @@ ScAddr GetDecompositionAgent::GetActionClass() const
   return SectionsKeynodes::action_get_decomposition;
 }
 
-bool GetDecompositionAgent::CheckActionClass(ScAddr const & actionNode)
-{
-  return m_context.CheckConnector(
-      SectionsKeynodes::action_get_decomposition, actionNode, ScType::EdgeAccessConstPosPerm);
-}
-
 ScAddrVector GetDecompositionAgent::GetDecomposition(ScAddr const & subjDomainAddr, ScAddr const & decompositionAddr)
 {
   SC_AGENT_LOG_DEBUG("Main section is " << m_context.GetElementSystemIdentifier(subjDomainAddr) << ".");

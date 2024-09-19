@@ -33,9 +33,7 @@ ScAddr sections_utils::GetSectionDecompositionTuple(ScMemoryContext * context, S
   ScTemplateResultItem genResult;
   context->GenerateByTemplate(scTemplate, genResult);
 
-  if (genResult.Size() != 0)
-    return genResult[sections_aliases::DECOMPOSITION_TUPLE];
-  return {};
+  return genResult[sections_aliases::DECOMPOSITION_TUPLE];
 }
 
 ScAddr sections_utils::FindSectionByName(ScMemoryContext * context, std::string const & sectionName)

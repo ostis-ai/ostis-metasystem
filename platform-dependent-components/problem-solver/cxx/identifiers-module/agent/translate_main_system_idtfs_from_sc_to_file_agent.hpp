@@ -82,7 +82,7 @@ public:
       {ScType::EdgeAccessVarFuzTemp, "sc_edge_main"}};
 
 private:
-  bool CheckAction(ScAddr const & actionAddr);
+  
   std::string GetStrScType(ScAddr const & node);
   static std::string GetSystemIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node);
   static std::string GetMainIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node);
