@@ -19,7 +19,7 @@ ScAddr sections_generator::GenerateSection(
     ScAddr const & lang,
     bool isAtomic)
 {
-  ScAddr section = context->CreateNode(ScType::NodeConstClass);
+  ScAddr section = context->GenerateNode(ScType::NodeConstClass);
   utils::CommonUtils::setMainIdtf(context, section, sectionName, {lang});
 
   ScTemplate sectionTemplate;
@@ -30,7 +30,7 @@ ScAddr sections_generator::GenerateSection(
     sectionTemplate.Triple(SectionsKeynodes::non_atomic_section, ScType::EdgeAccessVarPosPerm, section);
   sectionTemplate.Triple(SectionsKeynodes::not_enough_formed_structure, ScType::EdgeAccessVarPosPerm, section);
   ScTemplateGenResult genResult;
-  context->HelperGenTemplate(sectionTemplate, genResult);
+  context->GenerateByTemplate(sectionTemplate, genResult);
 
   return section;
 }

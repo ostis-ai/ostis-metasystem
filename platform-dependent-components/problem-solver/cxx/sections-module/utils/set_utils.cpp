@@ -19,7 +19,7 @@ ScAddrVector SetUtils::GetAllElementsByEdgeType(ScMemoryContext * context, ScAdd
   ScTemplate rightsTemplate;
   rightsTemplate.Triple(set, edgeType, ScType::NodeVar >> "_node");
   ScTemplateSearchResult result;
-  context->HelperSearchTemplate(rightsTemplate, result);
+  context->SearchByTemplate(rightsTemplate, result);
   if (!result.IsEmpty())
   {
     for (int i = 0; i < result.Size(); i++)
@@ -33,7 +33,7 @@ ScAddr SetUtils::GetEdge(ScMemoryContext * context, ScAddr const & source, ScAdd
   ScTemplate scTemplate;
   scTemplate.Triple(source, ScType::EdgeAccessVarPosPerm >> "_edge", target);
   ScTemplateSearchResult result;
-  context->HelperSearchTemplate(scTemplate, result);
+  context->SearchByTemplate(scTemplate, result);
   if (!result.IsEmpty())
     return result[0]["_edge"];
   else
@@ -58,7 +58,7 @@ void SetUtils::RemoveFromSets(ScMemoryContext * context, ScAddr const & element,
 
 void SetUtils::RemoveBaseEdgesFromSet(ScMemoryContext * context, ScAddr const & set)
 {
-  ScIterator3Ptr setElementsIterator = context->Iterator3(set, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
+  ScIterator3Ptr setElementsIterator = context->CreateIterator3(set, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
 
   while (setElementsIterator->Next())
   {

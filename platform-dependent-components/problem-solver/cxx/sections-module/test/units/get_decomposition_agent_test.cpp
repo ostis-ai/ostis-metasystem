@@ -40,7 +40,7 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_successful_decomposition.scs");
-  ScAddr const testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
 
   ScAction testAction = context.ConvertToAction(testActionNode);
 
@@ -49,7 +49,7 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition)
   EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr const it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Link);
+  ScIterator3Ptr const it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Link);
   EXPECT_TRUE(it3->Next());
   std::string decompositionContent;
   context.GetLinkContent(it3->Get(2), decompositionContent);
@@ -68,7 +68,7 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition_with_level)
   ScAgentContext & context = *m_ctx;
 
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_successful_decomposition.scs");
-  ScAddr const testActionNode = context.HelperFindBySystemIdtf("test_action_node2");
+  ScAddr const testActionNode = context.SearchElementBySystemIdentifier("test_action_node2");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<sectionsModule::GetDecompositionAgent>();
@@ -76,7 +76,7 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition_with_level)
   EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.Iterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Link);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Link);
 
   EXPECT_TRUE(it3->Next());
   std::string decompositionText;

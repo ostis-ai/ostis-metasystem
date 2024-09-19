@@ -57,7 +57,7 @@ TEST_F(AgentTest, VoidTest)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "void_test.scs");
-  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
@@ -75,7 +75,7 @@ TEST_F(AgentTest, CorrectTest)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "correct_test.scs");
-  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
@@ -104,7 +104,7 @@ TEST_F(AgentTest, IncorrectTest)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "incorrect_test.scs");
-  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();
@@ -134,7 +134,7 @@ TEST_F(AgentTest, ManySystemIdtfsTest)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "many_system_idtfs_test.scs");
-  ScAddr const & testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
   ScAction testAction = context.ConvertToAction(testActionNode);
 
   context.SubscribeAgent<identifiersModule::TranslateMainSystemIdtfsFromScToFileAgent>();

@@ -38,11 +38,11 @@ ScResult GetDecompositionAgent::DoProgram(ScActionInitiatedEvent const & event, 
   {
     decompositionAddr = SectionsKeynodes::nrel_section_decomposition;
     SC_LOG_DEBUG(
-        "Decomposition relation node not found. By default, " << m_context.HelperGetSystemIdtf(decompositionAddr)
+        "Decomposition relation node not found. By default, " << m_context.GetElementSystemIdentifier(decompositionAddr)
                                                               << " is used.");
   }
 
-  ScAddr answerLink = m_context.CreateLink();
+  ScAddr answerLink = m_context.GenerateLink();
 
   ScAddrVector decomposition = GetDecomposition(subjDomainAddr, decompositionAddr);
   json answerJSON{
@@ -69,13 +69,13 @@ ScAddr GetDecompositionAgent::GetActionClass() const
 
 bool GetDecompositionAgent::CheckActionClass(ScAddr const & actionNode)
 {
-  return m_context.HelperCheckEdge(
+  return m_context.CheckConnector(
       SectionsKeynodes::action_get_decomposition, actionNode, ScType::EdgeAccessConstPosPerm);
 }
 
 ScAddrVector GetDecompositionAgent::GetDecomposition(ScAddr const & subjDomainAddr, ScAddr const & decompositionAddr)
 {
-  SC_LOG_DEBUG("Main section is " << m_context.HelperGetSystemIdtf(subjDomainAddr) << ".");
+  SC_LOG_DEBUG("Main section is " << m_context.GetElementSystemIdentifier(subjDomainAddr) << ".");
   ScAddrVector decomposition;
 
   ScTemplate decompositionTemplate;
@@ -92,12 +92,12 @@ ScAddrVector GetDecompositionAgent::GetDecomposition(ScAddr const & subjDomainAd
       ScType::EdgeAccessVarPosPerm,
       ScKeynodes::rrel_1);
   ScTemplateSearchResult result;
-  m_context.HelperSearchTemplate(decompositionTemplate, result);
+  m_context.SearchByTemplate(decompositionTemplate, result);
   if (!result.IsEmpty())
   {
     ScAddr tupleNode = result[0][sections_aliases::DECOMPOSITION_TUPLE];
     ScAddr subSection = result[0][sections_aliases::SECTION_NODE];
-    SC_LOG_DEBUG("Subsection is " << m_context.HelperGetSystemIdtf(subSection) << ".");
+    SC_LOG_DEBUG("Subsection is " << m_context.GetElementSystemIdentifier(subSection) << ".");
     decomposition.push_back(subSection);
 
     ScAddr nextSubSection = utils::IteratorUtils::getNextFromSet(&m_context, tupleNode, subSection);
@@ -105,7 +105,7 @@ ScAddrVector GetDecompositionAgent::GetDecomposition(ScAddr const & subjDomainAd
     {
       decomposition.push_back(nextSubSection);
       subSection = nextSubSection;
-      SC_LOG_DEBUG("Subsection is " << m_context.HelperGetSystemIdtf(subSection) << ".");
+      SC_LOG_DEBUG("Subsection is " << m_context.GetElementSystemIdentifier(subSection) << ".");
       nextSubSection = utils::IteratorUtils::getNextFromSet(&m_context, tupleNode, subSection);
     }
   }
