@@ -40,7 +40,7 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedE
       if (!systemIdentifier.empty() && !mainIdentifier.empty() && !stringType.empty())
       {
         streamIdtfs << R"({")" << mainIdentifier << R"(", )"
-                    << R"({")" << systemIdentifier << R"(", ")" << stringType << R"("}},\n)";
+                    << R"({")" << systemIdentifier << R"(", ")" << stringType << R"("}},)" << "\n";
       }
     }
     catch (utils::ScException const & exception)
@@ -69,12 +69,12 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedE
 
   if (resultOfWrite)
   {
-    SC_LOG_DEBUG("File has been created");
+    SC_AGENT_LOG_DEBUG("File has been created");
     return action.FinishSuccessfully();
   }
   else
   {
-    SC_LOG_ERROR("File hasn't been created");
+    SC_AGENT_LOG_ERROR("File hasn't been created");
     return action.FinishUnsuccessfully();
   }
 }
