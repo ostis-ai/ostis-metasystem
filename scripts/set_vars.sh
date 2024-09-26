@@ -36,7 +36,7 @@ export SC_WEB_COMMIT="${SC_WEB_COMMIT:-""}"
 
 export IMS_KB_REPO="${IMS_KB_REPO:-https://github.com/ostis-ai/ims.ostis.kb.git}"
 export IMS_KB_BRANCH="${IMS_KB_BRANCH:-main}"
-export IMS_KB_COMMIT="${IMS_KB_COMMIT:-""}"
+export IMS_KB_COMMIT="${IMS_KB_COMMIT:-"e19fd4f62cf418ae56c8f67c01d03321f19e66df"}"
 
 export STANDARD_REPO="${STANDARD_REPO:-https://github.com/ostis-ai/ostis-standard.git}"
 export STANDARD_BRANCH="${STANDARD_BRANCH:-demo}"
