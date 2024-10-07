@@ -13,7 +13,7 @@ ui_menu_file_for_change_arc_direction => ui_nrel_command_template:
 			(*
 			_-> ui_arg_1;;	
 			*);;
-		._action_to_change_arc_direction_instance _<- question;;
+		._action_to_change_arc_direction_instance _<- action;;
 	*];;
 
 ui_menu_file_for_change_arc_direction => ui_nrel_command_lang_template: 

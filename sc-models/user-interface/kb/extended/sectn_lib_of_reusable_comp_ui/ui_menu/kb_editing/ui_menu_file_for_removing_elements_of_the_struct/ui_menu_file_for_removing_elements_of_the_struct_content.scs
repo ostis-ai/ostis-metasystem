@@ -13,7 +13,7 @@ ui_menu_file_for_removing_elements_of_the_struct => ui_nrel_command_template:
 			(*
 			_-> ui_arg_1;;					
 			*);;
-		._action_to_removing_elements_of_the_struct_instance _<- question;;
+		._action_to_removing_elements_of_the_struct_instance _<- action;;
 	*];;
 
 ui_menu_file_for_removing_elements_of_the_struct => ui_nrel_command_lang_template: 

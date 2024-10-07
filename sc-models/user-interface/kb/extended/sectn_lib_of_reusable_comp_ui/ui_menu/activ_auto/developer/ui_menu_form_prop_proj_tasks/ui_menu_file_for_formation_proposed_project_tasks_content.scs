@@ -11,7 +11,7 @@ ui_menu_file_for_formation_proposed_project_tasks => ui_nrel_command_template:
 			(*
 			_-> ui_arg_1;;
 			*);;
-		._action_to_form_a_proposal_of_project_task_instance _<- question;;
+		._action_to_form_a_proposal_of_project_task_instance _<- action;;
 	*];;
 
 ui_menu_file_for_formation_proposed_project_tasks => ui_nrel_command_lang_template: [Сформировать предложение проектного задания: $ui_arg_1] (* <- lang_ru;; *);;

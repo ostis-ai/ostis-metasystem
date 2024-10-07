@@ -10,7 +10,7 @@ ui_menu_file_for_formation_suggestion_edit_kb => ui_nrel_command_template:
 			(*
 			_-> ui_arg_1;;
 			*);;
-		._action_to_form_a_proposal_for_editing_the_knowledge_base_instance _<- question;;
+		._action_to_form_a_proposal_for_editing_the_knowledge_base_instance _<- action;;
 	*];;
 
 ui_menu_file_for_formation_suggestion_edit_kb => ui_nrel_command_lang_template: [Сформировать предложение по редактированию базы знаний: $ui_arg_1] (* <- lang_ru;; *);;
