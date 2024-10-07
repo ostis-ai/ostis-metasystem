@@ -9,5 +9,5 @@ ui_menu_view_get_decomposition => ui_nrel_command_template:
                 _-> rrel_3::ui_arg_3;;
                 _-> rrel_4::ui_arg_4;;
             *);;
-        ._action_get_decomposition_instance _<- question;;
+        ._action_get_decomposition_instance _<- action;;
     *];;

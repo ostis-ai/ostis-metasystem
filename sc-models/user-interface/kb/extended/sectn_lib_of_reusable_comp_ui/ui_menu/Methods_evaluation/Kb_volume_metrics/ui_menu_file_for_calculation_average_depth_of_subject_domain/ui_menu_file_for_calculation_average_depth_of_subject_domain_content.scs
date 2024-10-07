@@ -13,7 +13,7 @@ ui_menu_file_for_calculation_average_depth_of_subject_domain => ui_nrel_command_
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._action_to_calculate_average_depth_of_subject_domain_instance _<- question;;
+		._action_to_calculate_average_depth_of_subject_domain_instance _<- action;;
 	*];;
 
 ui_menu_file_for_calculation_average_depth_of_subject_domain => ui_nrel_command_lang_template: 

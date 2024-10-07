@@ -13,7 +13,7 @@ ui_menu_file_for_verification_compliance_of_sheaf_pow_with_relation_arity => ui_
 			(*
 			_-> ui_arg_1;;					
 			*);;
-		._action_of_verification_compliance_of_sheaf_pow_with_relation_arity_instance _<- question;;
+		._action_of_verification_compliance_of_sheaf_pow_with_relation_arity_instance _<- action;;
 	*];;
 
 ui_menu_file_for_verification_compliance_of_sheaf_pow_with_relation_arity => ui_nrel_command_lang_template: 

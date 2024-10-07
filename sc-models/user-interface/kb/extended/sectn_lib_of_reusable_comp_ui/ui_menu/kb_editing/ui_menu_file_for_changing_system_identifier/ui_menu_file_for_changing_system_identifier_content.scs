@@ -14,7 +14,7 @@ ui_menu_file_for_changing_system_identifier => ui_nrel_command_template:
 		_-> rrel_1:: ui_arg_1;;
 		_-> rrel_2:: ui_arg_2;;
 		*);;
-	._action_to_change_system_identifier_instance _<- question;;
+	._action_to_change_system_identifier_instance _<- action;;
 	*];;
 
 ui_menu_file_for_changing_system_identifier => ui_nrel_command_lang_template: 

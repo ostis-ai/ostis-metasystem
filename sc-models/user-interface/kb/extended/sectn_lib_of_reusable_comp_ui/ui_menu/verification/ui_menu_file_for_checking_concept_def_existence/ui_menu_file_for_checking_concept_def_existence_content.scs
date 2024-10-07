@@ -9,7 +9,7 @@ ui_menu_file_for_checking_concept_def_existence => ui_nrel_command_template:
 			(*
 				_-> ui_arg_1;;			
 			*);;
-		._action_to_check_concept_def_existence_instance _<- question;;
+		._action_to_check_concept_def_existence_instance _<- action;;
 	*];;
 
 ui_menu_file_for_checking_concept_def_existence => ui_nrel_command_lang_template: [Проверить наличие определений или пояснений у понятий: $ui_arg_1] (* <- lang_ru;; *);;

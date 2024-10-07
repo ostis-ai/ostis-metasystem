@@ -13,7 +13,7 @@ ui_menu_agent_of_expert_approval_of_verified_proposal => ui_nrel_command_templat
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._action_of_expert_approval_of_verified_proposal_instance _<- question;;
+		._action_of_expert_approval_of_verified_proposal_instance _<- action;;
 	*];;
 
 ui_menu_agent_of_expert_approval_of_verified_proposal => ui_nrel_command_lang_template: 

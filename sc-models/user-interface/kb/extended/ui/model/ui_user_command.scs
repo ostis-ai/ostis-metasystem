@@ -27,7 +27,7 @@ ui_user_command_class
 	{
 		ui_user_command_class_view_kb;
 		ui_user_command_class_edit_kb;
-		ui_user_command_class_question;
+		ui_user_command_class_action;
 		ui_user_command_class_edit_file;
 		ui_user_command_class_view_file;
 		ui_user_command_class_control_dialog
@@ -69,7 +69,7 @@ ui_user_command_class_edit_kb
 => nrel_main_idtf:
 	[класс пользовательских команд редактирования базы знаний] (* <- lang_ru;; *);;
 
-ui_user_command_class_question
+ui_user_command_class_action
 => nrel_main_idtf:
 	[класс пользовательских команд инициирующих вопрос системе] (* <- lang_ru;; *);;
 

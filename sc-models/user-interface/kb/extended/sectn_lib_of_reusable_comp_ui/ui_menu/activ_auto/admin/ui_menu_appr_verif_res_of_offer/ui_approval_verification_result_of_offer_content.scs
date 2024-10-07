@@ -9,7 +9,7 @@ ui_approval_verification_result_of_offer => ui_nrel_command_template:
 			(*
 				_-> rrel_1:: ui_arg_1;;			
 			*);;
-		._action_to_approve_the_result_of_proposal_verification_instance _<- question;;
+		._action_to_approve_the_result_of_proposal_verification_instance _<- action;;
 	*];;
 
 ui_approval_verification_result_of_offer => ui_nrel_command_lang_template: [Утвердить результат верификации предложения: $ui_arg_1] (* <- lang_ru;; *);;

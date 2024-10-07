@@ -19,11 +19,11 @@ ui_menu_file_for_finding_proof_steps
 
 ui_menu_file_for_finding_proof_steps => ui_nrel_command_template:
 	[*
-		question_finding_proof_steps _-> ._question_finding_proof_steps_instance
+		action_finding_proof_steps _-> ._action_finding_proof_steps_instance
 			(*
 			_-> ui_arg_1;;
 			*);;
-		._question_finding_proof_steps_instance _<- question;;
+		._action_finding_proof_steps_instance _<- action;;
 	*];;
 
 ui_menu_file_for_finding_proof_steps => ui_nrel_command_lang_template: 

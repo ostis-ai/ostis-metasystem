@@ -13,11 +13,11 @@ ui_menu_erase_elements
 
 ui_menu_erase_elements => ui_nrel_command_template:
 	[*
-		question_erase_elements _-> ._question_erase_elements
+		action_erase_elements _-> ._action_erase_elements
 			(*
 				_-> rrel_1:: ui_arg_1;;
 			*);;
-		._question_erase_elements _<- question;;
+		._action_erase_elements _<- action;;
 	*];;
 
 ui_menu_erase_elements => ui_nrel_command_lang_template: [Удалить sc-элементы] (* <- lang_ru;; *);;

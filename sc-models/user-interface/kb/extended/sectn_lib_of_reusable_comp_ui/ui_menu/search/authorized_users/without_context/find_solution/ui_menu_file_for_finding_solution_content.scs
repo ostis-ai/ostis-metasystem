@@ -19,11 +19,11 @@ ui_menu_file_for_finding_solution
 
 ui_menu_file_for_finding_solution => ui_nrel_command_template:
 	[*
-		question_of_finding_solution _-> ._question_of_finding_solution_instance
+		action_of_finding_solution _-> ._action_of_finding_solution_instance
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._question_of_finding_solution_instance _<- question;;
+		._action_of_finding_solution_instance _<- action;;
 	*];;
 
 ui_menu_file_for_finding_solution => ui_nrel_command_lang_template: 

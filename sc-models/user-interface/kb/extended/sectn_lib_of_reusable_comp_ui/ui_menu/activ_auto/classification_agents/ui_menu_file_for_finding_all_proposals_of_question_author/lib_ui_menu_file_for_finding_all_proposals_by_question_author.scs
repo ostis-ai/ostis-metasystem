@@ -1,8 +1,8 @@
-lib_ui_menu_file_for_finding_all_proposals_of_question_author
+lib_ui_menu_file_for_finding_all_proposals_of_action_author
 => nrel_main_idtf:
 	[Компонент библиотеки. Команда пользовательского интерфейса для поиска всех предложений автора вопроса]
 	(* <- lang_ru;; *);
-	[Library component. User interface command for search all proposals of question author]
+	[Library component. User interface command for search all proposals of action author]
 	(* <- lang_en;; *);
 
 <- library_of_platform_independent_reusable_components;
@@ -17,7 +17,7 @@ lib_ui_menu_file_for_finding_all_proposals_of_question_author
 		...
 		(*
 		-> rrel_example:
-			"file://htmls/ui_of_finding_all_proposals_of_question_author.html"
+			"file://htmls/ui_of_finding_all_proposals_of_action_author.html"
 			(*
 			<- lang_ru;;
 			=> nrel_format: format_html;;
