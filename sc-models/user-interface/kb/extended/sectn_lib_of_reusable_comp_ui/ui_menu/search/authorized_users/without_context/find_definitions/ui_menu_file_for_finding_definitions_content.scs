@@ -19,11 +19,11 @@ ui_menu_file_for_finding_definitions
 
 ui_menu_file_for_finding_definitions => ui_nrel_command_template:
 	[*
-		question_of_finding_definitions _-> ._question_of_finding_definitions_instance
+		action_of_finding_definitions _-> ._action_of_finding_definitions_instance
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._question_of_finding_definitions_instance _<- question;question111;;
+		._action_of_finding_definitions_instance _<- action;action111;;
 	*];;
 
 ui_menu_file_for_finding_definitions => ui_nrel_command_lang_template: 

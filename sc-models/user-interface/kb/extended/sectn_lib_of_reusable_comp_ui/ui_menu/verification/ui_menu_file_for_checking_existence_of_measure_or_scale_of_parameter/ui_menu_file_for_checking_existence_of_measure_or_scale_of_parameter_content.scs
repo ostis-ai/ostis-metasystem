@@ -13,7 +13,7 @@ ui_menu_file_for_checking_existence_of_measure_or_scale_of_parameter => ui_nrel_
 			(*
 			_-> ui_arg_1;;	
 			*);;
-		._action_to_check_indication_of_scale_or_measure_for_values_of_parameters_within_given_structure_instance _<- question;;
+		._action_to_check_indication_of_scale_or_measure_for_values_of_parameters_within_given_structure_instance _<- action;;
 	*];;
 
 ui_menu_file_for_checking_existence_of_measure_or_scale_of_parameter => ui_nrel_command_lang_template: 

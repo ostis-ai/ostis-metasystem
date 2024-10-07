@@ -11,7 +11,7 @@ action_of_check_for_crossing_from_one_subdividing_elements _-> ._action_of_check
 			_-> ui_arg_1;;	
 			_=> nrel_context_of_action:: ui_arg_2;;
 			*);;
-		._action_of_check_for_crossing_from_one_subdividing_elements_instance _<- question;;
+		._action_of_check_for_crossing_from_one_subdividing_elements_instance _<- action;;
 	*];;
 
 ui_menu_file_for_check_for_crossing_from_one_subdividing_elements_with_context => ui_nrel_command_lang_template: [Проверить наличие непустого пересечения у элементов одного разбиения в рамках структуры: $ui_arg_1 с заданным контекстом $ui_arg_2] (* <- lang_ru;; *);;

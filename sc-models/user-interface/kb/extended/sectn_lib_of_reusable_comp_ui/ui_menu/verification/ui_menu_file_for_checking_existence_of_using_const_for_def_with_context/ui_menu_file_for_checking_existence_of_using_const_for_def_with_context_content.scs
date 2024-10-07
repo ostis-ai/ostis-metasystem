@@ -10,7 +10,7 @@ ui_menu_file_for_checking_existence_of_using_const_for_def_with_context => ui_nr
 				_-> rrel_1:: ui_arg_1;;	
 				_=> nrel_context_of_action:: ui_arg_2;;
 			*);;
-		._action_to_check_existence_of_using_const_for_def_instance _<- question;;
+		._action_to_check_existence_of_using_const_for_def_instance _<- action;;
 	*];;
 
 ui_menu_file_for_checking_existence_of_using_const_for_def_with_context => ui_nrel_command_lang_template: [Проверить указание используемых констант для определений понятий: $ui_arg_1 в рамках контекста: $ui_arg_2] (* <- lang_ru;; *);;
