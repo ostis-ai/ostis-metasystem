@@ -13,7 +13,7 @@ ui_menu_file_for_finding_drafts_developed_by_specific_developer => ui_nrel_comma
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._action_to_find_drafts_developed_by_specific_developer_instance _<- question;;
+		._action_to_find_drafts_developed_by_specific_developer_instance _<- action;;
 	*];;
 
 ui_menu_file_for_finding_drafts_developed_by_specific_developer => ui_nrel_command_lang_template: 

@@ -13,7 +13,7 @@ ui_menu_file_for_calculation_number_of_subject_domains => ui_nrel_command_templa
 			(*
 			_-> subject_domain;;				
 			*);;
-		._action_to_calculate_number_of_subject_domains_instance _<- question;;
+		._action_to_calculate_number_of_subject_domains_instance _<- action;;
 	*];;
 
 ui_menu_file_for_calculation_number_of_subject_domains => ui_nrel_command_lang_template: 
