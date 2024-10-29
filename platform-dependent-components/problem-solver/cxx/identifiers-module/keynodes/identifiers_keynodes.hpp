@@ -5,10 +5,8 @@
  */
 
 #pragma once
-#include <sc-memory/sc_keynodes.hpp>
 
-#include "sc-memory/sc_addr.hpp"
-#include "sc-memory/sc_object.hpp"
+#include <sc-memory/sc_keynodes.hpp>
 
 namespace identifiersModule
 {
@@ -16,7 +14,7 @@ namespace identifiersModule
 class IdentifiersKeynodes : public ScKeynodes
 {
 public:
-  static inline ScKeynode const action_find_identifiers{"action_find_identifiers"};
+  static inline ScKeynode const action_find_identifiers{"action_find_identifiers", ScType::ConstNodeClass};
 };
 
 }  // namespace identifiersModule
