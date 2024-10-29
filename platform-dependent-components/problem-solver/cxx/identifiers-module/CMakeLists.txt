@@ -11,12 +11,17 @@ set(SOURCES
 add_library(identifiers-module SHARED ${SOURCES})
 target_link_libraries(identifiers-module
     LINK_PUBLIC sc-memory
+    LINK_PUBLIC sc-core
+    LINK_PUBLIC sc-builder-lib
     LINK_PUBLIC sc-agents-common
 )
 target_include_directories(identifiers-module
     PUBLIC ${IDENTIFIERS_MODULE_SRC}
     PUBLIC ${SC_MEMORY_SRC}
+    PUBLIC ${SC_CORE_PATH}
+    PUBLIC ${SC_AGENTS_COMMON_PATH}
     PUBLIC ${SC_KPM_SRC}
+    PUBLIC ${SC_BUILDER_PATH}
 )
 
 if(${SC_CLANG_FORMAT_CODE})

@@ -7,9 +7,6 @@
 #pragma once
 #include <sc-memory/sc_keynodes.hpp>
 
-#include "sc-memory/sc_addr.hpp"
-#include "sc-memory/sc_object.hpp"
-
 namespace sectionsModule
 {
 class SectionsKeynodes : public ScKeynodes
