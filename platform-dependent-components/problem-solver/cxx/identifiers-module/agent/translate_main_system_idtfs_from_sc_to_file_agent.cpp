@@ -4,7 +4,6 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "sc-agents-common/utils/CommonUtils.hpp"
 #include "keynodes/identifiers_keynodes.hpp"
 #include "translate_main_system_idtfs_from_sc_to_file_agent.hpp"
 

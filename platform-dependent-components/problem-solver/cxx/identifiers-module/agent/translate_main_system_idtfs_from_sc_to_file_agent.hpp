@@ -37,7 +37,6 @@ public:
       {ScType::NodeRole, "sc_node_role_relation"},
       {ScType::NodeNoRole, "sc_node_norole_relation"},
       {ScType::NodeClass, "sc_node_class"},
-      {ScType::NodeAbstract, "sc_node"},
       {ScType::NodeMaterial, "sc_node_material"},
 
       {ScType::NodeConstStruct, "sc_node_struct"},
@@ -45,7 +44,6 @@ public:
       {ScType::NodeConstRole, "sc_node_role_relation"},
       {ScType::NodeConstNoRole, "sc_node_norole_relation"},
       {ScType::NodeConstClass, "sc_node_class"},
-      {ScType::NodeConstAbstract, "sc_node"},
       {ScType::NodeConstMaterial, "sc_node_material"},
 
       {ScType::NodeVarStruct, "sc_node_struct"},
@@ -53,7 +51,6 @@ public:
       {ScType::NodeVarRole, "sc_node_role_relation"},
       {ScType::NodeVarNoRole, "sc_node_norole_relation"},
       {ScType::NodeVarClass, "sc_node_class"},
-      {ScType::NodeVarAbstract, "sc_node"},
       {ScType::NodeVarMaterial, "sc_node_material"}};
 
   std::map<ScType, std::string> ScTypesOfEdgesWithSCsClasses = {

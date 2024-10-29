@@ -33,7 +33,8 @@ target_link_libraries(sections-module
 target_include_directories(sections-module
     PUBLIC ${SECTIONS_MODULE_SRC}
     PUBLIC ${SC_MEMORY_SRC}
-    PUBLIC ${SC_KPM_SRC}
+    PUBLIC ${SC_CORE_PATH}
+    PUBLIC ${SC_AGENTS_COMMON_PATH}
 )
 
 if(${SC_CLANG_FORMAT_CODE})
