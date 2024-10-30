@@ -8,9 +8,9 @@
 #include "keynodes/sections_keynodes.hpp"
 #include "utils/sections_utils.hpp"
 
-#include "sc-builder/src/scs_loader.hpp"
-
-#include "sc_test.hpp"
+#include <gtest/gtest.h>
+#include <sc-builder/scs_loader.hpp>
+#include <sc-memory/test/sc_test.hpp>
 
 #include "sc-agents-common/utils/CommonUtils.hpp"
 #include "sc-agents-common/utils/IteratorUtils.hpp"
@@ -49,7 +49,7 @@ TEST_F(AddSectionTest, successful_add_section_to_decomposition)
   EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::ConstPermPosArc, ScType::Unknown);
   EXPECT_TRUE(it3->Next());
 
   EXPECT_TRUE(context.IsElement(it3->Get(2)));
@@ -76,7 +76,7 @@ TEST_F(AddSectionTest, successful_add_section_empty_decomposition)
 
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::ConstPermPosArc, ScType::ConstNode);
   EXPECT_TRUE(it3->Next());
 
   EXPECT_TRUE(context.IsElement(it3->Get(2)));
@@ -135,7 +135,7 @@ TEST_F(AddSectionTest, add_section_without_parent)
   EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::ConstPermPosArc, ScType::ConstNode);
   EXPECT_TRUE(it3->Next());
 
   EXPECT_TRUE(context.IsElement(it3->Get(2)));

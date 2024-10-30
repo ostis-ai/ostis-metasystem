@@ -1,6 +1,9 @@
-#include "sc-builder/src/scs_loader.hpp"
-#include "sc_test.hpp"
+#include <gtest/gtest.h>
+#include <sc-builder/scs_loader.hpp>
+#include <sc-memory/test/sc_test.hpp>
+
 #include "sc-agents-common/utils/CommonUtils.hpp"
+
 #include "keynodes/identifiers_keynodes.hpp"
 #include "agent/translate_main_system_idtfs_from_sc_to_file_agent.hpp"
 

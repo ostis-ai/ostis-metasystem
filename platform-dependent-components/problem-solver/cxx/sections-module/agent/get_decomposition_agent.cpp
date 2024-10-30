@@ -75,15 +75,15 @@ ScAddrVector GetDecompositionAgent::GetDecomposition(ScAddr const & subjDomainAd
   ScTemplate decompositionTemplate;
   decompositionTemplate.Quintuple(
       subjDomainAddr,
-      ScType::EdgeDCommonVar,
-      ScType::NodeVar >> sections_aliases::DECOMPOSITION_TUPLE,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarCommonArc,
+      ScType::VarNode >> sections_aliases::DECOMPOSITION_TUPLE,
+      ScType::VarPermPosArc,
       decompositionAddr);
   decompositionTemplate.Quintuple(
       sections_aliases::DECOMPOSITION_TUPLE,
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVar >> sections_aliases::SECTION_NODE,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarPermPosArc,
+      ScType::VarNode >> sections_aliases::SECTION_NODE,
+      ScType::VarPermPosArc,
       ScKeynodes::rrel_1);
   ScTemplateSearchResult result;
   m_context.SearchByTemplate(decompositionTemplate, result);

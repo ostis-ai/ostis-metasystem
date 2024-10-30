@@ -17,7 +17,7 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedE
   std::stringstream streamIdtfs;
 
   ScIterator3Ptr const & iterator3PtrEdgeBelongsToNrelSystemIdtf =
-      m_context.CreateIterator3(nrelSystemIdtf, ScType::EdgeAccessConstPosPerm, ScType::EdgeDCommonConst);
+      m_context.CreateIterator3(nrelSystemIdtf, ScType::ConstPermPosArc, ScType::ConstCommonArc);
 
   ScAddr edgeBelongsToNrelSystemIdtf;
   ScAddr sourceOfEdgeBelongsToNrelSystemIdtf;
@@ -91,9 +91,9 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::GetSystemIdtfAndVerifyNod
   ScAddr identifierLink;
   ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf = m_context.CreateIterator5(
       node,
-      ScType::EdgeDCommonConst,
-      ScType::LinkConst,
-      ScType::EdgeAccessConstPosPerm,
+      ScType::ConstCommonArc,
+      ScType::ConstNodeLink,
+      ScType::ConstPermPosArc,
       m_context.SearchElementBySystemIdentifier("nrel_system_identifier"));
 
   if (iterator5PtrCheckOnlyOneIdtf->Next())
@@ -114,13 +114,13 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::GetMainIdtfAndVerifyNode(
   ScAddr mainIdentifierLink;
   ScAddr mainAnotherIdentifierLink;
   ScIterator5Ptr const & iterator5PtrCheckOnlyOneIdtf = m_context.CreateIterator5(
-      node, ScType::EdgeDCommonConst, ScType::LinkConst, ScType::EdgeAccessConstPosPerm, ScKeynodes::nrel_main_idtf);
+      node, ScType::ConstCommonArc, ScType::ConstNodeLink, ScType::ConstPermPosArc, ScKeynodes::nrel_main_idtf);
 
   bool isLangRu;
   while (iterator5PtrCheckOnlyOneIdtf->Next())
   {
     mainIdentifierLink = iterator5PtrCheckOnlyOneIdtf->Get(2);
-    isLangRu = m_context.CheckConnector(ScKeynodes::lang_ru, mainIdentifierLink, ScType::EdgeAccessConstPosPerm);
+    isLangRu = m_context.CheckConnector(ScKeynodes::lang_ru, mainIdentifierLink, ScType::ConstPermPosArc);
 
     if (isLangRu)
     {
@@ -128,7 +128,7 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::GetMainIdtfAndVerifyNode(
       {
         mainAnotherIdentifierLink = iterator5PtrCheckOnlyOneIdtf->Get(2);
         isLangRu =
-            m_context.CheckConnector(ScKeynodes::lang_ru, mainAnotherIdentifierLink, ScType::EdgeAccessConstPosPerm);
+            m_context.CheckConnector(ScKeynodes::lang_ru, mainAnotherIdentifierLink, ScType::ConstPermPosArc);
 
         if (isLangRu)
           return identifier;

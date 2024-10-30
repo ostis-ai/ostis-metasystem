@@ -11,8 +11,6 @@ set(SOURCES
 add_library(identifiers-module SHARED ${SOURCES})
 target_link_libraries(identifiers-module
     LINK_PUBLIC sc-memory
-    LINK_PUBLIC sc-core
-    LINK_PUBLIC sc-builder-lib
     LINK_PUBLIC sc-agents-common
 )
 target_include_directories(identifiers-module

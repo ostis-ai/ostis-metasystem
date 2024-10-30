@@ -90,7 +90,7 @@ bool RemoveSectionAgent::RemoveSection(ScAddr const & section)
 
     return true;
   }
-  ScAddr edge = m_context.GenerateConnector(ScType::EdgeAccessConstPosPerm, SectionsKeynodes::removed_section, section);
+  ScAddr edge = m_context.GenerateConnector(ScType::ConstPermPosArc, SectionsKeynodes::removed_section, section);
   return m_context.IsElement(edge);
 }
 
@@ -154,7 +154,7 @@ void RemoveSectionAgent::HandleNeighboringSections(ScAddr const & tuple, ScAddr 
   if (!m_context.IsElement(currentSectionEdge))
   {
     ScIterator3Ptr currentSectionEdgeIterator =
-        m_context.CreateIterator3(tuple, ScType::EdgeAccessConstPosPerm, section);
+        m_context.CreateIterator3(tuple, ScType::ConstPermPosArc, section);
     if (currentSectionEdgeIterator->Next())
     {
       currentSectionEdge = currentSectionEdgeIterator->Get(1);
@@ -172,13 +172,13 @@ void RemoveSectionAgent::HandleNeighboringSections(ScAddr const & tuple, ScAddr 
   // If current element is the last
   if (m_context.IsElement(previousSection) && !m_context.IsElement(nextSection))
   {
-    m_context.GenerateConnector(ScType::EdgeAccessConstPosTemp, SectionsKeynodes::rrel_last, previousSectionEdge);
+    m_context.GenerateConnector(ScType::ConstTempPosArc, SectionsKeynodes::rrel_last, previousSectionEdge);
   }
 
   // If current element is the first
   if (!m_context.IsElement(previousSection) && m_context.IsElement(nextSection))
   {
-    m_context.GenerateConnector(ScType::EdgeAccessConstPosPerm, ScKeynodes::rrel_1, nextSectionEdge);
+    m_context.GenerateConnector(ScType::ConstPermPosArc, ScKeynodes::rrel_1, nextSectionEdge);
   }
 }
 

@@ -19,16 +19,16 @@ ScAddr sections_generator::GenerateSection(
     ScAddr const & lang,
     bool isAtomic)
 {
-  ScAddr section = context->GenerateNode(ScType::NodeConstClass);
+  ScAddr section = context->GenerateNode(ScType::ConstNodeClass);
   utils::CommonUtils::setMainIdtf(context, section, sectionName, {lang});
 
   ScTemplate sectionTemplate;
-  sectionTemplate.Triple(SectionsKeynodes::section, ScType::EdgeAccessVarPosPerm, section);
+  sectionTemplate.Triple(SectionsKeynodes::section, ScType::VarPermPosArc, section);
   if (isAtomic)
-    sectionTemplate.Triple(SectionsKeynodes::atomic_section, ScType::EdgeAccessVarPosPerm, section);
+    sectionTemplate.Triple(SectionsKeynodes::atomic_section, ScType::VarPermPosArc, section);
   else
-    sectionTemplate.Triple(SectionsKeynodes::non_atomic_section, ScType::EdgeAccessVarPosPerm, section);
-  sectionTemplate.Triple(SectionsKeynodes::not_enough_formed_structure, ScType::EdgeAccessVarPosPerm, section);
+    sectionTemplate.Triple(SectionsKeynodes::non_atomic_section, ScType::VarPermPosArc, section);
+  sectionTemplate.Triple(SectionsKeynodes::not_enough_formed_structure, ScType::VarPermPosArc, section);
   ScTemplateGenResult genResult;
   context->GenerateByTemplate(sectionTemplate, genResult);
 

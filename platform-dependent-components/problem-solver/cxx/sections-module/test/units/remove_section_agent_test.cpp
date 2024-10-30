@@ -8,9 +8,9 @@
 #include "constants/sections_aliases.hpp"
 #include "utils/sections_utils.hpp"
 
-#include "sc-builder/src/scs_loader.hpp"
-
-#include "sc_test.hpp"
+#include <gtest/gtest.h>
+#include <sc-builder/scs_loader.hpp>
+#include <sc-memory/test/sc_test.hpp>
 
 #include "sc-agents-common/utils/CommonUtils.hpp"
 #include "sc-agents-common/utils/IteratorUtils.hpp"
@@ -49,10 +49,10 @@ TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition)
   EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::ConstPermPosArc, ScType::Unknown);
   EXPECT_TRUE(it3->Next());
 
-  EXPECT_TRUE(context.CheckConnector(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.CheckConnector(SectionsKeynodes::removed_section, sectionAddr, ScType::ConstPermPosArc));
   EXPECT_EQ(decompositionSize - utils::CommonUtils::getSetPower(&context, decompositionTupleAddr), 1u);
 
   context.UnsubscribeAgent<sectionsModule::RemoveSectionAgent>();
@@ -77,19 +77,19 @@ TEST_F(RemoveSectionTest, successful_remove_section_from_decomposition_2)
 
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::ConstPermPosArc, ScType::ConstNode);
   EXPECT_TRUE(it3->Next());
   ScTemplate scTemplate;
   scTemplate.Quintuple(
-      ScType::NodeVarTuple >> sections_aliases::DECOMPOSITION_TUPLE,
-      ScType::EdgeDCommonVar,
+      ScType::VarNodeTuple >> sections_aliases::DECOMPOSITION_TUPLE,
+      ScType::VarCommonArc,
       parentSectionAddr,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarPermPosArc,
       SectionsKeynodes::nrel_entity_decomposition);
   ScTemplateSearchResult searchResult;
   context.SearchByTemplate(scTemplate, searchResult);
   EXPECT_TRUE(searchResult.IsEmpty());
-  EXPECT_TRUE(context.CheckConnector(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.CheckConnector(SectionsKeynodes::removed_section, sectionAddr, ScType::ConstPermPosArc));
 
   context.UnsubscribeAgent<sectionsModule::RemoveSectionAgent>();
 }
@@ -128,15 +128,15 @@ TEST_F(RemoveSectionTest, remove_section_without_parent)
 
   EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
 
-  EXPECT_TRUE(context.CheckConnector(SectionsKeynodes::removed_section, sectionAddr, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.CheckConnector(SectionsKeynodes::removed_section, sectionAddr, ScType::ConstPermPosArc));
   ScTemplate scTemplate;
   scTemplate.Quintuple(
-      ScType::NodeVarTuple >> sections_aliases::DECOMPOSITION_TUPLE,
-      ScType::EdgeDCommonVar,
-      ScType::NodeVar,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarNodeTuple >> sections_aliases::DECOMPOSITION_TUPLE,
+      ScType::VarCommonArc,
+      ScType::VarNode,
+      ScType::VarPermPosArc,
       SectionsKeynodes::nrel_entity_decomposition);
-  scTemplate.Triple(sections_aliases::DECOMPOSITION_TUPLE, ScType::EdgeAccessVarPosPerm, sectionAddr);
+  scTemplate.Triple(sections_aliases::DECOMPOSITION_TUPLE, ScType::VarPermPosArc, sectionAddr);
   ScTemplateSearchResult searchResult;
   context.SearchByTemplate(scTemplate, searchResult);
   EXPECT_TRUE(searchResult.IsEmpty());
