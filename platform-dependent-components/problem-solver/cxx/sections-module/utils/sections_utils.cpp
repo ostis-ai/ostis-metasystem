@@ -22,9 +22,9 @@ ScAddr sections_utils::GetSectionDecompositionTuple(ScMemoryContext * context, S
   ScTemplate scTemplate;
   scTemplate.Quintuple(
       sectionAddr,
-      ScType::EdgeDCommonVar,
-      ScType::NodeVar >> sections_aliases::DECOMPOSITION_TUPLE,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarCommonArc,
+      ScType::VarNode >> sections_aliases::DECOMPOSITION_TUPLE,
+      ScType::VarPermPosArc,
       SectionsKeynodes::nrel_entity_decomposition);
   ScTemplateSearchResult searchResult;
   context->SearchByTemplate(scTemplate, searchResult);

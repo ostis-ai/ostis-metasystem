@@ -7,9 +7,9 @@
 #include "agent/get_decomposition_agent.hpp"
 #include "keynodes/sections_keynodes.hpp"
 
-#include "sc-builder/src/scs_loader.hpp"
-
-#include "sc_test.hpp"
+#include <gtest/gtest.h>
+#include <sc-builder/scs_loader.hpp>
+#include <sc-memory/test/sc_test.hpp>
 
 #include "sc-agents-common/utils/CommonUtils.hpp"
 #include <sc-memory/sc_agent.hpp>
@@ -49,7 +49,7 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition)
   EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr const it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Link);
+  ScIterator3Ptr const it3 = context.CreateIterator3(result, ScType::ConstPermPosArc, ScType::NodeLink);
   EXPECT_TRUE(it3->Next());
   std::string decompositionContent;
   context.GetLinkContent(it3->Get(2), decompositionContent);
@@ -76,7 +76,7 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition_with_level)
   EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
   ScStructure result = testAction.GetResult();
 
-  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::EdgeAccessConstPosPerm, ScType::Link);
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::ConstPermPosArc, ScType::NodeLink);
 
   EXPECT_TRUE(it3->Next());
   std::string decompositionText;
