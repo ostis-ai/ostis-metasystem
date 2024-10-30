@@ -1,6 +1,7 @@
 import logging
 
 import g4f
+import re
 from g4f.client import Client
 import json
 import requests
@@ -107,6 +108,7 @@ class CleanTextGenerationAgent(ScAgentClassic):
         return ScResult.OK
     
     def _get_clean_text(self, raw_text: str, language: str) -> str:  
+        raw_text = re.sub("<.*>|\*", '', raw_text)
         prompt = constants.PROMPTS[language]%(raw_text.replace('\n', ' '))
         response = requests.post("https://llm.ostis.ai/completion", prompt.encode(encoding='UTF-8'))
         response.encoding = "utf-8"
