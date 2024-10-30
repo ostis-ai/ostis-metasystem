@@ -7,6 +7,9 @@
 #include "sections_aliases.hpp"
 
 std::string const sections_aliases::DECOMPOSITION_TUPLE = "_decomposition_tuple";
+std::string const sections_aliases::SUBDIVISION_TUPLE = "_subdivision_tuple";
+std::string const sections_aliases::SUBDIVISION_EDGE = "_subdivision_edge";
+std::string const sections_aliases::EDGE = "_edge";
 std::string const sections_aliases::EDGE_TO_DELETE = "_edge_to_delete";
 std::string const sections_aliases::PARENT_SECTION = "_parent_section";
 std::string const sections_aliases::BASE_SEQUENCE_EDGE = "_base_sequence_edge";

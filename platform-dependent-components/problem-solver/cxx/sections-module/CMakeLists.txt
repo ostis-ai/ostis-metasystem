@@ -3,6 +3,7 @@ set(SECTIONS_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
 set(HEADERS
     "subject_domain_module.hpp"
     "agent/get_decomposition_agent.hpp"
+    "agent/get_subdivision_agent.hpp"
     "agent/add_section_agent.hpp"
     "agent/remove_section_agent.hpp"
     "builder/sections_builder.hpp"
@@ -16,6 +17,7 @@ set(HEADERS
 set(SOURCES
     "subject_domain_module.cpp"
     "agent/get_decomposition_agent.cpp"
+    "agent/get_subdivision_agent.cpp"
     "agent/add_section_agent.cpp"
     "agent/remove_section_agent.cpp"
     "builder/sections_builder.cpp"

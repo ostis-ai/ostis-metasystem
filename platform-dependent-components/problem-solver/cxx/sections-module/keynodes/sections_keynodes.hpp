@@ -22,6 +22,9 @@ public:
   SC_PROPERTY(Keynode("action_get_decomposition"), ForceCreate)
   static ScAddr action_get_decomposition;
 
+  SC_PROPERTY(Keynode("action_get_decomposition"), ForceCreate)
+  static ScAddr action_get_subdivision;
+
   SC_PROPERTY(Keynode("action_add_section"), ForceCreate)
   static ScAddr action_add_section;
 
