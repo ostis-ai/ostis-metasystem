@@ -32,52 +32,49 @@ public:
       {ScType::ConstNodeLink, "sc_link"},
       {ScType::VarNodeLink, "sc_link"},
 
-      {ScType::NodeStructure, "sc_node_struct"},
+      {ScType::NodeStructure, "sc_node_structure"},
       {ScType::NodeTuple, "sc_node_tuple"},
       {ScType::NodeRole, "sc_node_role_relation"},
-      {ScType::NodeNoRole, "sc_node_norole_relation"},
+      {ScType::NodeNonRole, "sc_node_non_role_relation"},
       {ScType::NodeClass, "sc_node_class"},
+      {ScType::NodeSuperclass, "sc_node_superclass"},
       {ScType::NodeMaterial, "sc_node_material"},
 
-      {ScType::ConstNodeStructure, "sc_node_struct"},
+      {ScType::ConstNodeStructure, "sc_node_structure"},
       {ScType::ConstNodeTuple, "sc_node_tuple"},
       {ScType::ConstNodeRole, "sc_node_role_relation"},
-      {ScType::ConstNodeNoRole, "sc_node_norole_relation"},
+      {ScType::ConstNodeNonRole, "sc_node_non_role_relation"},
       {ScType::ConstNodeClass, "sc_node_class"},
       {ScType::ConstNodeMaterial, "sc_node_material"},
 
-      {ScType::VarNodeStructure, "sc_node_struct"},
+      {ScType::VarNodeStructure, "sc_node_structure"},
       {ScType::VarNodeTuple, "sc_node_tuple"},
-      {ScType::ScType::VarNodeRole, "sc_node_role_relation"},
-      {ScType::VarNodeNoRole, "sc_node_norole_relation"},
+      {ScType::VarNodeRole, "sc_node_role_relation"},
+      {ScType::VarNodeNonRole, "sc_node_non_role_relation"},
       {ScType::VarNodeClass, "sc_node_class"},
       {ScType::VarNodeMaterial, "sc_node_material"}};
 
   std::map<ScType, std::string> ScTypesOfEdgesWithSCsClasses = {
-      {ScType::CommonEdge, "sc_edge"},
-      {ScType::VarCommonArc, "sc_edge_common"},
+      {ScType::CommonEdge, "sc_common_edge"},
+      {ScType::CommonArc, "sc_common_arc"},
+      {ScType::MembershipArc, "sc_membership_arc"},
 
-      {ScType::ConstCommonEdge, "<=>"},
-      {ScType::ConstCommonArc, "sc_edge_common"},
+      {ScType::ConstCommonEdge, "sc_common_edge"},
+      {ScType::ConstCommonArc, "sc_common_arc"},
 
-      {ScType::ConstTempPosArc, "sc_edge_access"},
+      {ScType::ConstPermPosArc, "sc_main_arc"},
+      {ScType::ConstPermNegArc, "sc_main_arc"},
+      {ScType::ConstTempPosArc, "sc_main_arc"},
+      {ScType::ConstTempNegArc, "sc_main_arc"},
 
-      {ScType::ConstPermPosArc, "sc_edge_main"},
-      {ScType::ConstPermNegArc, "sc_edge_main"},
-      {ScType::ConstFuzArc, "sc_edge_main"},
-      {ScType::ConstTempPosArc, "sc_edge_main"},
-      {ScType::ConstTempNegArc, "sc_edge_main"},
-      {ScType::ConstFuzArc, "sc_edge_main"},
-
-      {ScType::VarCommonEdge, "_<=>"},
-      {ScType::VarCommonArc, "sc_edge_common"},
-      {ScType::VarPosArc, "sc_edge_main"},
-      {ScType::VarPermNegArc, "sc_edge_main"},
-      {ScType::VarFuzArc, "sc_edge_main"},
-      {ScType::VarTempPosArc, "sc_edge_main"},
-      {ScType::VarTempNegArc, "sc_edge_main"},
-      {ScType::VarFuzArc, "sc_edge_main"}};
-
+      {ScType::VarCommonEdge, "sc_common_edge"},
+      {ScType::VarCommonArc, "sc_main_arc"},
+      {ScType::VarPosArc, "sc_main_arc"},
+      {ScType::VarFuzArc, "sc_main_arc"},
+      {ScType::VarPermNegArc, "sc_main_arc"},
+      {ScType::VarTempPosArc, "sc_main_arc"},
+      {ScType::VarTempNegArc, "sc_main_arc"}};
+      
 private:
   
   std::string GetStrScType(ScAddr const & node);
