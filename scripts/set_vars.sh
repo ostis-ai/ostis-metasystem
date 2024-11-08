@@ -17,7 +17,7 @@ export PLATFORM_PATH="${PLATFORM_PATH:-${METASYSTEM_PATH}/ostis-web-platform}"
 
 export SC_WEB_REPO="${SC_WEB_REPO:-https://github.com/NikitaZotov/sc-web.git}"
 export SC_WEB_BRANCH="${SC_WEB_BRANCH:-feat/harmonise_sc_types}"
-export SC_WEB_COMMIT="${SC_WEB_COMMIT:-b0f5232707617518448b4a865aa3a562425f575a}"
+export SC_WEB_COMMIT="${SC_WEB_COMMIT:-"b0f5232707617518448b4a865aa3a562425f575a"}"
 
 export REACT_SC_WEB_REPO="${REACT_SC_WEB_REPO:-https://github.com/ostis-ai/react-sc-web}"
 export REACT_SC_WEB_PATH="${REACT_SC_WEB_PATH:-${METASYSTEM_PATH}/platform-dependent-components/interface/react-sc-web}"
