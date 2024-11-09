@@ -6,7 +6,7 @@ subject_domain_of_sc_identifiers
 	[subject domain of signs that are not the texts elements of sc-code]	
 	(* <- lang_en;; *);
 <- subject_domain;
-<- sc_node_struct;
+<- sc_node_structure;
 <- structure;
 -> rrel_maximum_studied_object_class: sc_identifier;
 -> rrel_not_maximum_studied_object_class:
@@ -28,7 +28,7 @@ subject_domain_of_sc_identifiers
 	nrel_external_sc_identifiers_sequence;;
 
 sc_identifier
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[идентификатор]
 	(* <- lang_ru;; *);
@@ -64,7 +64,7 @@ sc_identifier
 };;
 
 string_sc_identifier
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[строковый идентификатор]
 	(* <- lang_ru;; *);
@@ -92,7 +92,7 @@ string_sc_identifier
 };;
 
 non_string_sc_identifier
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[нестроковый идентификатор]
 	(* <- lang_ru;; *);
@@ -115,7 +115,7 @@ non_string_sc_identifier
 	*);;
 
 atomic_sc_identifier
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[атомарный идентификатор]
 	(* <- lang_ru;; *);
@@ -140,7 +140,7 @@ atomic_sc_identifier
 	"file://content_html/example_for_atomic_sc_identifier.html" (* => nrel_format: format_html;; *);;
 
 non_atomic_sc_identifier
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[неатомарный идентификатор]
 	(* <- lang_ru;; *);
@@ -188,7 +188,7 @@ non_atomic_sc_identifier
 => nrel_strict_inclusion: sc_identifier_operation;;
 
 sc_identifier_contour
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[идентификатор-контур]
 	(* <- lang_ru;; *);
@@ -217,7 +217,7 @@ sc_identifier_contour
 	*);;
 
 sc_identifier_file
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[идентификатор-файл]
 	(* <- lang_ru;; *);
@@ -250,7 +250,7 @@ sc_identifier_file
 	*);;
 
 sc_identifier_set
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[идентификатор-множество]
 	(* <- lang_ru;; *);
@@ -288,7 +288,7 @@ sc_identifier_set
 	*);;
 
 sc_identifier_tuple_set
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[идентификатор-кортеж]
 	(* <- lang_ru;; *);
@@ -325,7 +325,7 @@ sc_identifier_tuple_set
 	*);;
 
 sc_identifier_operation
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[идентификатор-операция]
 	(* <- lang_ru;; *);
@@ -362,7 +362,7 @@ sc_identifier_operation
 	*);;
 
 nrel_idtf
-<- sc_node_norole_relation;
+<- sc_node_non_role_relation;
 <- identification_relation;
 => nrel_main_idtf:
 	[идентификатор*]
@@ -401,7 +401,7 @@ nrel_idtf
 	*);;
 
 nrel_main_idtf
-<- sc_node_norole_relation;
+<- sc_node_non_role_relation;
 <- identification_relation;
 => nrel_main_idtf:
 	[основной идентификатор*]
@@ -439,7 +439,7 @@ nrel_main_idtf
 	*);;
 
 nrel_system_identifier
-<- sc_node_norole_relation;
+<- sc_node_non_role_relation;
 <- identification_relation;
 => nrel_main_idtf:
 	[системный идентификатор*]
@@ -477,7 +477,7 @@ nrel_system_identifier
 	*);;
 
 system_sc_identifier
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[системный идентификатор]
 	(* <- lang_ru;; *);
@@ -501,7 +501,7 @@ system_sc_identifier
 	*);;
 
 identification_relation
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[отношение идентификации]
 	(* <- lang_ru;; *);
@@ -509,7 +509,7 @@ identification_relation
 	(* <- lang_en;; *);;
 
 nrel_external_sc_identifiers_sequence
-<- sc_node_norole_relation;
+<- sc_node_non_role_relation;
 => nrel_main_idtf:
 	[последовательность внешних идентификаторов*]
 	(* <- lang_ru;; *);

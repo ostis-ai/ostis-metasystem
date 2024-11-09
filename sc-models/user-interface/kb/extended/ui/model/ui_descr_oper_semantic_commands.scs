@@ -1,5 +1,5 @@
 ui_descr_oper_semantic_commands
-<- sc_node_not_relation;
+<- sc_node_class;
 <= nrel_inclusion: 
 	semantic_neighborhood;
 

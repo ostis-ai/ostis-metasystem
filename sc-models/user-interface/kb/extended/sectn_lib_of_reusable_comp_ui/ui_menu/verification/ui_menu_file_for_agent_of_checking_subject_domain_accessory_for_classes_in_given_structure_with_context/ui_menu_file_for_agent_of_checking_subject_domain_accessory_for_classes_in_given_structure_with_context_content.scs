@@ -11,7 +11,7 @@ ui_menu_file_for_agent_of_checking_subject_domain_accessory_for_classes_in_given
 			_-> ui_arg_1;;		
 			_=> nrel_context_of_action:: ui_arg_2;; 		
 			*);;
-		._action_of_checking_subject_domain_accessory_for_classes_in_given_structure_instance _<- action;;
+		._action_of_checking_subject_domain_accessory_for_classes_in_given_structure_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_agent_of_checking_subject_domain_accessory_for_classes_in_given_structure_with_context => ui_nrel_command_lang_template: 

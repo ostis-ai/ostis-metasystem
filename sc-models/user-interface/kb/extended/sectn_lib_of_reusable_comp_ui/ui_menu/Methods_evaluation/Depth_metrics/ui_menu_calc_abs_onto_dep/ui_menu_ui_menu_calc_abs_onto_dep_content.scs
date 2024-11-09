@@ -13,7 +13,7 @@ ui_menu_file_for_calculation_absolute_ontology_depths => ui_nrel_command_templat
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._action_to_calculate_absolute_ontology_depths_instance _<- action;;
+		._action_to_calculate_absolute_ontology_depths_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_calculation_absolute_ontology_depths => ui_nrel_command_lang_template: 

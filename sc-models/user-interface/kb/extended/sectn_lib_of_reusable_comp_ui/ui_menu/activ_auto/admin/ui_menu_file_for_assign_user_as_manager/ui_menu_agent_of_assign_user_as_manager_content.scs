@@ -13,7 +13,7 @@ ui_menu_agent_of_assign_user_as_manager => ui_nrel_command_template:
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._action_assign_user_as_manager_instance _<- action;;
+		._action_assign_user_as_manager_instance <-_ action;;
 	*];;
 
 ui_menu_agent_of_assign_user_as_manager => ui_nrel_command_lang_template: 

@@ -9,7 +9,7 @@ ui_rejection_verification_result_of_offer => ui_nrel_command_template:
 			(*
 				_-> rrel_1:: ui_arg_1;;			
 			*);;
-		._action_to_reject_the_result_of_proposal_verification_instance _<- action;;
+		._action_to_reject_the_result_of_proposal_verification_instance <-_ action;;
 	*];;
 
 ui_rejection_verification_result_of_offer => ui_nrel_command_lang_template: [Отклонить результат верификации предложения: $ui_arg_1] (* <- lang_ru;; *);;

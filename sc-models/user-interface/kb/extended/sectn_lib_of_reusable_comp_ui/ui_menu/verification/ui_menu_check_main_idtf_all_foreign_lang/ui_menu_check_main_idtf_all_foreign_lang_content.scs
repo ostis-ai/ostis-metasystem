@@ -9,7 +9,7 @@ ui_menu_file_for_check_the_main_idtf_for_all_foreign_lang => ui_nrel_command_tem
 			(*
 			_-> ui_arg_1;;
 			*);;
-		._action_check_the_main_idtf_for_all_foreign_lang_instance _<- action;;
+		._action_check_the_main_idtf_for_all_foreign_lang_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_check_the_main_idtf_for_all_foreign_lang => ui_nrel_command_lang_template: [Проверить наличие основных идентификаторов sc-элементов для всех внешних языков: $ui_arg_1] (* <- lang_ru;;*);;
