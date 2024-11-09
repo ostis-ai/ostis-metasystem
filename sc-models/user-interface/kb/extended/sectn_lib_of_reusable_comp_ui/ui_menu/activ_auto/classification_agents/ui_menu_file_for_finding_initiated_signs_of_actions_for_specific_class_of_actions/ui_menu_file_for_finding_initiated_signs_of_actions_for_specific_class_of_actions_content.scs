@@ -13,7 +13,7 @@ ui_menu_for_agent_of_finding_initiated_signs_of_actions_for_specific_class_of_ac
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._action_of_finding_initiated_signs_of_actions_for_specific_class_of_actions_instance _<- action;;
+		._action_of_finding_initiated_signs_of_actions_for_specific_class_of_actions_instance <-_ action;;
 	*];;
 
 ui_menu_for_agent_of_finding_initiated_signs_of_actions_for_specific_class_of_actions => ui_nrel_command_lang_template: 

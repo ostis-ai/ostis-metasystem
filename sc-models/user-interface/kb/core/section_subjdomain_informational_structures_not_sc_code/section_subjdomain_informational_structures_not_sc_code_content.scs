@@ -7,7 +7,7 @@ subjdomain_informational_structures_not_sc_code
 	[Subjdomain informational structures not sc-code]
 	(* <- lang_en;; *);
 <- subject_domain;
-<- sc_node_struct;
+<- sc_node_structure;
 <- structure;
 -> rrel_maximum_studied_object_class: 
 	file;
@@ -22,7 +22,7 @@ subjdomain_informational_structures_not_sc_code
 -> rrel_explored_relation:
 	nrel_sc_text_translation;;
 
-file <- sc_node_not_relation;
+file <- sc_node_class;
 
 => nrel_main_idtf:
 	[файл]
@@ -56,7 +56,7 @@ file <- sc_node_not_relation;
 			*);;
 	*);;
 
-lang_external <- sc_node_not_relation;
+lang_external <- sc_node_class;
 
 => nrel_main_idtf:
 	[внешний язык]
@@ -87,7 +87,7 @@ lang_external <- sc_node_not_relation;
 	*);;
 
 
-languages <- sc_node_not_relation;
+languages <- sc_node_class;
 => nrel_main_idtf:
 	[естественный язык]
 	(* <- lang_ru;; *);
@@ -119,7 +119,7 @@ languages <- sc_node_not_relation;
 	*);;
 
 lang_ru
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[Русский язык]
 	(* <- lang_ru;; *);
@@ -127,7 +127,7 @@ lang_ru
 	(* <- lang_en;; *);;
 
 lang_en
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf:
 	[Английский язык]
 	(* <- lang_ru;; *);
@@ -135,7 +135,7 @@ lang_en
 	(* <- lang_en;; *);;
 
 nrel_sc_text_translation
-<- sc_node_norole_relation;
+<- sc_node_non_role_relation;
 <- quasybinary_relation;
 => nrel_main_idtf:
 	[трансляция sc-текста*]
@@ -175,7 +175,7 @@ nrel_sc_text_translation
 			*);;
 	*);;
 
-image <- sc_node_not_relation;
+image <- sc_node_class;
 
 => nrel_main_idtf:
 	[изображение]
@@ -191,7 +191,7 @@ image <- sc_node_not_relation;
 
 <= nrel_inclusion: file;;
 
-class_of_syntactically_equivalent_information_structures <- sc_node_not_relation;
+class_of_syntactically_equivalent_information_structures <- sc_node_class;
 
 => nrel_main_idtf:
 	[класс синтаксически эквивалентных информационных конструкций]
@@ -218,7 +218,7 @@ class_of_syntactically_equivalent_information_structures <- sc_node_not_relation
 	*);;
 
 
-maximum_class_of_syntactically_equivalent_information_structures <- sc_node_not_relation;
+maximum_class_of_syntactically_equivalent_information_structures <- sc_node_class;
 
 => nrel_main_idtf:
 	[максимальный класс синтаксически эквивалентных информационных конструкций]

@@ -1,7 +1,7 @@
 nrel_ui_commands_decomposition
 <- quasybinary_relation;
 <- decomposition_relation;
-<- sc_node_norole_relation;
+<- sc_node_non_role_relation;
 
 => nrel_main_idtf:
     [декомпозиция команд пользовательского интерфейса*]

@@ -20,7 +20,7 @@ ui_menu_check_translation
 ui_menu_check_translation => ui_nrel_command_template:
 	[*
 		action_check_translation _-> ._action_search_all_identifiers_instance;;
-		._action_search_all_identifiers_instance _<- action;;
+		._action_search_all_identifiers_instance <-_ action;;
 	*];;
 
 ui_menu_check_translation => ui_nrel_command_lang_template: [Какие sc-тексты имеют трансляцию только на некоторые внешние языки?] (* <- lang_ru;; *);;

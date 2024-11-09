@@ -15,7 +15,7 @@ ui_menu_file_for_checking_cycle_existence_of_ordering_relation => ui_nrel_comman
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._action_of_checking_cycle_existence_of_ordering_relation_instance _<- action;;
+		._action_of_checking_cycle_existence_of_ordering_relation_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_checking_cycle_existence_of_ordering_relation => ui_nrel_command_lang_template: 

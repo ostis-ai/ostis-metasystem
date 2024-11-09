@@ -25,7 +25,7 @@ ui_menu_view_links_of_relation_connected_with_element_in_the_agreed_part_of_kb =
 				_-> rrel_2:: ui_arg_2;;
 				_=> nrel_context_of_action:: concerted_part_of_specific_kb;;
 			*);;
-		._action_search_links_of_relation_connected_with_element_instance _<- action;;
+		._action_search_links_of_relation_connected_with_element_instance <-_ action;;
 	*];;
 
 ui_menu_view_links_of_relation_connected_with_element_in_the_agreed_part_of_kb => ui_nrel_command_lang_template: [С какими элементами сущность $ui_arg_1 связана отношением $ui_arg_2] (* <- lang_ru;; *);;

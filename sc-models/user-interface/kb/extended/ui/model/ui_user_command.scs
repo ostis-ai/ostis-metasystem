@@ -87,7 +87,7 @@ ui_user_command_class_control_dialog
 
 // -------------- Relations -----------------
 ui_nrel_command_init_sequence
-<- sc_node_norole_relation;
+<- sc_node_non_role_relation;
 <- quasybinary_relation;
 => nrel_main_idtf:
 	[последовательность элементарных действий инициирующих команду*] (* <- lang_ru;; *);;

@@ -13,7 +13,7 @@ ui_menu_file_for_calculation_dispersion_of_vertex_degrees => ui_nrel_command_tem
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._action_to_calculate_dispersion_of_vertex_degrees_instance _<- action;;
+		._action_to_calculate_dispersion_of_vertex_degrees_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_calculation_dispersion_of_vertex_degrees => ui_nrel_command_lang_template: 

@@ -1,5 +1,5 @@
 ui_no_argument_command_class
-<- sc_node_not_relation;
+<- sc_node_class;
 => nrel_main_idtf: 
     [класс команд без аргументов] 
     (* <- lang_ru;; *);

@@ -7,4 +7,4 @@ ui_nrel_command_template
     (* <- lang_en;; *);
 
 <- quasybinary_relation;
-<- sc_node_norole_relation;;
+<- sc_node_non_role_relation;;

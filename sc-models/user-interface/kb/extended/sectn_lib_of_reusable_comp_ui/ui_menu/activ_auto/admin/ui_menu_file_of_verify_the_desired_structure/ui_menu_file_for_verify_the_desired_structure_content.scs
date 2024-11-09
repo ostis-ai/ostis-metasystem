@@ -14,7 +14,7 @@ ui_menu_file_for_verify_the_desired_structure => ui_nrel_command_template:
 				_-> rrel_1:: ui_arg_1;;	
 				_-> rrel_2:: ui_arg_2;;					
 			*);;
-		._action_to_form_a_task_for_verification_of_the_proposal_instance _<- action;;
+		._action_to_form_a_task_for_verification_of_the_proposal_instance <-_ action;;
 	*];;
 
 

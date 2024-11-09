@@ -13,7 +13,7 @@ ui_menu_file_for_checking_existence_of_any_main_identifier => ui_nrel_command_te
 			(*
 			_-> ui_arg_1;;
 			*);;
-		._action_to_find_sc_elements_without_any_main_identifier_instance _<- action;;
+		._action_to_find_sc_elements_without_any_main_identifier_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_checking_existence_of_any_main_identifier => ui_nrel_command_lang_template: 
