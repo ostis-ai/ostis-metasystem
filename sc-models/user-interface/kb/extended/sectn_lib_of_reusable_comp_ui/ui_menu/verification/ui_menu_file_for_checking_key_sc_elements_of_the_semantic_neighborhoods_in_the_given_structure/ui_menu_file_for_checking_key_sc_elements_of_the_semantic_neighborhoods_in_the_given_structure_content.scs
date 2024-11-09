@@ -10,7 +10,7 @@ ui_menu_file_for_checking_key_sc_elements_of_the_semantic_neighborhoods_in_the_g
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._action_of_checking_key_sc_elements_of_the_semantic_neighborhoods_in_the_given_structure_instance _<- action;;
+		._action_of_checking_key_sc_elements_of_the_semantic_neighborhoods_in_the_given_structure_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_checking_key_sc_elements_of_the_semantic_neighborhoods_in_the_given_structure => ui_nrel_command_lang_template: 

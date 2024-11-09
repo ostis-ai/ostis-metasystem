@@ -11,7 +11,7 @@ ui_menu_file_for_specifying_of_indicated_entity => ui_nrel_command_template:
 			(*
 			_-> ui_arg_1;;	
 			*);;
-		._action_of_request_assistance_of_entity_specification_instance _<- action;;
+		._action_of_request_assistance_of_entity_specification_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_specifying_of_indicated_entity => ui_nrel_command_lang_template: [Cпецифицировать указываемую сущность: $ui_arg_1] (* <- lang_ru;; *);;

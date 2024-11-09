@@ -12,7 +12,7 @@ ui_menu_file_for_finding_connection_between_entity_and_alternative_of_specificat
 			_-> rrel_1:: ui_arg_1;;
 			_-> rrel_2:: ui_arg_2;;
 			*);;
-		._action_of_finding_connection_between_entity_and_alternative_of_specification_instance _<- action;;
+		._action_of_finding_connection_between_entity_and_alternative_of_specification_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_finding_connection_between_entity_and_alternative_of_specification => ui_nrel_command_lang_template: [Найти связь между сущностью и альтернативой спецификации: $ui_arg_1] (* <- lang_ru;; *);;

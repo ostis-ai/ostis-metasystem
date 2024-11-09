@@ -30,7 +30,7 @@ ui_menu_view_full_semantic_neighborhood => ui_nrel_command_template:
 			(*
 				_-> ui_arg_1;;				
 			*);;
-		._action_search_full_semantic_neighborhood_instance _<- action;;
+		._action_search_full_semantic_neighborhood_instance <-_ action;;
 	*];;
 
 ui_menu_view_full_semantic_neighborhood => ui_nrel_command_lang_template: [Что такое $ui_arg_1] (* <- lang_ru;; *);;

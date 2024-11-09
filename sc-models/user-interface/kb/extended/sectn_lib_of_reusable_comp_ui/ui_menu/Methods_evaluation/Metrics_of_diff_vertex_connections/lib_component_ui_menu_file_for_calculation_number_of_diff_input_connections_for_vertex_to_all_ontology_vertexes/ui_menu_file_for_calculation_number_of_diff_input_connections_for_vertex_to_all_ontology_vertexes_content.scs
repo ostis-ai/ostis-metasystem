@@ -13,7 +13,7 @@ ui_menu_file_for_calculation_number_of_diff_input_connections_for_vertex_to_all_
 			(*
 			_-> ui_arg_1;;				
 			*);;
-		._action_to_calculate_number_of_diff_input_connections_for_vertex_to_all_ontology_vertexes_instance _<- action;;
+		._action_to_calculate_number_of_diff_input_connections_for_vertex_to_all_ontology_vertexes_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_calculation_number_of_diff_input_connections_for_vertex_to_all_ontology_vertexes => ui_nrel_command_lang_template: 
