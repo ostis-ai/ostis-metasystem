@@ -19,6 +19,10 @@ export SC_WEB_REPO="${SC_WEB_REPO:-https://github.com/NikitaZotov/sc-web.git}"
 export SC_WEB_BRANCH="${SC_WEB_BRANCH:-feat/harmonise_sc_types}"
 export SC_WEB_COMMIT="${SC_WEB_COMMIT:-""}"
 
+export SC_MACHINE_REPO="${SC_MACHINE_REPO:-https://github.com/NikitaZotov/sc-machine.git}"
+export SC_MACHINE_BRANCH="${SC_MACHINE_BRANCH:-fix/kb_builder_config}"
+export SC_MACHINE_COMMIT="${SC_MACHINE_COMMIT:-""}"
+
 export REACT_SC_WEB_REPO="${REACT_SC_WEB_REPO:-https://github.com/ostis-ai/react-sc-web}"
 export REACT_SC_WEB_PATH="${REACT_SC_WEB_PATH:-${METASYSTEM_PATH}/platform-dependent-components/interface/react-sc-web}"
 export REACT_SC_WEB_BRANCH="${REACT_SC_WEB_BRANCH:-main}"
