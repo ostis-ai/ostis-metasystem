@@ -1,1 +1,2 @@
-py-sc-kpm==0.2.0
+py-sc-kpm==0.3.0
+py-sc-client==0.4.0
