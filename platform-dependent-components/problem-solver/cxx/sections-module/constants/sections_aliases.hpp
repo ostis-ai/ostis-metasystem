@@ -12,9 +12,6 @@ class sections_aliases
 {
 public:
   static std::string const DECOMPOSITION_TUPLE;
-  static std::string const SUBDIVISION_TUPLE;
-  static std::string const SUBDIVISION_EDGE;
-  static std::string const EDGE;
   static std::string const EDGE_TO_DELETE;
   static std::string const PARENT_SECTION;
   static std::string const BASE_SEQUENCE_EDGE;

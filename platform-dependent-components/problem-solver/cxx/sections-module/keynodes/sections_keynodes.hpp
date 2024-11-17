@@ -37,6 +37,10 @@ public:
   SC_PROPERTY(Keynode("nrel_entity_decomposition"), ForceCreate)
   static ScAddr nrel_entity_decomposition;
 
+  SC_PROPERTY(Keynode("nrel_subdividing"), ForceCreate)
+  static ScAddr nrel_subdividing;
+
+
   SC_PROPERTY(Keynode("removed_section"), ForceCreate)
   static ScAddr removed_section;
 

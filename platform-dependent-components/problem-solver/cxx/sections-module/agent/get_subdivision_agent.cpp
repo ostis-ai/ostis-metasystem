@@ -5,16 +5,13 @@
  */
 
 #include "sc-agents-common/utils/AgentUtils.hpp"
-#include "sc-agents-common/utils/CommonUtils.hpp"
 #include "sc-agents-common/utils/IteratorUtils.hpp"
-#include "sc-agents-common/utils/GenerationUtils.hpp"
-#include "sc-core/sc-store/sc-container/sc_struct_node.h"
+#include "sc-memory/sc_addr.hpp"
 #include "sc-memory/utils/sc_log.hpp"
 
 #include "keynodes/sections_keynodes.hpp"
 
 #include "get_subdivision_agent.hpp"
-#include "constants/sections_aliases.hpp"
 
 using namespace utils;
 
@@ -38,9 +35,22 @@ SC_AGENT_IMPLEMENTATION(GetSubdivisionAgent)
     return SC_RESULT_ERROR_INVALID_PARAMS;
   }
 
-  ScAddrVector subdivision = GetSubdivision(conceptAddr, SectionsKeynodes::nrel_subdividing);
-  if (subdivision.size() == 2)
-    subdivision = GetSubdivision(conceptAddr, SectionsKeynodes::nrel_section_decomposition);
+  ScAddr subdivisionRelationAddr;
+
+  ScAddrVector sectionClasses = {sectionsModule::SectionsKeynodes::not_enough_formed_structure,
+sectionsModule::SectionsKeynodes::removed_section,
+sectionsModule::SectionsKeynodes::section,
+sectionsModule::SectionsKeynodes::atomic_section,
+sectionsModule::SectionsKeynodes::non_atomic_section};
+
+  auto const & classIterator = m_memoryCtx.Iterator3(ScType::NodeConstClass, ScType::EdgeAccessConstPosPerm, conceptAddr);
+  ScAddr conceptClass = classIterator->Get(0);
+
+  if (std::find(sectionClasses.begin(), sectionClasses.end(), conceptClass)!=sectionClasses.end()) 
+    subdivisionRelationAddr = SectionsKeynodes::nrel_section_decomposition;
+  else subdivisionRelationAddr = SectionsKeynodes::nrel_subdividing;
+
+  ScAddrVector subdivision = GetSubdivision(conceptAddr, subdivisionRelationAddr);
 
   ScAddrVector answerElements = {subdivision};
 
@@ -55,39 +65,36 @@ bool GetSubdivisionAgent::CheckActionClass(ScAddr const & actionNode)
       SectionsKeynodes::action_get_subdivision, actionNode, ScType::EdgeAccessConstPosPerm);
 }
 
-ScAddrVector GetSubdivisionAgent::GetSubdivision(ScAddr const & conceptAddr, ScAddr const & subdivisionAddr)
+ScAddrVector GetSubdivisionAgent::GetSubdivision(ScAddr const & conceptAddr, ScAddr const & subdivisionRelationAddr)
 {
+  SC_LOG_DEBUG("func started");
   ScAddrVector subdivision;
         subdivision.push_back(conceptAddr);
-        subdivision.push_back(subdivisionAddr);
+        subdivision.push_back(subdivisionRelationAddr);
 
-  ScTemplate subdivisionTemplate;
-  subdivisionTemplate.Quintuple(
-      conceptAddr,
-      ScType::EdgeDCommonVar >> sections_aliases::SUBDIVISION_EDGE,
-      ScType::NodeVar >> sections_aliases::SUBDIVISION_TUPLE,
-      ScType::EdgeAccessVarPosPerm >> sections_aliases::EDGE,
-      SectionsKeynodes::nrel_subdividing);
-  ScTemplateSearchResult result;
-  m_memoryCtx.HelperSearchTemplate(subdivisionTemplate, result);
-  for (size_t i = 0; i < result.Size(); i++)
+  auto const & tupleIterator = m_memoryCtx.Iterator5(conceptAddr, ScType::EdgeDCommonConst, ScType::NodeConst, ScType::EdgeAccessConstPosPerm, subdivisionRelationAddr);
+  while (tupleIterator->Next())
   {
-    ScAddr tupleNode = result[i][sections_aliases::SUBDIVISION_TUPLE];
+  SC_LOG_DEBUG("first cycle");
+    ScAddr tupleNode = tupleIterator->Get(2);
     subdivision.push_back(tupleNode);
-    ScAddr subdivisionEdge = result[i][sections_aliases::SUBDIVISION_EDGE];
+    ScAddr subdivisionEdge = tupleIterator->Get(3);
     subdivision.push_back(subdivisionEdge);
-    ScAddr edge = result[i][sections_aliases::EDGE];
+    ScAddr edge = tupleIterator->Get(1);
     subdivision.push_back(edge);
 
     auto const & subdivisionIterator = m_memoryCtx.Iterator3(tupleNode, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
 
       while (subdivisionIterator->Next())
       {
+        SC_LOG_DEBUG("second cycle");
         ScAddr const & arc = subdivisionIterator->Get(1);
         ScAddr const & subconcept = subdivisionIterator->Get(2);
         subdivision.push_back(arc);
         subdivision.push_back(subconcept);
       }
+
+  SC_LOG_DEBUG("func finished");
   }
   return subdivision;
 }
