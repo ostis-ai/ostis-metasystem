@@ -1,13 +1,13 @@
 # ask-ai
 The system can answer 2 types of questions:
 
-1. about entity
-2. about subdividing
+1. entity description request
+2. entity subdivision request
 
 What can be improved:
 
-1. make ask-ai multilingual, now it is russian 
-2. make llm promt better (sometimes its answers are bad)
+1. make ask-ai multilingual, now it is in russian 
+2. improve work of LLM
 3. add more types of questions
 
 # ostis-metasystem
