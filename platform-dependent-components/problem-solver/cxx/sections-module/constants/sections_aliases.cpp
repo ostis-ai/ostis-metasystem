@@ -4,7 +4,12 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
+#include <set>
+
 #include "sections_aliases.hpp"
+#include "sc-memory/sc_addr.hpp"
+
+#include "keynodes/sections_keynodes.hpp"
 
 std::string const sections_aliases::DECOMPOSITION_TUPLE = "_decomposition_tuple";
 std::string const sections_aliases::EDGE_TO_DELETE = "_edge_to_delete";

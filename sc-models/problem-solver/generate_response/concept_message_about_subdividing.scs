@@ -1,9 +1,9 @@
 check2 = [*
 concept_message_about_subdividing
-=> nrel_response_action: action_get_decomposition;
+=> nrel_response_action: action_get_subdivision;
 => nrel_contained_role: ..contained_role_tuple(* <- sc_node_tuple;; *);;
 
-action_get_decomposition
+action_get_subdivision
 => nrel_required_arg_role: ..required_arg_tuple(* <- sc_node_tuple;; *);;
 
 @edge1 = (..contained_role_tuple -> rrel_entity);;

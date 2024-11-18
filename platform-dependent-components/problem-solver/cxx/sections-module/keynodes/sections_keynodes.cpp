@@ -11,10 +11,12 @@
 namespace sectionsModule
 {
 ScAddr SectionsKeynodes::action_get_decomposition;
+ScAddr SectionsKeynodes::action_get_subdivision;
 ScAddr SectionsKeynodes::action_add_section;
 ScAddr SectionsKeynodes::action_remove_section;
 ScAddr SectionsKeynodes::nrel_section_decomposition;
 ScAddr SectionsKeynodes::nrel_entity_decomposition;
+ScAddr SectionsKeynodes::nrel_subdividing;
 ScAddr SectionsKeynodes::removed_section;
 ScAddr SectionsKeynodes::section;
 ScAddr SectionsKeynodes::not_enough_formed_structure;
