@@ -6,7 +6,7 @@
 
 #include "identifiers_module.hpp"
 
-#include "sc-memory/sc_memory.hpp"
+#include <sc-memory/sc_memory.hpp>
 
 #include "keynodes/identifiers_keynodes.hpp"
 
