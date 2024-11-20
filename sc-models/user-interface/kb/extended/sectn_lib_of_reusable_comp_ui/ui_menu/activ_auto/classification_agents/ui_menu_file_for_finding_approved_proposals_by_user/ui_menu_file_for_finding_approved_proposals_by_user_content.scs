@@ -23,7 +23,7 @@ ui_menu_file_for_finding_approved_proposals_by_user => ui_nrel_command_lang_temp
 	(* <- lang_ru;; *);;
 ui_menu_file_for_finding_approved_proposals_by_user => ui_nrel_command_lang_template: 
 	[Find approved proposals by user: $ui_arg_1] 
-	(* <- lang_eng;; *);;
+	(* <- lang_en;; *);;
 
 
 

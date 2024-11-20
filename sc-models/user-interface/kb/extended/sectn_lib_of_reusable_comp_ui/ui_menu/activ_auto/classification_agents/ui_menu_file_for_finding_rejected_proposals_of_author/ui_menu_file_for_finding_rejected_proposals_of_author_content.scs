@@ -23,7 +23,7 @@ ui_menu_file_for_finding_rejected_proposals_of_author => ui_nrel_command_lang_te
 	(* <- lang_ru;; *);;
 ui_menu_file_for_finding_rejected_proposals_of_author => ui_nrel_command_lang_template: 
 	[Find all rejected proposals of author: $ui_arg_1] 
-	(* <- lang_eng;; *);;
+	(* <- lang_en;; *);;
 
 
 
