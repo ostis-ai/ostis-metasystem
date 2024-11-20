@@ -23,6 +23,6 @@ ui_menu_file_for_finding_all_drafts_of_author => ui_nrel_command_lang_template:
 	(* <- lang_ru;; *);;
 ui_menu_file_for_finding_all_drafts_of_author => ui_nrel_command_lang_template: 
 	[Find all drafts by author: $ui_arg_1]
-	(* <- lang_eng;; *);;
+	(* <- lang_en;; *);;
 
 *];;
