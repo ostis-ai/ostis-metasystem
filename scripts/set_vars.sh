@@ -18,11 +18,11 @@ export PLATFORM_PATH="${PLATFORM_PATH:-${METASYSTEM_PATH}/ostis-web-platform}"
 
 export SC_WEB_REPO="${SC_WEB_REPO:-https://github.com/ostis-ai/sc-web.git}"
 export SC_WEB_BRANCH="${SC_WEB_BRANCH:-main}"
-export SC_WEB_COMMIT="${SC_WEB_COMMIT:-""}"
+export SC_WEB_COMMIT="${SC_WEB_COMMIT:-"527a7a728e7d547f480dd106763c1d66a625fad6"}"
 
-export SC_MACHINE_REPO="${SC_MACHINE_REPO:-https://github.com/NikitaZotov/sc-machine.git}"
-export SC_MACHINE_BRANCH="${SC_MACHINE_BRANCH:-fix/kb_builder_config}"
-export SC_MACHINE_COMMIT="${SC_MACHINE_COMMIT:-""}"
+export SC_MACHINE_REPO="${SC_MACHINE_REPO:-https://github.com/ostis-ai/sc-machine.git}"
+export SC_MACHINE_BRANCH="${SC_MACHINE_BRANCH:-main}"
+export SC_MACHINE_COMMIT="${SC_MACHINE_COMMIT:-"d9b4ef25e39ece566d1b5f0931b8d2f3354542ad"}"
 
 export REACT_SC_WEB_REPO="${REACT_SC_WEB_REPO:-https://github.com/ostis-ai/react-sc-web}"
 export REACT_SC_WEB_PATH="${REACT_SC_WEB_PATH:-${METASYSTEM_PATH}/platform-dependent-components/interface/react-sc-web}"
