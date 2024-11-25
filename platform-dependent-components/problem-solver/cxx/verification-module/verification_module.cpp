@@ -12,6 +12,16 @@
 
 #include "agent/check-duplicate-constructions-agent.hpp"
 
+#include "agent/not-enough-specified-objects-search-agent.hpp"
+#include "agent/not-enough-specified-objects-search-module/not-enough-specified-relations-search-agent.hpp"
+#include "agent/not-enough-specified-objects-search-module/not-enough-specified-structures-search-agent.hpp"
+#include "agent/not-enough-specified-objects-search-module/not-enough-specified-classes-search-agent.hpp"
 using namespace verificationModule;
 
-SC_MODULE_REGISTER(VerificationModule)->Agent<CheckDuplicateConstructionsAgent>();
+SC_MODULE_REGISTER(VerificationModule)
+    ->Agent<CheckDuplicateConstructionsAgent>()
+    ->Agent<SearchNotEnoughSpecifiedRelationsAgent>()
+    ->Agent<SearchNotEnoughSpecifiedClassesAgent>()
+    ->Agent<SearchNotEnoughSpecifiedStructuresAgent>()
+    ->Agent<SearchNotEnoughSpecifiedObjectsAgent>();
+
