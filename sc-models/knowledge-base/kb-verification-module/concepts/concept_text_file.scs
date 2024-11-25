@@ -1,0 +1,28 @@
+concept_text_file
+<- sc_node_class;
+=> nrel_main_idtf:
+    [текстовый файл] (* <- lang_ru;; *);
+    [text file] (* <- lang_en;; *);
+<- rrel_key_sc_element:
+    ...
+    (*
+    <- definition;;
+    => nrel_main_idtf:
+        [Опр. (текстовый файл)]
+        (* <- lang_ru;; *);
+        [Def. (text file)]
+        (* <- lang_en;; *);;
+    => nrel_sc_text_translation:
+        {
+        rrel_example:
+            [Текстовый файл — это формат файла, используемый для хранения текста в цифровом формате.]
+            (* <- lang_ru;; *);
+        rrel_example:
+            [Text file is a file format used to store text in a digital format.]
+            (* <- lang_en;; *)
+        };;
+    => nrel_using_constants:
+        {
+          file
+        };;
+    *);;
