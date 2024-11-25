@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.11)
 project(ostis-metasystem)
 set(CMAKE_CXX_STANDARD 17)
+set(OSTIS_METASYSTEM_ROOT ${CMAKE_CURRENT_LIST_DIR})
 
 option(SC_BUILD_TESTS "Flag to build unit tests" OFF)
 option(SC_CLANG_FORMAT_CODE "Flag to add clangformat and clangformat_check targets" OFF)
