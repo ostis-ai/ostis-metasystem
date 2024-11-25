@@ -12,6 +12,7 @@
 #include "constants/verification_constants.hpp"
 #include "keynodes/verification_keynodes.hpp"
 #include "searcher/check_duplicate_constructions_searcher.hpp"
+#include "config/config.hpp"
 
 #include "check-duplicate-constructions-agent.hpp"
 
@@ -20,8 +21,13 @@ using namespace utils;
 namespace verificationModule
 {
 
+std::filesystem::path CheckDuplicateConstructionsAgent::filePath;
+
 ScResult CheckDuplicateConstructionsAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
+  if(filePath.empty())
+    filePath = Config::getInstance()->getValue(FileConfigs::VERIFICATION_ENDPOINT, FileConfigs::FILE_PATH);
+
   auto [classAddr] = action.GetArguments<1>();
   if (!m_context.IsElement(classAddr))
   {
@@ -105,9 +111,17 @@ std::string CheckDuplicateConstructionsAgent::findDomainSectionIdtf(ScAddr & cla
 
 std::ofstream CheckDuplicateConstructionsAgent::createOutputFile(std::string & stringMainIdtf, ScAddr & classAddr)
 {
-  std::string fileName = "duplicate_file_for_" + stringMainIdtf;
+  std::filesystem::create_directories(filePath);
 
-  std::ofstream outputFile = checkDuplicateConstructionSearcher::openOrCreateFile(&m_context, classAddr, fileName);
+  // Имя файла
+  std::string fileName ="duplicate_file_for_" + stringMainIdtf;
+
+  // Полный путь к файлу
+  std::filesystem::path directoryPath = filePath / fileName;
+
+  SC_LOG_DEBUG(directoryPath);
+
+  std::ofstream outputFile = checkDuplicateConstructionSearcher::openOrCreateFile(&m_context, classAddr, directoryPath);
 
   return outputFile;
 }
@@ -339,9 +353,10 @@ void CheckDuplicateConstructionsAgent::createDuplicateTripletsInfo(
   stringRelationObject = m_context.GetElementSystemIdentifier(relationObject);
 
   outputFile << "Object: " << stringObjectIdtf << std::endl;
-  outputFile << ", domain section: " << stringDomainSection << std::endl;
-  outputFile << ", relation type: inclusion " << std::endl;
+  outputFile << "Domain section: " << stringDomainSection << std::endl;
+  outputFile << "Relation type: inclusion " << std::endl;
   outputFile << "Inclusion object: " << stringRelationObject << std::endl;
+  outputFile << "------------------------------------" << std::endl;
 
   SC_LOG_ERROR("CheckDuplicateConstructionsAgent: duplication construction is found");
 }
