@@ -7,6 +7,7 @@
 #pragma once
 
 #include <sc-memory/sc_agent.hpp>
+#include "filesystem"
 
 namespace verificationModule
 {
@@ -18,6 +19,8 @@ public:
   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 
 private:
+  static std::filesystem::path filePath;
+
   std::string  findDomainSectionIdtf(
       ScAddr & classAddr,
       std::string & stringDomainSection);
