@@ -20,6 +20,7 @@ class FileConfigs
 {
 public:
   static std::string const FILE_PATH;
+  static std::string const VERIFICATION_ENDPOINT;
 };
 
 }  // namespace verificationModule

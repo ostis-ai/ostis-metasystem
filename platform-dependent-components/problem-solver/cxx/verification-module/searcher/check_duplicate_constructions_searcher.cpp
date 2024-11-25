@@ -28,7 +28,7 @@ checkDuplicateConstructionSearcher::checkDuplicateConstructionSearcher(ScMemoryC
 std::ofstream checkDuplicateConstructionSearcher::openOrCreateFile(
     ScMemoryContext * context,
     ScAddr & classAddr,
-    std::string const & filename)
+    std::filesystem::path const & filename)
 {
   ScAddr fileAddr;
   ScIterator5Ptr const & fileIterator = context->CreateIterator5(
@@ -42,7 +42,7 @@ std::ofstream checkDuplicateConstructionSearcher::openOrCreateFile(
     fileAddr = fileIterator->Get(2);
     std::string fileIdtf =
         utils::CommonUtils::getIdtf(context, fileAddr, ScKeynodes::nrel_main_idtf, {VerificationConstants::LANG});
-    std::string outputFile = filename + fileIdtf;
+    std::filesystem::path outputFile = filename.c_str() + fileIdtf;
     return std::ofstream(outputFile, std::ios::app);
   }
   else
