@@ -8,7 +8,7 @@
 
 #include "sc-memory/sc_memory.hpp"
 
-#include "sc-agents-common/utils/IteratorUtils.hpp"
+#include <sc-agents-common/utils/IteratorUtils.hpp>
 #include "keynodes/sections_keynodes.hpp"
 
 #include <string>

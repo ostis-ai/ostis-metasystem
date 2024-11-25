@@ -32,9 +32,9 @@ target_link_libraries(sections-module
     LINK_PUBLIC nlohmann_json::nlohmann_json)
 target_include_directories(sections-module
     PUBLIC ${SECTIONS_MODULE_SRC}
-    PUBLIC ${SC_MEMORY_SRC}
-    PUBLIC ${SC_CORE_PATH}
-    PUBLIC ${SC_AGENTS_COMMON_PATH}
+    PUBLIC ${SC_MEMORY_INCLUDE}
+    PUBLIC ${SC_CORE_INCLUDE}
+    PUBLIC ${SC_AGENTS_COMMON_INCLUDE}
 )
 
 if(${SC_CLANG_FORMAT_CODE})

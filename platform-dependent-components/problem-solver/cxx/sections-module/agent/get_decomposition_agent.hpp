@@ -18,7 +18,7 @@ class GetDecompositionAgent : public ScActionInitiatedAgent
 public:
   ScAddr GetActionClass() const override;
 
-  ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
+  ScResult DoProgram(ScAction & action) override;
 
 private:
   json GetJSONDecomposition(ScAddrVector const &, size_t, ScAddr const &, ScAddr const &);

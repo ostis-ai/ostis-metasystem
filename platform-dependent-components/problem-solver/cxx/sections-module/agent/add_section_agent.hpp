@@ -15,7 +15,7 @@ class AddSectionAgent : public ScActionInitiatedAgent
 public:
   ScAddr GetActionClass() const override;
 
-  ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
+  ScResult DoProgram(ScAction & action) override;
 
 private:
   ScAddr GenerateSection(std::string const & sectionName, ScAddr const & parentSection, ScAddr const & lang);

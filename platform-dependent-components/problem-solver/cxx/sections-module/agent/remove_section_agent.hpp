@@ -15,7 +15,7 @@ class RemoveSectionAgent : public ScActionInitiatedAgent
 public:
   ScAddr GetActionClass() const override;
 
-  ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
+  ScResult DoProgram(ScAction & action) override;
 
 private:
   bool RemoveSection(ScAddr const & section, ScAddr const & parentSection);

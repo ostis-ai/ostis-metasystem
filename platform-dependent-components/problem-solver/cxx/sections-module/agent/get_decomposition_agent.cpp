@@ -16,7 +16,7 @@ using namespace utils;
 
 namespace sectionsModule
 {
-ScResult GetDecompositionAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
+ScResult GetDecompositionAgent::DoProgram(ScAction & action)
 {
   size_t level = 1;
 

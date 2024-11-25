@@ -4,9 +4,9 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "sc-agents-common/utils/CommonUtils.hpp"
-#include "sc-agents-common/utils/IteratorUtils.hpp"
-#include "sc-agents-common/utils/GenerationUtils.hpp"
+#include <sc-agents-common/utils/CommonUtils.hpp>
+#include <sc-agents-common/utils/IteratorUtils.hpp>
+#include <sc-agents-common/utils/GenerationUtils.hpp>
 
 #include "utils/set_utils.hpp"
 
@@ -20,7 +20,7 @@ using namespace utils;
 
 namespace sectionsModule
 {
-ScResult RemoveSectionAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
+ScResult RemoveSectionAgent::DoProgram(ScAction & action)
 {
   ScAddr sectionAddr = IteratorUtils::getAnyByOutRelation(&m_context, action, ScKeynodes::rrel_1);
   ScAddr parentSectionAddr = IteratorUtils::getAnyByOutRelation(&m_context, action, ScKeynodes::rrel_2);
