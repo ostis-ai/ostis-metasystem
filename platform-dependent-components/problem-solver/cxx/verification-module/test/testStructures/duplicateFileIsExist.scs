@@ -1,0 +1,46 @@
+test_question_node
+<- action;
+-> rrel_1: classAddr;
+<- action_check_duplicate_constructions;;
+
+sc_node_class
+-> classAddr;;
+
+sc_node
+-> object1;
+-> object2;
+-> object3;
+-> fileAddr;;
+
+classAddr -> object1;;
+classAddr -> object2;;
+
+classAddr
+=> nrel_duplicate_construction_file: fileAddr;;
+
+object1 -> object3;;
+object2 -> object3;;
+
+object1
+=> nrel_main_idtf:
+    [Объект 1]
+    (* <- lang_ru;; *);
+=> nrel_main_idtf:
+    [Object 1]
+    (* <- lang_en;; *);
+
+object2
+=> nrel_main_idtf:
+    [Объект 2]
+    (* <- lang_ru;; *);
+=> nrel_main_idtf:
+    [Object 2]
+    (* <- lang_en;; *);
+
+object3
+=> nrel_main_idtf:
+    [Объект 3]
+    (* <- lang_ru;; *);
+=> nrel_main_idtf:
+    [Object 3]
+    (* <- lang_en;; *);

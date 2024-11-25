@@ -1,0 +1,7 @@
+test_action_node
+<- action;
+-> rrel_1: classAddr;
+<- action_check_duplicate_constructions;;
+
+sc_node_class
+-> classAddr;;
