@@ -18,7 +18,6 @@ target_include_directories(identifiers-module
     PUBLIC ${SC_MEMORY_INCLUDE}
     PUBLIC ${SC_CORE_INCLUDE}
     PUBLIC ${SC_AGENTS_COMMON_INCLUDE}
-    PUBLIC ${SC_KPM_SRC}
     PUBLIC ${SC_BUILDER_INCLUDE}
 )
 
