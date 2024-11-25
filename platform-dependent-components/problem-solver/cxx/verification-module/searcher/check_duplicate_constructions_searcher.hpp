@@ -18,7 +18,7 @@ class checkDuplicateConstructionSearcher
 public:
   explicit checkDuplicateConstructionSearcher(ScMemoryContext * context);
 
-  static std::ofstream openOrCreateFile(ScMemoryContext * context, ScAddr & classAddr, std::string const & filename);
+  static std::ofstream openOrCreateFile(ScMemoryContext * context, ScAddr & classAddr, std::filesystem::path const & filename);
 
 private:
   ScMemoryContext * context;

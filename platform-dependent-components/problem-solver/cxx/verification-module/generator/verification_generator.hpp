@@ -7,6 +7,7 @@
 #pragma once
 
 #include <string>
+#include "filesystem"
 
 #include "sc-memory/sc_memory.hpp"
 
@@ -17,7 +18,7 @@ class verificationGenerator
 public:
   explicit verificationGenerator(ScMemoryContext * context);
 
-  static std::ofstream generateDuplicationFile(ScMemoryContext * context, ScAddr const &, std::string const & filename);
+  static std::ofstream generateDuplicationFile(ScMemoryContext * context, ScAddr const &, std::filesystem::path const & filename);
 
 private:
   ScMemoryContext * context;

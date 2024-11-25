@@ -15,7 +15,7 @@ namespace verificationModule
 std::ofstream verificationGenerator::generateDuplicationFile(
     ScMemoryContext * context,
     ScAddr const & classAddr,
-    std::string const & filename)
+    std::filesystem::path const & filename)
 {
   std::ofstream outputFile = std::ofstream(filename, std::ios::app);
 
