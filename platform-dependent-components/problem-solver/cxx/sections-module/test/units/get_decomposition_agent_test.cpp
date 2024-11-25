@@ -7,7 +7,6 @@
 #include "agent/get_decomposition_agent.hpp"
 #include "keynodes/sections_keynodes.hpp"
 
-#include <gtest/gtest.h>
 #include <sc-builder/scs_loader.hpp>
 #include <sc-memory/test/sc_test.hpp>
 
