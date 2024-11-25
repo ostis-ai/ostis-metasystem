@@ -1,6 +1,5 @@
 test_action_node
-	<- action_find_identifiers;
-	<- action;;
+	<- action_find_identifiers;;
 
 Knowledge
 	<- sc_node_class;

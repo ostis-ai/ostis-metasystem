@@ -1,22 +1,22 @@
-test_action_node <- action; action_add_section;
+test_action_node <- action_add_section;
 -> rrel_1: [new section];
 -> rrel_2: knowledge_base_IMS;
 -> rrel_3: lang_en;;
 
-test_action_node2 <- action; action_add_section;
+test_action_node2 <- action_add_section;
 -> rrel_1: [new section];
 -> rrel_2: section_project_IMS_history_and_development_programme;
 -> rrel_3: lang_en;;
 
-test_action_node3 <- action; action_add_section;
+test_action_node3 <- action_add_section;
 -> rrel_2: section_project_IMS_history_and_development_programme;
 -> rrel_3: lang_en;;
 
-test_action_node4 <- action; action_add_section;
+test_action_node4 <- action_add_section;
 -> rrel_1: [new section];
 -> rrel_2: section_project_IMS_history_and_development_programme;;
 
-test_action_node5 <- action; action_add_section;
+test_action_node5 <- action_add_section;
 -> rrel_1: [new section];
 -> rrel_3: lang_en;;
 
