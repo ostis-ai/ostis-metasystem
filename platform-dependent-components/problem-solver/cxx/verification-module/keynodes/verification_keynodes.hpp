@@ -17,6 +17,9 @@ public:
   static inline ScKeynode const action_check_duplicate_constructions{
       "action_check_duplicate_constructions",
       ScType::ConstNodeClass};
+       static inline ScKeynode const action_search_not_enough_specified_objects{
+      "action_search_not_enough_specified_objects",
+      ScType::ConstNodeClass};
   static inline ScKeynode const nrel_duplicate_construction_file{
       "nrel_duplicate_construction_file",
       ScType::ConstNodeNonRole};

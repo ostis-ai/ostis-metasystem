@@ -2,6 +2,7 @@ set(VERIFICATION_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
 
 set(HEADERS
         "agent/check-duplicate-constructions-agent.hpp"
+        "agent/not-enough-specified-objects-search-agent.hpp"
         "constants/verification_constants.hpp"
         "keynodes/verification_keynodes.hpp"
         "searcher/check_duplicate_constructions_searcher.hpp"
@@ -11,6 +12,7 @@ set(HEADERS
 
 set(SOURCES
         "agent/check-duplicate-constructions-agent.cpp"
+        "agent/not-enough-specified-objects-search-agent.cpp"
         "constants/verification_constants.cpp"
         "searcher/check_duplicate_constructions_searcher.cpp"
         "generator/verification_generator.cpp"
