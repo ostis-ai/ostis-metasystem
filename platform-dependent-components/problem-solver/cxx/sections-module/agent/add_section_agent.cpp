@@ -4,7 +4,7 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "sc-agents-common/utils/GenerationUtils.hpp"
+#include <sc-agents-common/utils/GenerationUtils.hpp>
 
 #include "utils/set_utils.hpp"
 
@@ -19,7 +19,7 @@ using namespace utils;
 
 namespace sectionsModule
 {
-ScResult AddSectionAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
+ScResult AddSectionAgent::DoProgram(ScAction & action)
 {
   auto const [sectionNameAddr, parentSectionAddr, langAddr] = action.GetArguments<3>();
   if (!m_context.IsElement(sectionNameAddr))

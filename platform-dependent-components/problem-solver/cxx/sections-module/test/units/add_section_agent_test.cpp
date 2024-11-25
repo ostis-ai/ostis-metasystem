@@ -8,15 +8,14 @@
 #include "keynodes/sections_keynodes.hpp"
 #include "utils/sections_utils.hpp"
 
-#include <gtest/gtest.h>
 #include <sc-builder/scs_loader.hpp>
 #include <sc-memory/test/sc_test.hpp>
 
-#include "sc-agents-common/utils/CommonUtils.hpp"
-#include "sc-agents-common/utils/IteratorUtils.hpp"
+#include <sc-agents-common/utils/CommonUtils.hpp>
+#include <sc-agents-common/utils/IteratorUtils.hpp>
 
 #include <sc-memory/sc_agent.hpp>
-#include "sc-memory/utils/sc_base64.hpp"
+#include <sc-memory/utils/sc_base64.hpp>
 
 #include <vector>
 

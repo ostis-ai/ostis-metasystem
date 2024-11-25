@@ -9,7 +9,7 @@
 
 using namespace identifiersModule;
 
-ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
+ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScAction & action)
 {
   // TODO: replace by ScKeynodes::nrel_system_identifier after release
   ScAddr const & nrelSystemIdtf = m_context.SearchElementBySystemIdentifier("nrel_system_identifier");

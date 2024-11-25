@@ -15,11 +15,11 @@ target_link_libraries(identifiers-module
 )
 target_include_directories(identifiers-module
     PUBLIC ${IDENTIFIERS_MODULE_SRC}
-    PUBLIC ${SC_MEMORY_SRC}
-    PUBLIC ${SC_CORE_PATH}
-    PUBLIC ${SC_AGENTS_COMMON_PATH}
+    PUBLIC ${SC_MEMORY_INCLUDE}
+    PUBLIC ${SC_CORE_INCLUDE}
+    PUBLIC ${SC_AGENTS_COMMON_INCLUDE}
     PUBLIC ${SC_KPM_SRC}
-    PUBLIC ${SC_BUILDER_PATH}
+    PUBLIC ${SC_BUILDER_INCLUDE}
 )
 
 if(${SC_CLANG_FORMAT_CODE})

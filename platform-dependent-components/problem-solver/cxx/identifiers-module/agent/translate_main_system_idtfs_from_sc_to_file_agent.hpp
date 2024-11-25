@@ -15,7 +15,7 @@ class TranslateMainSystemIdtfsFromScToFileAgent : public ScActionInitiatedAgent
 public:
   ScAddr GetActionClass() const override;
 
-  ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
+  ScResult DoProgram(ScAction & action) override;
 
   std::map<ScType, std::string> ScTypesOfNodesWithSCsClasses = {
       {ScType::Const, "sc_node"},

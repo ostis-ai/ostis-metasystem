@@ -10,9 +10,9 @@
 #include <sc-builder/scs_loader.hpp>
 #include <sc-memory/test/sc_test.hpp>
 
-#include "sc-agents-common/utils/CommonUtils.hpp"
+#include <sc-agents-common/utils/CommonUtils.hpp>
 #include <sc-memory/sc_agent.hpp>
-#include "sc-memory/utils/sc_base64.hpp"
+#include <sc-memory/utils/sc_base64.hpp>
 
 #include <nlohmann/json.hpp>
 
