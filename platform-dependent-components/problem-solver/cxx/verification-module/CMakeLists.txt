@@ -2,6 +2,7 @@ set(VERIFICATION_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
 
 set(HEADERS
         "agent/check-duplicate-constructions-agent.hpp"
+        "config/config.hpp"
         "constants/verification_constants.hpp"
         "keynodes/verification_keynodes.hpp"
         "searcher/check_duplicate_constructions_searcher.hpp"
@@ -11,6 +12,7 @@ set(HEADERS
 
 set(SOURCES
         "agent/check-duplicate-constructions-agent.cpp"
+        "config/config.cpp"
         "constants/verification_constants.cpp"
         "searcher/check_duplicate_constructions_searcher.cpp"
         "generator/verification_generator.cpp"
@@ -29,6 +31,7 @@ target_include_directories(verification-module
         PUBLIC ${SC_AGENTS_COMMON_PATH}
         PUBLIC ${SC_KPM_SRC}
         PUBLIC ${SC_BUILDER_PATH}
+        PUBLIC ${SC_CONFIG_PATH}
 )
 
 if(${SC_CLANG_FORMAT_CODE})
