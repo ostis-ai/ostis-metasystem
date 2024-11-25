@@ -1,0 +1,22 @@
+action_check_duplicate_constructions
+<- sc_node_class;
+=> nrel_main_idtf:
+    [действие. проверить дублирующиеся конструкции в БЗ]
+    (* <- lang_ru;; *);
+    [action. check duplicate constructions]
+    (* <- lang_en;; *);
+<- actions_class;
+<- atomic_action_class;
+<- rrel_key_sc_element:
+    ...
+    (*
+    <- definition;;
+    => nrel_sc_text_translation:
+        {
+        rrel_example:
+            [Действие. проверить дублирующиеся конструкции в БЗ - это действие по выявлению дублирующихся конструкций в базе знаний.](* <- lang_ru;; *);
+
+        rrel_example:
+            [Action. check duplicate constructions is an action to check duplicate constructions in the knowledge base.](* <- lang_en;; *)
+        };;
+    *);;
