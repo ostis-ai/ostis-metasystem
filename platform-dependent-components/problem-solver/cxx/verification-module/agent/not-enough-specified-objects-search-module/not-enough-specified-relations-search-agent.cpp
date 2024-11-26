@@ -10,22 +10,20 @@
 
 #include "keynodes/verification_keynodes.hpp"
 
-#include "not-enough-specified-objects-search-agent.hpp"
+#include "not-enough-specified-relations-search-agent.hpp"
 
 using namespace utils;
 
 namespace verificationModule
 {
 
-ScResult SearchNotEnoughSpecifiedObjectsAgent::DoProgram(ScAction & action)
+ScResult SearchNotEnoughSpecifiedRelationsAgent::DoProgram(ScAction & action)
 {
-  const ScAddr parameter = action.GetArgument(0);
-  
   return action.FinishSuccessfully();
 }
 
-ScAddr SearchNotEnoughSpecifiedObjectsAgent::GetActionClass() const
+ScAddr SearchNotEnoughSpecifiedRelationsAgent::GetActionClass() const
 {
-  return VerificationKeynodes::action_search_not_enough_specified_objects;
+  return VerificationKeynodes::action_search_not_enough_specified_relations;
 }
 }  // namespace verificationModule
