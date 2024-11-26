@@ -5,7 +5,7 @@
  */
 
 #include <sc-agents-common/utils/GenerationUtils.hpp>
-#include "sc-memory/sc_template.hpp"
+#include <sc-memory/sc_template.hpp>
 
 #include "set_utils.hpp"
 
