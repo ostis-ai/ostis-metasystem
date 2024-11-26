@@ -26,6 +26,9 @@ set(SOURCES
 )
 
 add_library(sections-module SHARED ${HEADERS} ${SOURCES})
+
+find_package(nlohmann_json 3.2.0 REQUIRED)
+
 target_link_libraries(sections-module
     LINK_PUBLIC sc-memory
     LINK_PUBLIC sc-agents-common

@@ -26,8 +26,7 @@ set(SC_CORE_INCLUDE "${SC_MACHINE_PATH}/sc-memory/sc-core/include")
 set(SC_BUILDER_INCLUDE "${SC_MACHINE_PATH}/sc-tools/sc-builder/include")
 set(SC_CONFIG_INCLUDE "${SC_MACHINE_PATH}/sc-tools/sc-config/include")
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/dependencies.cmake")
-sc_target_dependencies()
+include(CTest)
 
 # for multi-config builds (e.g. msvc)
 foreach(OUTPUT_CONFIG ${CMAKE_CONFIGURATION_TYPES})
