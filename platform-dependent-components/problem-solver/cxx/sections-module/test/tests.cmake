@@ -1,6 +1,6 @@
 make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/units
     NAME sections-module-test-starter
-    DEPENDS sc-memory sc-core sc-builder-lib sections-module
+    DEPENDS sc-memory sc-builder-lib sections-module
     INCLUDES ${SC_MEMORY_INCLUDE} ${SC_BUILDER_INCLUDE}
 )
 
