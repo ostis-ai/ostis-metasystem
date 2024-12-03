@@ -17,8 +17,8 @@ export REPO_PATH_FILE="${REPO_PATH_FILE:-${METASYSTEM_PATH}/repo.path}"
 export PLATFORM_PATH="${PLATFORM_PATH:-${METASYSTEM_PATH}/ostis-web-platform}"
 
 export SC_WEB_REPO="${SC_WEB_REPO:-https://github.com/ostis-ai/sc-web.git}"
-export SC_WEB_BRANCH="${SC_WEB_BRANCH:-main}"
-export SC_WEB_COMMIT="${SC_WEB_COMMIT:-"527a7a728e7d547f480dd106763c1d66a625fad6"}"
+export SC_WEB_BRANCH="${SC_WEB_BRANCH:-feat/nvm_for_macOS}"
+export SC_WEB_COMMIT="${SC_WEB_COMMIT:-""}"
 
 export SC_MACHINE_REPO="${SC_MACHINE_REPO:-https://github.com/ostis-ai/sc-machine.git}"
 export SC_MACHINE_BRANCH="${SC_MACHINE_BRANCH:-main}"
