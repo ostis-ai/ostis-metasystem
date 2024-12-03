@@ -4,12 +4,12 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
+#include "get_decomposition_agent.hpp"
+
 #include <sc-agents-common/utils/CommonUtils.hpp>
 #include <sc-agents-common/utils/IteratorUtils.hpp>
 
 #include "keynodes/sections_keynodes.hpp"
-
-#include "get_decomposition_agent.hpp"
 #include "constants/sections_aliases.hpp"
 
 using namespace utils;

@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include <sc-memory/sc_agent.hpp>
 #include <nlohmann/json.hpp>
+
+#include <sc-memory/sc_agent.hpp>
 
 using json = nlohmann::json;
 

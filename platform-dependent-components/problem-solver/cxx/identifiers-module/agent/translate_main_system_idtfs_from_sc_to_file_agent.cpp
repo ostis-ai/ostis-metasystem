@@ -4,20 +4,20 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "keynodes/identifiers_keynodes.hpp"
 #include "translate_main_system_idtfs_from_sc_to_file_agent.hpp"
+
+#include <sc-memory/sc_memory.hpp>
+
+#include "keynodes/identifiers_keynodes.hpp"
 
 using namespace identifiersModule;
 
 ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScAction & action)
 {
-  // TODO: replace by ScKeynodes::nrel_system_identifier after release
-  ScAddr const & nrelSystemIdtf = m_context.SearchElementBySystemIdentifier("nrel_system_identifier");
-
   std::stringstream streamIdtfs;
 
   ScIterator3Ptr const & iterator3PtrEdgeBelongsToNrelSystemIdtf =
-      m_context.CreateIterator3(nrelSystemIdtf, ScType::ConstPermPosArc, ScType::ConstCommonArc);
+      m_context.CreateIterator3(ScKeynodes::nrel_system_identifier, ScType::ConstPermPosArc, ScType::ConstCommonArc);
 
   ScAddr edgeBelongsToNrelSystemIdtf;
   ScAddr sourceOfEdgeBelongsToNrelSystemIdtf;
@@ -45,10 +45,6 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScAction & action)
     catch (utils::ScException const & exception)
     {
       SC_LOG_ERROR(exception.Description());
-
-      ScStructure result = m_context.GenerateStructure();
-      result << action;
-      action.SetResult(result);
       return action.FinishUnsuccessfully();
     }
   }

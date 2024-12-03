@@ -4,10 +4,10 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
+#include "sections_builder.hpp"
+
 #include "constants/sections_aliases.hpp"
 #include "keynodes/sections_keynodes.hpp"
-
-#include "sections_builder.hpp"
 
 namespace sectionsModule
 {

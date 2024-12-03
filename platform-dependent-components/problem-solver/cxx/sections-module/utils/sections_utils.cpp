@@ -4,9 +4,9 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "constants/sections_aliases.hpp"
-
 #include "sections_utils.hpp"
+
+#include "constants/sections_aliases.hpp"
 
 namespace sectionsModule
 {

@@ -4,10 +4,11 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include <sc-agents-common/utils/GenerationUtils.hpp>
+#include "set_utils.hpp"
+
 #include <sc-memory/sc_template.hpp>
 
-#include "set_utils.hpp"
+#include <sc-agents-common/utils/GenerationUtils.hpp>
 
 namespace sectionsModule
 {

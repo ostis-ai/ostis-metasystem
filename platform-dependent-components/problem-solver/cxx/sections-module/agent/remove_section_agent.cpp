@@ -4,17 +4,16 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
+#include "remove_section_agent.hpp"
+
 #include <sc-agents-common/utils/CommonUtils.hpp>
 #include <sc-agents-common/utils/IteratorUtils.hpp>
 #include <sc-agents-common/utils/GenerationUtils.hpp>
 
-#include "utils/set_utils.hpp"
-
 #include "builder/sections_builder.hpp"
 #include "constants/sections_aliases.hpp"
 #include "keynodes/sections_keynodes.hpp"
-
-#include "remove_section_agent.hpp"
+#include "utils/set_utils.hpp"
 
 using namespace utils;
 
