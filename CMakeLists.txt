@@ -15,6 +15,7 @@ link_directories(${SC_BIN_PATH} ${SC_EXTENSIONS_DIRECTORY})
 
 set(SC_MACHINE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ostis-web-platform/sc-machine")
 set(CMAKE_MODULE_PATH "${SC_MACHINE_PATH}/cmake")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 if(${SC_CLANG_FORMAT_CODE})
     include(${CMAKE_MODULE_PATH}/ClangFormat.cmake)
