@@ -27,6 +27,26 @@ public:
       "rrel_maximum_studied_object_class",
       ScType::ConstNodeRole};
   static inline ScKeynode const lang_en{"lang_en", ScType::NodeClass};
+  
+  static inline ScKeynode const action_check_synonym_objects{
+      "action_check_synonym_objects",
+      ScType::ConstNodeClass};
+  static inline ScKeynode const action_check_synonym_relations{
+      "action_check_synonym_relations",
+      ScType::ConstNodeClass};
+  static inline ScKeynode const action_check_synonym_classes{
+      "action_check_synonym_classes",
+      ScType::ConstNodeClass};
+  static inline ScKeynode const nrel_synonym_objects_file{
+      "nrel_synonym_objects_file",
+      ScType::ConstNodeClass};
+  static inline ScKeynode const nrel_first_domain{
+      "nrel_first_domain",
+      ScType::ConstNodeClass};
+  static inline ScKeynode const nrel_second_domain{
+      "nrel_second_domain",
+      ScType::ConstNodeClass};
+      
 };
 
 }  // namespace verificationModule
