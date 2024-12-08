@@ -81,7 +81,8 @@ bool RemoveSectionAgent::RemoveSection(ScAddr const & section)
     for (size_t i = 0; i < searchResult.Size(); i++)
     {
       ScAddr parentSection = searchResult[i][sections_aliases::PARENT_SECTION];
-      SC_AGENT_LOG_DEBUG("Parent section system idtf is " << m_context.GetElementSystemIdentifier(parentSection) << ".");
+      SC_AGENT_LOG_DEBUG(
+          "Parent section system idtf is " << m_context.GetElementSystemIdentifier(parentSection) << ".");
       HandleSection(searchResult[i], section);
       HandleParentSection(searchResult[i], parentSection);
     }
@@ -152,8 +153,7 @@ void RemoveSectionAgent::HandleNeighboringSections(ScAddr const & tuple, ScAddr 
   // If current element is the first and the last
   if (!m_context.IsElement(currentSectionEdge))
   {
-    ScIterator3Ptr currentSectionEdgeIterator =
-        m_context.CreateIterator3(tuple, ScType::ConstPermPosArc, section);
+    ScIterator3Ptr currentSectionEdgeIterator = m_context.CreateIterator3(tuple, ScType::ConstPermPosArc, section);
     if (currentSectionEdgeIterator->Next())
     {
       currentSectionEdge = currentSectionEdgeIterator->Get(1);

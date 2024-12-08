@@ -80,13 +80,10 @@ ScAddr AddSectionAgent::GenerateSection(
   ScAddr newSectionArc = m_context.GenerateConnector(ScType::ConstPermPosArc, decompositionTuple, newSection);
   if (m_context.IsElement(lastSection))
   {
-    SC_AGENT_LOG_DEBUG("Last section system identifier is \"" + m_context.GetElementSystemIdentifier(lastSection) + "\".");
+    SC_AGENT_LOG_DEBUG(
+        "Last section system identifier is \"" + m_context.GetElementSystemIdentifier(lastSection) + "\".");
     ScIterator5Ptr lastSectionIterator = m_context.CreateIterator5(
-        decompositionTuple,
-        ScType::ConstPermPosArc,
-        lastSection,
-        ScType::ConstTempPosArc,
-        SectionsKeynodes::rrel_last);
+        decompositionTuple, ScType::ConstPermPosArc, lastSection, ScType::ConstTempPosArc, SectionsKeynodes::rrel_last);
     if (lastSectionIterator->Next())
     {
       ScAddr previousSectionArc = lastSectionIterator->Get(1);

@@ -23,9 +23,7 @@ void sections_builder::buildDecompositionTupleTemplate(
       ScType::VarPermPosArc,
       SectionsKeynodes::nrel_entity_decomposition);
   scTemplate.Triple(
-      sections_aliases::DECOMPOSITION_TUPLE,
-      ScType::VarPermPosArc >> sections_aliases::EDGE_TO_DELETE,
-      childSection);
+      sections_aliases::DECOMPOSITION_TUPLE, ScType::VarPermPosArc >> sections_aliases::EDGE_TO_DELETE, childSection);
 }
 
 void sections_builder::buildDecompositionTupleTemplate(ScTemplate & scTemplate, ScAddr const & section)

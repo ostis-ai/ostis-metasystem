@@ -74,9 +74,8 @@ public:
       {ScType::VarPermNegArc, "sc_main_arc"},
       {ScType::VarTempPosArc, "sc_main_arc"},
       {ScType::VarTempNegArc, "sc_main_arc"}};
-      
+
 private:
-  
   std::string GetStrScType(ScAddr const & node);
   static std::string GetSystemIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node);
   static std::string GetMainIdtfAndVerifyNode(ScMemoryContext & m_memoryCtx, ScAddr const & node);

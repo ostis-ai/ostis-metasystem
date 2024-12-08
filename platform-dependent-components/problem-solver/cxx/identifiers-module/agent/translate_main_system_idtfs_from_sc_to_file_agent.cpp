@@ -39,7 +39,8 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScAction & action)
       if (!systemIdentifier.empty() && !mainIdentifier.empty() && !stringType.empty())
       {
         streamIdtfs << R"({")" << mainIdentifier << R"(", )"
-                    << R"({")" << systemIdentifier << R"(", ")" << stringType << R"("}},)" << "\n";
+                    << R"({")" << systemIdentifier << R"(", ")" << stringType << R"("}},)"
+                    << "\n";
       }
     }
     catch (utils::ScException const & exception)
@@ -123,8 +124,7 @@ std::string TranslateMainSystemIdtfsFromScToFileAgent::GetMainIdtfAndVerifyNode(
       while (iterator5PtrCheckOnlyOneIdtf->Next())
       {
         mainAnotherIdentifierLink = iterator5PtrCheckOnlyOneIdtf->Get(2);
-        isLangRu =
-            m_context.CheckConnector(ScKeynodes::lang_ru, mainAnotherIdentifierLink, ScType::ConstPermPosArc);
+        isLangRu = m_context.CheckConnector(ScKeynodes::lang_ru, mainAnotherIdentifierLink, ScType::ConstPermPosArc);
 
         if (isLangRu)
           return identifier;
