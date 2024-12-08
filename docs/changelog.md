@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added build of sc-machine and manager in `install_metasystem.sh`
 
 ### Changed
+- This version of the Metasystem is not supported on macOS.
+- Rename questions to actions
 - Use `build_platform.sh` instead of `build_sc_machine.sh`
 - Update ostis-web-platform to develop-branch
 
