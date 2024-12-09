@@ -20,18 +20,21 @@ set(SOURCES
 )
 
 add_library(verification-module SHARED ${HEADERS} ${SOURCES})
+
+find_package(nlohmann_json 3.2.0 REQUIRED)
+
 target_link_libraries(verification-module
         LINK_PUBLIC sc-memory
         LINK_PUBLIC sc-agents-common
         LINK_PUBLIC nlohmann_json::nlohmann_json)
 target_include_directories(verification-module
         PUBLIC ${VERIFICATION_MODULE_SRC}
-        PUBLIC ${SC_MEMORY_SRC}
-        PUBLIC ${SC_CORE_PATH}
-        PUBLIC ${SC_AGENTS_COMMON_PATH}
-        PUBLIC ${SC_KPM_SRC}
-        PUBLIC ${SC_BUILDER_PATH}
-        PUBLIC ${SC_CONFIG_PATH}
+        PUBLIC ${SC_MEMORY_INCLUDE}
+        PUBLIC ${SC_CORE_INCLUDE}
+        PUBLIC ${SC_AGENTS_COMMON_INCLUDE}
+        PUBLIC ${SC_KPM_INCLUDE}
+        PUBLIC ${SC_BUILDER_INCLUDE}
+        PUBLIC ${SC_CONFIG_INCLUDE}
 )
 
 if(${SC_CLANG_FORMAT_CODE})
