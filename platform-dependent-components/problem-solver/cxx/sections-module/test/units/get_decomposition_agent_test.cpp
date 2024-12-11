@@ -7,16 +7,12 @@
 #include "agent/get_decomposition_agent.hpp"
 #include "keynodes/sections_keynodes.hpp"
 
-#include "sc-builder/src/scs_loader.hpp"
+#include <sc-builder/scs_loader.hpp>
+#include <sc-memory/test/sc_test.hpp>
 
-#include "sc_test.hpp"
-
-#include "sc-agents-common/keynodes/coreKeynodes.hpp"
-#include "sc-agents-common/utils/CommonUtils.hpp"
-#include "sc-agents-common/utils/AgentUtils.hpp"
-
-#include "sc-memory/kpm/sc_agent.hpp"
-#include "sc-memory/utils/sc_base64.hpp"
+#include <sc-agents-common/utils/CommonUtils.hpp>
+#include <sc-memory/sc_agent.hpp>
+#include <sc-memory/utils/sc_base64.hpp>
 
 #include <nlohmann/json.hpp>
 
@@ -39,33 +35,20 @@ int const WAIT_TIME = 1000;
 
 using GetSectionDecompositionTest = ScMemoryTest;
 
-void initialize()
-{
-  scAgentsCommon::CoreKeynodes::InitGlobal();
-  SectionsKeynodes::InitGlobal();
-
-  SC_AGENT_REGISTER(GetDecompositionAgent)
-}
-
-void shutdown(){SC_AGENT_UNREGISTER(GetDecompositionAgent)}
-
 TEST_F(GetSectionDecompositionTest, successful_decomposition)
 {
-  ScMemoryContext & context = *m_ctx;
-  initialize();
+  ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_successful_decomposition.scs");
-  ScAddr const testActionNode = context.HelperFindBySystemIdtf("test_action_node");
+  ScAddr const testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
 
-  utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
-  ScIterator5Ptr it5 = context.Iterator5(
-      testActionNode,
-      ScType::EdgeDCommon,
-      ScType::Unknown,
-      ScType::EdgeAccessConstPosPerm,
-      scAgentsCommon::CoreKeynodes::nrel_answer);
-  EXPECT_TRUE(it5->Next());
+  ScAction testAction = context.ConvertToAction(testActionNode);
 
-  ScIterator3Ptr const it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::Link);
+  context.SubscribeAgent<sectionsModule::GetDecompositionAgent>();
+
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
+  ScStructure result = testAction.GetResult();
+
+  ScIterator3Ptr const it3 = context.CreateIterator3(result, ScType::ConstPermPosArc, ScType::NodeLink);
   EXPECT_TRUE(it3->Next());
   std::string decompositionContent;
   context.GetLinkContent(it3->Get(2), decompositionContent);
@@ -76,26 +59,23 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition)
   json testJson = GetTestJSON();
   EXPECT_EQ(temp, GetTestJSON());
 
-  shutdown();
+  context.UnsubscribeAgent<sectionsModule::GetDecompositionAgent>();
 }
 
 TEST_F(GetSectionDecompositionTest, successful_decomposition_with_level)
 {
-  ScMemoryContext & context = *m_ctx;
-  initialize();
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_successful_decomposition.scs");
-  ScAddr const testActionNode = context.HelperFindBySystemIdtf("test_action_node2");
+  ScAgentContext & context = *m_ctx;
 
-  context.CreateEdge(ScType::EdgeAccessConstPosPerm, scAgentsCommon::CoreKeynodes::question_initiated, testActionNode);
-  EXPECT_TRUE(utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME));
-  ScIterator5Ptr const it5 = context.Iterator5(
-      testActionNode,
-      ScType::EdgeDCommon,
-      ScType::Unknown,
-      ScType::EdgeAccessConstPosPerm,
-      scAgentsCommon::CoreKeynodes::nrel_answer);
-  EXPECT_TRUE(it5->Next());
-  ScIterator3Ptr it3 = context.Iterator3(it5->Get(2), ScType::EdgeAccessConstPosPerm, ScType::Link);
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_successful_decomposition.scs");
+  ScAddr const testActionNode = context.SearchElementBySystemIdentifier("test_action_node2");
+  ScAction testAction = context.ConvertToAction(testActionNode);
+
+  context.SubscribeAgent<sectionsModule::GetDecompositionAgent>();
+
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
+  ScStructure result = testAction.GetResult();
+
+  ScIterator3Ptr it3 = context.CreateIterator3(result, ScType::ConstPermPosArc, ScType::NodeLink);
 
   EXPECT_TRUE(it3->Next());
   std::string decompositionText;
@@ -107,7 +87,7 @@ TEST_F(GetSectionDecompositionTest, successful_decomposition_with_level)
   json testJson = GetTestJSON(2);
   EXPECT_EQ(temp, GetTestJSON(2));
 
-  shutdown();
+  context.UnsubscribeAgent<sectionsModule::GetDecompositionAgent>();
 }
 
 json GetDecompositionIdList(json const & answerDecomposition, int level)

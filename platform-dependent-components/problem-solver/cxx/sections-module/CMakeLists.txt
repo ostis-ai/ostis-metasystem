@@ -21,23 +21,24 @@ set(SOURCES
     "builder/sections_builder.cpp"
     "constants/sections_aliases.cpp"
     "generator/sections_generator.cpp"
-    "keynodes/sections_keynodes.cpp"
     "utils/set_utils.cpp"
     "utils/sections_utils.cpp"
 )
 
 add_library(sections-module SHARED ${HEADERS} ${SOURCES})
+
+find_package(nlohmann_json 3.2.0 REQUIRED)
+
 target_link_libraries(sections-module
     LINK_PUBLIC sc-memory
     LINK_PUBLIC sc-agents-common
     LINK_PUBLIC nlohmann_json::nlohmann_json)
 target_include_directories(sections-module
     PUBLIC ${SECTIONS_MODULE_SRC}
-    PUBLIC ${SC_MEMORY_SRC}
-    PUBLIC ${SC_KPM_SRC}
+    PUBLIC ${SC_MEMORY_INCLUDE}
+    PUBLIC ${SC_CORE_INCLUDE}
+    PUBLIC ${SC_AGENTS_COMMON_INCLUDE}
 )
-
-sc_codegen_ex(sections-module ${SECTIONS_MODULE_SRC} ${SECTIONS_MODULE_SRC}/generated)
 
 if(${SC_CLANG_FORMAT_CODE})
     target_clangformat_setup(sections-module)

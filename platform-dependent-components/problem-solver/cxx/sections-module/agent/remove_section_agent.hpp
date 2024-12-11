@@ -6,22 +6,18 @@
 
 #pragma once
 
-#include "sc-memory/kpm/sc_agent.hpp"
-
-#include "sc-agents-common/keynodes/coreKeynodes.hpp"
-
-#include "generated/remove_section_agent.generated.hpp"
+#include <sc-memory/sc_agent.hpp>
 
 namespace sectionsModule
 {
-class RemoveSectionAgent : public ScAgent
+class RemoveSectionAgent : public ScActionInitiatedAgent
 {
-  SC_CLASS(Agent, Event(scAgentsCommon::CoreKeynodes::question_initiated, ScEvent::Type::AddOutputEdge))
-  SC_GENERATED_BODY()
+public:
+  ScAddr GetActionClass() const override;
+
+  ScResult DoProgram(ScAction & action) override;
 
 private:
-  bool CheckActionClass(ScAddr const & actionNode);
-
   bool RemoveSection(ScAddr const & section, ScAddr const & parentSection);
 
   bool RemoveSection(ScAddr const & section);

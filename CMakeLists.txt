@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.14)
 project(ostis-metasystem)
 set(CMAKE_CXX_STANDARD 17)
 
@@ -15,18 +15,19 @@ link_directories(${SC_BIN_PATH} ${SC_EXTENSIONS_DIRECTORY})
 
 set(SC_MACHINE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ostis-web-platform/sc-machine")
 set(CMAKE_MODULE_PATH "${SC_MACHINE_PATH}/cmake")
-include("${CMAKE_MODULE_PATH}/codegen.cmake")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 if(${SC_CLANG_FORMAT_CODE})
     include(${CMAKE_MODULE_PATH}/ClangFormat.cmake)
 endif()
 
-set(SC_MEMORY_SRC "${SC_MACHINE_PATH}/sc-memory/")
-set(SC_KPM_SRC "${SC_MACHINE_PATH}/sc-kpm/")
-set(SC_TOOLS_SRC "${SC_MACHINE_PATH}/sc-tools/")
+set(SC_MEMORY_INCLUDE "${SC_MACHINE_PATH}/sc-memory/sc-memory/include")
+set(SC_AGENTS_COMMON_INCLUDE "${SC_MACHINE_PATH}/sc-kpm/sc-agents-common/include")
+set(SC_CORE_INCLUDE "${SC_MACHINE_PATH}/sc-memory/sc-core/include")
+set(SC_BUILDER_INCLUDE "${SC_MACHINE_PATH}/sc-tools/sc-builder/include")
+set(SC_CONFIG_INCLUDE "${SC_MACHINE_PATH}/sc-tools/sc-config/include")
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/dependencies.cmake")
-sc_target_dependencies()
+include(CTest)
 
 # for multi-config builds (e.g. msvc)
 foreach(OUTPUT_CONFIG ${CMAKE_CONFIGURATION_TYPES})

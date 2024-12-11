@@ -1,2 +1,2 @@
-ui_nrel_user_used_language <- sc_node_norole_relation;;
+ui_nrel_user_used_language <- sc_node_non_role_relation;;
 

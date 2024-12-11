@@ -4,12 +4,10 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "sc-agents-common/keynodes/coreKeynodes.hpp"
+#include "sections_builder.hpp"
 
 #include "constants/sections_aliases.hpp"
 #include "keynodes/sections_keynodes.hpp"
-
-#include "sections_builder.hpp"
 
 namespace sectionsModule
 {
@@ -20,26 +18,24 @@ void sections_builder::buildDecompositionTupleTemplate(
 {
   scTemplate.Quintuple(
       parentSection,
-      ScType::EdgeDCommonVar,
-      ScType::NodeVar >> sections_aliases::DECOMPOSITION_TUPLE,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarCommonArc,
+      ScType::VarNode >> sections_aliases::DECOMPOSITION_TUPLE,
+      ScType::VarPermPosArc,
       SectionsKeynodes::nrel_entity_decomposition);
   scTemplate.Triple(
-      sections_aliases::DECOMPOSITION_TUPLE,
-      ScType::EdgeAccessVarPosPerm >> sections_aliases::EDGE_TO_DELETE,
-      childSection);
+      sections_aliases::DECOMPOSITION_TUPLE, ScType::VarPermPosArc >> sections_aliases::EDGE_TO_DELETE, childSection);
 }
 
 void sections_builder::buildDecompositionTupleTemplate(ScTemplate & scTemplate, ScAddr const & section)
 {
   scTemplate.Quintuple(
-      ScType::NodeVar >> sections_aliases::PARENT_SECTION,
-      ScType::EdgeDCommonVar,
-      ScType::NodeVar >> sections_aliases::DECOMPOSITION_TUPLE,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarNode >> sections_aliases::PARENT_SECTION,
+      ScType::VarCommonArc,
+      ScType::VarNode >> sections_aliases::DECOMPOSITION_TUPLE,
+      ScType::VarPermPosArc,
       SectionsKeynodes::nrel_entity_decomposition);
   scTemplate.Triple(
-      sections_aliases::DECOMPOSITION_TUPLE, ScType::EdgeAccessVarPosPerm >> sections_aliases::EDGE_TO_DELETE, section);
+      sections_aliases::DECOMPOSITION_TUPLE, ScType::VarPermPosArc >> sections_aliases::EDGE_TO_DELETE, section);
 }
 
 void sections_builder::buildNextSectionTemplate(
@@ -47,17 +43,17 @@ void sections_builder::buildNextSectionTemplate(
     ScAddr const & tuple,
     ScAddr const & section)
 {
-  nextSectionTemplate.Triple(tuple, ScType::EdgeAccessVarPosPerm >> sections_aliases::SECTION_EDGE, section);
+  nextSectionTemplate.Triple(tuple, ScType::VarPermPosArc >> sections_aliases::SECTION_EDGE, section);
   nextSectionTemplate.Triple(
       tuple,
-      ScType::EdgeAccessVarPosPerm >> sections_aliases::NEXT_SECTION_ARC,
-      ScType::NodeVar >> sections_aliases::SECTION_NODE);
+      ScType::VarPermPosArc >> sections_aliases::NEXT_SECTION_ARC,
+      ScType::VarNode >> sections_aliases::SECTION_NODE);
   nextSectionTemplate.Quintuple(
       sections_aliases::SECTION_EDGE,
-      ScType::EdgeDCommonVar >> sections_aliases::BASE_SEQUENCE_EDGE,
+      ScType::VarCommonArc >> sections_aliases::BASE_SEQUENCE_EDGE,
       sections_aliases::NEXT_SECTION_ARC,
-      ScType::EdgeAccessVarPosPerm,
-      scAgentsCommon::CoreKeynodes::nrel_basic_sequence);
+      ScType::VarPermPosArc,
+      ScKeynodes::nrel_basic_sequence);
 }
 
 void sections_builder::buildPreviousSectionTemplate(
@@ -65,17 +61,17 @@ void sections_builder::buildPreviousSectionTemplate(
     ScAddr const & tuple,
     ScAddr const & section)
 {
-  previousSectionTemplate.Triple(tuple, ScType::EdgeAccessVarPosPerm >> sections_aliases::SECTION_EDGE, section);
+  previousSectionTemplate.Triple(tuple, ScType::VarPermPosArc >> sections_aliases::SECTION_EDGE, section);
   previousSectionTemplate.Triple(
       tuple,
-      ScType::EdgeAccessVarPosPerm >> sections_aliases::PREVIOUS_SECTION_ARC,
-      ScType::NodeVar >> sections_aliases::SECTION_NODE);
+      ScType::VarPermPosArc >> sections_aliases::PREVIOUS_SECTION_ARC,
+      ScType::VarNode >> sections_aliases::SECTION_NODE);
   previousSectionTemplate.Quintuple(
       sections_aliases::PREVIOUS_SECTION_ARC,
-      ScType::EdgeDCommonVar >> sections_aliases::BASE_SEQUENCE_EDGE,
+      ScType::VarCommonArc >> sections_aliases::BASE_SEQUENCE_EDGE,
       sections_aliases::SECTION_EDGE,
-      ScType::EdgeAccessVarPosPerm,
-      scAgentsCommon::CoreKeynodes::nrel_basic_sequence);
+      ScType::VarPermPosArc,
+      ScKeynodes::nrel_basic_sequence);
 }
 
 }  // namespace sectionsModule

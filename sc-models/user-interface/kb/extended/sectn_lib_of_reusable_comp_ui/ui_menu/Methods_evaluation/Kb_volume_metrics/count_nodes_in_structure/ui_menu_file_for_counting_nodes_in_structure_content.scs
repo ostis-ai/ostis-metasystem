@@ -16,7 +16,6 @@ ui_menu_file_for_counting_nodes_in_structure
 			(*
 			_-> ui_arg_1;;			
 			*);;
-		._action_to_count_nodes_in_structure_instance _<- question;;
 	*];;
 
 ui_menu_file_for_counting_nodes_in_structure

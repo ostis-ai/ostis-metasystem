@@ -6,22 +6,15 @@
 
 #pragma once
 
-#include "sc-memory/sc_addr.hpp"
-#include "sc-memory/sc_object.hpp"
-
-#include "identifiers_keynodes.generated.hpp"
+#include <sc-memory/sc_keynodes.hpp>
 
 namespace identifiersModule
 {
 
-class IdentifiersKeynodes : public ScObject
+class IdentifiersKeynodes : public ScKeynodes
 {
-  SC_CLASS()
-  SC_GENERATED_BODY()
-
 public:
-  SC_PROPERTY(Keynode("action_find_identifiers"), ForceCreate)
-  static ScAddr action_find_identifiers;
+  static inline ScKeynode const action_find_identifiers{"action_find_identifiers", ScType::ConstNodeClass};
 };
 
 }  // namespace identifiersModule

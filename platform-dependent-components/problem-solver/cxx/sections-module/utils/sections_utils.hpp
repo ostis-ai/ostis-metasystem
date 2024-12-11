@@ -6,14 +6,13 @@
 
 #pragma once
 
-#include "sc-memory/sc_memory.hpp"
+#include <string>
 
-#include "sc-agents-common/utils/IteratorUtils.hpp"
-#include "sc-agents-common/keynodes/coreKeynodes.hpp"
+#include <sc-memory/sc_memory.hpp>
+
+#include <sc-agents-common/utils/IteratorUtils.hpp>
 
 #include "keynodes/sections_keynodes.hpp"
-
-#include <string>
 
 namespace sectionsModule
 {

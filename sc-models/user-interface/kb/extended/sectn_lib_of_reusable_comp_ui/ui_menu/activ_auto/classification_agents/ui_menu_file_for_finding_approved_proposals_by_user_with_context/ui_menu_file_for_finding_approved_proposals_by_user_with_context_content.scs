@@ -16,7 +16,6 @@ ui_menu_file_for_finding_approved_proposals_by_user_with_context => ui_nrel_comm
 			_-> ui_arg_1;;
 			_=> nrel_context_of_action:: ui_arg_2;; 
 			*);;
-		._action_of_finding_approved_proposals_by_user_instance _<- question;;
 	*];;
 
 ui_menu_file_for_finding_approved_proposals_by_user_with_context => ui_nrel_command_lang_template: 
@@ -24,7 +23,7 @@ ui_menu_file_for_finding_approved_proposals_by_user_with_context => ui_nrel_comm
 	(* <- lang_ru;; *);;
 ui_menu_file_for_finding_approved_proposals_by_user_with_context => ui_nrel_command_lang_template: 
 	[Find approved proposals by user: $ui_arg_1 with the given context $ui_arg_2] 
-	(* <- lang_eng;; *);;
+	(* <- lang_en;; *);;
 
 
 *];;

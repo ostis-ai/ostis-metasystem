@@ -6,51 +6,36 @@
 
 #pragma once
 
-#include "sc-memory/sc_addr.hpp"
-#include "sc-memory/sc_object.hpp"
-
-#include "generated/sections_keynodes.generated.hpp"
+#include <sc-memory/sc_keynodes.hpp>
 
 namespace sectionsModule
 {
-class SectionsKeynodes : public ScObject
+class SectionsKeynodes : public ScKeynodes
 {
-  SC_CLASS()
-  SC_GENERATED_BODY()
-
 public:
-  SC_PROPERTY(Keynode("action_get_decomposition"), ForceCreate)
-  static ScAddr action_get_decomposition;
+  static inline ScKeynode const action_get_decomposition{"action_get_decomposition", ScType::ConstNodeClass};
 
-  SC_PROPERTY(Keynode("action_add_section"), ForceCreate)
-  static ScAddr action_add_section;
+  static inline ScKeynode const action_add_section{"action_add_section", ScType::ConstNodeClass};
 
-  SC_PROPERTY(Keynode("action_remove_section"), ForceCreate)
-  static ScAddr action_remove_section;
+  static inline ScKeynode const action_remove_section{"action_remove_section", ScType::ConstNodeClass};
 
-  SC_PROPERTY(Keynode("nrel_section_decomposition"), ForceCreate)
-  static ScAddr nrel_section_decomposition;
+  static inline ScKeynode const nrel_section_decomposition{"nrel_section_decomposition", ScType::ConstNodeNonRole};
 
-  SC_PROPERTY(Keynode("nrel_entity_decomposition"), ForceCreate)
-  static ScAddr nrel_entity_decomposition;
+  static inline ScKeynode const nrel_entity_decomposition{"nrel_entity_decomposition", ScType::ConstNodeNonRole};
 
-  SC_PROPERTY(Keynode("removed_section"), ForceCreate)
-  static ScAddr removed_section;
+  static inline ScKeynode const removed_section{"removed_section", ScType::ConstNodeClass};
 
-  SC_PROPERTY(Keynode("section"), ForceCreate)
-  static ScAddr section;
+  static inline ScKeynode const section{"section", ScType::ConstNodeClass};
 
-  SC_PROPERTY(Keynode("not_enough_formed_structure"), ForceCreate)
-  static ScAddr not_enough_formed_structure;
+  static inline ScKeynode const not_enough_formed_structure{"not_enough_formed_structure", ScType::ConstNode};
 
-  SC_PROPERTY(Keynode("atomic_section"), ForceCreate)
-  static ScAddr atomic_section;
+  static inline ScKeynode const atomic_section{"atomic_section", ScType::ConstNode};
 
-  SC_PROPERTY(Keynode("non_atomic_section"), ForceCreate)
-  static ScAddr non_atomic_section;
+  static inline ScKeynode const non_atomic_section{"non_atomic_section", ScType::ConstNode};
 
-  SC_PROPERTY(Keynode("rrel_last"), ForceCreate)
-  static ScAddr rrel_last;
+  static inline ScKeynode const rrel_last{"rrel_last", ScType::ConstNodeRole};
+
+  static inline ScKeynode const nrel_answer{"nrel_answer", ScType::ConstNodeNonRole};
 };
 
 }  // namespace sectionsModule

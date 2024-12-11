@@ -4,10 +4,11 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include "sc-agents-common/utils/GenerationUtils.hpp"
-#include "sc-memory/sc_template.hpp"
-
 #include "set_utils.hpp"
+
+#include <sc-memory/sc_template.hpp>
+
+#include <sc-agents-common/utils/GenerationUtils.hpp>
 
 namespace sectionsModule
 {
@@ -17,9 +18,9 @@ ScAddrVector SetUtils::GetAllElementsByEdgeType(ScMemoryContext * context, ScAdd
     return {};
   ScAddrVector elements;
   ScTemplate rightsTemplate;
-  rightsTemplate.Triple(set, edgeType, ScType::NodeVar >> "_node");
+  rightsTemplate.Triple(set, edgeType, ScType::VarNode >> "_node");
   ScTemplateSearchResult result;
-  context->HelperSearchTemplate(rightsTemplate, result);
+  context->SearchByTemplate(rightsTemplate, result);
   if (!result.IsEmpty())
   {
     for (int i = 0; i < result.Size(); i++)
@@ -31,9 +32,9 @@ ScAddrVector SetUtils::GetAllElementsByEdgeType(ScMemoryContext * context, ScAdd
 ScAddr SetUtils::GetEdge(ScMemoryContext * context, ScAddr const & source, ScAddr const & target)
 {
   ScTemplate scTemplate;
-  scTemplate.Triple(source, ScType::EdgeAccessVarPosPerm >> "_edge", target);
+  scTemplate.Triple(source, ScType::VarPermPosArc >> "_edge", target);
   ScTemplateSearchResult result;
-  context->HelperSearchTemplate(scTemplate, result);
+  context->SearchByTemplate(scTemplate, result);
   if (!result.IsEmpty())
     return result[0]["_edge"];
   else
@@ -58,7 +59,7 @@ void SetUtils::RemoveFromSets(ScMemoryContext * context, ScAddr const & element,
 
 void SetUtils::RemoveBaseEdgesFromSet(ScMemoryContext * context, ScAddr const & set)
 {
-  ScIterator3Ptr setElementsIterator = context->Iterator3(set, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
+  ScIterator3Ptr setElementsIterator = context->CreateIterator3(set, ScType::ConstPermPosArc, ScType::Unknown);
 
   while (setElementsIterator->Next())
   {
