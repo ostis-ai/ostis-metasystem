@@ -12,28 +12,28 @@
 #include "constants/verification_constants.hpp"
 #include "keynodes/verification_keynodes.hpp"
 
-#include "check-synonym-relations-agent.hpp"
+#include "check-synonym-classes-agent.hpp"
 
 using namespace utils;
 
 namespace verificationModule
 {
 
-ScResult CheckSynonymRelationsAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
+ScResult CheckSynonymClassesAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
   auto [classAddr] = action.GetArguments<1>();
   if (!m_context.IsElement(classAddr))
   {
-    SC_AGENT_LOG_ERROR("CheckSynonymRelationsAgent: class not found.");
+    SC_AGENT_LOG_ERROR("CheckSynonymClassesAgent: class not found.");
     return action.FinishUnsuccessfully();
   }
 
-  SC_LOG_DEBUG("CheckSynonymRelationsAgent started");
+  SC_LOG_DEBUG("CheckSynonymClassesAgent started");
 
   try
   {
     std::string stringMainIdtf = m_context.GetElementSystemIdentifier(classAddr);
-    std::vector<ScAddr> classObjects = createRelationObjectsVector(classAddr);
+    std::vector<ScAddr> classObjects = createClassObjectsVector(classAddr);
     std::ofstream outputFile = createOutputFile(stringMainIdtf, classAddr);
 
     checkSynonymFives(classObjects, outputFile);
@@ -48,13 +48,13 @@ ScResult CheckSynonymRelationsAgent::DoProgram(ScActionInitiatedEvent const & ev
   }
 }
 
-void CheckSynonymRelationsAgent::checkSynonymFives(
+void CheckSynonymClassesAgent::checkSynonymFives(
     std::vector<ScAddr> & classObjects,
     std::ofstream & outputFile)
 {
-  for (auto relation : classObjects)
+  for (auto class : classObjects)
   {
-    std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> fives = fillFivesVector(relation);
+    std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> fives = fillFivesVector(class);
 
     std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> otherFives;
     ScAddr duplicateIdentifier;
@@ -65,63 +65,49 @@ void CheckSynonymRelationsAgent::checkSynonymFives(
       if (find(otherFives.begin(), otherFives.end(), fives[index]) != otherFives.end())
       {
         duplicateIdentifier = std::get<2>(fives[index]);
-        createSynonymRelationsInfo(duplicateIdentifier, std::get<0>(fives[index]), std::get<0>(otherFives[otherIndex]), outputFile);
+        createSynonymClassesInfo(duplicateIdentifier, std::get<0>(fives[index]), std::get<0>(otherFives[otherIndex]), outputFile);
       }
     }
   }
 }
 
-void CheckSynonymRelationsAgent::createSynonymRelationsInfo(ScAddr & identifier, ScAddr & firstSynonym,ScAddr & secondSynonym, std::ofstream & outputFile)
+void CheckSynonymClassesAgent::createSynonymClassesInfo(ScAddr & identifier, ScAddr & firstSynonym,ScAddr & secondSynonym, std::ofstream & outputFile)
 {
   std::string domainSection = findDomainSectionIdtf(firstSynonym);
-  std::string relationIdtf = m_context.GetElementSystemIdentifier(identifier);
+  std::string classIdtf = m_context.GetElementSystemIdentifier(identifier);
 
-  outputFile << "Relation: " << relationIdtf;
+  outputFile << "Class: " << classIdtf;
   outputFile << ", domain section: " << domainSectionIdtf;
 
-  outputFile << "\nFirst relation: ";
-  createRelationInfo(firstSynonym, outputFile);
+  outputFile << "\nFirst class: ";
+  createClassInfo(firstSynonym, outputFile);
 
-  outputFile << "\nSecond relation: ";
-  createRelationInfo(secondSynonym, outputFile);
+  outputFile << "\nSecond class: ";
+  createClassInfo(secondSynonym, outputFile);
   
   SC_LOG_ERROR("CheckSynonymRelationsAgent: synonym relations are found");
 }
 
-void CheckSynonymRelationsAgent::createRelationInfo(ScAddr & relation, std::ofstream & outputFile)
+void CheckSynonymClassesAgent::createClassInfo(ScAddr & class, std::ofstream & outputFile)
 {
-  ScAddr firsDomain = m_context.getAnyByOutRelation(relation, VerificationKeynodes::nrel_first_domain);
-  ScAddr secondDomain = m_context.getAnyByOutRelation(relation, VerificationKeynodes::nrel_first_domain);
-
-  std::string relationIdtf = m_context.GetElementSystemIdentifier(relation);
+  std::string relationIdtf = m_context.GetElementSystemIdentifier(class);
   std::string firstDomainIdtf = m_context.GetElementSystemIdentifier(firsDomain);
   std::string secondDomainIdtf = m_context.GetElementSystemIdentifier(secondDomain);
 
-  outputFile << "first domain: " << firstDomainIdtf;
-  outputFile << ", second domain: " << secondDomainIdtf;
-
-  std::string definition getDefinition(relation);
+  std::string definition getDefinition(class);
   if (!definition.empty())
     outputFile << "\ndefinition: " << definition;
 
-  std::string relationClasses = getRelationClassesString(relation)
-  if (!relationClasses.empty())
-    outputFile << "\nrelation classes:\n" << relationClasses;
-}
-
-std::string CheckSynonymRelationsAgent::getRelationClassesString(ScAddr & relation)
-{
-  std::string classes;
-  ScIterator3Ptr const & classesIterator = m_context.CreateIterator3(
-      ScType::Node, ScType::ConstPermPosArc, relation);
-  while (classesIterator->Next())
+  std::vector<ScAddr> classObjects = createClassObjectsVector(class);
+  if (!classObjects.empty())
   {
-    classes += m_context.GetElementSystemIdentifier(classesIterator->Get(0)) + "\n"
+    outputFile << "\nclass objects: " << definition;
+    for (size_t index = 0; index < classObjects.size() - 1; ++index)
+      outputFile << "\n" << m_context.GetElementSystemIdentifier(classObjects[index]);
   }
-  return classes
 }
 
-std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> CheckSynonymRelationsAgent::fillFivesVector(
+std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> CheckSynonymClassesAgent::fillFivesVector(
     ScAddr & classObject)
 {
   std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> fives;
@@ -143,7 +129,7 @@ std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> CheckSynonymRela
   return fives;
 }
 
-std::string CheckSynonymRelationsAgent::findDomainSectionIdtf(ScAddr & object)
+std::string CheckSynonymClassesAgent::findDomainSectionIdtf(ScAddr & object)
 {
   std::string stringDomainSection;
   std::string stringMainIdtf = m_context.GetElementSystemIdentifier(object);
@@ -180,7 +166,7 @@ std::string CheckSynonymRelationsAgent::findDomainSectionIdtf(ScAddr & object)
   return stringDomainSection;
 }
 
-std::ofstream CheckSynonymRelationsAgent::createOutputFile(std::string & stringMainIdtf, ScAddr & classAddr)
+std::ofstream CheckSynonymClassesAgent::createOutputFile(std::string & stringMainIdtf, ScAddr & classAddr)
 {
   std::string fileName = "synonym_file_for_" + stringMainIdtf;
 
@@ -189,7 +175,7 @@ std::ofstream CheckSynonymRelationsAgent::createOutputFile(std::string & stringM
   return outputFile;
 }
 
-std::ofstream CheckSynonymRelationsAgent::openOrCreateFile(
+std::ofstream CheckSynonymClassesAgent::openOrCreateFile(
     ScAddr & classAddr,
     std::string const & filename)
 {
@@ -215,7 +201,7 @@ std::ofstream CheckSynonymRelationsAgent::openOrCreateFile(
   }
 }
 
-std::ofstream CheckSynonymRelationsAgent::generateSynonymFile(
+std::ofstream CheckSynonymClassesAgent::generateSynonymFile(
     ScAddr const & classAddr,
     std::string const & filename)
 {
@@ -230,25 +216,25 @@ std::ofstream CheckSynonymRelationsAgent::generateSynonymFile(
   return outputFile;
 }
 
-std::vector<ScAddr> CheckSynonymRelationsAgent::createRelationObjectsVector(ScAddr & classAddr)
+std::vector<ScAddr> CheckSynonymClassesAgent::createClassObjectsVector(ScAddr & classAddr)
 {
-  std::vector<ScAddr> relationObjects;
+  std::vector<ScAddr> classObjects;
 
-  ScIterator3Ptr const & objectRelationIter = m_context.CreateIterator3(classAddr, ScType::ConstPermPosArc, ScType::Node);
-  while (objectRelationIter->Next())
-    relationObjects.push_back(objectRelationIter->Get(2));
+  ScIterator3Ptr const & classRelationIter = m_context.CreateIterator3(classAddr, ScType::ConstPermPosArc, ScType::Node);
+  while (classRelationIter->Next())
+    classObjects.push_back(classRelationIter->Get(2));
 
-  return relationObjects;
+  return classObjects;
 }
 
-std::string CheckSynonymClassesAgent::getDefinition(ScAddr & relation)
+std::string CheckSynonymClassesAgent::getDefinition(ScAddr & class)
 {
   std::string definition;
   ScTemplate definitionTemplate;
   definitionTemplate.Quintuple(
       ScType::NodeVar >> VerificationConstants::KEY_NODE,
       ScType::VarPermPosArc,
-      relation,
+      class,
       ScType::VarPermPosArc,
       ScKeynodes::rrel_key_sc_element);
   definitionTemplate.Quintuple(
@@ -276,9 +262,9 @@ std::string CheckSynonymClassesAgent::getDefinition(ScAddr & relation)
   return definition;
 }
 
-ScAddr CheckSynonymRelationsAgent::GetActionClass() const
+ScAddr CheckSynonymClassesAgent::GetActionClass() const
 {
-  return VerificationKeynodes::action_check_synonym_relations;
+  return VerificationKeynodes::action_check_synonym_classes;
 }
 
 }  // namespace verificationModule

@@ -29,9 +29,10 @@ ScResult CheckSynonymObjectsAgent::DoProgram(ScActionInitiatedEvent const & even
   SC_LOG_DEBUG("CheckSynonymObjectsAgent started");
 
   ScAddr actionClass;
-  if (m_context.checktype(classAddr, ScType::sc_node_role_relation) || m_context.checktype(classAddr, ScType::sc_node_non_role_relation))
+  ScAddr classObject = m_context.getAnyFromSet(classAddr);
+  if (m_context.checktype(classObject, ScType::sc_node_role_relation) || m_context.checktype(classObject, ScType::sc_node_non_role_relation))
     actionClass = VerificationKeynodes::action_check_synonym_relations;
-  else if (m_context.checktype(classAddr, ScType::sc_node_class))
+  else if (m_context.checktype(classObject, ScType::sc_node_class))
     actionClass = VerificationKeynodes::action_check_synonym_classes;
 
   try
