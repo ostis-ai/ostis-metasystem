@@ -65,12 +65,12 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScAction & action)
 
   if (resultOfWrite)
   {
-    SC_AGENT_LOG_DEBUG("File has been created");
+    m_logger.Debug("File has been created");
     return action.FinishSuccessfully();
   }
   else
   {
-    SC_AGENT_LOG_ERROR("File hasn't been created");
+    m_logger.Error("File hasn't been created");
     return action.FinishUnsuccessfully();
   }
 }
@@ -151,7 +151,7 @@ bool TranslateMainSystemIdtfsFromScToFileAgent::WriteInFile(std::string const & 
 {
   try
   {
-    std::ofstream file(IDENTIFIERS_MODULE_PATH "identifiers.txt");
+    std::ofstream file("identifiers.txt");
     if (file.is_open())
     {
       file << strIdentifiers;

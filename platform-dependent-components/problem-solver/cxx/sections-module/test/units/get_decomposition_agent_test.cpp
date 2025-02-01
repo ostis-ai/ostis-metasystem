@@ -29,7 +29,7 @@ json GetDecompositionIdList(json const &, int level = 1);
 json GetTestJSON(int level = 1);
 
 ScsLoader loader;
-std::string const TEST_FILES_DIR_PATH = SUBJECT_DOMAIN_MODULE_TEST_SRC_PATH "/testStructures/";
+std::string const TEST_FILES_DIR_PATH = "../test-structures/";
 
 int const WAIT_TIME = 1000;
 

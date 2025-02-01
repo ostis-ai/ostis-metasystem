@@ -23,18 +23,18 @@ ScResult AddSectionAgent::DoProgram(ScAction & action)
   auto const [sectionNameAddr, parentSectionAddr, langAddr] = action.GetArguments<3>();
   if (!m_context.IsElement(sectionNameAddr))
   {
-    SC_AGENT_LOG_ERROR("Section identifier link not found.");
+    m_logger.Error("Section identifier link not found.");
     return action.FinishUnsuccessfully();
   }
   if (!m_context.IsElement(langAddr))
   {
-    SC_AGENT_LOG_ERROR("Lang node not found.");
+    m_logger.Error("Lang node not found.");
     return action.FinishUnsuccessfully();
   }
 
   std::string sectionName;
   m_context.GetLinkContent(sectionNameAddr, sectionName);
-  SC_AGENT_LOG_DEBUG("New section name is `" << sectionName << "`.");
+  m_logger.Debug("New section name is `", sectionName, "`.");
   ScAddr sectionAddr;
   if (m_context.IsElement(parentSectionAddr))
     sectionAddr = GenerateSection(sectionName, parentSectionAddr, langAddr);
@@ -43,7 +43,7 @@ ScResult AddSectionAgent::DoProgram(ScAction & action)
 
   if (!m_context.IsElement(sectionAddr))
   {
-    SC_AGENT_LOG_ERROR("Section is not generated.");
+    m_logger.Error("Section is not generated.");
     return action.FinishUnsuccessfully();
   }
   ScStructure result = m_context.GenerateStructure();
@@ -80,8 +80,7 @@ ScAddr AddSectionAgent::GenerateSection(
   ScAddr newSectionArc = m_context.GenerateConnector(ScType::ConstPermPosArc, decompositionTuple, newSection);
   if (m_context.IsElement(lastSection))
   {
-    SC_AGENT_LOG_DEBUG(
-        "Last section system identifier is \"" + m_context.GetElementSystemIdentifier(lastSection) + "\".");
+    m_logger.Debug("Last section system identifier is \"" + m_context.GetElementSystemIdentifier(lastSection) + "\".");
     ScIterator5Ptr lastSectionIterator = m_context.CreateIterator5(
         decompositionTuple, ScType::ConstPermPosArc, lastSection, ScType::ConstTempPosArc, SectionsKeynodes::rrel_last);
     if (lastSectionIterator->Next())
@@ -97,7 +96,7 @@ ScAddr AddSectionAgent::GenerateSection(
   }
   else
   {
-    SC_AGENT_LOG_DEBUG("Added section is new.");
+    m_logger.Debug("Added section is new.");
     m_context.GenerateConnector(ScType::ConstPermPosArc, ScKeynodes::rrel_1, newSectionArc);
     m_context.GenerateConnector(ScType::ConstTempPosArc, SectionsKeynodes::rrel_last, newSectionArc);
   }

@@ -22,7 +22,7 @@ using namespace sectionsModule;
 namespace subjDomainTest
 {
 
-const std::string TEST_FILES_DIR_PATH = SUBJECT_DOMAIN_MODULE_TEST_SRC_PATH "/testStructures/";
+std::string const TEST_FILES_DIR_PATH = "../test-structures/";
 
 int const WAIT_TIME = 1000;
 

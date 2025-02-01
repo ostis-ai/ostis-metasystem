@@ -14,13 +14,13 @@ namespace moduleTest
 {
 ScsLoader loader;
 
-std::string const TEST_FILES_DIR_PATH = MODULE_TEST_SRC_PATH "/test-structures/";
+std::string const TEST_FILES_DIR_PATH = "../test-structures/";
 
 int const WAIT_TIME = 1000;
 
 std::string GetFileContent()
 {
-  char fileName[] = IDENTIFIERS_MODULE_PATH "identifiers.txt";
+  char fileName[] = "identifiers.txt";
   std::ifstream file(fileName);
   std::stringstream fileContent;
   std::string line;
