@@ -35,7 +35,7 @@ if(${SC_CLANG_FORMAT_CODE})
 endif()
 
 if(${WIN32})
-    message(SEND_ERROR "scp-machine isn't supported on Windows OS.")
+    message(SEND_ERROR "ostis-metasystem isn't supported on Windows OS.")
 endif(${WIN32})
 
 if(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")

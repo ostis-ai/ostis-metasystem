@@ -6,7 +6,7 @@ install(TARGETS
 
 install(EXPORT privateExport
     FILE privateTargets.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/scp-machine
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ostis-metasystem
 )
 
 include(CMakePackageConfigHelpers)
@@ -19,10 +19,10 @@ write_basic_package_version_file(
 
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/ostis-metasystem-config-version.cmake"
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/scp-machine
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ostis-metasystem
 )
 
-set(CPACK_PACKAGE_NAME                  scp-machine)
+set(CPACK_PACKAGE_NAME                  ostis-metasystem)
 set(CPACK_PACKAGE_VENDOR                "OSTIS AI")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY   "Software implementation of semantic network program interpreter")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY     ${CPACK_PACKAGE_NAME})
