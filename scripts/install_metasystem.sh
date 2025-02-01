@@ -9,14 +9,6 @@ cd "${METASYSTEM_PATH}" && git submodule update --init --recursive
 
 source "${CURRENT_DIR}/set_vars.sh"
 
-stage "Install ostis-web-platform"
-
-"${PLATFORM_PATH}/scripts/install_submodules.sh"
-"${PLATFORM_PATH}/scripts/install_dependencies.sh" --dev
-"${PLATFORM_PATH}/scripts/build_platform.sh"
-
-stage "ostis-platform is installed successfully"
-
 stage "Install ostis-metasystem"
 
 "${CURRENT_DIR}/install_react_sc_web.sh"
