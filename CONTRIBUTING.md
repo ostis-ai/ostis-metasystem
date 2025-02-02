@@ -43,31 +43,34 @@ Message text should start from an upper case letter. If commit doesn't fix or im
 
 Examples:
 <pre>
-[scp] Implement contErase operator 
-[docs] Add examples of using contErase operator
+[solver] Implement TranslateMainSystemIdtfsFromScToFileAgent
+[docs] Add docs for TranslateMainSystemIdtfsFromScToFileAgent
 </pre>
 
 Possible tags:
 
-  * `[scp]` - changes in scp folder;
-  * `[kb]` - changes in kb folder;
+  * `[kb]` - changes in `sc-models/knowledge-base` folder;
+  * `[solver]` - changes in `platform-dependent-components/problem-solver` and `sc-models/problem-solver` folder;
+  * `[interface]` - changes in `platform-dependent-components/interface` and `sc-models/interface` folder;
   * `[tests]` or `[test]` - changes in tests;
   * `[config]` - commits with changes in configuration;
   * `[review]` - commits with review fixes;
   * `[refactor]` - commits with some code refactoring;
   * `[changelog]` - use when you update changelog;
   * `[docs]` or `[doc]` - use when you update documentation;
-  * `[scripts]` - updates in the `ostis-metasystem/scripts` files
+  * `[build]` - updates in build system;
+  * `[cmake]` - updates in cmake files;
+  * `[scripts]` - updates in the `ostis-metasystem/scripts` files;
   * `[ci]` - changes in `ci` configuration or scripts;
-  * `[git]` - changes in `git` configuration;
+  * `[git]` - changes in `git` configuration.
 
 Each commit in Pull Request should be an atomic. In other words, it should implement or fix one feature. For example:
 
 <pre>
 Last commit
 ...
-[tests] Test contErase operator
-[changelog] Add info about contErase operator
+[tests] Test TranslateMainSystemIdtfsFromScToFileAgent
+[changelog] Add info about TranslateMainSystemIdtfsFromScToFileAgent
 ...
 Init commit
 </pre>
