@@ -11,6 +11,7 @@ class ostis_metasystemRecipe(ConanFile):
     
     def requirements(self):
         self.requires("sc-machine/0.10.0")
+        self.requires("nlohmann_json/3.11.3")
 
     def build_requirements(self):
         self.test_requires("gtest/1.14.0")
