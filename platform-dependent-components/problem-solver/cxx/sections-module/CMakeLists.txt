@@ -33,6 +33,7 @@ target_link_libraries(sections-module
 target_include_directories(sections-module
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
 )
+set_target_properties(sections-module PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${SC_EXTENSIONS_DIRECTORY})
 
 if(${SC_CLANG_FORMAT_CODE})
     target_clangformat_setup(sections-module)
