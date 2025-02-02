@@ -1,6 +1,6 @@
 [submodule "docs/scn"]
 	path = docs/scn
 	url = https://github.com/ostis-ai/scn-latex-plugin
-[submodule "interface/react-sc-web"]
-	path = interface/react-sc-web
+[submodule "platform-dependent-components/interface/react-sc-web"]
+	path = platform-dependent-components/interface/react-sc-web
 	url = https://github.com/ostis-ai/react-sc-web.git
