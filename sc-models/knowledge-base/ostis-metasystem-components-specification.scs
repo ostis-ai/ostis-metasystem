@@ -21,7 +21,25 @@ ostis_metasystem_repository
                             *);;
                     *);;
             *);;
-        *);;
+        *);
+    -> sc_web_specification
+		(*
+			<- concept_reusable_component_specification;;
+			=> nrel_alternative_addresses:
+			...
+			(*
+				<- sc_node_tuple;;
+				<- singletone;;
+				-> rrel_1:
+					...
+					(*
+						-> [https://github.com/ostis-ai/sc-web]
+							(*
+								<- concept_github_url;;
+							*);;
+					*);;
+			*);;
+		*);;
 
 concept_need_to_install_components
 -> ostis_standard;;
