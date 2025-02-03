@@ -1,7 +1,10 @@
 import logging
 
 import g4f
+import re
 from g4f.client import Client
+import json
+import requests
 from requests import HTTPError
 from sc_client.client import template_search, template_generate
 from sc_client.constants import sc_types
@@ -62,18 +65,21 @@ class CleanTextGenerationAgent(ScAgentClassic):
             return ScResult.ERROR_INVALID_PARAMS
         
         # Get raw text string
-        raw_text = get_link_content_data(raw_text_node)        
+        raw_text = get_link_content_data(raw_text_node).replace('\n', ' ')
         if not isinstance(raw_text, str):
             self.logger.error(f'Error: your raw text link must be string type, but text of yours is {type(raw_text)}')
             return ScResult.ERROR_INVALID_TYPE
         self.logger.info('Raw text:' + raw_text)
 
-        # Trying to get clean text        
-        try:
-            clean_text = self._get_clean_text(raw_text, language)            
-        except HTTPError as err:
-            self.logger.error(f'Error: {err}.\nThis error is on non-official API\'s side.')
-            return ScResult.ERROR
+        # Trying to get clean text 
+        if not raw_text.isspace():       
+            try:
+                clean_text = self._get_clean_text(raw_text, language)            
+            except HTTPError as err:
+                self.logger.error(f'Error: {err}.\nThis error is on non-official API\'s side.')
+                return ScResult.ERROR
+        else:
+            clean_text = 'К сожалению, в настоящее время нет информации, соответствующей вашему вопросу в базе знаний. Приносим извинения за неудобства.'
         
         # Check text for emptiness. If processed text is empty, that means that model does not work
         if clean_text is None or clean_text == '':
@@ -101,15 +107,9 @@ class CleanTextGenerationAgent(ScAgentClassic):
         finish_action_with_status(action_element, True)
         return ScResult.OK
     
-    def _get_clean_text(self, raw_text: str, language: str) -> str:
-        client = Client()
-        self.logger.info('Language'+ language)
-        messages = [{'role': 'user', 'content': constants.PROMPTS[language].format(raw_text)}]
-        self.logger.info('Prompt:' + constants.PROMPTS[language].format(raw_text))
-        response = client.chat.completions.create(
-            model='gpt-3.5-turbo',
-            messages=messages,
-            temperature=0,
-        )
-        self.logger.info(f'Successfully cleaned text for you\n: {response}\n' + response.choices[0].message.content)
-        return response.choices[0].message.content   
+    def _get_clean_text(self, raw_text: str, language: str) -> str:  
+        raw_text = re.sub("<.*>|\*", '', raw_text)
+        prompt = constants.PROMPTS[language]%(raw_text.replace('\n', ' '))
+        response = requests.post("https://llm.ostis.ai/completion", prompt.encode(encoding='UTF-8'))
+        response.encoding = "utf-8"
+        return response.json()["content"]
