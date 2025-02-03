@@ -2,6 +2,14 @@
 
 This guide provides short information for developers to start to work with ostis-metasystem quickly. You can always learn more about the ostis-metasystem's [build system](build_system.md).
 
+## Install ostis-metasystem submodules
+
+After cloning the repository, run:
+
+```sh
+git submodule update --init --recursive
+```
+
 ## Check CMake
 
 Install pipx first using [**pipx installation guide**](https://pipx.pypa.io/stable/installation/) if not already installed.
@@ -32,11 +40,11 @@ pipx ensurepath
 exec $SHELL
 ```
 
-## Start develop ostis-metasystem with Conan
+## Start develop C++ problem solver of ostis-metasystem with Conan
 
 ### Install Conan
 
-Install Conan, to build ostis-metasystem dependencies with Conan-provided dependencies:
+Install Conan, to build C++ problem solver dependencies with Conan-provided dependencies:
 
 ```sh
 # Use pipx to install conan if not already installed
@@ -46,19 +54,19 @@ pipx ensurepath
 exec $SHELL
 ```
 
-### Use ostis-metasystem in Debug
+### Use C++ problem solver in Debug
 
 #### Install dependencies with Conan
 
-ostis-metasystem is an extension to sc-machine, so sc-machine is main dependency for ostis-metasystem. To install it, run in the root of the project:
+C++ problem solver of ostis-metasystem is an extension to sc-machine, so sc-machine is main dependency for C++ problem solver. To install it, run in the root of the project:
 
 ```sh
 conan install . -s build_type=Debug --build=missing
 ```
 
-#### Build ostis-metasystem in Debug
+#### Build C++ problem solver in Debug
 
-To build ostis-metasystem in debug mode using Conan-provided dependencies, run:
+To build C++ problem solver in debug mode using Conan-provided dependencies, run:
 
 ```sh
 # debug build type
@@ -66,9 +74,10 @@ cmake --preset debug-conan
 cmake --build --preset debug
 ```
 
-Note: By default, configure preset `debug` enables building ostis-metasystem tests.
+!!! Note
+    By default, configure preset `debug` enables building C++ problem solver tests.
 
-#### Run ostis-metasystem tests in Debug
+#### Run C++ problem solver tests in Debug
 
 After that, you can go to `build/Debug` and run tests via `ctest`:
 
@@ -79,7 +88,7 @@ ctest -V
 
 You can also check code formatting. To learn more, go to the [CMake flags](cmake_flags.md) page.
 
-### Use ostis-metasystem in Release
+### Use C++ problem solver in Release
 
 #### Install dependencies with Conan
 
@@ -89,9 +98,9 @@ To install it, run in the root of the project:
 conan install . -s build_type=Release --build=missing
 ```
 
-#### Build ostis-metasystem in Release
+#### Build C++ problem solver in Release
 
-To build ostis-metasystem in release mode using Conan-provided dependencies, run:
+To build C++ problem solver in release mode using Conan-provided dependencies, run:
 
 ```sh
 # release build type without tests
@@ -99,7 +108,7 @@ cmake --preset release-conan
 cmake --build --preset release
 ```
 
-To build ostis-metasystem with tests in release mode using Conan-provided dependencies, run:
+To build C++ problem solver with tests in release mode using Conan-provided dependencies, run:
 
 ```sh
 # release build type with tests
@@ -107,7 +116,7 @@ cmake --preset release-with-tests-conan
 cmake --build --preset release
 ```
 
-#### Run ostis-metasystem tests in Release
+#### Run C++ problem solver tests in Release
 
 After that, you can run tests:
 
@@ -118,17 +127,108 @@ ctest -V
 
 You can also check code formatting. To learn more, go to the [CMake flags](cmake_flags.md) page.
 
-### Run ostis-metasystem
+## Start develop Python problem solver of ostis-metasystem
+
+### Install dependencies with pip3
+
+To install dependencies, run:
+
+```sh
+python3 -m venv platform-dependent-components/problem-solver/py/.venv
+source platform-dependent-components/problem-solver/py/.venv/bin/activate
+pip3 install -r platform-dependent-components/problem-solver/py/requirements.txt
+```
+
+### Run Python problem solver tests
+
+Running Python problem solver requires C++ problem solver to be running. Run C++ problem solver:
+
+```sh
+./build/Release/bin/sc-machine -s kb.bin \
+    -e "path/to/ostis-metasystem/lib/extensions;path/to/sc-machine/lib/extensions"
+```
+
+and after that, run Python problem-solver tests in new terminal:
+
+```sh
+source platform-dependent-components/problem-solver/py/.venv/bin/activate && \
+python3 -m unittest discover platform-dependent-components/problem-solver/py
+```
+
+### Run Python problem solver
+
+Run C++ problem solver:
+
+```sh
+./build/Release/bin/sc-machine -s kb.bin \
+    -e "path/to/ostis-metasystem/lib/extensions;path/to/sc-machine/lib/extensions"
+```
+
+and after that, run Python problem-solver in new terminal:
+
+```sh
+source platform-dependent-components/problem-solver/py/.venv/bin/activate && \
+python3 platform-dependent-components/problem-solver/py/server.py
+```
+
+## Start develop interface of ostis-metasystem
+
+### Install dependencies with npm
+
+To install dependencies, go to the `react-sc-web` directory and run:
+
+```sh
+cd platform-dependent-components/interface/react-sc-web
+npm install
+```
+
+### Build interface 
+
+To build interface, run:
+
+```sh
+npm run build
+```
+
+### Run interface
+
+After run:
+
+```sh
+npm run start
+```
+
+## Run ostis-metasystem
 
 Before launching ostis-metasystem, [extract sc-machine from GitHub Releases](https://ostis-ai.github.io/sc-machine/quick_start/#github-releases) or [build it](https://ostis-ai.github.io/sc-machine/build/quick_start/).
 
-To launch ostis-metasystem, run:
+Firstly, build knowledge base:
 
 ```sh
-./path/to/sc-machine/binary -s path/to/kb.bin \
+./build/Release/bin/sc-builder -i repo.path -o kb.bin --clear
+``` 
+
+After run C++ problem solver:
+
+```sh
+./build/Release/bin/sc-machine -s kb.bin \
     -e "path/to/ostis-metasystem/lib/extensions;path/to/sc-machine/lib/extensions"
 # if several paths to extensions are provided then they should be separated 
 # by semicolon and wrapped in double quotes
+```
+
+Run Python problem solver in new terminal:
+
+```sh
+source platform-dependent-components/problem-solver/py/.venv/bin/activate && \
+python3 platform-dependent-components/problem-solver/py/server.py
+```
+
+And run react-sc-web in new terminal:
+
+```sh
+cd platform-dependent-components/interface/react-sc-web
+npm run start
 ```
 
 ### Contributing
