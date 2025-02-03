@@ -11,10 +11,10 @@
     git checkout feat/update_build_system
     ```
 
-2. Install problem solver of the OSTIS Metasystem:
+2. Install C++ problem solver:
 
     ```sh
-    ./scripts/install_problem_solver.sh
+    ./scripts/install_cxx_problem_solver.sh
     ```
 
 3. Build knowledge base:
@@ -23,7 +23,7 @@
     ./install/sc-machine/bin/sc-builder -i repo.path -o kb.bin --clear
     ```
 
-4. Run problem solver:
+4. Run C++ problem solver:
 
     ```sh
     ./install/sc-machine/bin/sc-machine -s kb.bin -c ostis-metasystem.ini \
@@ -42,24 +42,42 @@
     components install sc_web
     ```
 
-7. Build and run sc-web. Open new terminal and run:
-
-   ```sh
-   cd platform-dependent-components/interface/sc-web
-   npm run build
-   source .venv/bin/activate && python3 server/app.py --allowed_origins=http://localhost:3000
-   cd ..
-   ```
-
-8. Install and build interface of the OSTIS Metasystem:
+7. Build sc-web. Open new terminal and run:
 
     ```sh
-    cd react-sc-web
+    cd platform-dependent-components/interface/sc-web
+    npm run build
+    ```
+
+8. Run sc-web:
+   
+    ```sh
+    source .venv/bin/activate && python3 server/app.py --allowed_origins=http://localhost:3000
+    ```
+
+9.  Install Python problem solver. Open new terminal and run:
+
+    ```sh
+    python3 -m venv platform-dependent-components/problem-solver/py/.venv
+    source platform-dependent-components/problem-solver/py/.venv/bin/activate
+    pip3 install -r platform-dependent-components/problem-solver/py/requirements.txt
+    ```
+
+10. Run Python problem-solver:
+    
+    ```sh
+    python3 platform-dependent-components/problem-solver/py/server.py
+    ```
+
+11. Install and build react interface. Open new terminal and run:
+
+    ```sh
+    cd platform-dependent-components/interface/react-sc-web
     npm install
     npm run build
     ```
 
-9. Run interface of the OSTIS Metasystem:
+12. Run react interface:
 
     ```sh
     npm run start
