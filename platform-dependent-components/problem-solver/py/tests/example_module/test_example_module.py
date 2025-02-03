@@ -10,7 +10,7 @@ from modules.example_module.example_module import ExampleModule
 from sc_kpm.utils.action_utils import execute_agent
 from tests.base_testcase import BaseTestCase
 
-from sc_kpm.identifiers import CommonIdentifiers, QuestionStatus
+from sc_kpm.identifiers import CommonIdentifiers, ActionStatus
 
 WAIT_TIME = 5
 
@@ -33,8 +33,8 @@ class ExampleAgentTestCase(BaseTestCase):
     def run_example_agent(self):
         kwargs = dict(
             arguments={},
-            concepts=[CommonIdentifiers.QUESTION, "action_example_py"],
-            reaction=QuestionStatus.QUESTION_FINISHED_SUCCESSFULLY,
+            concepts=[CommonIdentifiers.ACTION, "action_example_py"],
+            reaction=ActionStatus.ACTION_FINISHED_SUCCESSFULLY,
             wait_time=WAIT_TIME,
         )
         self.assertTrue(execute_agent(**kwargs)[1])
