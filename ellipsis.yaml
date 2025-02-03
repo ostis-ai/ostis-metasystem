@@ -1,0 +1,22 @@
+version: 1.3
+about:
+  - "The OSTIS Metasystem is an intelligent computer system designed to provide comprehensive support for all stages of the life cycle of intelligent systems, known as ostis-systems"
+  - "The OSTIS Metasystem serves as both a project management system and a knowledge portal for designing, producing, operating, and evolving semantically compatible hybrid intelligent systems"
+
+pr_review:
+  rules:
+    - "Code should be DRY (Don't Repeat Yourself)"
+    - "There should be no secrets or credentials in the code"
+    - "Extremely Complicated Code Needs Comments"
+    - "Use Descriptive Variable and Constant Names"
+    - "Don't log sensitive data"
+    - "Follow the Single Responsibility Principle"
+    - "Function and Method Naming Should Follow Consistent Patterns"
+  summary_rules:
+    - "Don't mention changes if the change is only whitespace"
+    - "When a rename occurs, mention the old and new file names, but don't mention every single spot where the file renamed occurred"
+  auto_review_enabled: true
+  enable_approve_prs: true
+
+pr_address_comments:
+  delivery: "new_commit"
