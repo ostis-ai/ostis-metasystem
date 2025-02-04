@@ -61,7 +61,7 @@ download_archive "${SC_MACHINE_URL}"
 extract_archive "${SC_MACHINE_ARCHIVE}" "${SC_MACHINE_DESTINATION_DIR}"
 cleanup "${SC_MACHINE_ARCHIVE}" "${SC_MACHINE_DESTINATION_DIR}"
 
-SC_COMPONENT_MANAGER_ARCHIVE=$(get_archive_name "sc-component-manager" "${SC_COMPONENT_MANAGER_MACHINE_VERSION}")
+SC_COMPONENT_MANAGER_ARCHIVE=$(get_archive_name "sc-component-manager" "${SC_COMPONENT_MANAGER_VERSION}")
 SC_COMPONENT_MANAGER_URL="https://github.com/ostis-ai/sc-component-manager/releases/download/${SC_COMPONENT_MANAGER_VERSION}/${SC_COMPONENT_MANAGER_ARCHIVE}"
 
 download_archive "${SC_COMPONENT_MANAGER_URL}"
