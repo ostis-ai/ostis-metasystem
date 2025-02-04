@@ -144,7 +144,7 @@ pip3 install -r platform-dependent-components/problem-solver/py/requirements.txt
 Running Python problem solver requires C++ problem solver to be running. Run C++ problem solver:
 
 ```sh
-./build/Release/bin/sc-machine -s kb.bin \
+./path/to/sc-machine/binary -s kb.bin \
     -e "path/to/ostis-metasystem/lib/extensions;path/to/sc-machine/lib/extensions"
 ```
 
@@ -160,7 +160,7 @@ python3 -m unittest discover platform-dependent-components/problem-solver/py
 Run C++ problem solver:
 
 ```sh
-./build/Release/bin/sc-machine -s kb.bin \
+./path/to/sc-machine/binary -s kb.bin \
     -e "path/to/ostis-metasystem/lib/extensions;path/to/sc-machine/lib/extensions"
 ```
 
@@ -205,13 +205,13 @@ Before launching ostis-metasystem, [extract sc-machine from GitHub Releases](htt
 Firstly, build knowledge base:
 
 ```sh
-./build/Release/bin/sc-builder -i repo.path -o kb.bin --clear
+./path/to/sc-builder/binary -i repo.path -o kb.bin --clear
 ``` 
 
 After run C++ problem solver:
 
 ```sh
-./build/Release/bin/sc-machine -s kb.bin \
+./path/to/sc-machine/binary -s kb.bin \
     -e "path/to/ostis-metasystem/lib/extensions;path/to/sc-machine/lib/extensions"
 # if several paths to extensions are provided then they should be separated 
 # by semicolon and wrapped in double quotes
