@@ -29,7 +29,7 @@ To get started, check out our [quick start guide](https://ostis-ai.github.io/ost
     ```sh
     pip3 install mkdocs mkdocs-material
     mkdocs serve
-    # and open http://127.0.0.1:8003/ in your browser
+    # and open http://127.0.0.1:8001/ in your browser
     ```
     </details>
 
