@@ -45,7 +45,7 @@
 7. Build sc-web. Open new terminal and run:
 
     ```sh
-    cd platform-dependent-components/interface/sc-web
+    cd platform-dependent-components/interface/install/sc-web
     npm run build
     ```
 
@@ -55,7 +55,7 @@
     source .venv/bin/activate && python3 server/app.py --allowed_origins=http://localhost:3000
     ```
 
-9.  Install Python problem solver. Open new terminal and run:
+9.  Install Python problem solver dependencies. Open new terminal and run:
 
     ```sh
     python3 -m venv platform-dependent-components/problem-solver/py/.venv
