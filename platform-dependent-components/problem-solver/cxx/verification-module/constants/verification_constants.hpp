@@ -21,6 +21,7 @@ class FileConfigs
 public:
   static std::string const FILE_PATH;
   static std::string const VERIFICATION_ENDPOINT;
+  static std::string const NOT_ENOUGH_SPECIFIED_OBJECTS_FILE_NAME;
 };
 
 }  // namespace verificationModule

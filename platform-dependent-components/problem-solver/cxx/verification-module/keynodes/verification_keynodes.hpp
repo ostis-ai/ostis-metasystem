@@ -39,6 +39,9 @@ public:
       "rrel_maximum_studied_object_class",
       ScType::ConstNodeRole};
   static inline ScKeynode const lang_en{"lang_en", ScType::NodeClass};
+  static inline ScKeynode const subject_domain{"subject_domain", ScType::ConstNodeClass};
+  static inline ScKeynode const nrel_template{"nrel_template", ScType::ConstNodeNonRole};
+  static inline ScKeynode const nrel_decomposition{"nrel_decomposition", ScType::ConstNodeNonRole};
 };
 
 }  // namespace verificationModule

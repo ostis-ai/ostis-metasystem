@@ -13,5 +13,5 @@ ScAddr const VerificationConstants::LANG = VerificationKeynodes::lang_en;
 
 std::string const FileConfigs::FILE_PATH = "file_path";
 std::string const FileConfigs::VERIFICATION_ENDPOINT = "verification";
-
+std::string const FileConfigs::NOT_ENOUGH_SPECIFIED_OBJECTS_FILE_NAME = "not_enough_specified_objects_file.txt";
 }  // namespace verificationModule

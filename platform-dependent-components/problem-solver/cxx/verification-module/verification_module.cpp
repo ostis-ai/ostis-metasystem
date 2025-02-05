@@ -20,8 +20,4 @@ using namespace verificationModule;
 
 SC_MODULE_REGISTER(VerificationModule)
     ->Agent<CheckDuplicateConstructionsAgent>()
-    ->Agent<SearchNotEnoughSpecifiedRelationsAgent>()
-    ->Agent<SearchNotEnoughSpecifiedClassesAgent>()
-    ->Agent<SearchNotEnoughSpecifiedStructuresAgent>()
     ->Agent<SearchNotEnoughSpecifiedObjectsAgent>();
-
