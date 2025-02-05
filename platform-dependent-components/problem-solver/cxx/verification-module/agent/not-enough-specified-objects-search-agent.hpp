@@ -26,7 +26,6 @@ public:
   static ScAddr GetTemplateAddr(ScMemoryContext & m_context, ScAddr const & classNode);
   static bool CheckTemplate(ScMemoryContext & m_context, ScAddr const & argument, ScAddr const & classNode);
 
-
 private:
   ScAddrVector GetSubjectDomainAddr(ScAddr const & nodeAddr) const;
   void getInfoAboutNode(std::stringstream & infoAboutBasicSpec, ScAddr const & nodeAddr) const;

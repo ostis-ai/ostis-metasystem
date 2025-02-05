@@ -6,7 +6,9 @@
 
 #include <fstream>
 #include <filesystem>
+
 #include "config/config.hpp"
+
 #include "constants/verification_constants.hpp"
 
 #include <sc-memory/sc_keynodes.hpp>
@@ -14,7 +16,6 @@
 #include "keynodes/verification_keynodes.hpp"
 
 #include "sc-agents-common/utils/IteratorUtils.hpp"
-#include "sc-agents-common/utils/CommonUtils.hpp"
 
 #include "not-enough-specified-objects-search-agent.hpp"
 
@@ -45,7 +46,6 @@ ScResult SearchNotEnoughSpecifiedObjectsAgent::DoProgram(ScAction & action)
   std::string nodeName;
   std::string subjectDomainName;
   filePath = Config::getInstance()->getValue(FileConfigs::VERIFICATION_ENDPOINT, FileConfigs::FILE_PATH);
-
 
   std::for_each(
       std::begin(arguments),
