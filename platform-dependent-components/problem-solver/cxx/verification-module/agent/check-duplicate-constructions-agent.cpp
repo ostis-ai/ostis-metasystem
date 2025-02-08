@@ -41,7 +41,7 @@ ScResult CheckDuplicateConstructionsAgent::DoProgram(ScActionInitiatedEvent cons
   {
     std::string stringMainIdtf = m_context.GetElementSystemIdentifier(classAddr);
     std::string stringDomainSection;
-    // находим идентификатор класса
+
     stringDomainSection = findDomainSectionIdtf(classAddr, stringDomainSection);
 
     std::ofstream outputFile = createOutputFile(stringMainIdtf, classAddr);
@@ -49,7 +49,6 @@ ScResult CheckDuplicateConstructionsAgent::DoProgram(ScActionInitiatedEvent cons
     std::time_t now = std::time(nullptr);
     std::tm* localTime = std::localtime(&now);
 
-    // Форматируем дату и время
     char buffer[100];
     std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", localTime);
 
@@ -154,8 +153,6 @@ void CheckDuplicateConstructionsAgent::checkDuplicateTriplets(
 
       int numberOfDuplicateTriples = checkDuplicateRelationTriplets(relationObject, classObject);
 
-      SC_LOG_DEBUG(numberOfDuplicateTriples);
-
       if (numberOfDuplicateTriples > 1)
         createDuplicateTripletsInfo(classObject, relationObject, outputFile, stringDomainSection);
     }
@@ -167,22 +164,58 @@ void CheckDuplicateConstructionsAgent::checkDuplicateFives(
     std::ofstream & outputFile,
     std::string & stringDomainSection)
 {
-  for (auto objectClass : classObjects)  // проходим по всем объектам класса
+  std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> tupleInFile;
+
+  for (auto classObject : classObjects)  // проходим по всем объектам класса
   {
-    std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> fives = fillFivesVector(objectClass);
+    std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> fives = fillFivesVector(classObject);
 
     for (auto five : fives)  // проходим по вектору кортежей
     {
-      ScAddr relationObject = std::get<2>(five);
-      ScAddr relation = std::get<4>(five);
+      int numberOfDuplicateRelClassObject, numberOfDuplicateClassRelObject;
+      ScAddr relationObject, relation;
 
-      int numberOfDuplicateFifths = checkDuplicateRelationFives(
+      relationObject = std::get<2>(five);
+      relation = std::get<4>(five);
+
+      numberOfDuplicateRelClassObject = checkDuplicateRelationFives(
           relationObject,
-          objectClass,
+          classObject,
           relation);  // проверяем связь с другим объектом, объектом, который не принадлежит исходному классу
 
-      if (numberOfDuplicateFifths > 1)
-        createDuplicateFivesInfo(objectClass, relationObject, relation, outputFile, stringDomainSection);
+      if(numberOfDuplicateRelClassObject > 1)
+      {
+        auto addTupleIfNotExist = [&tupleInFile](auto& tup){
+          if (std::find(tupleInFile.begin(), tupleInFile.end(), tup) == tupleInFile.end())
+          {
+            tupleInFile.push_back(tup);
+            SC_LOG_DEBUG(tupleInFile.size());
+            return true;
+          }
+        };
+        if (addTupleIfNotExist(five))
+          createDuplicateFivesInfo(classObject, relationObject, relation, outputFile, stringDomainSection);
+      }
+
+      numberOfDuplicateClassRelObject = checkDuplicateRelationFives(
+          classObject,
+          relationObject,
+          relation);
+
+      if(numberOfDuplicateClassRelObject > 1)
+      {
+        auto addTupleIfNotExist = [&tupleInFile](auto& tup){
+          if (std::find(tupleInFile.begin(), tupleInFile.end(), tup) == tupleInFile.end())
+          {
+            tupleInFile.push_back(tup);
+            SC_LOG_DEBUG(tupleInFile.size());
+            return true;
+          }
+        };
+
+        if (addTupleIfNotExist(five))
+          createDuplicateFivesInfo(classObject, relationObject, relation, outputFile, stringDomainSection);
+      }
     }
   }
 }
@@ -197,16 +230,22 @@ void CheckDuplicateConstructionsAgent::checkDuplicateQuasyRelations(
 
     for (auto tuple : tuples)
     {
-      ScAddr tupleObject =
-          std::get<2>(tuple);  // проверяем связь с другим объектом, объектом, который не принадлежит исходному классу
+      ScAddr tupleObject = std::get<2>(tuple);  // проверяем связь с другим объектом, объектом, который не принадлежит исходному классу
       ScAddr relation = std::get<4>(tuple);
 
-      int numberOfDuplicateTuples =
+      int numberOfDuplicateTupleObject =
           checkDuplicateRelationQuasyRelations(tupleObject, objectClass, relation);  // создаем счетчик повторений
 
-      if (numberOfDuplicateTuples > 1)  // если счётчик повторений больше 1, то записываем в файл все данные
+      int numberOfDuplicateObjectTuple =
+          checkDuplicateRelationQuasyRelations(objectClass, tupleObject, relation);
+
+      if (numberOfDuplicateTupleObject > 1)  // если счётчик повторений больше 1, то записываем в файл все данные
+        createDuplicateQuasyRelationsInfo(objectClass, tupleObject, relation, outputFile);
+
+      if (numberOfDuplicateObjectTuple > 1)  // если счётчик повторений больше 1, то записываем в файл все данные
         createDuplicateQuasyRelationsInfo(objectClass, tupleObject, relation, outputFile);
     }
+
   }
 }
 
@@ -232,34 +271,85 @@ std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> CheckDuplicateCo
   std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> fives;
 
   ScIterator5Ptr const & fivesWithObjects = m_context.CreateIterator5(
-      classObject, ScType::ConstPermPosArc, ScType::Node, ScType::ConstCommonArc, ScType::ConstPermPosArc);
+      classObject, ScType::ConstConnector, ScType::Node, ScType::ConstPermPosArc, ScType::ConstNode);
 
   while (fivesWithObjects->Next())
   {
-    fives.push_back(std::make_tuple(
+    auto newTuple = std::make_tuple(
         fivesWithObjects->Get(0),
         fivesWithObjects->Get(1),
         fivesWithObjects->Get(2),
         fivesWithObjects->Get(3),
-        fivesWithObjects->Get(
-            4)));  // записываем в отдельный вектор кортежи из пятерок, чтобы потом проверить повторения
+        fivesWithObjects->Get(4)
+    );
+
+    // Проверяем, не добавлен ли кортеж ранее в tupleInFile
+    if (std::find(fives.begin(), fives.end(), newTuple) == fives.end())
+    {
+      SC_LOG_DEBUG(fives.size());
+      fives.push_back(newTuple);  // Добавляем кортеж в fives
+    }
+  }
+
+  ScIterator5Ptr const & fivesWithRelationObjects = m_context.CreateIterator5(
+      ScType::Node, ScType::ConstConnector, classObject, ScType::ConstPermPosArc, ScType::ConstNode);
+
+  while (fivesWithRelationObjects->Next())
+  {
+    std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr> newFivesTuple =
+        std::make_tuple(
+        fivesWithRelationObjects->Get(2),
+        fivesWithRelationObjects->Get(1),
+        fivesWithRelationObjects->Get(0),
+        fivesWithRelationObjects->Get(3),
+        fivesWithRelationObjects->Get(4));
+
+    // Проверяем, не добавлен ли кортеж ранее в tupleInFile
+    if (std::find(fives.begin(), fives.end(), newFivesTuple) == fives.end())
+    {
+      SC_LOG_DEBUG(fives.size());
+      fives.push_back(newFivesTuple);  // Добавляем кортеж в fives
+    }
   }
 
   return fives;
 }
 
-std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> CheckDuplicateConstructionsAgent::
-    fillQuasyRelationVector(ScAddr & classObject)
+std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> CheckDuplicateConstructionsAgent::fillQuasyRelationVector(ScAddr & classObject)
 {
   std::vector<std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>> tuples;
 
   ScIterator5Ptr const & tupleIter = m_context.CreateIterator5(
-      classObject, ScType::ConstPermPosArc, ScType::NodeTuple, ScType::ConstCommonArc, ScType::ConstPermPosArc);
+      classObject, ScType::ConstConnector, ScType::NodeTuple, ScType::ConstPermPosArc, ScType::ConstNode);
 
   while (tupleIter->Next())
   {
     tuples.push_back(
-        std::make_tuple(tupleIter->Get(0), tupleIter->Get(1), tupleIter->Get(2), tupleIter->Get(3), tupleIter->Get(4)));
+        std::make_tuple(tupleIter->Get(0),
+                        tupleIter->Get(1),
+                        tupleIter->Get(2),
+                        tupleIter->Get(3),
+                        tupleIter->Get(4)));
+  }
+
+  ScIterator5Ptr const & classIter = m_context.CreateIterator5(
+      ScType::NodeTuple, ScType::ConstConnector, classObject, ScType::ConstPermPosArc, ScType::ConstNode);
+
+  while (classIter->Next())
+  {
+    std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr> newQuasyTuple =
+            std::make_tuple(classIter->Get(2),
+                            classIter->Get(1),
+                            classIter->Get(0),
+                            classIter->Get(3),
+                            classIter->Get(4));
+
+    auto addTupleIfNotExists = [&tuples](const std::tuple<ScAddr, ScAddr, ScAddr, ScAddr, ScAddr>& tuple) {
+      if (std::find(tuples.begin(), tuples.end(), tuple) == tuples.end())
+        tuples.push_back(tuple);
+    };
+
+    addTupleIfNotExists(newQuasyTuple);
   }
 
   return tuples;
@@ -282,15 +372,15 @@ int CheckDuplicateConstructionsAgent::checkDuplicateRelationFives(
     ScAddr & classObject,
     ScAddr & relation)
 {
-  int numberOfDuplicateFifths = 0;  // создаем счетчик повторений
+  int numberOfDuplicateFives = 0;  // создаем счетчик повторений
 
   ScIterator5Ptr const & tupleIter =
-      m_context.CreateIterator5(classObject, ScType::ConstPermPosArc, relationObject, ScType::ConstCommonArc, relation);
+      m_context.CreateIterator5(classObject, ScType::ConstConnector, relationObject, ScType::ConstPermPosArc, relation);
 
   while (tupleIter->Next())
-    numberOfDuplicateFifths++;
+    numberOfDuplicateFives++;
 
-  return numberOfDuplicateFifths;
+  return numberOfDuplicateFives;
 }
 
 int CheckDuplicateConstructionsAgent::checkDuplicateRelationQuasyRelations(
@@ -298,34 +388,36 @@ int CheckDuplicateConstructionsAgent::checkDuplicateRelationQuasyRelations(
     ScAddr & objectClass,
     ScAddr & relation)
 {
-  int numberOfDuplicateTuples = 0;
+  int numberOfDuplicateTuples = 0; // создаем счетчик тьюплов
 
-  ScIterator5Ptr const & tupleIter = m_context.CreateIterator5(
-      objectClass, ScType::ConstPermPosArc, tupleObject, ScType::ConstCommonArc, ScType::ConstPermPosArc);
+  ScIterator5Ptr const & tupleMainIter = m_context.CreateIterator5(
+      objectClass, ScType::ConstConnector, tupleObject, ScType::ConstCommonArc, relation);
 
-  if (tupleIter->Next())
+  while (tupleMainIter->Next()) // считаем в этом цикле тьюплы
   {
-    std::vector<std::tuple<ScAddr, ScAddr, ScAddr>> tupleElements;
-    // создаем итератор на 3 по tuples
-    ScIterator3Ptr const & tupleElementsIter =
+    std::vector<std::tuple<ScAddr, ScAddr, ScAddr>> tupleElements; // создаем вектор для повторяющихся элементов внутри тьюпла
+
+    ScIterator3Ptr const & tupleElementsIter = // создаем итератор на три, чтобы посмотреть элементы тьюпла
         m_context.CreateIterator3(tupleObject, ScType::ConstPermPosArc, ScType::Node);
 
-    if (tupleElementsIter->Next())
+    while (tupleElementsIter->Next()) // ходим по элементам тьюпла
     {
       // Создаем кортеж и добавляем его в вектор
       tupleElements.push_back(
-          std::make_tuple(tupleElementsIter->Get(0), tupleElementsIter->Get(1), tupleElementsIter->Get(2)));
+          std::make_tuple(tupleElementsIter->Get(0),
+                          tupleElementsIter->Get(1),
+                          tupleElementsIter->Get(2)));
     }
 
-    int numberDuplicateTupleElements = 0;
-    for (auto tupleElement : tupleElements)
+    int numberDuplicateTupleElements = 0; // создаем счетчик для повторяющихся элементов внутри тьюпла
+    for (auto tupleElement : tupleElements) // пройдем по вектору элементов тьюпла
     {
       ScAddr relationObject = std::get<2>(tupleElement);
       ScIterator3Ptr const & tupleIter =
-          m_context.CreateIterator3(relationObject, ScType::ConstPermPosArc, objectClass);
+          m_context.CreateIterator3(relationObject, ScType::ConstPermPosArc, tupleObject);
       // создаем счетчик повторений
 
-      if (tupleIter->Next())
+      while (tupleIter->Next()) // если нашли повторяющийся элемент, то добавляем 
         numberDuplicateTupleElements++;
     }
 
@@ -342,8 +434,6 @@ void CheckDuplicateConstructionsAgent::createDuplicateTripletsInfo(
     std::ofstream & outputFile,
     std::string & stringDomainSection)
 {
-  SC_LOG_ERROR("CheckDuplicateConstructionsAgent: duplication construction is found 1111111");
-
   std::string stringObjectIdtf;
   stringObjectIdtf =
       m_context.GetElementSystemIdentifier(classObject);  // нашли идентификатор предметной области объекта класса
@@ -357,8 +447,6 @@ void CheckDuplicateConstructionsAgent::createDuplicateTripletsInfo(
   outputFile << "Relation type: inclusion " << std::endl;
   outputFile << "Inclusion object: " << stringRelationObject << std::endl;
   outputFile << "------------------------------------" << std::endl;
-
-  SC_LOG_ERROR("CheckDuplicateConstructionsAgent: duplication construction is found");
 }
 
 void CheckDuplicateConstructionsAgent::createDuplicateFivesInfo(
@@ -373,17 +461,18 @@ void CheckDuplicateConstructionsAgent::createDuplicateFivesInfo(
   std::string stringRelation;
 
   stringObjectIdtf =
-      m_context.GetElementSystemIdentifier(classObject);  // нашли идентификатор предметной области объекта класса
+      m_context.GetElementSystemIdentifier(classObject);
   stringRelation =
         m_context.GetElementSystemIdentifier(relation);
   stringRelationObject =
       m_context.GetElementSystemIdentifier(relationObject);
 
-  outputFile << "Object: " << stringObjectIdtf;
-  outputFile << ", domain section: " << stringDomainSection;
-  outputFile << ", relation type: " << stringRelation;
-  outputFile << ", second domain: " << stringRelationObject;
-  outputFile.close();
+  outputFile << "Object: " << stringObjectIdtf << std::endl;
+  outputFile << "Domain section: " << stringDomainSection << std::endl;
+  outputFile << "Relation type: " << stringRelation << std::endl;
+  outputFile << "Second domain: " << stringRelationObject << std::endl;
+  outputFile << "------------------------------------" << std::endl;
+
   SC_LOG_ERROR("CheckDuplicateConstructionsAgent: duplication construction is found");
 }
 
