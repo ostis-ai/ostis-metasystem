@@ -6,23 +6,16 @@
 
 #pragma once
 
-#include "sc-memory/sc_memory.hpp"
+#include <sc-memory/sc_agent.hpp>
 
 namespace verificationModule
 {
-class VerificationConstants
+class CheckSynonymObjectsAgent : public ScActionInitiatedAgent
 {
 public:
-  static ScAddr const LANG;
-};
+  ScAddr GetActionClass() const override;
 
-class FileConfigs
-{
-public:
-  static std::string const FILE_PATH;
-  static std::string const VERIFICATION_ENDPOINT;
-  static std::string const KEY_NODE;
-  static std::string const TRANSLATION_NODE;
+  ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 };
 
 }  // namespace verificationModule
