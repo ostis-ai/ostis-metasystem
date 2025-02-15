@@ -2,11 +2,13 @@
 
 This guide provides short information for developers to start to work with ostis-metasystem quickly. You can always learn more about the ostis-metasystem's [build system](build_system.md).
 
-## Install ostis-metasystem submodules
+## Install project
 
-After cloning the repository, run:
+Install ostis-metasystem via git:
 
 ```sh
+git clone https://github.com/ostis-ai/ostis-metasystem
+cd ostis-metasystem
 git submodule update --init --recursive
 ```
 
@@ -52,6 +54,14 @@ pipx install conan
 pipx ensurepath
 # relaunch your shell after installation
 exec $SHELL
+```
+
+### Add Conan remote repository
+
+Add Conan remote repository with the specified URL:
+
+```sh
+conan remote add ostis-ai https://conan.ostis.net/artifactory/api/conan/ostis-ai-library
 ```
 
 ### Use C++ problem solver in Debug
