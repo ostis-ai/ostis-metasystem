@@ -9,6 +9,7 @@
     git clone https://github.com/NikitaZotov/ostis-metasystem
     cd ostis-metasystem
     git checkout feat/update_build_system
+    git submodule update --init --recursive
     ```
 
 2. Install C++ problem solver:
