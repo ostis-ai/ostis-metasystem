@@ -1,0 +1,20 @@
+test_class_a
+-> a_test; b_test; c_test;;
+
+test_class_b
+-> b_test; e_test;;
+
+subject_domain_test_a -> a_test; c_test;;
+subject_domain_test_b -> b_test; a_test; c_test;;
+subject_domain_test_c -> b_test; a_test;;
+
+subject_domain
+-> subject_domain_test_a; subject_domain_test_b; subject_domain_test_c;;
+
+sc_node_structure
+-> subject_domain_test_a; subject_domain_test_b; subject_domain_test_c;;
+
+a_test => nrel_annotation: ... (* <- annotation;; <- sc_text;;*);;
+b_test => nrel_annotation: ... (* <- annotation;; *);;
+c_test => nrel_annotation: ... (* <- annotation;; *);;
+e_test => nrel_annotation: ... (* <- annotation;; <- sc_text;;*);;

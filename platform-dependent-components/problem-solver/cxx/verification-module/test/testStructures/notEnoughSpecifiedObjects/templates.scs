@@ -1,0 +1,18 @@
+test_template = [*
+_specified_object _=> nrel_annotation:: _t;;
+_t _<- annotation; sc_text;;
+*];;
+
+test_template -> rrel_key_sc_element: _specified_object;;
+
+test_specification
+<- sc_node_structure;
+=> nrel_template: test_template;
+=> nrel_decomposition:
+  {
+  test_class_a;
+  test_class_b
+  };;
+
+sc_node_class -> test_class_a; test_class_b; sc_text; annotation;;
+sc_node_non_role_relation -> nrel_annotation; nrel_decomposition; nrel_template;;
