@@ -243,4 +243,4 @@ npm run start
 
 ### Contributing
 
-To contribute changes to the project, you need to [create Pull Request](https://github.com/ostis-ai/ostis-metasystem/blob/main/CONTRIBUTING.md).
+To contribute changes to the project, you need to [create Pull Request](https://github.com/ostis-ai/ostis-metasystem/blob/main/docs/CONTRIBUTING.md).
