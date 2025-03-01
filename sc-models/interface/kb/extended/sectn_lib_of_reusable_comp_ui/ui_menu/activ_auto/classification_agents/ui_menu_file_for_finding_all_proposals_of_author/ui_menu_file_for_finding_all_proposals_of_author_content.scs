@@ -15,6 +15,7 @@ ui_menu_file_for_finding_all_proposals_of_author => ui_nrel_command_template:
 			(*
 			_-> ui_arg_1;;				
 			*);;
+		._action_of_finding_all_proposals_of_author_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_finding_all_proposals_of_author => ui_nrel_command_lang_template: 
@@ -22,7 +23,7 @@ ui_menu_file_for_finding_all_proposals_of_author => ui_nrel_command_lang_templat
 	(* <- lang_ru;; *);;
 ui_menu_file_for_finding_all_proposals_of_author => ui_nrel_command_lang_template: 
 	[Find all proposals of author: $ui_arg_1] 
-	(* <- lang_en;; *);;
+	(* <- lang_eng;; *);;
 
 
 

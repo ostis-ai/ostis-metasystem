@@ -1,0 +1,6 @@
+user_interface_Metasystem
+=> nrel_main_idtf:
+	[Пользовательский интерфейс Метасистемы OSTIS]
+	(* <- lang_ru;; *);
+	[OSTIS Metasystem user interface]
+	(* <- lang_en;; *);;

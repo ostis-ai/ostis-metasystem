@@ -1,0 +1,32 @@
+ui_dev_mode
+<- sc_node_not_class;
+=> nrel_main_idtf: 
+    [Переключение режима разработчика] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Switching developer mode] 
+    (* <- lang_en;; *);
+=> nrel_description_for_developer_mode:
+		ui_dev_mode_button;;
+		
+		
+ui_dev_mode_button
+<- sc_node_not_class;
+=> nrel_main_idtf: 
+    [Кнопка переключения режима разработчика] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Developer mode switch button] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[69px] (* <- lang_ru;; *);
+	[69px] (* <- lang_en;; *);
+=> nrel_height: 
+	[36px] (* <- lang_ru;; *);
+	[36px] (* <- lang_en;; *);
+=> nrel_border_radius: 
+	[35px] (* <- lang_ru;; *);
+	[35px] (* <- lang_en;; *);
+=>nrel_background_color:
+	[#F2F2F2] (* <- lang_ru;; *);
+	[#F2F2F2] (* <- lang_en;; *);;

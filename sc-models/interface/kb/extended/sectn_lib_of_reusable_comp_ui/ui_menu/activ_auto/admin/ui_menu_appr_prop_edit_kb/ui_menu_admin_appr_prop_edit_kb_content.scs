@@ -4,7 +4,7 @@ ui_menu_file_for_administrator_approval_proposals_for_editing_kb <- ui_user_comm
 ui_menu_file_for_administrator_approval_proposals_for_editing_kb => nrel_main_idtf: 
 	[Утвердить предложение по редактированию базы знаний. Администратор] 
 	(* <- lang_ru;; *);
-	[Approvе proposal for editing the kb. Administrator] 
+	[Approve proposal for editing the kb. Administrator]
 	(* <- lang_en;; *);;
 
 ui_menu_file_for_administrator_approval_proposals_for_editing_kb => ui_nrel_command_template:
@@ -13,12 +13,13 @@ ui_menu_file_for_administrator_approval_proposals_for_editing_kb => ui_nrel_comm
 			(*
 			_-> ui_arg_1;;				
 			*);;
+		._action_to_approve_the_proposal_for_editing_the_knowledge_base_administrator_instance <-_ action;;
 	*];;
 
 ui_menu_file_for_administrator_approval_proposals_for_editing_kb => ui_nrel_command_lang_template: 
 	[Утвердить предложение: $ui_arg_1 по редактированию базы знаний. Администратор] 
 	(* <- lang_ru;; *);
-	[Approvе proposal: $ui_arg_1 for editing the kb. Administrator] 
+	[Approve proposal: $ui_arg_1 for editing the kb. Administrator]
 	(* <- lang_en;; *);;
 
 *];;
