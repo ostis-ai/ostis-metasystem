@@ -20,6 +20,6 @@ ui_menu_file_for_finding_all_proposals_of_action_author => ui_nrel_command_lang_
 	(* <- lang_ru;; *);;
 ui_menu_file_for_finding_all_proposals_of_action_author => ui_nrel_command_lang_template: 
 	[Show my proposals] 
-	(* <- lang_eng;; *);;
+	(* <- lang_en;; *);;
 
 *];;
