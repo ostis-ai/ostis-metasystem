@@ -225,7 +225,7 @@ Firstly, build knowledge base:
 After run C++ problem solver:
 
 ```sh
-./path/to/sc-machine/binary -s kb.bin \
+./path/to/sc-machine/binary -s kb.bin -c ostis-metasystem.ini \
     -e "path/to/ostis-metasystem/lib/extensions;path/to/sc-machine/lib/extensions;path/to/scp-machine/lib/extensions;path/to/sc-component-manager/lib/extensions"
 # if several paths to extensions are provided then they should be separated 
 # by semicolon and wrapped in double quotes
