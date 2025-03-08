@@ -1,0 +1,41 @@
+ui_section
+<- sc_node_not_class;
+=> nrel_main_idtf: 
+    [Сворачивание или разворачивание раздела] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Collapse or expand a section] 
+    (* <- lang_en;; *);
+=> nrel_description_for_developer_mode:
+		ui_section_dropdown_list;;
+		
+		
+ui_section_dropdown_list
+<- sc_node_not_class;
+=> nrel_main_idtf: 
+    [Выпадающий список разделов] 
+    (* <- lang_ru;; *);
+=> nrel_main_idtf: 
+    [Dropdown list of sections] 
+    (* <- lang_en;; *);
+=> nrel_width: 
+	[415px] (* <- lang_ru;; *);
+	[415px] (* <- lang_en;; *);
+=> nrel_height: 
+	[36px] (* <- lang_ru;; *);
+	[36px] (* <- lang_en;; *);
+=> nrel_content: 
+	[Разделы] (* <- lang_ru;; *);
+	[Sections] (* <- lang_en;; *);
+=> nrel_font: 
+	[Roboto] (* <- lang_ru;; *);
+	[Roboto] (* <- lang_en;; *);
+=> nrel_font_color: 
+	[#949494] (* <- lang_ru;; *);
+	[#949494] (* <- lang_en;; *);
+=> nrel_font_size: 
+	[20px] (* <- lang_ru;; *);
+	[20px] (* <- lang_en;; *);
+=> nrel_font_weight: 
+	[600] (* <- lang_ru;; *);
+	[600] (* <- lang_en;; *);;

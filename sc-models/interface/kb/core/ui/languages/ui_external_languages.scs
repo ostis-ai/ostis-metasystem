@@ -1,0 +1,9 @@
+ui_external_languages <- sc_node_class;;
+
+ui_external_languages -> scg_code; scn_code;;
+
+nrel_result
+<- sc_node_non_role_relation;;
+
+nrel_authors
+<- sc_node_non_role_relation;;

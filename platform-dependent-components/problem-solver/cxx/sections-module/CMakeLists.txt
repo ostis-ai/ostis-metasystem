@@ -1,5 +1,3 @@
-set(SECTIONS_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
-
 set(HEADERS
     "subject_domain_module.hpp"
     "agent/get_decomposition_agent.hpp"
@@ -25,25 +23,23 @@ set(SOURCES
     "utils/sections_utils.cpp"
 )
 
-add_library(sections-module SHARED ${HEADERS} ${SOURCES})
-
 find_package(nlohmann_json 3.2.0 REQUIRED)
 
+add_library(sections-module SHARED ${HEADERS} ${SOURCES})
 target_link_libraries(sections-module
-    LINK_PUBLIC sc-memory
-    LINK_PUBLIC sc-agents-common
+    LINK_PUBLIC sc-machine::sc-memory
+    LINK_PUBLIC sc-machine::sc-agents-common
     LINK_PUBLIC nlohmann_json::nlohmann_json)
 target_include_directories(sections-module
-    PUBLIC ${SECTIONS_MODULE_SRC}
-    PUBLIC ${SC_MEMORY_INCLUDE}
-    PUBLIC ${SC_CORE_INCLUDE}
-    PUBLIC ${SC_AGENTS_COMMON_INCLUDE}
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
 )
+set_target_properties(sections-module PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${SC_EXTENSIONS_DIRECTORY})
 
 if(${SC_CLANG_FORMAT_CODE})
     target_clangformat_setup(sections-module)
 endif()
 
 if(${SC_BUILD_TESTS})
-    include(${SECTIONS_MODULE_SRC}/test/tests.cmake)
+    set(SECTIONS_MODULE_SRC ${CMAKE_CURRENT_SOURCE_DIR})
+    add_subdirectory(test)
 endif()

@@ -1,0 +1,34 @@
+concept_scn_json_elements_order_set <- sc_node_class;;
+
+rrel_1 -> (concept_scn_json_elements_order_set -> nrel_system_identifier)
+(*
+    => nrel_scn_json_elements_base_order: (concept_scn_json_elements_order_set -> nrel_main_idtf)
+(*
+    => nrel_scn_json_elements_base_order: (concept_scn_json_elements_order_set -> nrel_idtf)
+(*
+    => nrel_scn_json_elements_base_order: (concept_scn_json_elements_order_set -> nrel_inclusion)
+(*
+    => nrel_scn_json_elements_base_order: (concept_scn_json_elements_order_set -> nrel_ostis_system_decomposition)
+(*
+    => nrel_scn_json_elements_base_order: (concept_scn_json_elements_order_set -> nrel_decomposition)
+(*
+    => nrel_scn_json_elements_base_order: (concept_scn_json_elements_order_set -> rrel_key_sc_element)
+;;*);;*);;*);;*);;*);;*);;
+
+concept_scn_json_elements_order_set
+=> nrel_main_idtf:
+    [Элементы множества порядка SCn JSON]
+    (* <- lang_ru;; *);
+    [SCn JSON elements order set]
+    (* <- lang_en;; *);
+<- rrel_key_sc_element: ...
+(*
+    <- definition;;
+    => nrel_main_idtf:
+        [Опр. (Элементы множества порядка SCn JSON)] (*<-lang_ru;;*);;
+    <= nrel_sc_text_translation: ...
+    (*
+        -> rrel_example: [Элементы множества порядка SCn JSON - это множество элементов, с которых необходимо начинать трансляцию в формате scn (json), в заданном порядке.] (*<- lang_ru;;*);;
+    *);;
+    <= nrel_using_constants: {format_scn_json};;
+*);;

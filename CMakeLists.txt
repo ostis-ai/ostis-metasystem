@@ -1,44 +1,78 @@
-cmake_minimum_required(VERSION 3.14)
-project(ostis-metasystem)
+cmake_minimum_required(VERSION 3.24)
 set(CMAKE_CXX_STANDARD 17)
+project(ostis-metasystem VERSION 0.1.0 LANGUAGES C CXX)
+message(STATUS "Current project version: ${CMAKE_PROJECT_VERSION}")
+cmake_policy(SET CMP0048 NEW)
 
-option(SC_BUILD_TESTS "Flag to build unit tests" OFF)
-option(SC_CLANG_FORMAT_CODE "Flag to add clangformat and clangformat_check targets" OFF)
+if(${WIN32})
+    message(FATAL_ERROR "ostis-metasystem isn't supported on Windows OS.")
+endif(${WIN32})
 
-if(NOT SC_BIN_PATH)
-    set(SC_BIN_PATH "${CMAKE_BINARY_DIR}/../bin")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+if(DEFINED "${SC_EXTENSIONS_DIRECTORY}")
+    message(STATUS "Provided extensions directory: ${SC_EXTENSIONS_DIRECTORY}")
+    file(MAKE_DIRECTORY ${SC_EXTENSIONS_DIRECTORY})
+else()
+    set(SC_EXTENSIONS_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/extensions)
+    file(MAKE_DIRECTORY ${SC_EXTENSIONS_DIRECTORY})
+    message(STATUS "No extensions directory provided. Defaulting to: ${SC_EXTENSIONS_DIRECTORY}")
 endif()
-set(SC_EXTENSIONS_DIRECTORY "${SC_BIN_PATH}/extensions")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${SC_BIN_PATH})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${SC_EXTENSIONS_DIRECTORY})
-link_directories(${SC_BIN_PATH} ${SC_EXTENSIONS_DIRECTORY})
 
-set(SC_MACHINE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ostis-web-platform/sc-machine")
-set(CMAKE_MODULE_PATH "${SC_MACHINE_PATH}/cmake")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+option(SC_CLANG_FORMAT_CODE "Flag to add clangformat and clangformat_check targets" OFF)
+option(SC_BUILD_TESTS "Flag to build unit tests" OFF)
+
+option(AUTO_CCACHE "Use ccache to speed up rebuilds" ON)
+
+if(${SC_BUILD_TESTS})
+    include(CTest)
+    include(GoogleTest)
+    find_package(GTest REQUIRED)
+    include(${CMAKE_MODULE_PATH}/tests.cmake)
+endif()
 
 if(${SC_CLANG_FORMAT_CODE})
     include(${CMAKE_MODULE_PATH}/ClangFormat.cmake)
 endif()
 
-set(SC_MEMORY_INCLUDE "${SC_MACHINE_PATH}/sc-memory/sc-memory/include")
-set(SC_AGENTS_COMMON_INCLUDE "${SC_MACHINE_PATH}/sc-kpm/sc-agents-common/include")
-set(SC_CORE_INCLUDE "${SC_MACHINE_PATH}/sc-memory/sc-core/include")
-set(SC_BUILDER_INCLUDE "${SC_MACHINE_PATH}/sc-tools/sc-builder/include")
-set(SC_CONFIG_INCLUDE "${SC_MACHINE_PATH}/sc-tools/sc-config/include")
-
-include(CTest)
-
-# for multi-config builds (e.g. msvc)
-foreach(OUTPUT_CONFIG ${CMAKE_CONFIGURATION_TYPES})
-    string(TOUPPER ${OUTPUT_CONFIG} OUTPUT_CONFIG)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUT_CONFIG} ${SC_EXTENSIONS_DIRECTORY})
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUT_CONFIG} ${SC_EXTENSIONS_DIRECTORY})
-endforeach(OUTPUT_CONFIG)
-
-if(${SC_BUILD_TESTS})
-    include(${CMAKE_MODULE_PATH}/tests.cmake)
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
+if(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics")
+elseif(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 endif()
 
+find_program(CCACHE_PROGRAM ccache)
+if(CCACHE_PROGRAM AND ${AUTO_CCACHE})
+    message(STATUS "Using ${CCACHE_PROGRAM} as compiler launcher")
+    set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
+    set(CMAKE_C_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
+endif()
+
+set(CMAKE_FIND_PACKAGE_PREFER_CONFIG)
+
+include(GNUInstallDirs)
+
+message("CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
+message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
+message("Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}, path: ${CMAKE_CXX_COMPILER}")
+
+# Set up dynamic linking paths for our own libraries
+# For macOS, use @loader_path instead of $ORIGIN
+if(APPLE)
+    set(CMAKE_INSTALL_RPATH "@loader_path;@loader_path/../lib;")
+else()
+    set(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/../lib;")
+endif()
+
+# Always use full RPATH
+set(CMAKE_BUILD_RPATH_USE_ORIGIN TRUE)
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+find_package(sc-machine REQUIRED)
+
 add_subdirectory(platform-dependent-components/problem-solver)
+
+include(${CMAKE_MODULE_PATH}/install.cmake)

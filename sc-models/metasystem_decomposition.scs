@@ -1,0 +1,7 @@
+myself
+<- ui_start_sc_element;
+=> nrel_section_decomposition: nrel_ostis_system_decomposition: <
+	knowledge_base_Metasystem;
+	problem_solver_Metasystem;
+	user_interface_Metasystem
+>;;

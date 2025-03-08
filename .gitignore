@@ -4,6 +4,9 @@ cmake-build-debug
 cmake-build-release
 /build
 /bin
+install
+repo
+/ConanPresets.json
 
 .venv
 *.pyc
@@ -36,5 +39,3 @@ sc-server.log
 *.synctex.gz
 
 *.db
-
-platform-dependent-components/interface/react-sc-web

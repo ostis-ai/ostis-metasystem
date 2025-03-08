@@ -1,0 +1,77 @@
+nrel_width
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[ширина*](* <- lang_ru;; *);
+	[width*](* <- lang_en;; *);;
+	
+nrel_height
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[высота*](* <- lang_ru;; *);
+	[height*](* <- lang_en;; *);;
+	
+nrel_border_radius
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[радиус границы*](* <- lang_ru;; *);
+	[border radius*](* <- lang_en;; *);;
+	
+nrel_padding
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[внутренний отступ*](* <- lang_ru;; *);
+	[padding*](* <- lang_en;; *);;
+	
+nrel_gap
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[отступ*](* <- lang_ru;; *);
+	[gap*](* <- lang_en;; *);;
+	
+nrel_content
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[содержание*](* <- lang_ru;; *);
+	[content*](* <- lang_en;; *);;
+	
+nrel_font_color
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[цвет шрифта*](* <- lang_ru;; *);
+	[font color*](* <- lang_en;; *);;
+	
+nrel_font
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[шрифт*](* <- lang_ru;; *);
+	[font*](* <- lang_en;; *);;
+	
+nrel_font_size
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[размер шрифта*](* <- lang_ru;; *);
+	[font size*](* <- lang_en;; *);;
+	
+nrel_font_weight
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[начертание шрифта*](* <- lang_ru;; *);
+	[font weight*](* <- lang_en;; *);;
+	
+nrel_border
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[толщина границы*](* <- lang_ru;; *);
+	[border thickness*](* <- lang_en;; *);;
+	
+nrel_border_color
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+	[цвет границы*](* <- lang_ru;; *);
+	[border color*](* <- lang_en;; *);;
+	
+nrel_background_color
+<- sc_node_non_role_relation;
+=> nrel_main_idtf:
+  [цвет заднего фона*](* <- lang_ru;; *);
+  [background color*](* <- lang_en;; *);;

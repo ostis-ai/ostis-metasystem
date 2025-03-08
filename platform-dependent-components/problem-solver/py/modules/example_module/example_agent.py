@@ -6,14 +6,14 @@ Distributed under the MIT License
 
 import logging
 from sc_client.models import ScAddr, ScLinkContentType
-from sc_client.constants import sc_types
+from sc_client.constants import sc_type
 
 from sc_kpm import ScAgentClassic, ScResult
 from sc_kpm.utils import (
-    create_link,
+    generate_link,
 )
 from sc_kpm.utils.action_utils import (
-    create_action_answer,
+    generate_action_result,
     finish_action_with_status
 )
 
@@ -27,17 +27,17 @@ class ExampleAgent(ScAgentClassic):
     def __init__(self):
         super().__init__("action_example_py")
 
-    def on_event(self, event_element: ScAddr, event_edge: ScAddr, action_element: ScAddr) -> ScResult:
-        result = self.run(action_element)
+    def on_event(self, action_class: ScAddr, arc: ScAddr, action: ScAddr) -> ScResult:
+        result = self.run(action)
         is_successful = result == ScResult.OK
-        finish_action_with_status(action_element, is_successful)
+        finish_action_with_status(action, is_successful)
         self.logger.info("ExampleAgent finished %s",
                          "successfully" if is_successful else "unsuccessfully")
         return result
 
     def run(self, action_node: ScAddr) -> ScResult:
         self.logger.info("ExampleAgent started")
-        link = create_link(
-            "Example agent is called", ScLinkContentType.STRING, link_type=sc_types.LINK_CONST)
-        create_action_answer(action_node, link)
+        link = generate_link(
+            "Example agent is called", ScLinkContentType.STRING, link_type=sc_type.CONST_NODE_LINK)
+        generate_action_result(action_node, link)
         return ScResult.OK

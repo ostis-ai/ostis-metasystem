@@ -1,0 +1,3 @@
+nrel_ostis_system_decomposition
+<- sc_node_non_role_relation;
+=> nrel_main_idtf: [декомпозиция ostis-системы*] (* <- lang_ru;; *);;
