@@ -22,6 +22,9 @@ public:
   SC_PROPERTY(Keynode("action_get_decomposition"), ForceCreate)
   static ScAddr action_get_decomposition;
 
+  SC_PROPERTY(Keynode("action_get_decomposition"), ForceCreate)
+  static ScAddr action_get_subdivision;
+
   SC_PROPERTY(Keynode("action_add_section"), ForceCreate)
   static ScAddr action_add_section;
 
@@ -33,6 +36,10 @@ public:
 
   SC_PROPERTY(Keynode("nrel_entity_decomposition"), ForceCreate)
   static ScAddr nrel_entity_decomposition;
+
+  SC_PROPERTY(Keynode("nrel_subdividing"), ForceCreate)
+  static ScAddr nrel_subdividing;
+
 
   SC_PROPERTY(Keynode("removed_section"), ForceCreate)
   static ScAddr removed_section;
