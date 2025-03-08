@@ -1,3 +1,15 @@
+# ask-ai
+The system can answer 2 types of questions:
+
+1. entity description request
+2. entity subdivision request
+
+What can be improved:
+
+1. make ask-ai multilingual, now it is in russian 
+2. improve work of LLM
+3. add more types of questions
+
 # ostis-metasystem
 
 [![license](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
