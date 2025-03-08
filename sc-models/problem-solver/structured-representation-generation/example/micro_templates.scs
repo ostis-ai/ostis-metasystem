@@ -1,0 +1,36 @@
+generation_rule_subj_domain
+<- sc_node_tuple;
+-> rrel_key_sc_element: _struct;;
+
+@arc1 = (generation_rule_subj_domain -> template_not_maximum_class_subj_domain);;
+@arc2 = (generation_rule_subj_domain -> ..generation_rule_entity);;
+
+rrel_1 -> @arc1;;
+
+@arc1 => nrel_basic_sequence: @arc2;;
+
+..generation_rule_entity
+<- sc_node_tuple;
+-> rrel_key_sc_element: _entity;;
+
+@arc3 = (..generation_rule_entity -> template_main_idtf);;
+@arc4 = (..generation_rule_entity -> template_strict_inclusion);;
+
+rrel_1 -> @arc3;;
+
+@arc3 => nrel_basic_sequence: @arc4;;
+
+template_not_maximum_class_subj_domain = [* 
+  _struct _-> rrel_not_maximum_studied_object_class::_entity;;
+*];;
+
+sc_node_struct
+-> _struct;;
+
+template_main_idtf = [* 
+  _entity _=> nrel_main_idtf::_[];;
+*];;
+
+template_strict_inclusion = [* 
+  _entity _<= nrel_strict_inclusion::_include;;
+*];;
