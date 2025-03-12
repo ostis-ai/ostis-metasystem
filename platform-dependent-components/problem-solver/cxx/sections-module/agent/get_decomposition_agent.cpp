@@ -123,7 +123,14 @@ json GetDecompositionAgent::GetJSONDecomposition(
   {
     json item;
     item["position"] = index;
-    item["idtf"] = CommonUtils::getMainIdtf(&m_context, decomposition[index], {langAddr});
+    std::string identifier = CommonUtils::getMainIdtf(&m_context, decomposition[index], {langAddr});
+    if (identifier.empty())
+    {
+      identifier = m_context.GetElementSystemIdentifier(decomposition[index]);
+      if (identifier.empty())
+        identifier = "...";
+    }
+    item["idtf"] = identifier;
     if (level != 1)
       item["decomposition"] = GetJSONDecomposition(
           GetDecomposition(decomposition[index], decompositionAddr), level - 1, langAddr, decompositionAddr);
