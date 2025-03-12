@@ -342,7 +342,7 @@ void CheckDuplicateConstructionsAgent::createDuplicateTripletsInfo(
     std::ofstream & outputFile,
     std::string & stringDomainSection)
 {
-  SC_LOG_ERROR("CheckDuplicateConstructionsAgent: duplication construction is found 1111111");
+  SC_LOG_ERROR("CheckDuplicateConstructionsAgent: duplication construction is found");
 
   std::string stringObjectIdtf;
   stringObjectIdtf =
