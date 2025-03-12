@@ -91,7 +91,7 @@ nrel_answer
 
 ..q7
 => nrel_main_idtf: [Как создать с нуля свою ostis-систему с помощью Метасистемы OSTIS?] (* <- lang_ru;; *);
-=> nrel_main_idtf: [How to create the own ostis-system via OSTIS Metasystem from the very beggining?] (* <- lang_en;; *);
+=> nrel_main_idtf: [How to create the own ostis-system via OSTIS Metasystem from the very begining?] (* <- lang_en;; *);
 => nrel_answer: creation_system_instruction;;
 
 ..q8
