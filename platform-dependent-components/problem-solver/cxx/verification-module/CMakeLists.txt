@@ -4,7 +4,6 @@ set(HEADERS
         "agent/check-duplicate-constructions-agent.hpp"
         "agent/not-enough-specified-objects-search-agent.hpp"
         "config/config.hpp"
-        "agent/not-enough-specified-objects-search-agent.hpp"
         "constants/verification_constants.hpp"
         "keynodes/verification_keynodes.hpp"
         "searcher/check_duplicate_constructions_searcher.hpp"
