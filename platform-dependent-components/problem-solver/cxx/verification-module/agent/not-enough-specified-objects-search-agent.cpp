@@ -28,7 +28,7 @@ std::filesystem::path SearchNotEnoughSpecifiedObjectsAgent::filePath;
 ScResult SearchNotEnoughSpecifiedObjectsAgent::DoProgram(ScAction & action)
 {
   // list of  <templAddr, elements>
-  std::vector<std::pair<ScAddr, ScAddrVector>> templAddrAndElementsList = GetSpecificationTemplateAndElements();
+  std::list<std::pair<ScAddr, ScAddrList>> templAddrAndElementsList = GetSpecificationTemplateAndElements();
 
   std::stringstream infoAboutBasicSpec;
   std::string nodeName;
@@ -39,10 +39,10 @@ ScResult SearchNotEnoughSpecifiedObjectsAgent::DoProgram(ScAction & action)
   std::for_each(
       std::begin(templAddrAndElementsList),
       std::end(templAddrAndElementsList),
-      [&](std::pair<ScAddr, ScAddrVector> & templAddrAndElements)
+      [&](std::pair<ScAddr, ScAddrList> & templAddrAndElements)
       {
         ScAddr const & templAddr = templAddrAndElements.first;
-        ScAddrVector const & elementsAddrs = templAddrAndElements.second;
+        ScAddrList const & elementsAddrs = templAddrAndElements.second;
         std::for_each(
             std::begin(elementsAddrs),
             std::end(elementsAddrs),
@@ -56,8 +56,8 @@ ScResult SearchNotEnoughSpecifiedObjectsAgent::DoProgram(ScAction & action)
               catch (utils::ScException const & exception)  // No template or no specification
               {
                 SC_LOG_ERROR(exception.Description());
-                getNodeSystemId(infoAboutBasicSpec, elementAddr);
-                getNodeSubjectDomainsId(infoAboutBasicSpec, elementAddr);
+                GetNodeSystemId(infoAboutBasicSpec, elementAddr);
+                GetNodeSubjectDomainsId(infoAboutBasicSpec, elementAddr);
               }
             });
       });
@@ -77,40 +77,39 @@ ScAddr SearchNotEnoughSpecifiedObjectsAgent::GetActionClass() const
   return VerificationKeynodes::action_search_not_enough_specified_objects;
 }
 
-std::vector<std::pair<ScAddr, ScAddrVector>> SearchNotEnoughSpecifiedObjectsAgent::GetSpecificationTemplateAndElements()
+std::list<std::pair<ScAddr, ScAddrList>> SearchNotEnoughSpecifiedObjectsAgent::GetSpecificationTemplateAndElements()
     const
 {
-  std::vector<std::pair<ScAddr, ScAddrVector>> templAddrAndElementsList;
+  std::list<std::pair<ScAddr, ScAddrList>> templAddrAndElementsList;
   ScIterator5Ptr const & itTemplate = m_context.CreateIterator5(
-      ScType::ConstNodeStructure, //specificationAddr
+      ScType::ConstNodeStructure,  // specificationAddr
       ScType::ConstCommonArc,
-      ScType::ConstNodeStructure, // templAddr
-      ScType::ConstMembershipArc,
+      ScType::ConstNodeStructure,  // templAddr
+      ScType::ConstPermPosArc,
       VerificationKeynodes::nrel_template);
-  std::pair<ScAddr, ScAddrVector> templAddrAndElements;
+  std::pair<ScAddr, ScAddrList> templAddrAndElements;
   while (itTemplate->Next())
   {
     templAddrAndElements.first = itTemplate->Get(2);
+    templAddrAndElements.second = {};
     ScAddr decompositionAddr = utils::IteratorUtils::getAnyByOutRelation(
         &m_context, itTemplate->Get(0), VerificationKeynodes::nrel_decomposition);
-    if (!decompositionAddr.IsValid()) // template without elements classes
+    if (!decompositionAddr.IsValid())  // template without elements classes
       continue;
     ScIterator3Ptr const & itElements =
-        m_context.CreateIterator3(decompositionAddr, ScType::ConstMembershipArc, ScType::Unknown);
-    ScAddrVector elements;
+        m_context.CreateIterator3(decompositionAddr, ScType::ConstPermPosArc, ScType::Unknown);
     while (itElements->Next())
     {
-      elements = GetElements(m_context, itElements->Get(2)); // elements of classes
-      templAddrAndElements.second.insert(templAddrAndElements.second.end(), elements.begin(), elements.end());
+      GetElements(m_context, itElements->Get(2), templAddrAndElements.second);  // elements of classes
     }
-    if (templAddrAndElements.second.empty()) // template without classes elements
+    if (templAddrAndElements.second.empty())  // template without classes elements
       continue;
     templAddrAndElementsList.push_back(templAddrAndElements);
   }
   return templAddrAndElementsList;
 }
 
-void SearchNotEnoughSpecifiedObjectsAgent::getNodeSystemId(
+void SearchNotEnoughSpecifiedObjectsAgent::GetNodeSystemId(
     std::stringstream & infoAboutBasicSpec,
     ScAddr const & nodeAddr) const
 {
@@ -120,11 +119,11 @@ void SearchNotEnoughSpecifiedObjectsAgent::getNodeSystemId(
   infoAboutBasicSpec << "\t" << m_context.GetElementSystemIdentifier(nodeAddr) << "\n";
 }
 
-void SearchNotEnoughSpecifiedObjectsAgent::getNodeSubjectDomainsId(
+void SearchNotEnoughSpecifiedObjectsAgent::GetNodeSubjectDomainsId(
     std::stringstream & infoAboutBasicSpec,
     ScAddr const & nodeAddr) const
 {
-  ScAddrVector subjectDomainAddrs = GetSubjectDomainAddr(nodeAddr);
+  ScAddrList subjectDomainAddrs = GetSubjectDomainAddr(nodeAddr);
   if (subjectDomainAddrs.empty())
     return;
   infoAboutBasicSpec << "subject domains: \n";
@@ -138,26 +137,26 @@ void SearchNotEnoughSpecifiedObjectsAgent::getNodeSubjectDomainsId(
   infoAboutBasicSpec << "\n";
 }
 
-ScAddrVector SearchNotEnoughSpecifiedObjectsAgent::GetSubjectDomainAddr(ScAddr const & nodeAddr) const
+ScAddrList SearchNotEnoughSpecifiedObjectsAgent::GetSubjectDomainAddr(ScAddr const & nodeAddr) const
 {
-  ScAddrVector subjectDomainAddrs;
-  ScIterator3Ptr it = m_context.CreateIterator3(ScType::ConstNodeStructure, ScType::ConstMembershipArc, nodeAddr);
+  ScAddrList subjectDomainAddrs;
+  ScIterator3Ptr it = m_context.CreateIterator3(ScType::ConstNodeStructure, ScType::ConstPermPosArc, nodeAddr);
   while (it->Next())
   {
-    if (m_context.CheckConnector(VerificationKeynodes::subject_domain, it->Get(0), ScType::ConstMembershipArc))
+    if (m_context.CheckConnector(VerificationKeynodes::subject_domain, it->Get(0), ScType::ConstPermPosArc))
       subjectDomainAddrs.push_back(it->Get(0));
   }
   return subjectDomainAddrs;
 }
 
-ScAddrVector SearchNotEnoughSpecifiedObjectsAgent::GetElements(ScMemoryContext & m_context, ScAddr const & class_node)
+void SearchNotEnoughSpecifiedObjectsAgent::GetElements(
+    ScMemoryContext & m_context,
+    ScAddr const & class_node,
+    ScAddrList & elements)
 {
-  ScAddrVector arguments;
   ScIterator3Ptr const & it = m_context.CreateIterator3(class_node, ScType::ConstPermPosArc, ScType::Unknown);
   while (it->Next())
-    arguments.push_back(it->Get(2));
-
-  return arguments;
+    elements.push_back(it->Get(2));
 }
 
 bool SearchNotEnoughSpecifiedObjectsAgent::CheckTemplate(
@@ -167,7 +166,8 @@ bool SearchNotEnoughSpecifiedObjectsAgent::CheckTemplate(
 {
   if (!templAddr.IsValid() || m_context.GetElementType(templAddr) != ScType::ConstNodeStructure)
   {
-    SC_THROW_EXCEPTION(utils::ScException, "Class of the element doesn't have the template of the basic specification.");
+    SC_THROW_EXCEPTION(
+        utils::ScException, "Class of the element doesn't have the template of the basic specification.");
   }
   ScTemplateSearchResult result;
   ScTemplate templ;
