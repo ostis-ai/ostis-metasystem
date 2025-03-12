@@ -20,7 +20,7 @@ using namespace verificationModule;
 
 namespace VerificationModuleTestA
 {
-std::string const TEST_PATH = VERIFICATION_MODULE_TEST_SRC_PATH "testStructures/notEnoughSpecifiedObjects";
+std::string const TEST_PATH = VERIFICATION_MODULE_TEST_SRC_PATH "/testStructures/notEnoughSpecifiedObjects/";
 int const WAIT_TIME = 1000;
 
 using SearchNotEnoughSpecifiedObjectsAgentTest = ScMemoryTest;
