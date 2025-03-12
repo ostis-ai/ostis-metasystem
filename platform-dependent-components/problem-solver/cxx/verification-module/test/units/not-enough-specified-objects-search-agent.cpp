@@ -45,4 +45,4 @@ TEST_F(SearchNotEnoughSpecifiedObjectsAgentTest, TestA)
   context.UnsubscribeAgent<verificationModule::SearchNotEnoughSpecifiedObjectsAgent>();
 }
 
-}  // namespace VerificationModuleTest
+}  // namespace VerificationModuleTestA
