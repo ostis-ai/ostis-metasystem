@@ -5,23 +5,13 @@ knowledge_base_Metasystem
 	[Knowledge base OSTIS Metasystem]
 	(* <- lang_en;; *);
 <- not_enough_formed_structure;
-
-=> nrel_section_decomposition: ..kb_metasystem_decomposition (* <- sc_node_tuple;; *);;
-
-@arc1 = (..kb_metasystem_decomposition -> rrel_1: ostis_standard);;
-
-@arc2 = (..kb_metasystem_decomposition -> history_current_state_and_prospects_of_the_OSTIS_Metasystem_development);;
-@arc1 => nrel_basic_sequence: @arc2;;
-
-@arc3 = (..kb_metasystem_decomposition -> knowledge_base_of_the_OSTIS_Metasystem_Library);;
-@arc2 => nrel_basic_sequence: @arc3;;
-
-@arc4 = (..kb_metasystem_decomposition -> OSTIS_Metasystem_Corporate_knowledge_base);;
-@arc3 => nrel_basic_sequence: @arc4;;
-
-@arc5 = (..kb_metasystem_decomposition -> section_faq_ostis_metasystem);;
-@arc4 => nrel_basic_sequence: @arc5;;
-rrel_last ~> @arc5;;
+=> nrel_section_decomposition: <
+	ostis_standard;
+	history_current_state_and_prospects_of_the_OSTIS_Metasystem_development;
+	knowledge_base_of_the_OSTIS_Metasystem_Library;
+	OSTIS_Metasystem_Corporate_knowledge_base;
+	section_faq_ostis_metasystem
+>;;
 
 history_current_state_and_prospects_of_the_OSTIS_Metasystem_development
 => nrel_main_idtf:
@@ -46,6 +36,6 @@ OSTIS_Metasystem_Corporate_knowledge_base
 	(* <- lang_ru;; *);
 	[OSTIS Metasystem Corporate Knowledge Base]
 	(* <- lang_en;; *);
-<- not_enough_formed_structure; 
+<- not_enough_formed_structure;
 -> ostis_discrete_mathematics;
 -> ostis_geometry;;
