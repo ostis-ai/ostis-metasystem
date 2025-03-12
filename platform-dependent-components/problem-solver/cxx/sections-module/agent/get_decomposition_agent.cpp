@@ -16,6 +16,11 @@ using namespace utils;
 
 namespace sectionsModule
 {
+GetDecompositionAgent::GetDecompositionAgent()
+{
+  m_logger = utils::ScLogger(utils::ScLogger::ScLogType::Console, "", utils::ScLogLevel::Debug);
+}
+
 ScResult GetDecompositionAgent::DoProgram(ScAction & action)
 {
   size_t level = 1;

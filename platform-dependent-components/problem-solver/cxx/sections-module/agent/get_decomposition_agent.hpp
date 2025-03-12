@@ -17,6 +17,8 @@ namespace sectionsModule
 class GetDecompositionAgent : public ScActionInitiatedAgent
 {
 public:
+  GetDecompositionAgent();
+
   ScAddr GetActionClass() const override;
 
   ScResult DoProgram(ScAction & action) override;
