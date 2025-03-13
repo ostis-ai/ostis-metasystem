@@ -31,10 +31,18 @@ creation_system_instruction
 
 nrel_sequence
 <- sc_node_non_role_relation;
-=> nrel_main_idtf: [последовательность*](* <- lang_ru;; *);
-=> nrel_main_idtf: [sequence*](*< - lang_en;; *);;
+=> nrel_main_idtf:
+  [последовательность*]
+  (* <- lang_ru;; *);
+=> nrel_main_idtf:
+  [sequence*]
+  (* <- lang_en;; *);;
 
 nrel_note
 <- sc_node_non_role_relation;
-=> nrel_main_idtf: [примечание*](* <- lang_ru;; *);
-=> nrel_main_idtf: [note*](* <- lang_en;; *);;
+=> nrel_main_idtf:
+  [примечание*]
+  (* <- lang_ru;; *);
+=> nrel_main_idtf:
+  [note*]
+  (* <- lang_en;; *);;
