@@ -2,7 +2,7 @@ knowledge_base_Metasystem
 => nrel_main_idtf:
 	[База знаний Метасистемы OSTIS]
 	(* <- lang_ru;; *);
-	[Knowledge base OSTIS Metasystem]
+	[Knowledge base of OSTIS Metasystem]
 	(* <- lang_en;; *);
 <- not_enough_formed_structure;
 => nrel_section_decomposition: <
