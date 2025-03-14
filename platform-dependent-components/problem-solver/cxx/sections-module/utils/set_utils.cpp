@@ -23,7 +23,7 @@ ScAddrVector SetUtils::GetAllElementsByEdgeType(ScMemoryContext * context, ScAdd
   context->SearchByTemplate(rightsTemplate, result);
   if (!result.IsEmpty())
   {
-    for (int i = 0; i < result.Size(); i++)
+    for (size_t i = 0; i < result.Size(); i++)
       elements.push_back(result[i]["_node"]);
   }
   return elements;

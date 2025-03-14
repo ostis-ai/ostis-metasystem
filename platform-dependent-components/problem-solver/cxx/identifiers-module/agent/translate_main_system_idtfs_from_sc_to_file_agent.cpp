@@ -43,9 +43,8 @@ ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScAction & action)
 
       if (!systemIdentifier.empty() && !mainIdentifier.empty() && !stringType.empty())
       {
-        streamIdtfs << R"({")" << mainIdentifier << R"(", )"
-                    << R"({")" << systemIdentifier << R"(", ")" << stringType << R"("}},)"
-                    << "\n";
+        streamIdtfs << R"({")" << mainIdentifier << R"(", )" << R"({")" << systemIdentifier << R"(", ")" << stringType
+                    << R"("}},)" << "\n";
       }
     }
     catch (utils::ScException const & exception)
