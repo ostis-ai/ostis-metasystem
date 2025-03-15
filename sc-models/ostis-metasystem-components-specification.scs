@@ -29,6 +29,7 @@ ostis_metasystem_repository
 		<- singletone;;
 		-> rrel_1: ...
 		(*
+			// TODO(NikitaZotov): Support git checkout in sc-component-manager
 			-> [https://github.com/ostis-ai/sc-web]
 			(*
 				<- concept_github_url;;

@@ -1,0 +1,7 @@
+problem_solver_Metasystem
+=> nrel_main_idtf:
+	[Решатель задач Метасистемы OSTIS]
+	(* <- lang_ru;; *);
+	[Problem solver of OSTIS Metasystem]
+	(* <- lang_en;; *);
+<- not_enough_formed_structure;;

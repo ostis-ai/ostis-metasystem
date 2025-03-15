@@ -2,7 +2,7 @@
 set -eo pipefail
 
 # Constants
-SC_MACHINE_VERSION="0.10.0"
+SC_MACHINE_VERSION="0.10.1"
 SC_MACHINE_DESTINATION_DIR="install/sc-machine"
 
 SC_COMPONENT_MANAGER_VERSION="0.2.0"

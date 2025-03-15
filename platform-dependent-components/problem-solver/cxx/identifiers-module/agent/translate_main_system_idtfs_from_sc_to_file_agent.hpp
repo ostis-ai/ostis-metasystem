@@ -13,6 +13,8 @@ namespace identifiersModule
 class TranslateMainSystemIdtfsFromScToFileAgent : public ScActionInitiatedAgent
 {
 public:
+  TranslateMainSystemIdtfsFromScToFileAgent();
+
   ScAddr GetActionClass() const override;
 
   ScResult DoProgram(ScAction & action) override;

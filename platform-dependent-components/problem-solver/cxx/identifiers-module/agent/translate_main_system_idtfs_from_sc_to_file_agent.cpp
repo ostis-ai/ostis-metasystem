@@ -12,6 +12,11 @@
 
 using namespace identifiersModule;
 
+TranslateMainSystemIdtfsFromScToFileAgent::TranslateMainSystemIdtfsFromScToFileAgent()
+{
+  m_logger = utils::ScLogger(utils::ScLogger::ScLogType::Console, "", utils::ScLogLevel::Debug);
+}
+
 ScResult TranslateMainSystemIdtfsFromScToFileAgent::DoProgram(ScAction & action)
 {
   std::stringstream streamIdtfs;

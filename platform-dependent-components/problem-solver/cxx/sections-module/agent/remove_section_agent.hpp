@@ -13,6 +13,8 @@ namespace sectionsModule
 class RemoveSectionAgent : public ScActionInitiatedAgent
 {
 public:
+  RemoveSectionAgent();
+
   ScAddr GetActionClass() const override;
 
   ScResult DoProgram(ScAction & action) override;

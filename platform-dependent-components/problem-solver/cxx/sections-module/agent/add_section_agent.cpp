@@ -18,6 +18,11 @@ using namespace utils;
 
 namespace sectionsModule
 {
+AddSectionAgent::AddSectionAgent()
+{
+  m_logger = utils::ScLogger(utils::ScLogger::ScLogType::Console, "", utils::ScLogLevel::Debug);
+}
+
 ScResult AddSectionAgent::DoProgram(ScAction & action)
 {
   auto const [sectionNameAddr, parentSectionAddr, langAddr] = action.GetArguments<3>();

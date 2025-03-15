@@ -1,5 +1,0 @@
-proc_of_something_in_metasystem
-=> nrel_main_idtf:
-	[scp-программа чего-то в Метасистеме] (* <- lang_ru;; *);
-<- scp_program;
--> rrel_key_sc_element: .._process1;;
