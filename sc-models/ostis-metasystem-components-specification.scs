@@ -4,8 +4,6 @@ ostis_metasystem_repository
 
 ..components_addresses
 <- sc_node_tuple;
-// TODO(NikitaZotov): Fix building OSTIS standard
-/*
 -> ostis_standard_specification
 (*
 	<- concept_reusable_component_specification;;
@@ -22,7 +20,6 @@ ostis_metasystem_repository
 		*);;
 	*);;
 *);
-*/
 -> sc_web_specification
 (*
 	<- concept_reusable_component_specification;;
