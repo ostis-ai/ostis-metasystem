@@ -6,7 +6,6 @@ section_faq_ostis_metasystem
 	(* <- lang_en;; *);
 <- atomic_section;
 <- not_enough_formed_structure;
-
 -> ..q1;
 -> ..q2;
 -> ..q3;
@@ -84,7 +83,7 @@ nrel_answer
 => nrel_main_idtf: [Как можно установить Метасистему OSTIS?] (* <- lang_ru;; *);
 => nrel_main_idtf: [How to install OSTIS Metasystem?] (* <- lang_en;; *);
 => nrel_answer: 
-	[<p>Инструкция указана по ссылке "https://github.com/ostis-ai/ostis-metasystem?tab=readme-ov-file#installation".</p>]
+	[<p>Инструкция указана по ссылке "https://github.com/ostis-ai/ostis-metasystem?tab=readme-ov-file".</p>]
 	(*
 		=> nrel_format: format_html;;
 	*);;

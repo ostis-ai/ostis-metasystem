@@ -1,7 +1,7 @@
 creation_system_instruction
 => nrel_main_idtf: [Инструкция по созданию ostis-систем] (* <- lang_ru;; *);
 => nrel_main_idtf: [Creation system instruction] (* <- lang_en;; *);
-=> nrel_sequence: <
+=> nrel_sequence_of_actions: <
   [Поиск ostis-платформы.]
 	(*
     <- lang_ru;;
@@ -28,21 +28,3 @@ creation_system_instruction
   (* <- lang_ru;; *)
 >;
 => nrel_note: [Помимо действий пользователя при создании ostis-системы, подсистема порождения ostis-систем также регистрирует созданную ostis-систему в Метасистеме OSTIS. Таким образом, Метасистема OSTIS имеет возможность отслеживать и обновлять состояние компонентов этой системы.] (* <- lang_ru;; *);;
-
-nrel_sequence
-<- sc_node_non_role_relation;
-=> nrel_main_idtf:
-  [последовательность*]
-  (* <- lang_ru;; *);
-=> nrel_main_idtf:
-  [sequence*]
-  (* <- lang_en;; *);;
-
-nrel_note
-<- sc_node_non_role_relation;
-=> nrel_main_idtf:
-  [примечание*]
-  (* <- lang_ru;; *);
-=> nrel_main_idtf:
-  [note*]
-  (* <- lang_en;; *);;
