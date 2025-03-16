@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- OSTIS Standard installation
+
 ### Changed
 
 - GetDecompositionAgent: add system identifier of section into result if main identifier is not specified
