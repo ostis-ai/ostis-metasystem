@@ -6,7 +6,6 @@ section_faq_ostis_metasystem
 	(* <- lang_en;; *);
 <- atomic_section;
 <- not_enough_formed_structure;
-
 -> ..q1;
 -> ..q2;
 -> ..q3;
@@ -22,21 +21,21 @@ section_faq_ostis_metasystem
 
 nrel_answer
 <- sc_node_non_role_relation;
-=> nrel_main_idtf:[ответ*](*<- lang_ru;;*);
-=> nrel_main_idtf:[answer*](*<- lang_en;;*);;
+=> nrel_main_idtf: [ответ*] (* <- lang_ru;; *);
+=> nrel_main_idtf: [answer*] (* <- lang_en;; *);;
 
 ..q1
-=> nrel_main_idtf:[Что такое Метасистема OSTIS?](*<- lang_ru;;*);
-=> nrel_main_idtf:[What is OSTIS Metasystem?](*<- lang_en;;*);
+=> nrel_main_idtf: [Что такое Метасистема OSTIS?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [What is OSTIS Metasystem?] (* <- lang_en;; *);
 => nrel_answer:
 	[Метасистема OSTIS - это интеллектуальная метасистема комплексной поддержки проектирования совместимых семантических компьютерных систем по Технологии OSTIS.</p>]
 	(*
-	=> nrel_format: format_html;;
+		=> nrel_format: format_html;;
 	*);;
 
 ..q2
-=> nrel_main_idtf:[Для чего нужна Метасистема OSTIS?](*<- lang_ru;;*);
-=> nrel_main_idtf:[What is the purpose of OSTIS Metasystem?](*<- lang_en;;*);
+=> nrel_main_idtf: [Для чего нужна Метасистема OSTIS?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [What is the purpose of OSTIS Metasystem?] (* <- lang_en;; *);
 => nrel_answer:
 	[Метасистема OSTIS является в Экосистеме OSTIS ключевой интеллектуальной системой, которая поддерживает не только проектирование новых интеллектуальных систем и не только замену устаревших
 	компонентов в интеллектуальных системах, входящих в состав Экосистемы OSTIS, но и включение (интеграцию) в состав Экосистемы OSTIS новых создаваемых интеллектуальных систем.
@@ -45,95 +44,95 @@ nrel_answer
 	</br>Подчеркнем при этом, что сферы практического применения методики компонентного проектирования семантически
 	совместимых интеллектуальных систем ничем не ограничены.]
 	(*
-	=> nrel_format: format_html;;
+		=> nrel_format: format_html;;
 	*);;
 
 ..q3
-=> nrel_main_idtf:[В чем отличие и сходства Метасистемы OSTIS и других ostis-систем?](*<- lang_ru;;*);
-=> nrel_main_idtf:[What is the differences and similarities of OSTIS Metasystem and the rest?](*<- lang_en;;*);
+=> nrel_main_idtf: [В чем отличие и сходства Метасистемы OSTIS и других ostis-систем?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [What is the differences and similarities of OSTIS Metasystem and the rest?] (* <- lang_en;; *);
 => nrel_answer:
 	[Метасистема OSTIS является ostis-системой, которая содержит все базовые компоненты, необходимые другим ostis-системам. 
 	</br>Метасистема OSTIS позволяет управлять данными базовыми компонентами и предоставлять их другим ostis-системам.
 	]
 	(*
-	=> nrel_format: format_html;;
+		=> nrel_format: format_html;;
 	*);;
 
 ..q4
-=> nrel_main_idtf:[Почему Метасистема OSTIS так называется?](*<- lang_ru;;*);
-=> nrel_main_idtf:[Why OSTIS Metasystem is named like that?](*<- lang_en;;*);
+=> nrel_main_idtf: [Почему Метасистема OSTIS так называется?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Why OSTIS Metasystem is named like that?] (* <- lang_en;; *);
 => nrel_answer:
 	[Метасистема OSTIS выступает материнской системой для всех разрабатываемых ostis-систем, поскольку содержит все базовые компоненты. Материнская система отвечает за какой-то класс
 	компонентов и является САПРом для этого класса,	содержит методики разработки таких компонентов,
 	их классификацию, подробные пояснения ко всем подклассам компонентов.</br>
 	Значит метасистема является системой, которая способна "порождать" другие системы. Отсюда такое название.]
 	(*
-	=> nrel_format: format_html;;
+		=> nrel_format: format_html;;
 	*);;
 
 ..q5
-=> nrel_main_idtf:[Как Метасистема OSTIS общается с другими ostis-системами?](*<- lang_ru;;*);
-=> nrel_main_idtf:[In which ways OSTIS Metasystem communicates with other ostis-systems?](*<- lang_en;;*);
+=> nrel_main_idtf: [Как Метасистема OSTIS общается с другими ostis-системами?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [In which ways OSTIS Metasystem communicates with other ostis-systems?] (* <- lang_en;; *);
 => nrel_answer:
 	[Метасистема OSTIS общается с другими ostis-системами с помощью sc-сервера  и менеджера компонентов.]
 	(*
-	=> nrel_format: format_html;;
+		=> nrel_format: format_html;;
 	*);;
 
 ..q6
-=> nrel_main_idtf:[Как можно установить Метасистему OSTIS?](*<- lang_ru;;*);
-=> nrel_main_idtf:[How to install OSTIS Metasystem?](*<- lang_en;;*);
+=> nrel_main_idtf: [Как можно установить Метасистему OSTIS?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [How to install OSTIS Metasystem?] (* <- lang_en;; *);
 => nrel_answer: 
-	[<p>Инструкция указана по ссылке "https://github.com/ostis-ai/ostis-metasystem?tab=readme-ov-file#installation".</p>]
+	[<p>Инструкция указана по ссылке "https://github.com/ostis-ai/ostis-metasystem?tab=readme-ov-file".</p>]
 	(*
-	=> nrel_format: format_html;;
+		=> nrel_format: format_html;;
 	*);;
 
 ..q7
-=> nrel_main_idtf:[Как создать с нуля свою ostis-систему с помощью Метасистемы OSTIS?](*<- lang_ru;;*);
-=> nrel_main_idtf:[How to create the own ostis-system via OSTIS Metasystem from the very beggining?](*<- lang_en;;*);
+=> nrel_main_idtf: [Как создать с нуля свою ostis-систему с помощью Метасистемы OSTIS?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [How to create the own ostis-system via OSTIS Metasystem from the very beginning?] (* <- lang_en;; *);
 => nrel_answer: creation_system_instruction;;
 
 ..q8
-=> nrel_main_idtf:[Где можно познакомиться с Метасистемой OSTIS?](*<- lang_ru;;*);
-=> nrel_main_idtf:[Whe OSTIS Metasystem is?](*<- lang_en;;*);
+=> nrel_main_idtf: [Где можно познакомиться с Метасистемой OSTIS?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Whe OSTIS Metasystem is?] (* <- lang_en;; *);
 => nrel_answer:
 	[Метасистема OSTIS доступна по ссылке "http://ims.ostis.net"]
 	(*
-	=> nrel_format: format_html;;
+		=> nrel_format: format_html;;
 	*);;
 
  ..q9
-=> nrel_main_idtf:[Какую роль выполняет Метасистема OSTIS в Экосистеме OSTIS?](*<- lang_ru;;*);
-=> nrel_main_idtf:[Which role plays OSTIS Metasystem in OSTIS Ecosytem?](*<- lang_en;;*);
+=> nrel_main_idtf: [Какую роль выполняет Метасистема OSTIS в Экосистеме OSTIS?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Which role plays OSTIS Metasystem in OSTIS Ecosytem?] (* <- lang_en;; *);
 => nrel_answer:
 	[<p>Метасистема OSTIS в Экосистеме OSTIS выполняет роль материнской ostis-системы и роль ключевого узла.]
 	(*
-	=> nrel_format: format_html;;
+		=> nrel_format: format_html;;
 	*);;
 
 ..q10
-=> nrel_main_idtf:[Из каких компонентов состоит Метасистема OSTIS?](*<- lang_ru;;*);
-=> nrel_main_idtf:[What are the components of the OSTIS Metasystem?](*<- lang_en;;*);
+=> nrel_main_idtf: [Из каких компонентов состоит Метасистема OSTIS?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [What are the components of the OSTIS Metasystem?] (* <- lang_en;; *);
 => nrel_answer:
 	[Метасистема OSTIS декомпозируется на SC-модель Метасистемы OSTIS и Программный вариант реализации ostis-платформы. </br>
 	Состоит SC-модель Метасистемы OSTIS из Базы знаний Метасистемы OSTIS, Решателя задач Метасистемы OSTIS, Пользовательского интерфейса Метасистемы OSTIS.]
 	(*
-	=> nrel_format: format_html;;
+		=> nrel_format: format_html;;
 	*);;
 
 ..q11
-=> nrel_main_idtf:[Существуют ли аналоги Метасистемы OSTIS?](*<- lang_ru;;*);
-=> nrel_main_idtf:[Are there any OSTIS Metasystem equivalents](*<- lang_en;;*);
+=> nrel_main_idtf: [Существуют ли аналоги Метасистемы OSTIS?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Are there any OSTIS Metasystem equivalents] (* <- lang_en;; *);
 => nrel_answer:
 	[Да, существуют. Среди аналогов можно выделить SPAM, NixOS, LUDE, OPIUM, MPM.]
 	(*
-	=> nrel_format: format_html;;
+		=> nrel_format: format_html;;
 	*);;
 
 ..q12
-=> nrel_main_idtf:[Какие преимущества у Метасистемы OSTIS по сравнению с другими похожими системами?](*<- lang_ru;;*);
-=> nrel_main_idtf:[What are the advantages of the OSTIS Metasystem compared to other similar systems?](*<- lang_en;;*);
+=> nrel_main_idtf: [Какие преимущества у Метасистемы OSTIS по сравнению с другими похожими системами?] (* <- lang_ru;; *);
+=> nrel_main_idtf: [What are the advantages of the OSTIS Metasystem compared to other similar systems?] (* <- lang_en;; *);
 => nrel_answer:
 	[Среди преимуществ можно выделить:
 	<ol>
@@ -148,5 +147,3 @@ nrel_answer
 	(*
 	=> nrel_format: format_html;;
 	*);;
-
-

@@ -19,6 +19,11 @@ using namespace utils;
 
 namespace sectionsModule
 {
+RemoveSectionAgent::RemoveSectionAgent()
+{
+  m_logger = utils::ScLogger(utils::ScLogger::ScLogType::Console, "", utils::ScLogLevel::Debug);
+}
+
 ScResult RemoveSectionAgent::DoProgram(ScAction & action)
 {
   ScAddr sectionAddr = IteratorUtils::getAnyByOutRelation(&m_context, action, ScKeynodes::rrel_1);
