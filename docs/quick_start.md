@@ -6,9 +6,8 @@
 1. Clone repository of the OSTIS Metasystem:
    
     ```sh
-    git clone https://github.com/NikitaZotov/ostis-metasystem
+    git clone https://github.com/ostis-ai/ostis-metasystem
     cd ostis-metasystem
-    git checkout feat/update_build_system
     git submodule update --init --recursive
     ```
 
