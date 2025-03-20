@@ -26,7 +26,7 @@
 4. Run C++ problem solver:
 
     ```sh
-    ./install/sc-machine/bin/sc-machine -s kb.bin -c ostis-metasystem.ini \
+    LD_LIBRARY_PATH=./install/sc-machine/lib ./install/sc-machine/bin/sc-machine -s kb.bin -c ostis-metasystem.ini \
         -e "install/sc-machine/lib/extensions;install/sc-component-manager/lib/extensions;install/scp-machine/lib/extensions;install/problem-solver/lib/extensions"
     ```
 
