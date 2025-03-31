@@ -18,9 +18,10 @@ class checkDuplicateConstructionSearcher
 public:
   explicit checkDuplicateConstructionSearcher(ScMemoryContext * context);
 
-  static std::ofstream openOrCreateFile(ScMemoryContext * context, ScAddr & classAddr, std::filesystem::path const & filename);
+  void getSingularRelations();
 
 private:
   ScMemoryContext * context;
+  ScAddrList singularRelations;
 };
 }  // namespace verificationModule

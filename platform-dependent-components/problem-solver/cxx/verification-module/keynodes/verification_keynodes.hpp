@@ -26,7 +26,16 @@ public:
   static inline ScKeynode const rrel_maximum_studied_object_class{
       "rrel_maximum_studied_object_class",
       ScType::ConstNodeRole};
-  static inline ScKeynode const lang_en{"lang_en", ScType::NodeClass};
+  static inline ScKeynode const lang_en{"lang_en", ScType::ConstNodeClass};
+  static inline ScKeynode const concept_singular_relation{
+      "concept_singular_relation",
+      ScType::ConstNodeClass};
+  static inline ScKeynode const quasybinary_relation{
+      "quasybinary_relation",
+      ScType::ConstNodeClass};
+  static inline ScKeynode const class_node{
+      "class_node",
+      ScType::ConstNodeClass};
 };
 
 }  // namespace verificationModule

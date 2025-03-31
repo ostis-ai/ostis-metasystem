@@ -7,20 +7,18 @@
 #pragma once
 
 #include <string>
-#include "filesystem"
 
-#include "sc-memory/sc_memory.hpp"
+#include <sc-memory/sc_memory.hpp>
 
 namespace verificationModule
 {
-class verificationGenerator
+
+class SearchUtils
 {
 public:
-  explicit verificationGenerator(ScMemoryContext * context);
+  static void getSingularRelations(ScMemoryContext * context, ScAddrList & singularRelations);
 
-  static std::ofstream generateDuplicationFile(ScMemoryContext * context, ScAddr const &, std::filesystem::path const & filename);
-
-private:
-  ScMemoryContext * context;
+  static void getQuasybinaryRelations(ScMemoryContext * context, ScAddrUnorderedSet & quasybinaryRelations);
 };
+
 }  // namespace verificationModule
