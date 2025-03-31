@@ -6,7 +6,10 @@ set(HEADERS
         "constants/verification_constants.hpp"
         "keynodes/verification_keynodes.hpp"
         "searcher/check_duplicate_constructions_searcher.hpp"
-        "generator/verification_generator.hpp"
+        "handler/verification_result_file_handler.hpp"
+        "manager/duplications_check_manager.hpp"
+        "logger/verification_result_logger.hpp"
+        "utils/search_utils.hpp"
         "verification_module.hpp"
 )
 
@@ -15,18 +18,18 @@ set(SOURCES
         "config/config.cpp"
         "constants/verification_constants.cpp"
         "searcher/check_duplicate_constructions_searcher.cpp"
-        "generator/verification_generator.cpp"
+        "handler/verification_result_file_handler.cpp"
+        "manager/duplications_check_manager.cpp"
+        "logger/verification_result_logger.cpp"
+        "utils/search_utils.cpp"
         "verification_module.cpp"
 )
 
 add_library(verification-module SHARED ${HEADERS} ${SOURCES})
 
-find_package(nlohmann_json 3.2.0 REQUIRED)
-
 target_link_libraries(verification-module
         LINK_PUBLIC sc-memory
-        LINK_PUBLIC sc-agents-common
-        LINK_PUBLIC nlohmann_json::nlohmann_json)
+        LINK_PUBLIC sc-agents-common)
 target_include_directories(verification-module
         PUBLIC ${VERIFICATION_MODULE_SRC}
         PUBLIC ${SC_MEMORY_INCLUDE}

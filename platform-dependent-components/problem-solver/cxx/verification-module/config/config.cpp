@@ -11,7 +11,7 @@ Config::Config(std::string const & path)
 
 Config * Config::getInstance()
 {
-  static Config instance(CONFIG_PATH);
+  static Config instance(ScMemory::ms_configPath);
   return &instance;
 }
 
