@@ -1,17 +1,6 @@
-test_question_node
-<- action;
--> rrel_1: classAddr;
-<- action_check_duplicate_constructions;;
-
-sc_node_class
--> classAddr;;
-
-classAddr -> object1;;
-classAddr -> object2;;
-
-object1 -> object3;;
-object1 -> object3;;
-object2 -> object3;;
+sc_node_non_role_relation
+-> nrel_creation;
+-> nrel_main_idtf;;
 
 sc_node
 -> object1;
@@ -24,7 +13,7 @@ object1
     (* <- lang_ru;; *);
 => nrel_main_idtf:
     [Object 1]
-    (* <- lang_en;; *);
+    (* <- lang_en;; *);;
 
 object2
 => nrel_main_idtf:
@@ -32,7 +21,7 @@ object2
     (* <- lang_ru;; *);
 => nrel_main_idtf:
     [Object 2]
-    (* <- lang_en;; *);
+    (* <- lang_en;; *);;
 
 object3
 => nrel_main_idtf:
@@ -40,4 +29,12 @@ object3
     (* <- lang_ru;; *);
 => nrel_main_idtf:
     [Object 3]
-    (* <- lang_en;; *);
+    (* <- lang_en;; *);;
+
+nrel_creation
+=> nrel_main_idtf:
+    [Создание*]
+    (* <- lang_ru;; *);
+=> nrel_main_idtf:
+    [Creation*]
+    (* <- lang_en;; *);;

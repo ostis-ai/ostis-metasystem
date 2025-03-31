@@ -1,0 +1,8 @@
+sc_node
+-> fileAddr;;
+
+test_class -> object1;;
+test_class -> object2;;
+
+test_class
+=> nrel_duplicate_construction_file: fileAddr;;
