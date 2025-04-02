@@ -1,0 +1,32 @@
+test_action_node
+<- action;
+-> rrel_1: nrel_main_idtf;
+<- action_check_synonym_classes;;
+
+sc_node_class
+    -> lang_ru;
+    -> subject_domain;
+    -> action_check_synonym_classes;
+    -> action;;
+
+sc_node_non_role_relation
+    -> nrel_main_idtf;;
+
+sc_node_role_relation
+    -> rrel_1;;
+
+subject_domain_of_tasks =
+[*
+task
+    => nrel_main_idtf: [задача] (* <- lang_ru;; *);;
+*];;
+
+subject_domain_of_problems =
+[*
+.problem
+    => nrel_main_idtf: [задача] (* <- lang_ru;; *);;
+*];;
+
+subject_domain
+    -> subject_domain_of_tasks;
+    -> subject_domain_of_problems;;
