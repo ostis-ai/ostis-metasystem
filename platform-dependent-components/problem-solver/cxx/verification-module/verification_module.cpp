@@ -11,11 +11,10 @@
 #include "keynodes/verification_keynodes.hpp"
 
 #include "agent/check-duplicate-constructions-agent.hpp"
-#include "check-synonym-objects-agent.hpp"
-#include "check-synonym-relations-agent.hpp"
+#include "agent/check_homonyms_agent.hpp"
 
 using namespace verificationModule;
 
-SC_MODULE_REGISTER(VerificationModule)->Agent<CheckDuplicateConstructionsAgent>();
-SC_MODULE_REGISTER(VerificationModule)->Agent<CheckSynonymObjectsAgent>();
-SC_MODULE_REGISTER(VerificationModule)->Agent<CheckSynonymRelationsAgent>();
+SC_MODULE_REGISTER(VerificationModule)
+  ->Agent<CheckDuplicateConstructionsAgent>()
+  ->Agent<CheckHomonymsAgent>();

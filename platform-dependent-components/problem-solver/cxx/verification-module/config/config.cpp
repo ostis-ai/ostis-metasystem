@@ -11,6 +11,7 @@ Config::Config(std::string const & path)
 
 Config * Config::getInstance()
 {
+  // todo(kilativ-dotcom): replace with ScMemory::ms_configPath after using build system
   static Config instance(CONFIG_PATH);
   return &instance;
 }

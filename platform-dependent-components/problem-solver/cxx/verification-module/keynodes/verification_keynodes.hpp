@@ -33,7 +33,7 @@ public:
   static inline ScKeynode const action_check_synonym_relations{
       "action_check_synonym_relations",
       ScType::ConstNodeClass};
-  static inline ScKeynode const action_check_synonym_classes{
+  static inline ScKeynode const action_check_homonyms{
       "action_check_synonym_classes",
       ScType::ConstNodeClass};
   static inline ScKeynode const nrel_synonym_objects_file{
@@ -44,6 +44,9 @@ public:
       ScType::ConstNodeClass};
   static inline ScKeynode const nrel_second_domain{
       "nrel_second_domain",
+      ScType::ConstNodeClass};
+  static inline ScKeynode const subject_domain{
+      "subject_domain",
       ScType::ConstNodeClass};
 };
 
