@@ -60,7 +60,7 @@ void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr) const
     DuplicationsCheckManager duplicationsCheckManager(&m_context);
     duplicationsCheckManager.checkSetElementsDuplications(classAddr, setCheckResult);
 
-    VerificationResulFileHandler fileHandler(&m_context);
+    VerificationResultFileHandler fileHandler(&m_context);
     std::ofstream outputFile = fileHandler.createOutputFile(filePath, setCheckResult.setIdtf, classAddr);
 
     VerificationResultLogger resultLogger;
@@ -68,7 +68,8 @@ void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr) const
   }
   catch (utils::ScException const & exception)
   {
-    m_logger.Error("Error during " + IdentifierUtils::getIdentifier(&m_context, classAddr) + " processing.");
+    m_logger.Error("Error during " + IdentifierUtils::getIdentifier(&m_context, classAddr)
+                   + " processing: " + exception.Description());
   }
 }
 

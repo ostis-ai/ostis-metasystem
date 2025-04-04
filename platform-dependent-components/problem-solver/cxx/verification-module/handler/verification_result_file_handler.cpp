@@ -14,12 +14,12 @@
 namespace verificationModule
 {
 
-VerificationResulFileHandler::VerificationResulFileHandler(ScMemoryContext * context)
+VerificationResultFileHandler::VerificationResultFileHandler(ScMemoryContext * context)
   : context(context)
 {
 }
 
-std::ofstream VerificationResulFileHandler::createOutputFile(
+std::ofstream VerificationResultFileHandler::createOutputFile(
     std::filesystem::path const & filePath,
     std::string const & checkedElementIdtf,
     ScAddr const & checkedElementAddr) const
@@ -27,18 +27,18 @@ std::ofstream VerificationResulFileHandler::createOutputFile(
   std::filesystem::create_directories(filePath);
 
   std::string fileName = "duplications_check_result_file_for_" + checkedElementIdtf;
-  std::filesystem::path fileFullNAme = filePath / fileName;
+  std::filesystem::path fileFullName = filePath / fileName;
 
-  SC_LOG_INFO("Duplications file for " << checkedElementIdtf << " is " << fileFullNAme.string());
+  SC_LOG_INFO("Duplications file for " << checkedElementIdtf << " is " << fileFullName.string());
 
-  resolveFileSpecification(checkedElementAddr, fileFullNAme);
+  resolveFileSpecification(checkedElementAddr, fileFullName);
 
-  return std::ofstream(fileFullNAme, std::ios::app);
+  return std::ofstream(fileFullName, std::ios::app);
 }
 
-void VerificationResulFileHandler::resolveFileSpecification(
+void VerificationResultFileHandler::resolveFileSpecification(
     ScAddr const & checkedElementAddr,
-    std::filesystem::path const & fileFullNAme) const
+    std::filesystem::path const & fileFullName) const
 {
   ScAddr fileAddr;
   ScIterator5Ptr const & fileIterator = context->CreateIterator5(
@@ -48,17 +48,17 @@ void VerificationResulFileHandler::resolveFileSpecification(
       ScType::ConstCommonArc,
       VerificationKeynodes::nrel_duplicate_construction_file);
   if (fileIterator->Next())
-    context->SetLinkContent(fileIterator->Get(2), fileFullNAme);
+    context->SetLinkContent(fileIterator->Get(2), fileFullName);
   else
-    generateDuplicationFileSpecification(checkedElementAddr, fileFullNAme);
+    generateDuplicationFileSpecification(checkedElementAddr, fileFullName);
 }
 
-void VerificationResulFileHandler::generateDuplicationFileSpecification(
+void VerificationResultFileHandler::generateDuplicationFileSpecification(
     ScAddr const & checkedElementAddr,
-    std::filesystem::path const & fileFullNAme) const
+    std::filesystem::path const & fileFullName) const
 {
   ScAddr const & fileAddr = context->GenerateLink(ScType::ConstNodeLink);
-  context->SetLinkContent(fileAddr, fileFullNAme);
+  context->SetLinkContent(fileAddr, fileFullName);
   ScAddr const & edge = context->GenerateConnector(ScType::ConstCommonArc, checkedElementAddr, fileAddr);
   ScAddr const & relationEdge =
       context->GenerateConnector(ScType::ConstPermPosArc, VerificationKeynodes::nrel_duplicate_construction_file, edge);

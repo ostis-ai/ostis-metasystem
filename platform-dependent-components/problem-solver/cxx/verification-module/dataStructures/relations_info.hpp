@@ -12,7 +12,7 @@
 
 struct RelationsInfo
 {
-  ScAddrSet duplicationgRelations;
+  ScAddrSet duplicatingRelations;
   bool containsArcsWithoutRelations;
   bool containsArcsWithoutIntersectingRelations;
 };
