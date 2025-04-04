@@ -208,7 +208,7 @@ void DuplicationsCheckManager::checkSingularRelations(ScAddr const & checkedElem
         checkResult.errorsDescriptions.emplace_back(
             "Duplicating relation " + m_context->GetElementSystemIdentifier(relation) + " from "
             + m_context->GetElementSystemIdentifier(checkedElement)
-            + ". Expected only one outgoing relation relation pair per element.");
+            + ". Expected only one outgoing relation pair per element.");
 
         break;
       }

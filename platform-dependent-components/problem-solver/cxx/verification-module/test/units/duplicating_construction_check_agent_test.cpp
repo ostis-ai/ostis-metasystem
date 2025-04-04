@@ -10,11 +10,51 @@
 #include "sc-memory/utils/sc_base64.hpp"
 
 #include <vector>
+#include <regex>
 
 #include "manager/duplications_check_manager.hpp"
 #include "keynodes/verification_keynodes.hpp"
+#include "agent/check-duplicate-constructions-agent.hpp"
 
 using namespace verificationModule;
+
+void DuplicatingConstructionCheckAgentTest::compareResultFiles(
+    std::string const & generatedFileName, std::string const & referenceFileName)
+{
+  std::ifstream generatedFileStream(generatedFileName);
+  std::ifstream referenceFileStream(referenceFileName);
+
+  if (!referenceFileStream.is_open() || !generatedFileStream.is_open())
+    FAIL();
+
+  std::regex datetimeRegex("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+  std::string const & datetimeReplacement = "[DATETIME]";
+
+  std::string referenceLine, generatedLine;
+
+  std::getline(referenceFileStream, referenceLine);
+  std::getline(generatedFileStream, generatedLine);
+
+  // first string contain datetime
+  std::string const & normalizedReferenceLine
+      = std::regex_replace(referenceLine, datetimeRegex, datetimeReplacement);
+  std::string const & normalizedGeneratedLine
+      = std::regex_replace(generatedLine, datetimeRegex, datetimeReplacement);
+  if (normalizedReferenceLine != normalizedGeneratedLine)
+    FAIL();
+
+  while (std::getline(referenceFileStream, referenceLine) && std::getline(generatedFileStream, generatedLine)) {
+    if (referenceLine != generatedLine)
+      FAIL();
+  }
+
+  if (std::getline(referenceFileStream, referenceLine))
+    FAIL();
+
+  if (std::getline(generatedFileStream, generatedLine))
+    FAIL();
+}
+
 
 namespace VerificationModuleTest
 {
@@ -26,7 +66,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, NoMembersTest)
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "noMembers.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
-  EXPECT_TRUE(context.IsElement(testClass));
+  ASSERT_TRUE(context.IsElement(testClass));
 
   SetCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
@@ -43,7 +83,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, AccessArcsWithoutRelationsTest)
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "accessArcsWithoutRelations.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
-  EXPECT_TRUE(context.IsElement(testClass));
+  ASSERT_TRUE(context.IsElement(testClass));
 
   SetCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
@@ -54,14 +94,14 @@ TEST_F(DuplicatingConstructionCheckAgentTest, AccessArcsWithoutRelationsTest)
   ElementCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
-  EXPECT_TRUE(elementCheckResult.errorsDescriptions.empty());
+  ASSERT_TRUE(elementCheckResult.errorsDescriptions.empty());
   ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1);
 
   std::string const & warningDescription = elementCheckResult.warningDescriptions.front();
 
   ASSERT_EQ(
       warningDescription,
-      "Found multiple access arcs to object3 not belonging to any relations. Possible duplication if it was not meant "
+      "Found multiple access arcs to object3. Possible duplication if it was not meant "
       "as multiset.");
 }
 
@@ -73,7 +113,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, CommonArcsWithoutRelationsTest)
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "commonArcsWithoutRelations.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
-  EXPECT_TRUE(context.IsElement(testClass));
+  ASSERT_TRUE(context.IsElement(testClass));
 
   SetCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
@@ -84,14 +124,14 @@ TEST_F(DuplicatingConstructionCheckAgentTest, CommonArcsWithoutRelationsTest)
   ElementCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
-  EXPECT_TRUE(elementCheckResult.errorsDescriptions.empty());
+  ASSERT_TRUE(elementCheckResult.errorsDescriptions.empty());
   ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1);
 
   std::string const & warningDescription = elementCheckResult.warningDescriptions.front();
 
   ASSERT_EQ(
       warningDescription,
-      "Found common arc(s) to object3 not belonging to any relations. Possible incorrect construction.");
+      "Found common arcs to object3 not belonging to any relations. Possible incorrect construction.");
 }
 
 TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingNonRoleRelationsTest)
@@ -102,7 +142,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingNonRoleRelationsTest)
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "duplicatingNonRoleRelations.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
-  EXPECT_TRUE(context.IsElement(testClass));
+  ASSERT_TRUE(context.IsElement(testClass));
 
   SetCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
@@ -113,7 +153,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingNonRoleRelationsTest)
   ElementCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
-  EXPECT_TRUE(elementCheckResult.warningDescriptions.empty());
+  ASSERT_TRUE(elementCheckResult.warningDescriptions.empty());
   ASSERT_EQ(elementCheckResult.errorsDescriptions.size(), 1);
 
   std::string const & errorDescription = elementCheckResult.errorsDescriptions.front();
@@ -129,7 +169,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingRoleRelationsTest)
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "duplicatingRoleRelations.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
-  EXPECT_TRUE(context.IsElement(testClass));
+  ASSERT_TRUE(context.IsElement(testClass));
 
   SetCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
@@ -160,7 +200,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "equalSetQuasybinaries.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
-  EXPECT_TRUE(context.IsElement(testClass));
+  ASSERT_TRUE(context.IsElement(testClass));
 
   SetCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
@@ -201,7 +241,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
       FAIL();
   }
 
-  EXPECT_TRUE(checkResultForObject1Exist && checkResultForObject2Exist && checkResultForObject3Exist);
+  ASSERT_TRUE(checkResultForObject1Exist && checkResultForObject2Exist && checkResultForObject3Exist);
 }
 
 TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjDomainSearchTest)
@@ -213,7 +253,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjD
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subjectDomains.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
-  EXPECT_TRUE(context.IsElement(testClass));
+  ASSERT_TRUE(context.IsElement(testClass));
 
   SetCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
@@ -240,10 +280,53 @@ TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjD
   std::string const & errorDescription = elementCheckResult.errorsDescriptions.front();
   ASSERT_EQ(
       errorDescription,
-      "Duplicating relation nrel_singular_r8 from object1. Expected only one outgoing relation relation pair per "
-      "element.");
+      "Duplicating relation nrel_singular_r8 from object1. Expected only one outgoing relation pair per element.");
 }
 
-// subjectDomainsSearch
+TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithArgument)
+{
+  ScAgentContext & context = *m_ctx;
+
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "multipleDuplications.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "testActionWithArgument.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subjectDomains.scs");
+
+  ScAddr const & test_action_node = context.SearchElementBySystemIdentifier("test_verification_action_node");
+  ASSERT_TRUE(context.IsElement(test_action_node));
+
+  ScAction testAction = context.ConvertToAction(test_action_node);
+  context.SubscribeAgent<verificationModule::CheckDuplicateConstructionsAgent>();
+
+  ASSERT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
+  ASSERT_TRUE(testAction.IsFinishedSuccessfully());
+
+  compareResultFiles(
+      GENERATED_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class",
+      REFERENCE_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class_example.txt");
+}
+
+TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithoutArgument)
+{
+  ScAgentContext & context = *m_ctx;
+
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "multipleDuplications.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "testActionWithoutArgument.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subjectDomains.scs");
+
+  ScAddr const & test_action_node = context.SearchElementBySystemIdentifier("test_verification_action_node");
+  ASSERT_TRUE(context.IsElement(test_action_node));
+
+  ScAction testAction = context.ConvertToAction(test_action_node);
+  context.SubscribeAgent<verificationModule::CheckDuplicateConstructionsAgent>();
+
+  ASSERT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
+  ASSERT_TRUE(testAction.IsFinishedSuccessfully());
+
+  compareResultFiles(
+      GENERATED_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class",
+      REFERENCE_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class_example.txt");
+}
 
 }  // namespace VerificationModuleTest

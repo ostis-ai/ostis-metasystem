@@ -1,0 +1,6 @@
+test_class -> object1;;
+
+object1 => object3;;
+object1 => object3;;
+object1 => nrel_singular_r8: object3;;
+object1 => nrel_singular_r8: object4;;
