@@ -1,0 +1,47 @@
+nrel_duplicate_construction_file
+<- sc_node_norole_relation;
+=> nrel_main_idtf:
+    [файл дублирующихся конструкций*] (* <- lang_ru;; *);
+    [duplicate constructions file*] (* <- lang_en;; *);
+<- relation;
+<- binary_relation;
+<- oriented_relation;
+<- antireflexive_relation;
+<- asymmetric_relation;
+<- antitransitive_relation;
+=> nrel_first_domain: sc_node_class;
+=> nrel_second_domain: concept_text_file;
+=> nrel_definitional_domain:
+    ...
+    (*
+    <= nrel_combination:
+        {
+        concept_text_file;
+        sc_node_class
+        };;
+    *);
+<- rrel_key_sc_element:
+    ...
+    (*
+    => nrel_main_idtf:
+        [Опр. (файл дублирующихся конструкций*)]
+        (* <- lang_ru;; *);
+        [Def. (duplicate constructions file*)]
+        (* <- lang_en;; *);;
+    <- definition;;
+    => nrel_sc_text_translation:
+        {
+        rrel_example:
+            [Файл дублирующихся конструкций* — бинарное отношение, связывающее класс сущности с текстовым файлом, куда записываются дублирующиеся объекты, принадлежащие этому классу сущностей.]
+            (* <- lang_ru;; *);
+        rrel_example:
+            [Duplicate constructions file* is a binary relation that connects an sc node class to a text file where duplicate objects belonging to that entity class are written.]
+            (* <- lang_en;; *)
+        };;
+    => nrel_using_constants:
+        {
+           binary_relation;
+           sc_node_class;
+           concept_text_file
+        };;
+    *);;

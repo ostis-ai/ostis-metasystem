@@ -1,0 +1,3 @@
+test_class <- rrel_maximum_studied_object_class: subj_dom_1;;
+test_class <- rrel_not_maximum_studied_object_class: subj_dom_2;;
+test_class <- rrel_not_maximum_studied_object_class: subj_dom_3;;
