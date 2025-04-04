@@ -1,5 +1,5 @@
-#include <sc-memory/utils/sc_log.hpp>
-#include <constants/verification_constants.hpp>
+#include "constants/verification_constants.hpp"
+
 #include "config.hpp"
 
 std::mutex Config::mutex;

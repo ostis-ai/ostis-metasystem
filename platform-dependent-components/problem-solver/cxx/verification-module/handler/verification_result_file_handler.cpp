@@ -14,16 +14,19 @@
 namespace verificationModule
 {
 
-VerificationResulFileHandler::VerificationResulFileHandler(ScMemoryContext * context) : context(context)
+VerificationResulFileHandler::VerificationResulFileHandler(ScMemoryContext * context)
+  : context(context)
 {
 }
 
 std::ofstream VerificationResulFileHandler::createOutputFile(
-    std::filesystem::path const & filePath, std::string const & checkedElementIdtf, ScAddr const & checkedElementAddr) const
+    std::filesystem::path const & filePath,
+    std::string const & checkedElementIdtf,
+    ScAddr const & checkedElementAddr) const
 {
   std::filesystem::create_directories(filePath);
 
-  std::string fileName ="duplications_check_result_file_for_" + checkedElementIdtf;
+  std::string fileName = "duplications_check_result_file_for_" + checkedElementIdtf;
   std::filesystem::path fileFullNAme = filePath / fileName;
 
   SC_LOG_INFO("Duplications file for " << checkedElementIdtf << " is " << fileFullNAme.string());

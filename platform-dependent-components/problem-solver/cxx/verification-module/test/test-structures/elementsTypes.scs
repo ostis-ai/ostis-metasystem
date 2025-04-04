@@ -1,0 +1,35 @@
+sc_node_non_role_relation
+-> nrel_r1;
+-> nrel_r2;
+-> nrel_quasibinary_r5;
+-> nrel_quasibinary_r6;
+-> nrel_quasibinary_r7;
+-> nrel_singular_r8;
+-> nrel_singular_r9;;
+
+concept_singular_relation
+-> nrel_singular_r8;
+-> nrel_singular_r9;;
+
+quasybinary_relation
+-> nrel_quasibinary_r5;
+-> nrel_quasibinary_r6;
+-> nrel_quasibinary_r7;;
+
+sc_node_role_relation
+-> rrel_r3;
+-> rrel_r4;
+-> rrel_maximum_studied_object_class;
+-> rrel_not_maximum_studied_object_class;;
+
+sc_node
+-> subj_dom_1;
+-> subj_dom_2;
+-> subj_dom_3;
+-> object1;
+-> object2;
+-> object3;
+-> object4;
+-> object5;
+-> object6;
+-> object7;;

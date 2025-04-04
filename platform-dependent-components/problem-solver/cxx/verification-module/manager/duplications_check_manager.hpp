@@ -47,7 +47,9 @@ private:
   void checkQuasybinaryRelations(ScAddr const & checkedElement, ElementCheckResult & checkResult);
 
   void checkDuplicationInQuasybinaryRelationSets(
-      ScAddr const & relation, ScAddrList const & checkedTuples, ElementCheckResult & checkResult);
+      ScAddr const & relation,
+      ScAddrList const & checkedTuples,
+      ElementCheckResult & checkResult);
 
   bool atleastTwoSetsAreEqual(ScAddrVector const & setsToCompare);
 
@@ -55,9 +57,7 @@ private:
 
   std::string getCurrentDatetimeString();
 
-  bool findMaxObjectClassSubjectDomain(
-      ScAddr const & checkedSet,
-      std::string & subjectDomainContainingAsMaximumClass);
+  bool findMaxObjectClassSubjectDomain(ScAddr const & checkedSet, std::string & subjectDomainContainingAsMaximumClass);
 
   void findNonMaxObjectClassSubjectDomains(
       ScAddr const & checkedSet,

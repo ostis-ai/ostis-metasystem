@@ -22,7 +22,6 @@ public:
   void logElementCheckResult(ElementCheckResult const & checkResult, std::ofstream & logFile);
 
 private:
-
   std::string const INDENT = "    ";
 };
 }  // namespace verificationModule

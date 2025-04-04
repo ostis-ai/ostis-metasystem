@@ -4,13 +4,15 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 #include <fstream>
-#include "sc-memory/sc_keynodes.hpp"
+#include <sc-memory/sc_keynodes.hpp>
+#include <sc-memory/sc_agent.hpp>
 
 #include "constants/verification_constants.hpp"
 #include "keynodes/verification_keynodes.hpp"
 #include "manager/duplications_check_manager.hpp"
 #include "handler/verification_result_file_handler.hpp"
 #include "logger/verification_result_logger.hpp"
+#include "dataStructures/set_check_result.hpp"
 #include "config/config.hpp"
 
 #include "check-duplicate-constructions-agent.hpp"
@@ -21,25 +23,18 @@ namespace verificationModule
 {
 ScResult CheckDuplicateConstructionsAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  SC_LOG_DEBUG("CheckDuplicateConstructionsAgent started");
-
-  filePath = Config::getInstance()->getValue(
-      FileConfigs::VERIFICATION_ENDPOINT, FileConfigs::FILE_PATH);
+  filePath = Config::getInstance()->getValue(FileConfigs::VERIFICATION_ENDPOINT, FileConfigs::FILE_PATH);
 
   auto [classAddr] = action.GetArguments<1>();
 
   if (m_context.IsElement(classAddr))
-  {
-    SC_AGENT_LOG_INFO("CheckDuplicateConstructionsAgent: running check for "
-                      << m_context.GetElementSystemIdentifier(classAddr));
     runCheck(classAddr);
-  }
   else
   {
-    SC_AGENT_LOG_INFO("CheckDuplicateConstructionsAgent: argument not found, running check for all classes");
-    //todo: replace specialized "class_node" with sc_node_class after corresponding changes to sc-machine
-    ScIterator3Ptr classesIterator = m_context.CreateIterator3(
-        VerificationKeynodes::class_node, ScType::ConstPermPosArc, ScType::Unknown);
+    m_logger.Info("Argument not found, running check for all classes");
+    // todo: replace specialized "class_node" with sc_node_class after corresponding changes to sc-machine
+    ScIterator3Ptr classesIterator =
+        m_context.CreateIterator3(VerificationKeynodes::entity_class, ScType::ConstPermPosArc, ScType::Unknown);
     while (classesIterator->Next())
       runCheck(classesIterator->Get(2));
   }
@@ -58,6 +53,8 @@ void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr) const
 {
   try
   {
+    m_logger.Info("Running check for " + m_context.GetElementSystemIdentifier(classAddr));
+
     SetCheckResult setCheckResult;
     DuplicationsCheckManager duplicationsCheckManager(&m_context);
     duplicationsCheckManager.checkSetElementsDuplications(classAddr, setCheckResult);
@@ -70,8 +67,7 @@ void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr) const
   }
   catch (utils::ScException const & exception)
   {
-    SC_AGENT_LOG_ERROR("CheckDuplicateConstructionsAgent: error during "
-                       << m_context.GetElementSystemIdentifier(classAddr) << " processing.");
+    m_logger.Error("Error during " + m_context.GetElementSystemIdentifier(classAddr) + " processing.");
   }
 }
 

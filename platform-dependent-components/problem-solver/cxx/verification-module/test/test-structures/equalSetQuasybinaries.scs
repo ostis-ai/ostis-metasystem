@@ -1,0 +1,12 @@
+test_class
+    -> object1;
+    -> object2;
+    -> object3;;
+
+object1 => nrel_quasibinary_r5: ... (* -> object4;; -> object5;; *);;
+object1 => nrel_quasibinary_r5: ... (* -> object4;; -> object5;; *);;
+object2 => nrel_quasibinary_r5: ... (* -> object4;; -> object5;; *);;
+object2 => nrel_quasibinary_r6: ... (* -> object4;; -> object5;; *);;
+object2 => nrel_quasibinary_r6: ... (* -> object6;; -> object7;; -> object7;; *);;
+object3 <= nrel_quasibinary_r7: ... (* -> object4;; -> object5;; *);;
+object3 <= nrel_quasibinary_r7: ... (* -> object4;; -> object5;; *);;
