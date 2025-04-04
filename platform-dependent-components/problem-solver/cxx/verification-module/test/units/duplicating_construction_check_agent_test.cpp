@@ -19,7 +19,8 @@
 using namespace verificationModule;
 
 void DuplicatingConstructionCheckAgentTest::compareResultFiles(
-    std::string const & generatedFileName, std::string const & referenceFileName)
+    std::string const & generatedFileName,
+    std::string const & referenceFileName)
 {
   std::ifstream generatedFileStream(generatedFileName);
   std::ifstream referenceFileStream(referenceFileName);
@@ -36,14 +37,13 @@ void DuplicatingConstructionCheckAgentTest::compareResultFiles(
   std::getline(generatedFileStream, generatedLine);
 
   // first string contain datetime
-  std::string const & normalizedReferenceLine
-      = std::regex_replace(referenceLine, datetimeRegex, datetimeReplacement);
-  std::string const & normalizedGeneratedLine
-      = std::regex_replace(generatedLine, datetimeRegex, datetimeReplacement);
+  std::string const & normalizedReferenceLine = std::regex_replace(referenceLine, datetimeRegex, datetimeReplacement);
+  std::string const & normalizedGeneratedLine = std::regex_replace(generatedLine, datetimeRegex, datetimeReplacement);
   if (normalizedReferenceLine != normalizedGeneratedLine)
     FAIL();
 
-  while (std::getline(referenceFileStream, referenceLine) && std::getline(generatedFileStream, generatedLine)) {
+  while (std::getline(referenceFileStream, referenceLine) && std::getline(generatedFileStream, generatedLine))
+  {
     if (referenceLine != generatedLine)
       FAIL();
   }
@@ -54,7 +54,6 @@ void DuplicatingConstructionCheckAgentTest::compareResultFiles(
   if (std::getline(generatedFileStream, generatedLine))
     FAIL();
 }
-
 
 namespace VerificationModuleTest
 {
