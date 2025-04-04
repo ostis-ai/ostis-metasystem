@@ -27,15 +27,9 @@ public:
       "rrel_maximum_studied_object_class",
       ScType::ConstNodeRole};
   static inline ScKeynode const lang_en{"lang_en", ScType::ConstNodeClass};
-  static inline ScKeynode const concept_singular_relation{
-      "concept_singular_relation",
-      ScType::ConstNodeClass};
-  static inline ScKeynode const quasybinary_relation{
-      "quasybinary_relation",
-      ScType::ConstNodeClass};
-  static inline ScKeynode const class_node{
-      "class_node",
-      ScType::ConstNodeClass};
+  static inline ScKeynode const concept_singular_relation{"concept_singular_relation", ScType::ConstNodeClass};
+  static inline ScKeynode const quasybinary_relation{"quasybinary_relation", ScType::ConstNodeClass};
+  static inline ScKeynode const entity_class{"entity_class", ScType::ConstNodeClass};
 };
 
 }  // namespace verificationModule

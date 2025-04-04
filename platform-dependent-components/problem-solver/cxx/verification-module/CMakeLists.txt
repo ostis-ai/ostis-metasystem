@@ -1,5 +1,3 @@
-set(VERIFICATION_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
-
 set(HEADERS
         "agent/check-duplicate-constructions-agent.hpp"
         "config/config.hpp"
@@ -28,22 +26,18 @@ set(SOURCES
 add_library(verification-module SHARED ${HEADERS} ${SOURCES})
 
 target_link_libraries(verification-module
-        LINK_PUBLIC sc-memory
-        LINK_PUBLIC sc-agents-common)
+        LINK_PUBLIC sc-machine::sc-memory
+        LINK_PUBLIC sc-machine::sc-agents-common)
 target_include_directories(verification-module
-        PUBLIC ${VERIFICATION_MODULE_SRC}
-        PUBLIC ${SC_MEMORY_INCLUDE}
-        PUBLIC ${SC_CORE_INCLUDE}
-        PUBLIC ${SC_AGENTS_COMMON_INCLUDE}
-        PUBLIC ${SC_KPM_INCLUDE}
-        PUBLIC ${SC_BUILDER_INCLUDE}
-        PUBLIC ${SC_CONFIG_INCLUDE}
+        PUBLIC ${CMAKE_CURRENT_LIST_DIR}
 )
+set_target_properties(verification-module PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${SC_EXTENSIONS_DIRECTORY})
 
 if(${SC_CLANG_FORMAT_CODE})
     target_clangformat_setup(verification-module)
 endif()
 
 if(${SC_BUILD_TESTS})
+    set(VERIFICATION_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
     include(${VERIFICATION_MODULE_SRC}/test/tests.cmake)
 endif()

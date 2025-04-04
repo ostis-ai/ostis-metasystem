@@ -6,11 +6,9 @@
 
 #pragma once
 
-#include "filesystem"
+#include <filesystem>
 
 #include <sc-memory/sc_agent.hpp>
-
-#include "dataStructures/element_check_result.hpp"
 
 namespace verificationModule
 {

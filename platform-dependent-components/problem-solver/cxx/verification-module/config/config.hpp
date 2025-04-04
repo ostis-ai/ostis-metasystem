@@ -11,14 +11,12 @@ private:
 
   Config(std::string const & scConfig);
 
-  ~Config()
-  {
-  }
+  ~Config() {}
 
 public:
   Config(Config & other) = delete;
 
-  void operator=(const Config &) = delete;
+  void operator=(Config const &) = delete;
 
   static Config * getInstance();
 

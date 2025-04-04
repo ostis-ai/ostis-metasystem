@@ -19,7 +19,9 @@ public:
   explicit VerificationResulFileHandler(ScMemoryContext * context);
 
   std::ofstream createOutputFile(
-      std::filesystem::path const & filePath, std::string const & checkedElementIdtf, ScAddr const & checkedElementAddr) const;
+      std::filesystem::path const & filePath,
+      std::string const & checkedElementIdtf,
+      ScAddr const & checkedElementAddr) const;
 
 private:
   ScMemoryContext * context;
