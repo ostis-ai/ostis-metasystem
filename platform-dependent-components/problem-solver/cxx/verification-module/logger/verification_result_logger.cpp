@@ -17,23 +17,21 @@ void VerificationResultLogger::logSetCheckResult(SetCheckResult const & checkRes
 
 void VerificationResultLogger::logSetInfo(SetCheckResult const & checkResult, std::ofstream & logFile)
 {
-  std::string description = "Check results for " + checkResult.setIdtf +
-                            ". Check performed at " + checkResult.checkTime + ".\n";
+  std::string description =
+      "Check results for " + checkResult.setIdtf + ". Check performed at " + checkResult.checkTime + ".\n";
 
   if (!checkResult.subjectDomainContainingAsMaximumClass.empty())
     description += "Checked set belong to " + checkResult.subjectDomainContainingAsMaximumClass
                    + " as maximum studied object class.\n";
-
 
   if (!checkResult.subjectDomainsContainingAsNotMaximumClass.empty())
   {
     std::string subjectDomainsEnumeration;
     for (auto const & subjectDomain : checkResult.subjectDomainsContainingAsNotMaximumClass)
       subjectDomainsEnumeration += subjectDomain + ", ";
-    subjectDomainsEnumeration.erase(subjectDomainsEnumeration.length() - 2);//remove ", " after the last element
+    subjectDomainsEnumeration.erase(subjectDomainsEnumeration.length() - 2);  // remove ", " after the last element
 
-    description +=
-        "Checked set belong to " + subjectDomainsEnumeration + " as not maximum studied object classes.\n";
+    description += "Checked set belong to " + subjectDomainsEnumeration + " as not maximum studied object classes.\n";
   }
 
   logFile << description;
