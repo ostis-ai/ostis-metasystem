@@ -8,6 +8,7 @@ set(HEADERS
         "manager/duplications_check_manager.hpp"
         "logger/verification_result_logger.hpp"
         "utils/search_utils.hpp"
+        "utils/identifier_utils.hpp"
         "verification_module.hpp"
 )
 
@@ -20,6 +21,7 @@ set(SOURCES
         "manager/duplications_check_manager.cpp"
         "logger/verification_result_logger.cpp"
         "utils/search_utils.cpp"
+        "utils/identifier_utils.cpp"
         "verification_module.cpp"
 )
 
