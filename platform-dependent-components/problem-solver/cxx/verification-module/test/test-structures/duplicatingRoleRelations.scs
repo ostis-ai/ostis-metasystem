@@ -5,5 +5,3 @@ object1 -> rrel_r3: object3;;
 object1 -> rrel_r3: object3;;
 object2 -> rrel_r3: object3;;
 object2 -> rrel_r4: object4;;
-
-

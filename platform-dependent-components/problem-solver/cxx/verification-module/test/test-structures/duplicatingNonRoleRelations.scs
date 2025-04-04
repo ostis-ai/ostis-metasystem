@@ -5,5 +5,3 @@ object1 => nrel_r1: object3;;
 object1 => nrel_r1: object3;;
 object2 => nrel_r1: object3;;
 object2 => nrel_r2: object4;;
-
-
