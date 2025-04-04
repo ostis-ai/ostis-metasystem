@@ -16,6 +16,7 @@
 #include "config/config.hpp"
 
 #include "check-duplicate-constructions-agent.hpp"
+#include "utils/identifier_utils.hpp"
 
 using namespace utils;
 
@@ -53,7 +54,7 @@ void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr) const
 {
   try
   {
-    m_logger.Info("Running check for " + m_context.GetElementSystemIdentifier(classAddr));
+    m_logger.Info("Running check for " + IdentifierUtils::getIdentifier(&m_context, classAddr));
 
     SetCheckResult setCheckResult;
     DuplicationsCheckManager duplicationsCheckManager(&m_context);
@@ -67,7 +68,7 @@ void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr) const
   }
   catch (utils::ScException const & exception)
   {
-    m_logger.Error("Error during " + m_context.GetElementSystemIdentifier(classAddr) + " processing.");
+    m_logger.Error("Error during " + IdentifierUtils::getIdentifier(&m_context, classAddr) + " processing.");
   }
 }
 

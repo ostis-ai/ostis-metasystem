@@ -9,8 +9,9 @@
 #include <iomanip>
 
 #include "sc-agents-common/utils/SetOperationsUtils.hpp"
-#include "utils/search_utils.hpp"
 
+#include "utils/search_utils.hpp"
+#include "utils/identifier_utils.hpp"
 #include "keynodes/verification_keynodes.hpp"
 
 #include "duplications_check_manager.hpp"
@@ -54,7 +55,7 @@ bool DuplicationsCheckManager::checkElementDuplications(ScAddr const & checkedEl
 
   if (!checkResult.errorsDescriptions.empty() || !checkResult.warningDescriptions.empty())
   {
-    checkResult.elementIdtf = m_context->GetElementSystemIdentifier(checkedElement);
+    checkResult.elementIdtf = IdentifierUtils::getIdentifier(m_context, checkedElement);
 
     return true;
   }
@@ -100,7 +101,7 @@ void DuplicationsCheckManager::processMultipleAccessArcs(
       continue;
 
     checkResult.warningDescriptions.emplace_back(
-        "Found multiple access arcs to " + m_context->GetElementSystemIdentifier(targetElement)
+        "Found multiple access arcs to " + IdentifierUtils::getIdentifier(m_context,targetElement)
         + ". Possible duplication if it was not meant as multiset.");
 
     RelationsInfo relationsInfo;
@@ -108,12 +109,12 @@ void DuplicationsCheckManager::processMultipleAccessArcs(
 
     for (auto const & relation : relationsInfo.duplicationgRelations)
       checkResult.errorsDescriptions.emplace_back(
-          "Found duplication of relation " + m_context->GetElementSystemIdentifier(relation) + " to "
-          + m_context->GetElementSystemIdentifier(targetElement));
+          "Found duplication of relation " + IdentifierUtils::getIdentifier(m_context,relation) + " to "
+          + IdentifierUtils::getIdentifier(m_context,targetElement));
 
     if (relationsInfo.containsArcsWithoutIntersectingRelations)
       checkResult.warningDescriptions.emplace_back(
-          "Found multiple access arcs of different relations to " + m_context->GetElementSystemIdentifier(targetElement)
+          "Found multiple access arcs of different relations to " + IdentifierUtils::getIdentifier(m_context,targetElement)
           + ". Possible it's better to use one arc belonging to several relations.");
   }
 }
@@ -137,19 +138,19 @@ void DuplicationsCheckManager::processMultipleCommonArcs(
 
     for (auto const & relation : relationsInfo.duplicationgRelations)
       checkResult.errorsDescriptions.emplace_back(
-          "Found duplication of relation " + m_context->GetElementSystemIdentifier(relation) + " to "
-          + m_context->GetElementSystemIdentifier(targetElement));
+          "Found duplication of relation " + IdentifierUtils::getIdentifier(m_context,relation) + " to "
+          + IdentifierUtils::getIdentifier(m_context,targetElement));
 
     // Check logic a single common arc without relation, but this is not a kind of error we search here
     // but rather an accompanying one
     if (relationsInfo.containsArcsWithoutRelations)
       checkResult.warningDescriptions.emplace_back(
-          "Found common arcs to " + m_context->GetElementSystemIdentifier(targetElement)
+          "Found common arcs to " + IdentifierUtils::getIdentifier(m_context,targetElement)
           + " not belonging to any relations. Possible incorrect construction.");
 
     if (relationsInfo.containsArcsWithoutIntersectingRelations)
       checkResult.warningDescriptions.emplace_back(
-          "Found multiple common arcs of different relations to " + m_context->GetElementSystemIdentifier(targetElement)
+          "Found multiple common arcs of different relations to " + IdentifierUtils::getIdentifier(m_context,targetElement)
           + ". Possible it's better to use one arc belonging to several relations.");
   }
 }
@@ -206,8 +207,8 @@ void DuplicationsCheckManager::checkSingularRelations(ScAddr const & checkedElem
       if (relationPairsNum > 1)
       {
         checkResult.errorsDescriptions.emplace_back(
-            "Duplicating relation " + m_context->GetElementSystemIdentifier(relation) + " from "
-            + m_context->GetElementSystemIdentifier(checkedElement)
+            "Duplicating relation " + IdentifierUtils::getIdentifier(m_context,relation) + " from "
+            + IdentifierUtils::getIdentifier(m_context,checkedElement)
             + ". Expected only one outgoing relation pair per element.");
 
         break;
@@ -279,7 +280,7 @@ void DuplicationsCheckManager::checkDuplicationInQuasybinaryRelationSets(
       auto const & insertionResult = tupleElements.insert(element);
       if (!insertionResult.second)
         checkResult.warningDescriptions.emplace_back(
-            "Found duplication of " + m_context->GetElementSystemIdentifier(relation) + "'s tuple elements.");
+            "Found duplication of " + IdentifierUtils::getIdentifier(m_context,relation) + "'s tuple elements.");
     }
 
     tuplesHashes[tupleHash].push_back(tuple);
@@ -293,7 +294,7 @@ void DuplicationsCheckManager::checkDuplicationInQuasybinaryRelationSets(
 
     if (atleastTwoSetsAreEqual(hashWithCorrespondingTuples.second))
       checkResult.errorsDescriptions.emplace_back(
-          "Two or more " + m_context->GetElementSystemIdentifier(relation)
+          "Two or more " + IdentifierUtils::getIdentifier(m_context,relation)
           + "'s tuples are equall. Likely duplication.");
   }
 }
@@ -335,7 +336,7 @@ bool DuplicationsCheckManager::findMaxObjectClassSubjectDomain(
   if (subjectDomainClassIterator->Next())
   {
     ScAddr domainSection = subjectDomainClassIterator->Get(0);
-    subjectDomainContainingAsMaximumClass = m_context->GetElementSystemIdentifier(domainSection);
+    subjectDomainContainingAsMaximumClass = IdentifierUtils::getIdentifier(m_context,domainSection);
     return true;
   }
 
@@ -356,13 +357,13 @@ void DuplicationsCheckManager::findNonMaxObjectClassSubjectDomains(
   while (subjectDomainClassIterator->Next())
   {
     ScAddr domainSection = subjectDomainClassIterator->Get(0);
-    subjectDomainsContainingAsNotMaximumClass.emplace_back(m_context->GetElementSystemIdentifier(domainSection));
+    subjectDomainsContainingAsNotMaximumClass.emplace_back(IdentifierUtils::getIdentifier(m_context,domainSection));
   }
 }
 
 void DuplicationsCheckManager::fillCheckedSetInfo(ScAddr const & checkedSet, SetCheckResult & setCheckResult)
 {
-  setCheckResult.setIdtf = m_context->GetElementSystemIdentifier(checkedSet);
+  setCheckResult.setIdtf = IdentifierUtils::getIdentifier(m_context,checkedSet);
   setCheckResult.checkTime = getCurrentDatetimeString();
   std::string subjectDomainContainingAsMaximumClass;
   if (findMaxObjectClassSubjectDomain(checkedSet, subjectDomainContainingAsMaximumClass))
