@@ -21,8 +21,11 @@ class DuplicatingConstructionCheckAgentTest : public ScMemoryTest
 {
 public:
   static inline std::string const & TEST_FILES_DIR_PATH = "../test-structures/";
+  static inline std::string const & GENERATED_RESULT_FILES_PATH = "../duplication-check-results/generated/";
+  static inline std::string const & REFERENCE_RESULT_FILES_PATH = "../duplication-check-results/prepared/";
   static inline std::string const & TEST_KB_BIN_PATH = "../kb.bin/";
   static inline std::string const & TEST_CONFIG_PATH = "../test-config.ini";
+  static inline int const WAIT_TIME = 5000;
   static inline ScsLoader loader;
 
 protected:
@@ -40,6 +43,7 @@ protected:
     DuplicatingConstructionCheckAgentTest::Shutdown();
 
     std::filesystem::remove_all(TEST_KB_BIN_PATH);
+    std::filesystem::remove_all(GENERATED_RESULT_FILES_PATH);
   }
 
   static void Initialize()
@@ -66,4 +70,6 @@ protected:
     ScMemory::Shutdown(SC_FALSE);
     ScMemory::LogUnmute();
   }
+
+  void compareResultFiles(std::string const & generatedFileName, std::string const & referenceFileName);
 };

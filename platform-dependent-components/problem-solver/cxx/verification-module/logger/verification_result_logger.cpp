@@ -17,44 +17,43 @@ void VerificationResultLogger::logSetCheckResult(SetCheckResult const & checkRes
 
 void VerificationResultLogger::logSetInfo(SetCheckResult const & checkResult, std::ofstream & logFile)
 {
-  std::string description = "Check results for " + checkResult.setIdtf + ". Check performed at " + checkResult.checkTime
-                            + ".\n Checked set belong to " + checkResult.subjectDomainContainingAsMaximumClass
-                            + " as maximum studed object class";
+  std::string description = "Check results for " + checkResult.setIdtf +
+                            ". Check performed at " + checkResult.checkTime + ".\n";
+
+  if (!checkResult.subjectDomainContainingAsMaximumClass.empty())
+    description += "Checked set belong to " + checkResult.subjectDomainContainingAsMaximumClass
+                   + " as maximum studied object class.\n";
+
 
   if (!checkResult.subjectDomainsContainingAsNotMaximumClass.empty())
   {
-    std::string subjectDomainsContainingAsNotMaximumClassEnumeration;
-    bool isFirst = true;
+    std::string subjectDomainsEnumeration;
     for (auto const & subjectDomain : checkResult.subjectDomainsContainingAsNotMaximumClass)
-    {
-      subjectDomainsContainingAsNotMaximumClassEnumeration += subjectDomain;
-
-      if (isFirst)
-      {
-        isFirst = false;
-        continue;
-      }
-
-      subjectDomainsContainingAsNotMaximumClassEnumeration += ", ";
-    }
+      subjectDomainsEnumeration += subjectDomain + ", ";
+    subjectDomainsEnumeration.erase(subjectDomainsEnumeration.length() - 2);//remove ", " after the last element
 
     description +=
-        "and to " + subjectDomainsContainingAsNotMaximumClassEnumeration + " as not maximum studied object classes.\n";
+        "Checked set belong to " + subjectDomainsEnumeration + " as not maximum studied object classes.\n";
   }
-  else
-    description += ".\n";
 
   logFile << description;
 }
 
 void VerificationResultLogger::logElementCheckResult(ElementCheckResult const & checkResult, std::ofstream & logFile)
 {
-  logFile << "Found next errors in checked set element " << checkResult.elementIdtf << ":\n";
-  for (auto const & errorDescription : checkResult.errorsDescriptions)
-    logFile << INDENT << "- " << errorDescription << "\n";
-  logFile << "And next possible errors: " << "\n";
-  for (auto const & warningDescription : checkResult.warningDescriptions)
-    logFile << INDENT << "- " << warningDescription << "\n";
+  if (!checkResult.errorsDescriptions.empty())
+  {
+    logFile << "Found next errors in checked set element " << checkResult.elementIdtf << ":\n";
+    for (auto const & errorDescription : checkResult.errorsDescriptions)
+      logFile << INDENT << "- " << errorDescription << "\n";
+  }
+
+  if (!checkResult.warningDescriptions.empty())
+  {
+    logFile << "Found next possible errors in checked set element " << checkResult.elementIdtf << ":\n";
+    for (auto const & warningDescription : checkResult.warningDescriptions)
+      logFile << INDENT << "- " << warningDescription << "\n";
+  }
 }
 
 }  // namespace verificationModule
