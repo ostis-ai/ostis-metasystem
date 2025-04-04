@@ -16,7 +16,7 @@ concept_singular_relation
     => nrel_sc_text_translation:
         {
         rrel_example:
-            [Eдиничное отношение — это отношение, для которого ожидается участие элементов в парах этого отношения не более одного раза.]
+            [Единичное отношение — это отношение, для которого ожидается участие элементов в парах этого отношения не более одного раза.]
             (* <- lang_ru;; *);
         rrel_example:
             [Singular relation - is a relation for which the elements in pairs of this relation are expected to participate no more than once]

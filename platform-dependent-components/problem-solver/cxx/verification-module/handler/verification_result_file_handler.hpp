@@ -13,10 +13,10 @@
 
 namespace verificationModule
 {
-class VerificationResulFileHandler
+class VerificationResultFileHandler
 {
 public:
-  explicit VerificationResulFileHandler(ScMemoryContext * context);
+  explicit VerificationResultFileHandler(ScMemoryContext * context);
 
   std::ofstream createOutputFile(
       std::filesystem::path const & filePath,
@@ -26,8 +26,8 @@ public:
 private:
   ScMemoryContext * context;
 
-  void resolveFileSpecification(ScAddr const & checkedElementAddr, std::filesystem::path const & fileFullNAme) const;
+  void resolveFileSpecification(ScAddr const & checkedElementAddr, std::filesystem::path const & fileFullName) const;
 
-  void generateDuplicationFileSpecification(ScAddr const &, std::filesystem::path const & fileFullNAme) const;
+  void generateDuplicationFileSpecification(ScAddr const &, std::filesystem::path const & fileFullName) const;
 };
 }  // namespace verificationModule

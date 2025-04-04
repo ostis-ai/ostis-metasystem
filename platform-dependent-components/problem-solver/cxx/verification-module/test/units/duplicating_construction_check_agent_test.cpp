@@ -219,7 +219,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
       checkResultForObject1Exist = true;
 
       std::string errorDescription = elementCheckResult.errorsDescriptions.front();
-      ASSERT_EQ(errorDescription, "Two or more nrel_quasibinary_r5's tuples are equall. Likely duplication.");
+      ASSERT_EQ(errorDescription, "Two or more nrel_quasibinary_r5's tuples are equal. Likely duplication.");
     }
     else if (elementCheckResult.elementIdtf == "object2")
     {
@@ -235,7 +235,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
       checkResultForObject3Exist = true;
 
       std::string errorDescription = elementCheckResult.errorsDescriptions.front();
-      ASSERT_EQ(errorDescription, "Two or more nrel_quasibinary_r7's tuples are equall. Likely duplication.");
+      ASSERT_EQ(errorDescription, "Two or more nrel_quasibinary_r7's tuples are equal. Likely duplication.");
     }
     else
       FAIL();

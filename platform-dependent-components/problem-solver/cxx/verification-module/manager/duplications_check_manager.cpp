@@ -107,7 +107,7 @@ void DuplicationsCheckManager::processMultipleAccessArcs(
     RelationsInfo relationsInfo;
     getRelationsInfo(connectors, ScType::ConstNodeRole, relationsInfo);
 
-    for (auto const & relation : relationsInfo.duplicationgRelations)
+    for (auto const & relation : relationsInfo.duplicatingRelations)
       checkResult.errorsDescriptions.emplace_back(
           "Found duplication of relation " + IdentifierUtils::getIdentifier(m_context,relation) + " to "
           + IdentifierUtils::getIdentifier(m_context,targetElement));
@@ -136,7 +136,7 @@ void DuplicationsCheckManager::processMultipleCommonArcs(
     RelationsInfo relationsInfo;
     getRelationsInfo(connectors, ScType::ConstNodeNonRole, relationsInfo);
 
-    for (auto const & relation : relationsInfo.duplicationgRelations)
+    for (auto const & relation : relationsInfo.duplicatingRelations)
       checkResult.errorsDescriptions.emplace_back(
           "Found duplication of relation " + IdentifierUtils::getIdentifier(m_context,relation) + " to "
           + IdentifierUtils::getIdentifier(m_context,targetElement));
@@ -176,7 +176,7 @@ void DuplicationsCheckManager::getRelationsInfo(
       arcContainsRelations = true;
       auto const & insertionResult = foundRelations.insert(relationIterator->Get(0));
       if (!insertionResult.second)
-        relationsInfo.duplicationgRelations.insert(relationIterator->Get(0));
+        relationsInfo.duplicatingRelations.insert(relationIterator->Get(0));
 
       else
       {
@@ -295,7 +295,7 @@ void DuplicationsCheckManager::checkDuplicationInQuasybinaryRelationSets(
     if (atleastTwoSetsAreEqual(hashWithCorrespondingTuples.second))
       checkResult.errorsDescriptions.emplace_back(
           "Two or more " + IdentifierUtils::getIdentifier(m_context,relation)
-          + "'s tuples are equall. Likely duplication.");
+          + "'s tuples are equal. Likely duplication.");
   }
 }
 
