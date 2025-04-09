@@ -1,9 +1,10 @@
-#include "scs_loader.hpp"
-#include "sc_test.hpp"
-#include "sc-agents-common/utils/CommonUtils.hpp"
-#include "sc-agents-common/utils/AgentUtils.hpp"
-#include "sc-agents-common/utils/IteratorUtils.hpp"
-#include "sc-agents-common/keynodes/coreKeynodes.hpp"
+#include <sc-builder/scs_loader.hpp>
+#include <sc-memory/test/sc_test.hpp>
+
+#include <sc-agents-common/utils/CommonUtils.hpp>
+#include <sc-agents-common/utils/IteratorUtils.hpp>
+#include <sc-agents-common/utils/AgentUtils.hpp>
+
 #include "agent/GenerateResponseAgent.hpp"
 #include "test/agent/OneParameterTestAgent.hpp"
 #include "test/agent/ZeroParameterTestAgent.hpp"
@@ -11,6 +12,8 @@
 #include "keynodes/Keynodes.hpp"
 
 #include <filesystem>
+
+using namespace generateResponseModule;
 
 namespace generateResponseModuleTest
 {
@@ -29,11 +32,8 @@ namespace generateResponseModuleTest
 
     void initialize(ScMemoryContext & context)
     {
-        ScAgentInit(true);
-        scAgentsCommon::CoreKeynodes::InitGlobal();
-        generateResponseModule::Keynodes::InitGlobal();
-        TestKeynodes::InitGlobal();
-        SC_AGENT_REGISTER(generateResponseModule::GenerateResponseAgent);
+
+        context.SubscribeAgent<generateResponseModule::GenerateResponseAgent>();
 
         for (auto const & file : std::filesystem::directory_iterator(TEMPLATES_DIR_PATH))
         {
@@ -44,7 +44,7 @@ namespace generateResponseModuleTest
 
     void shutdown()
     {
-      SC_AGENT_UNREGISTER(generateResponseModule::GenerateResponseAgent);
+        context.UnsubscribeAgent<generateResponseModule::GenerateResponseAgent>();
     }
 
     TEST_F(GenerateRsponseAgentTest, OneParameterAgentTest)
@@ -55,20 +55,18 @@ namespace generateResponseModuleTest
 
         initialize(context);
 
-        SC_AGENT_REGISTER(OneParameterTestAgent);
+        context.SubscribeAgent<OneParameterTestAgent>();
 
-        ScAddr const testActionNode = context.HelperFindBySystemIdtf("one_param_action_node");
-        ScAddr const message = context.HelperFindBySystemIdtf("message");
-        ScAddr const answer = context.HelperFindBySystemIdtf("_answer");
+        ScAddr const testActionNode = context.SearchElementBySystemIdentifier("one_param_action_node");
+        ScAddr const message = context.SearchElementBySystemIdentifier("message");
+        ScAddr const answer = context.SearchElementBySystemIdentifier("_answer");
         
-        utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
+        ScAction testAction = context.ConvertToAction(testActionNode);
 
-        EXPECT_TRUE(context.HelperCheckEdge(
-                scAgentsCommon::CoreKeynodes::question_finished_successfully,
-                testActionNode,
-                ScType::EdgeAccessConstPosPerm));
+        EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
+        EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
-        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_reply_structure);
+        ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, GenerateResponseKeynodes::nrel_reply_structure);
 
         EXPECT_TRUE(messageAnswer.IsValid());
 
@@ -78,7 +76,7 @@ namespace generateResponseModuleTest
 
         EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosTemp));
         
-        SC_AGENT_UNREGISTER(OneParameterTestAgent);
+        context.UnsubscribeAgent<OneParameterTestAgent>();
         shutdown();
     }
 
@@ -89,18 +87,16 @@ namespace generateResponseModuleTest
 
         initialize(context);
 
-        SC_AGENT_REGISTER(ZeroParameterTestAgent);
+        context.SubscribeAgent<ZeroParameterTestAgent>();
 
-        ScAddr const & testActionNode = context.HelperFindBySystemIdtf("zero_param_action_node");
-        ScAddr const & message = context.HelperFindBySystemIdtf("message");
-        ScAddr const & answer = context.HelperFindBySystemIdtf("_answer");
+        ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("zero_param_action_node");
+        ScAddr const & message = context.SearchElementBySystemIdentifier("message");
+        ScAddr const & answer = context.SearchElementBySystemIdentifier("_answer");
         
-        utils::AgentUtils::applyAction(&context, testActionNode, WAIT_TIME);
+        ScAction testAction = context.ConvertToAction(testActionNode);
 
-        EXPECT_TRUE(context.HelperCheckEdge(
-                scAgentsCommon::CoreKeynodes::question_finished_successfully,
-                testActionNode,
-                ScType::EdgeAccessConstPosPerm));
+        EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
+        EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
         ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::Keynodes::nrel_reply_structure);
 
@@ -113,7 +109,7 @@ namespace generateResponseModuleTest
 
         EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosTemp));
 
-        SC_AGENT_UNREGISTER(OneParameterTestAgent);
+        context.UnsubscribeAgent<ZeroParameterTestAgent>();
         shutdown();
     }
 }

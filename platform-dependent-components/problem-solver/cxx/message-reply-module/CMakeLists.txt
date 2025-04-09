@@ -1,29 +1,32 @@
 set(MESSAGE_REPLY_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
 
-set(SOURCES
-    "agent/MessageReplyAgent.cpp"
-    "agent/MessageReplyAgent.hpp"
-    "keynodes/MessageReplyKeynodes.cpp"
-    "keynodes/MessageReplyKeynodes.hpp"
-    "MessageReplyModule.cpp"
-    "MessageReplyModule.hpp"
+set(HEADERS
+        "agent/message-reply-agent.hpp"
+        "keynodes/message_reply_keynodes.hpp"
+        "message_reply_module.hpp"
 )
 
-add_library(message-reply SHARED ${SOURCES})
-target_link_libraries(message-reply 
+set(SOURCES
+        "agent/message-reply-agent.cpp"
+        "message_reply_module.cpp"
+)
+
+add_library(message-reply-module SHARED ${HEADERS} ${SOURCES})
+
+target_link_libraries(message-reply-module
     LINK_PUBLIC sc-memory 
     LINK_PUBLIC sc-agents-common
 )
-include_directories(message-reply
+target_include_directories(message-reply-module
     PUBLIC ${MESSAGE_REPLY_MODULE_SRC}
-    PUBLIC ${SC_MEMORY_SRC}
-    PUBLIC ${SC_KPM_SRC}
+    PUBLIC ${SC_MEMORY_INCLUDE}
+    PUBLIC ${SC_CORE_INCLUDE}
+    PUBLIC ${SC_AGENTS_COMMON_INCLUDE}
 )
 
-sc_codegen_ex(message-reply ${MESSAGE_REPLY_MODULE_SRC} ${MESSAGE_REPLY_MODULE_SRC}/generated)
-
 if(${SC_CLANG_FORMAT_CODE})
-    target_clangformat_setup(message-reply)
+    target_clangformat_setup(message-reply-module)
+>>>>>>> 0e7c22e (update ask-ai)
 endif()
 
 add_definitions(-DMESSAGE_REPLY_MODULE_PATH="${MESSAGE_REPLY_MODULE_SRC}/")

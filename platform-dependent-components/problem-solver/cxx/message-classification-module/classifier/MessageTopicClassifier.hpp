@@ -25,9 +25,9 @@ private:
   std::unique_ptr<WitAiClientInterface> client;
 
   ScAddrVector const relationsToIdtf = {
-      scAgentsCommon::CoreKeynodes::nrel_idtf,
-      scAgentsCommon::CoreKeynodes::nrel_main_idtf,
-      scAgentsCommon::CoreKeynodes::nrel_system_identifier,
+      ScKeynodes::nrel_idtf,
+      ScKeynodes::nrel_main_idtf,
+      ScKeynodes::nrel_system_identifier,
       MessageClassificationKeynodes::nrel_wit_ai_idtf};
 
   std::string getMessageText(ScAddr const & messageAddr);

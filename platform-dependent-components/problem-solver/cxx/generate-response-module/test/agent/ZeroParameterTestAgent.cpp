@@ -1,5 +1,7 @@
-#include "sc-agents-common/utils/IteratorUtils.hpp"
-#include "sc-agents-common/utils/AgentUtils.hpp"
+#include <sc-agents-common/utils/IteratorUtils.hpp>
+#include <sc-agents-common/utils/AgentUtils.hpp>
+
+#include "sc-memory/sc_addr.hpp"
 
 #include "test/keynodes/TestKeynodes.hpp"
 
@@ -7,14 +9,9 @@
 
 using namespace generateResponseModuleTest;
 
-SC_AGENT_IMPLEMENTATION(ZeroParameterTestAgent)
+
+ScResult OneParameterTestAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  ScAddr const & actionAddr = otherAddr;
-
-  if (!checkAction(actionAddr)) {
-      return SC_RESULT_OK;
-  }
-
   SC_LOG_DEBUG("ZeroParameterTestAgent started");
 
   ScAddr successNode = m_memoryCtx.CreateNode(ScType::NodeConst);
@@ -22,15 +19,14 @@ SC_AGENT_IMPLEMENTATION(ZeroParameterTestAgent)
 
   SC_LOG_DEBUG("ZeroParameterTestAgent ended");
 
-  utils::AgentUtils::finishAgentWork(&m_memoryCtx, actionAddr, {successNode});
-  return SC_RESULT_OK;
+  return action.FinishSuccessfully();
 }
 
-bool ZeroParameterTestAgent::checkAction(ScAddr const & actionAddr) 
+bool ZeroParameterTestAgent::checkAction(ScAddr const & action) 
 {
     return m_memoryCtx.HelperCheckEdge(
             TestKeynodes::action_zero_param,
-            actionAddr,
+            action,
             ScType::EdgeAccessConstPosPerm
             );
 }

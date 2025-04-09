@@ -1,10 +1,12 @@
+set(MESSAGE_CLASSIFICATION_MODULE_SRC "${CMAKE_CURRENT_LIST_DIR}")
+
 set(SOURCES
-    "MessageClassificationModule.cpp"
-    "keynodes/MessageClassificationKeynodes.cpp"
-    "agent/MessageTopicClassificationAgent.cpp"
+    "message_classification_module.cpp"
+    "keynodes/message_classification_keynodes.cpp"
+    "agent/message-topic-classification-agent.cpp"
     "classifier/MessageTopicClassifier.cpp"
     "client/WitAiClient.cpp"
-    "keynodes/MessageClassificationKeynodes.cpp"
+    "keynodes/message_keynodes.cpp"
     "keynodes/MessageKeynodes.cpp"
     "manager/MessageTopicClassificationManager.cpp"
     "constants/MessageClassificationConstants.cpp"
@@ -12,12 +14,12 @@ set(SOURCES
 )
 
 set(HEADERS
-    "MessageClassificationModule.hpp"
-    "keynodes/MessageClassificationKeynodes.hpp"
-    "agent/MessageTopicClassificationAgent.hpp"
+    "message_classification_module.hpp"
+    "keynodes/message_classification_keynodes.hpp"
+    "agent/message-topic-classification-agent.hpp"
     "classifier/MessageTopicClassifier.hpp"
     "client/WitAiClient.hpp"
-    "keynodes/MessageClassificationKeynodes.hpp"
+    "keynodes/message_keynodes.hpp"
     "keynodes/MessageKeynodes.hpp"
     "manager/MessageTopicClassificationManager.hpp"
     "client/WitAiClientInterface.hpp"
@@ -39,17 +41,20 @@ include_directories(
     ${GLIB2_INCLUDE_DIRS}
 )
 
-add_library(messageClassification SHARED ${SOURCES} ${HEADERS})
-target_link_libraries(
-    messageClassification
-    local-common
-    common-ps-lib
-    sc-memory
-    sc-agents-common
-    sc-config-utils
-)
+add_library(message-classification-module SHARED ${SOURCES} ${HEADERS})
 
-sc_codegen_ex(messageClassification ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/generated)
+target_link_libraries(message-classification-module
+        LINK_PUBLIC local-common
+        LINK_PUBLIC common-ps-lib
+        LINK_PUBLIC sc-memory
+        LINK_PUBLIC sc-agents-common
+        LINK_PUBLIC sc-config-utils)
+target_include_directories(message-classification-module
+        PUBLIC ${MESSAGE_CLASSIFICATION_MODULE_SRC}
+        PUBLIC ${SC_MEMORY_INCLUDE}
+        PUBLIC ${SC_CORE_INCLUDE}
+        PUBLIC ${SC_AGENTS_COMMON_INCLUDE}
+)
 
 add_definitions(-DMESSAGE_CLASSIFICATION_CONFIG_PATH="${CMAKE_SOURCE_DIR}/ostis-metasystem.ini")
 
@@ -58,5 +63,5 @@ if(${SC_BUILD_TESTS})
 endif()
 
 if(${SC_CLANG_FORMAT_CODE})
-    target_clangformat_setup(messageClassification)
+    target_clangformat_setup(message-classification-module)
 endif()
