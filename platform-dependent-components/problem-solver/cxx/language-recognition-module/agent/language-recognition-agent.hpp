@@ -7,19 +7,21 @@
 #pragma once
 
 #include <sc-memory/sc_agent.hpp>
- 
 
-namespace messageReplyModuleTest
+
+namespace languageRecognitionModule
 {
-class GenerateReplyMessageAgent : public ScActionInitiatedAgent
+class LanguageRecognitionAgent : public ScActionInitiatedAgent
 {
-  public:
+ public:
   ScAddr GetActionClass() const override;
 
   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 
 private:
-  bool actionIsValid(ScAddr const & actionAddr);
+  ScAddr recognizeLanguage(std::string message);
+
+  bool checkAction(ScAddr const & actionAddr);
 };
 
-} // namespace commonTest
+}  // namespace languageRecognitionModule

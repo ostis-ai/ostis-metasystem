@@ -1,10 +1,10 @@
-#include "MessageTopicClassifier.hpp"
-
-#include "sc-agents-common/utils/IteratorUtils.hpp"
+#include <sc-agents-common/utils/IteratorUtils.hpp>
 
 #include "constants/MessageClassificationConstants.hpp"
-#include "keynodes/MessageClassificationKeynodes.hpp"
+#include "keynodes/message_classification_keynodes.hpp"
 #include "searcher/MessageSearcher.hpp"
+
+#include "MessageTopicClassifier.hpp"
 
 namespace messageClassificationModule
 {
@@ -70,7 +70,7 @@ ScAddrVector MessageTopicClassifier::getMessageIntentClass(ScAddr const & messag
     return messageIntentCLassElements;
   }
 
-  ScIterator3Ptr const possibleIntentIterator = context->Iterator3(
+  ScIterator3Ptr const possibleIntentIterator = context->CreateIterator3(
       MessageClassificationKeynodes::concept_intent_possible_class,
       ScType::EdgeAccessConstPosPerm,
       ScType::NodeConstClass);
@@ -148,7 +148,7 @@ ScAddrVector MessageTopicClassifier::getMessageTraitClass(ScAddr const & message
     return messageTraitClassElements;
   }
 
-  ScIterator3Ptr possibleTraitIterator = context->Iterator3(
+  ScIterator3Ptr possibleTraitIterator = context->CreateIterator3(
       MessageClassificationKeynodes::concept_trait_possible_class,
       ScType::EdgeAccessConstPosPerm,
       ScType::NodeConstClass);
@@ -252,7 +252,7 @@ ScAddrVector MessageTopicClassifier::getMessageEntity(ScAddr const & messageAddr
   json const messageEntity = getMessageEntities(witResponse);
   if (!messageEntity.empty())
   {
-    ScIterator3Ptr possibleEntityIterator = context->Iterator3(
+    ScIterator3Ptr possibleEntityIterator = context->CreateIterator3(
         MessageClassificationKeynodes::concept_entity_possible_class,
         ScType::EdgeAccessConstPosPerm,
         ScType::NodeConstClass);
@@ -286,7 +286,7 @@ ScAddr MessageTopicClassifier::findEntityByIdtf(std::string const & idtf, ScType
     for (ScAddr const & idtfRelation : relationsToIdtf)
     {
       ScIterator5Ptr entityByIdtfIterator =
-          context->Iterator5(entityType, ScType::EdgeDCommonConst, link, ScType::EdgeAccessConstPosPerm, idtfRelation);
+          context->CreateIterator5(entityType, ScType::EdgeDCommonConst, link, ScType::EdgeAccessConstPosPerm, idtfRelation);
       if (entityByIdtfIterator->Next())
       {
         return entityByIdtfIterator->Get(0);

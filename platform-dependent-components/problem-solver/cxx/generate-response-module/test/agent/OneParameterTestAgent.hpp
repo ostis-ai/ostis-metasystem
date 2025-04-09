@@ -1,20 +1,18 @@
 #pragma once
 
-#include "sc-memory/kpm/sc_agent.hpp"
-#include "sc-agents-common/keynodes/coreKeynodes.hpp"
-
-#include "OneParameterTestAgent.generated.hpp"
+#include <sc-memory/sc_agent.hpp>
 
 namespace generateResponseModuleTest
 {
-class OneParameterTestAgent : public ScAgent
+class OneParameterTestAgent : public ScActionInitiatedAgent
 {
-  SC_CLASS(Agent, Event(scAgentsCommon::CoreKeynodes::question_initiated, ScEvent::Type::AddOutputEdge))
-  SC_GENERATED_BODY()
+  public:
+   ScAddr GetActionClass() const override;
+ 
+   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 
 private:
   bool checkAction(ScAddr const & actionAddr);
-  
 };
 
 }  // namespace generateResponseModuleTest

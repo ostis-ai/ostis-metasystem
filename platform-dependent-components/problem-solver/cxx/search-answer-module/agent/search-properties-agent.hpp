@@ -7,19 +7,21 @@
 #pragma once
 
 #include <sc-memory/sc_agent.hpp>
- 
 
-namespace messageReplyModuleTest
+
+namespace searchAnswerModule
 {
-class GenerateReplyMessageAgent : public ScActionInitiatedAgent
+class SearchPropertiesAgent : public ScActionInitiatedAgent
 {
-  public:
+ public:
   ScAddr GetActionClass() const override;
 
   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 
 private:
-  bool actionIsValid(ScAddr const & actionAddr);
+  ScAddrVector findProperties(ScAddr const & conceptAddr);
+
+  bool checkAction(ScAddr const & actionAddr);
 };
 
-} // namespace commonTest
+}  // namespace SearchAnswerModule
