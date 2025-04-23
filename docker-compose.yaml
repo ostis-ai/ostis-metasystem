@@ -45,24 +45,6 @@ services:
     command:
       - "run"
 
-  metasystem-ui:
-    image: ostis/metasystem-ui:0.1.0
-    build:
-      context: ./platform-depended-components/interface/react-sc-web
-      dockerfile: ./Dockerfile
-    container_name: metasystem-ui
-    restart: unless-stopped
-    ports:
-      - "3000:8080"
-    networks:
-      - nika
-    environment:
-      - SOCKET_URL=ws://machine:8090
-      - SC_URL=ws://machine:8090
-      - SC_WEB_URL=http://web:8000
-    depends_on:
-      - web
-
 volumes:
   kb-binary: {}
 
