@@ -2,7 +2,7 @@ services:
   web:
     image: ostis/sc-web:0.9.0
     build:
-      context: ./platform-depended-components/interface/install/sc-web
+      context: ./platform-dependent-components/interface/install/sc-web
     restart: unless-stopped
     ports:
       - "8000:8000"
@@ -40,7 +40,7 @@ services:
       - "KB_PATH=/knowledge-base/repo.path"
       - "BINARY_PATH=/ostis-metasystem/install/sc-machine/bin"
       - "CONFIG_PATH=/knowledge-base/ostis-metasystem.ini"
-      - "EXTENSIONS_PATH=/ostis-metasystem/build/Release/extensions;/ostis-metasystem/install/sc-machine/lib/extensions;/ostis-metasystem/install/scp-machine/lib/extensions;/ostis-metasystem/install/sc-component-manager/lib/extensions"
+      - "EXTENSIONS_PATH=/ostis-metasystem/build/Release/lib/extensions;/ostis-metasystem/install/sc-machine/lib/extensions;/ostis-metasystem/install/scp-machine/lib/extensions;/ostis-metasystem/install/sc-component-manager/lib/extensions"
       - "SC_SERVER_HOST=0.0.0.0"
     command:
       - "run"

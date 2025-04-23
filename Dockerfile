@@ -45,7 +45,7 @@ FROM base AS final
 
 COPY --from=builder /ostis-metasystem/scripts /ostis-metasystem/scripts
 COPY --from=builder /ostis-metasystem/install /ostis-metasystem/install
-COPY --from=builder /ostis-metasystem/build/Release/extensions /ostis-metasystem/build/Release/extensions
+COPY --from=builder /ostis-metasystem/build/Release/lib/extensions /ostis-metasystem/build/Release/lib/extensions
 COPY --from=builder /ostis-metasystem/.venv /ostis-metasystem/.venv
 
 WORKDIR /ostis-metasystem

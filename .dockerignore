@@ -1,0 +1,12 @@
+docker-compose.yml
+Dockerfile
+.dockerignore
+.git
+.gitignore
+platform-dependent-component/interface/react-sc-web
+knowledge-base
+LICENSE
+README.md
+build
+install
+ConanPresets.json
