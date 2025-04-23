@@ -49,7 +49,7 @@ function start_machine {
         echo "Using default arguments."
         LD_LIBRARY_PATH="$SC_MACHINE_LIBRARY_PATH" "$BINARY_PATH"/sc-machine -c "$CONFIG_PATH" -e "$EXTENSIONS_PATH"
     else
-        "$BINARY_PATH"/sc-machine "$@"
+        LD_LIBRARY_PATH="$SC_MACHINE_LIBRARY_PATH" "$BINARY_PATH"/sc-machine "$@"
     fi
 }
 
