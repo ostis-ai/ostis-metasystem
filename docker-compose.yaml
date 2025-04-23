@@ -40,7 +40,7 @@ services:
       - "KB_PATH=/knowledge-base/repo.path"
       - "BINARY_PATH=/ostis-metasystem/install/sc-machine/bin"
       - "CONFIG_PATH=/knowledge-base/ostis-metasystem.ini"
-      - "SC_MACHINE_LIBRARY_PATH=/ostis-metasystem/install/sc-machine/lib/extensions"
+      - "SC_MACHINE_LIBRARY_PATH=/ostis-metasystem/install/sc-machine/lib"
       - "EXTENSIONS_PATH=/ostis-metasystem/build/Release/lib/extensions;/ostis-metasystem/install/sc-machine/lib/extensions;/ostis-metasystem/install/scp-machine/lib/extensions;/ostis-metasystem/install/sc-component-manager/lib/extensions"
       - "SC_SERVER_HOST=0.0.0.0"
     command:
