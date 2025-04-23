@@ -47,7 +47,7 @@ function start_machine {
     then
         # you should provide the config file path and host settings yourself in case you want to use custom options!
         echo "Using default arguments."
-        "$BINARY_PATH"/sc-machine -c "$CONFIG_PATH" -e "$EXTENSIONS_PATH"
+        LD_LIBRARY_PATH="$SC_MACHINE_LIBRARY_PATH" "$BINARY_PATH"/sc-machine -c "$CONFIG_PATH" -e "$EXTENSIONS_PATH"
     else
         "$BINARY_PATH"/sc-machine "$@"
     fi
