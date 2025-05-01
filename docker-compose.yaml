@@ -1,0 +1,53 @@
+services:
+  web:
+    image: ostis/sc-web:0.9.0
+    build:
+      context: ./platform-dependent-components/interface/install/sc-web
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    networks:
+      - sc-machine
+    command:
+      - "--server-host=machine"
+      - "--allowed_origins=http://localhost:3000"
+    depends_on:
+      machine:
+        condition: service_healthy
+
+  machine:
+    image: ostis/sc-machine:0.10.2
+    build:
+      context: ./
+    restart: unless-stopped
+    volumes:
+      # TODO(NikitaZotov): Don't load all project sources to volume to build knowledge-base.
+      - ./:/knowledge-base
+      - kb-binary:/kb.bin
+    networks:
+      - sc-machine
+    ports:
+      - "8090:8090"
+    healthcheck:
+      test: "/bin/bash -c 'source /ostis-metasystem/.venv/bin/activate && python3 /ostis-metasystem/scripts/healthcheck.py'"
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      # start_period: 120s
+    environment:
+      # Use the commented env variable if you need to rebuild KB every startup. Also, use commented start period.
+      #- "REBUILD_KB=1"
+      - "KB_PATH=/knowledge-base/repo.path"
+      - "BINARY_PATH=/ostis-metasystem/install/sc-machine/bin"
+      - "CONFIG_PATH=/knowledge-base/ostis-metasystem.ini"
+      - "SC_MACHINE_LIBRARY_PATH=/ostis-metasystem/install/sc-machine/lib"
+      - "EXTENSIONS_PATH=/ostis-metasystem/build/Release/lib/extensions;/ostis-metasystem/install/sc-machine/lib/extensions;/ostis-metasystem/install/scp-machine/lib/extensions;/ostis-metasystem/install/sc-component-manager/lib/extensions"
+      - "SC_SERVER_HOST=0.0.0.0"
+    command:
+      - "run"
+
+volumes:
+  kb-binary: {}
+
+networks:
+  sc-machine: {}
