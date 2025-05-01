@@ -46,7 +46,7 @@
 
     ```sh
     cd platform-dependent-components/interface/install/sc-web
-    git checkout feature/add_scg_iframe_with_linear_mode
+    git checkout feature/add-scg-iframe
     npm run build
     ```
 
