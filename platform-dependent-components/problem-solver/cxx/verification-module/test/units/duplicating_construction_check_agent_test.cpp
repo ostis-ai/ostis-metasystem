@@ -9,9 +9,12 @@
 #include <sc-memory/sc_agent.hpp>
 #include "sc-memory/utils/sc_base64.hpp"
 
+#include "sc-agents-common/utils/IteratorUtils.hpp"
+
 #include <vector>
 #include <regex>
 
+#include "utils/identifier_utils.hpp"
 #include "manager/duplications_check_manager.hpp"
 #include "keynodes/verification_keynodes.hpp"
 #include "agent/check-duplicate-constructions-agent.hpp"
@@ -339,6 +342,31 @@ TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithoutArgument)
   compareResultFiles(
       GENERATED_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class",
       REFERENCE_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class_example.txt");
+}
+
+TEST_F(DuplicatingConstructionCheckAgentTest, GetUniqueIdentifierTest)
+{
+  ScAgentContext & context = *m_ctx;
+
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "uniqueIdentifiersTest.scs");
+
+  ScAddr const & nodesWithIdtfsSet = context.SearchElementBySystemIdentifier("node_with_system_id");
+  ASSERT_TRUE(context.IsElement(nodesWithIdtfsSet));
+  ScAddr const & nodeWithIdtf = utils::IteratorUtils::getAnyFromSet(&context, nodesWithIdtfsSet);
+  ASSERT_TRUE(context.IsElement(nodeWithIdtf));
+
+  std::string identifierOfNodeWithSystemId
+      = verificationModule::IdentifierUtils::getUniqueIdentifier(&context, nodeWithIdtf);
+  ASSERT_EQ(identifierOfNodeWithSystemId, "test_node");
+
+  ScAddr const & nodesWithoutIdtfsSet = context.SearchElementBySystemIdentifier("node_without_system_id");
+  ASSERT_TRUE(context.IsElement(nodesWithoutIdtfsSet));
+  ScAddr const & nodeWithoutIdtf = utils::IteratorUtils::getAnyFromSet(&context, nodesWithoutIdtfsSet);
+  ASSERT_TRUE(context.IsElement(nodeWithoutIdtf));
+
+  std::string identifierOfNodeWithoutSystemId
+      = verificationModule::IdentifierUtils::getUniqueIdentifier(&context, nodeWithoutIdtf);
+  ASSERT_EQ(identifierOfNodeWithoutSystemId, std::to_string(nodeWithoutIdtf.Hash()));
 }
 
 }  // namespace VerificationModuleTest
