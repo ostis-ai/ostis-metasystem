@@ -35,7 +35,7 @@ nrel_duplicate_construction_file
             [Файл дублирующихся конструкций* — бинарное отношение, связывающее класс сущности с текстовым файлом, куда записываются дублирующиеся объекты, принадлежащие этому классу сущностей.]
             (* <- lang_ru;; *);
         rrel_example:
-            [Duplicate constructions file* is a binary relation that connects an sc node class to a text file where duplicate objects belonging to that entity class are written.]
+            [Duplicate constructions file* is a binary relation that connects an sc node class to a text file where duplicate objects belonging to this entity class are written.]
             (* <- lang_en;; *)
         };;
     => nrel_using_constants:

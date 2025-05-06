@@ -17,6 +17,6 @@ action_check_duplicate_constructions
             [Действие. проверить дублирующиеся конструкции в БЗ - это действие по выявлению дублирующихся конструкций в базе знаний.](* <- lang_ru;; *);
 
         rrel_example:
-            [Action. check duplicate constructions is an action to check duplicate constructions in the knowledge base.](* <- lang_en;; *)
+            [Action. check duplicate constructions is an action to identify duplicate constructions in a knowledge base.](* <- lang_en;; *)
         };;
     *);;
