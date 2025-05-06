@@ -9,7 +9,8 @@ sc_node_non_role_relation
 
 concept_singular_relation
 -> nrel_singular_r8;
--> nrel_singular_r9;;
+-> nrel_singular_r9;
+-> rrel_singular_r10;;
 
 quasybinary_relation
 -> nrel_quasibinary_r5;
@@ -20,6 +21,7 @@ sc_node_role_relation
 -> rrel_1;
 -> rrel_r3;
 -> rrel_r4;
+-> rrel_singular_r10;
 -> rrel_maximum_studied_object_class;
 -> rrel_not_maximum_studied_object_class;;
 

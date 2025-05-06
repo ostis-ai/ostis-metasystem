@@ -88,13 +88,13 @@ TEST_F(DuplicatingConstructionCheckAgentTest, AccessArcsWithoutRelationsTest)
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
-  ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1);
+  ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1u);
 
   ElementDuplicationsCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
   ASSERT_TRUE(elementCheckResult.errorsDescriptions.empty());
-  ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1);
+  ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1u);
 
   std::string const & warningDescription = elementCheckResult.warningDescriptions.front();
 
@@ -118,13 +118,13 @@ TEST_F(DuplicatingConstructionCheckAgentTest, CommonArcsWithoutRelationsTest)
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
-  ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1);
+  ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1u);
 
   ElementDuplicationsCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
   ASSERT_TRUE(elementCheckResult.errorsDescriptions.empty());
-  ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1);
+  ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1u);
 
   std::string const & warningDescription = elementCheckResult.warningDescriptions.front();
 
@@ -147,13 +147,13 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingNonRoleRelationsTest)
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
-  ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1);
+  ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1u);
 
   ElementDuplicationsCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
   ASSERT_TRUE(elementCheckResult.warningDescriptions.empty());
-  ASSERT_EQ(elementCheckResult.errorsDescriptions.size(), 1);
+  ASSERT_EQ(elementCheckResult.errorsDescriptions.size(), 1u);
 
   std::string const & errorDescription = elementCheckResult.errorsDescriptions.front();
 
@@ -174,17 +174,17 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingRoleRelationsTest)
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
-  ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1);
+  ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1u);
 
   ElementDuplicationsCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
 
-  ASSERT_EQ(elementCheckResult.errorsDescriptions.size(), 1);
+  ASSERT_EQ(elementCheckResult.errorsDescriptions.size(), 1u);
   std::string const & errorDescription = elementCheckResult.errorsDescriptions.front();
   ASSERT_EQ(errorDescription, "Found duplication of relation rrel_r3 to object3");
 
-  ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1);
+  ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1u);
   std::string const & warningDescription = elementCheckResult.warningDescriptions.front();
   ASSERT_EQ(
       warningDescription,
@@ -206,7 +206,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
   std::list<ElementDuplicationsCheckResult> const & elementsCheckResults = checkResult.elemtnsCheckResults;
-  ASSERT_EQ(elementsCheckResults.size(), 3);
+  ASSERT_EQ(elementsCheckResults.size(), 3u);
 
   bool checkResultForObject1Exist = false;
   bool checkResultForObject2Exist = false;
@@ -224,7 +224,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
     {
       checkResultForObject2Exist = true;
 
-      ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1);
+      ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1u);
 
       std::string warningDescription = elementCheckResult.warningDescriptions.front();
       ASSERT_EQ(warningDescription, "Found duplication of nrel_quasibinary_r6's tuple elements.");
@@ -240,7 +240,9 @@ TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
       FAIL();
   }
 
-  ASSERT_TRUE(checkResultForObject1Exist && checkResultForObject2Exist && checkResultForObject3Exist);
+  ASSERT_TRUE(checkResultForObject1Exist);
+  ASSERT_TRUE(checkResultForObject2Exist);
+  ASSERT_TRUE(checkResultForObject3Exist);
 }
 
 TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjDomainSearchTest)
@@ -259,10 +261,10 @@ TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjD
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
   ASSERT_EQ(checkResult.setIdtf, "test_class");
-  ASSERT_EQ(checkResult.subjectDomainsContainingAsMaximumClass.size(), 1);
+  ASSERT_EQ(checkResult.subjectDomainsContainingAsMaximumClass.size(), 1u);
   ASSERT_EQ(checkResult.subjectDomainsContainingAsMaximumClass.front(), "subj_dom_1");
 
-  ASSERT_EQ(checkResult.subjectDomainsContainingAsNotMaximumClass.size(), 2);
+  ASSERT_EQ(checkResult.subjectDomainsContainingAsNotMaximumClass.size(), 2u);
   std::string firstSubjDom = checkResult.subjectDomainsContainingAsNotMaximumClass.front();
   std::string secondSubjDom = checkResult.subjectDomainsContainingAsNotMaximumClass.back();
 
@@ -270,17 +272,27 @@ TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjD
   ASSERT_TRUE(firstSubjDom == "subj_dom_2" || firstSubjDom == "subj_dom_3");
   ASSERT_TRUE(secondSubjDom == "subj_dom_2" || secondSubjDom == "subj_dom_3");
 
-  ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1);
+  ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1u);
 
   ElementDuplicationsCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
 
-  ASSERT_EQ(elementCheckResult.errorsDescriptions.size(), 1);
-  std::string const & errorDescription = elementCheckResult.errorsDescriptions.front();
-  ASSERT_EQ(
-      errorDescription,
-      "Duplicating relation nrel_singular_r8 from object1. Expected only one outgoing relation pair per element.");
+  ASSERT_EQ(elementCheckResult.errorsDescriptions.size(), 2u);
+  std::string const & firstErrorDescription = elementCheckResult.errorsDescriptions.front();
+  std::string const & secondErrorDescription = elementCheckResult.errorsDescriptions.back();
+
+  std::string const & firstExpectedErrorDescription =
+      "Duplicating relation nrel_singular_r8 from object1. Expected only one outgoing relation pair per element.";
+  std::string const & secondExpectedErrorDescription =
+      "Duplicating relation rrel_singular_r10 from object1. Expected only one outgoing relation pair per element.";
+
+  // Descriptions order is not defined
+  ASSERT_TRUE(firstErrorDescription != secondErrorDescription);
+  ASSERT_TRUE((firstErrorDescription == firstExpectedErrorDescription)
+              || (firstErrorDescription == secondExpectedErrorDescription));
+  ASSERT_TRUE((secondErrorDescription == firstExpectedErrorDescription)
+              || (secondErrorDescription == secondExpectedErrorDescription));
 }
 
 TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithArgument)
@@ -292,10 +304,10 @@ TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithArgument)
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "testActionWithArgument.scs");
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subjectDomains.scs");
 
-  ScAddr const & test_action_node = context.SearchElementBySystemIdentifier("test_verification_action_node");
-  ASSERT_TRUE(context.IsElement(test_action_node));
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_verification_action_node");
+  ASSERT_TRUE(context.IsElement(testActionNode));
 
-  ScAction testAction = context.ConvertToAction(test_action_node);
+  ScAction testAction = context.ConvertToAction(testActionNode);
   context.SubscribeAgent<verificationModule::CheckDuplicateConstructionsAgent>();
 
   ASSERT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
@@ -315,10 +327,10 @@ TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithoutArgument)
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "testActionWithoutArgument.scs");
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subjectDomains.scs");
 
-  ScAddr const & test_action_node = context.SearchElementBySystemIdentifier("test_verification_action_node");
-  ASSERT_TRUE(context.IsElement(test_action_node));
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_verification_action_node");
+  ASSERT_TRUE(context.IsElement(testActionNode));
 
-  ScAction testAction = context.ConvertToAction(test_action_node);
+  ScAction testAction = context.ConvertToAction(testActionNode);
   context.SubscribeAgent<verificationModule::CheckDuplicateConstructionsAgent>();
 
   ASSERT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
