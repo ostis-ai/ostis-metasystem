@@ -3,5 +3,7 @@ test_class -> object2;;
 
 object1 => nrel_singular_r8: object3;;
 object1 => nrel_singular_r8: object4;;
+object1 -> rrel_singular_r10: object5;;
+object1 -> rrel_singular_r10: object6;;
 object2 => nrel_singular_r8: object5;;
 object2 => nrel_singular_r9: object6;;
