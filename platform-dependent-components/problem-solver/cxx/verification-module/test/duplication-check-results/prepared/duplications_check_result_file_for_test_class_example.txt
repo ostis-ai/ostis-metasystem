@@ -2,6 +2,6 @@ Check results for test_class. Check performed at 2025-04-04 14:04:42.
 Checked set belong to subj_dom_1 as maximum studied object class.
 Checked set belong to subj_dom_3, subj_dom_2 as not maximum studied object class.
 Found next errors in checked set element object1:
-    - Duplicating relation nrel_singular_r8 from object1. Expected only one outgoing relation pair per element.
+    - Duplicate relation nrel_singular_r8 from object1. Expected only one outgoing relation pair per element.
 Found next possible errors in checked set element object1:
     - Found common arcs to object3 not belonging to any relations. Possible incorrect construction.

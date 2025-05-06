@@ -103,8 +103,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, AccessArcsWithoutRelationsTest)
 
   ASSERT_EQ(
       warningDescription,
-      "Found multiple access arcs to object3. Possible duplication if it was not meant "
-      "as multiset.");
+      "Found multiple access arcs to object3. Duplication is possible if it was not intended as a multiset.");
 }
 
 TEST_F(DuplicatingConstructionCheckAgentTest, CommonArcsWithoutRelationsTest)
@@ -185,13 +184,13 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingRoleRelationsTest)
 
   ASSERT_EQ(elementCheckResult.errorsDescriptions.size(), 1u);
   std::string const & errorDescription = elementCheckResult.errorsDescriptions.front();
-  ASSERT_EQ(errorDescription, "Found duplication of relation rrel_r3 to object3");
+  ASSERT_EQ(errorDescription, "Found duplicate relation rrel_r3 to object3");
 
   ASSERT_EQ(elementCheckResult.warningDescriptions.size(), 1u);
   std::string const & warningDescription = elementCheckResult.warningDescriptions.front();
   ASSERT_EQ(
       warningDescription,
-      "Found multiple access arcs to object3. Possible duplication if it was not meant as multiset.");
+      "Found multiple access arcs to object3. Duplication is possible if it was not intended as a multiset.");
 }
 
 TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
@@ -286,9 +285,9 @@ TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjD
   std::string const & secondErrorDescription = elementCheckResult.errorsDescriptions.back();
 
   std::string const & firstExpectedErrorDescription =
-      "Duplicating relation nrel_singular_r8 from object1. Expected only one outgoing relation pair per element.";
+      "Duplicate relation nrel_singular_r8 from object1. Expected only one outgoing relation pair per element.";
   std::string const & secondExpectedErrorDescription =
-      "Duplicating relation rrel_singular_r10 from object1. Expected only one outgoing relation pair per element.";
+      "Duplicate relation rrel_singular_r10 from object1. Expected only one outgoing relation pair per element.";
 
   // Descriptions order is not defined
   ASSERT_TRUE(firstErrorDescription != secondErrorDescription);

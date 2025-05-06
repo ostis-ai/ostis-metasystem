@@ -114,21 +114,21 @@ void DuplicationsCheckManager::processMultipleAccessArcs(
 
     checkResult.warningDescriptions.emplace_back(
         "Found multiple access arcs to " + IdentifierUtils::getIdentifiersString(m_context, targetElement)
-        + ". Possible duplication if it was not meant as multiset.");
+        + ". Duplication is possible if it was not intended as a multiset.");
 
     RelationsDuplicationInfo relationsInfo;
     getRelationsInfo(connectors, ScType::ConstNodeRole, relationsInfo);
 
     for (auto const & relation : relationsInfo.duplicatingRelations)
       checkResult.errorsDescriptions.emplace_back(
-          "Found duplication of relation " + IdentifierUtils::getIdentifiersString(m_context, relation) + " to "
+          "Found duplicate relation " + IdentifierUtils::getIdentifiersString(m_context, relation) + " to "
           + IdentifierUtils::getIdentifiersString(m_context, targetElement));
 
     if (relationsInfo.containsConnectorsWithoutIntersectingRelations)
       checkResult.warningDescriptions.emplace_back(
           "Found multiple access arcs of different relations to "
           + IdentifierUtils::getIdentifiersString(m_context, targetElement)
-          + ". Possible it's better to use one arc belonging to several relations.");
+          + ". It might be better to use a single arc belonging to multiple relations.");
   }
 }
 
@@ -161,9 +161,9 @@ void DuplicationsCheckManager::processMultipleCommonArcs(
 
     if (relationsInfo.containsConnectorsWithoutIntersectingRelations)
       checkResult.warningDescriptions.emplace_back(
-          "Found multiple common arcs of different relations to "
+          "Found multiple common arcs directed to"
           + IdentifierUtils::getIdentifiersString(m_context, targetElement)
-          + ". Possible it's better to use one arc belonging to several relations.");
+          + ", which belong to different relations. It might be better to use a single arc belonging to multiple relations.");
   }
 }
 
@@ -220,7 +220,7 @@ void DuplicationsCheckManager::checkSingularRelations(
       if (relationPairsNum > 1)
       {
         checkResult.errorsDescriptions.emplace_back(
-            "Duplicating relation " + IdentifierUtils::getIdentifiersString(m_context, relation) + " from "
+            "Duplicate relation " + IdentifierUtils::getIdentifiersString(m_context, relation) + " from "
             + IdentifierUtils::getIdentifiersString(m_context, checkedElement)
             + ". Expected only one outgoing relation pair per element.");
 
