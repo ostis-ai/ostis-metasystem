@@ -10,6 +10,9 @@
 
 #include <sc-memory/sc_agent.hpp>
 
+#include "manager/duplications_check_manager.hpp"
+#include "handler/verification_result_file_handler.hpp"
+
 namespace verificationModule
 {
 class CheckDuplicateConstructionsAgent : public ScActionInitiatedAgent
@@ -21,8 +24,12 @@ public:
 
 private:
   std::filesystem::path filePath;
+  std::unique_ptr<DuplicationsCheckManager> duplicationsCheckManager;
+  std::unique_ptr<VerificationResultFileHandler> fileHandler;
 
-  void runCheck(ScAddr const & classAddr) const;
+  ScAddr formResultStructure(ScAddrUnorderedSet const & resultElements) const;
+
+  void runCheck(ScAddr const & classAddr, ScAddrUnorderedSet & resultElements) const;
 };
 
 }  // namespace verificationModule

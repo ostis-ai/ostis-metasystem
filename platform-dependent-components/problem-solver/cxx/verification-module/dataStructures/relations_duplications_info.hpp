@@ -8,11 +8,11 @@
 
 #include <sc-memory/sc_addr.hpp>
 
-#include "dataStructures/element_check_result.hpp"
+#include "dataStructures/element_duplications_check_result.hpp"
 
-struct RelationsInfo
+struct RelationsDuplicationInfo
 {
   ScAddrSet duplicatingRelations;
-  bool containsArcsWithoutRelations;
-  bool containsArcsWithoutIntersectingRelations;
+  bool containsConnectorsWithoutRelations;
+  bool containsConnectorsWithoutIntersectingRelations;
 };

@@ -9,13 +9,13 @@
 #include <list>
 #include <string>
 
-#include "dataStructures/element_check_result.hpp"
+#include "dataStructures/element_duplications_check_result.hpp"
 
-struct SetCheckResult
+struct SetDuplicationsCheckResult
 {
   std::string setIdtf;
-  std::string subjectDomainContainingAsMaximumClass;
+  std::list<std::string> subjectDomainsContainingAsMaximumClass;
   std::list<std::string> subjectDomainsContainingAsNotMaximumClass;
   std::string checkTime;
-  std::list<ElementCheckResult> elemtnsCheckResults;
+  std::list<ElementDuplicationsCheckResult> elemtnsCheckResults;
 };

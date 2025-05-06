@@ -16,10 +16,10 @@ concept_singular_relation
     => nrel_sc_text_translation:
         {
         rrel_example:
-            [Единичное отношение — это отношение, для которого ожидается участие элементов в парах этого отношения не более одного раза.]
+            [Единичное отношение — это бинарное отношение, для которого ожидается участие элементов в качестве первого элемента пары этого отношения не более одного раза.]
             (* <- lang_ru;; *);
         rrel_example:
-            [Singular relation - is a relation for which the elements in pairs of this relation are expected to participate no more than once]
+            [Singular relation - is a binary relation for which the elements in pairs of this relation are expected to participate as the pair's fist element no more than once]
             (* <- lang_en;; *)
         };;
     => nrel_using_constants:

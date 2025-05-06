@@ -9,7 +9,7 @@
 #include <list>
 #include <string>
 
-struct ElementCheckResult
+struct ElementDuplicationsCheckResult
 {
   std::string elementIdtf;
   std::list<std::string> warningDescriptions;

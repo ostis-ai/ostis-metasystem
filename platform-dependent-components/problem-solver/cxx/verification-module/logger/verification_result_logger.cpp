@@ -8,49 +8,65 @@
 
 namespace verificationModule
 {
-void VerificationResultLogger::logSetCheckResult(SetCheckResult const & checkResult, std::ofstream & logFile)
+void VerificationResultLogger::logSetCheckResult(
+    SetDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const
 {
   logSetInfo(checkResult, logFile);
   for (auto const & elementCheckResult : checkResult.elemtnsCheckResults)
     logElementCheckResult(elementCheckResult, logFile);
 }
 
-void VerificationResultLogger::logSetInfo(SetCheckResult const & checkResult, std::ofstream & logFile)
+void VerificationResultLogger::logSetInfo(SetDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const
 {
-  std::string description =
-      "Check results for " + checkResult.setIdtf + ". Check performed at " + checkResult.checkTime + ".\n";
+  std::stringstream descriptionStream;
+  descriptionStream << "Check results for " << checkResult.setIdtf
+                    << ". Check performed at " << checkResult.checkTime << ".\n";
 
-  if (!checkResult.subjectDomainContainingAsMaximumClass.empty())
-    description += "Checked set belong to " + checkResult.subjectDomainContainingAsMaximumClass
-                   + " as maximum studied object class.\n";
+  descriptionStream << "Checked set belong to ";
+  addEnumeration(checkResult.subjectDomainsContainingAsMaximumClass, descriptionStream);
+  descriptionStream << " as maximum studied object class.\n";
 
-  if (!checkResult.subjectDomainsContainingAsNotMaximumClass.empty())
-  {
-    std::string subjectDomainsEnumeration;
-    for (auto const & subjectDomain : checkResult.subjectDomainsContainingAsNotMaximumClass)
-      subjectDomainsEnumeration += subjectDomain + ", ";
-    subjectDomainsEnumeration.erase(subjectDomainsEnumeration.length() - 2);  // remove ", " after the last element
+  descriptionStream << "Checked set belong to ";
+  addEnumeration(checkResult.subjectDomainsContainingAsNotMaximumClass, descriptionStream);
+  descriptionStream << " as not maximum studied object class.\n";
 
-    description += "Checked set belong to " + subjectDomainsEnumeration + " as not maximum studied object classes.\n";
-  }
-
-  logFile << description;
+  logFile << descriptionStream.rdbuf();
 }
 
-void VerificationResultLogger::logElementCheckResult(ElementCheckResult const & checkResult, std::ofstream & logFile)
+void VerificationResultLogger::logElementCheckResult(
+    ElementDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const
 {
+  std::stringstream errorsStream;
   if (!checkResult.errorsDescriptions.empty())
   {
-    logFile << "Found next errors in checked set element " << checkResult.elementIdtf << ":\n";
+    errorsStream << "Found next errors in checked set element " << checkResult.elementIdtf << ":\n";
     for (auto const & errorDescription : checkResult.errorsDescriptions)
-      logFile << INDENT << "- " << errorDescription << "\n";
+      errorsStream << INDENT << "- " << errorDescription << "\n";
   }
 
   if (!checkResult.warningDescriptions.empty())
   {
-    logFile << "Found next possible errors in checked set element " << checkResult.elementIdtf << ":\n";
+    errorsStream << "Found next possible errors in checked set element " << checkResult.elementIdtf << ":\n";
     for (auto const & warningDescription : checkResult.warningDescriptions)
-      logFile << INDENT << "- " << warningDescription << "\n";
+      errorsStream << INDENT << "- " << warningDescription << "\n";
+  }
+
+  logFile << errorsStream.rdbuf();
+}
+
+void VerificationResultLogger::addEnumeration(
+    std::list<std::string> const & enumerationElements, std::stringstream & stringStream) const
+{
+  ;
+  bool first = true;
+  for (auto const & subjectDomain : enumerationElements)
+  {
+    if (!first)
+      stringStream << ", ";
+
+    stringStream << subjectDomain;
+
+    first = false;
   }
 }
 

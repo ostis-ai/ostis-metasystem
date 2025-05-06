@@ -4,17 +4,13 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#pragma once
-
-#include "sc-memory/sc_memory.hpp"
+#include "container_utils.hpp"
 
 namespace verificationModule
 {
-class FileConfigs
+void ContainerUtils::insertSeveral(ScAddrUnorderedSet & set, std::initializer_list<ScAddr> const & elements)
 {
-public:
-  static std::string const FILE_PATH;
-  static std::string const VERIFICATION_ENDPOINT;
-};
+  set.insert(elements.begin(), elements.end());
+}
 
 }  // namespace verificationModule

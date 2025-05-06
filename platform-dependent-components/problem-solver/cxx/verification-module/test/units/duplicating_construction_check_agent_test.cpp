@@ -67,7 +67,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, NoMembersTest)
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
-  SetCheckResult checkResult;
+  SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
@@ -84,13 +84,13 @@ TEST_F(DuplicatingConstructionCheckAgentTest, AccessArcsWithoutRelationsTest)
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
-  SetCheckResult checkResult;
+  SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
   ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1);
 
-  ElementCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
+  ElementDuplicationsCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
   ASSERT_TRUE(elementCheckResult.errorsDescriptions.empty());
@@ -114,13 +114,13 @@ TEST_F(DuplicatingConstructionCheckAgentTest, CommonArcsWithoutRelationsTest)
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
-  SetCheckResult checkResult;
+  SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
   ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1);
 
-  ElementCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
+  ElementDuplicationsCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
   ASSERT_TRUE(elementCheckResult.errorsDescriptions.empty());
@@ -143,13 +143,13 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingNonRoleRelationsTest)
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
-  SetCheckResult checkResult;
+  SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
   ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1);
 
-  ElementCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
+  ElementDuplicationsCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
   ASSERT_TRUE(elementCheckResult.warningDescriptions.empty());
@@ -170,13 +170,13 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingRoleRelationsTest)
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
-  SetCheckResult checkResult;
+  SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
   ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1);
 
-  ElementCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
+  ElementDuplicationsCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
 
@@ -201,11 +201,11 @@ TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
-  SetCheckResult checkResult;
+  SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
-  std::list<ElementCheckResult> const & elementsCheckResults = checkResult.elemtnsCheckResults;
+  std::list<ElementDuplicationsCheckResult> const & elementsCheckResults = checkResult.elemtnsCheckResults;
   ASSERT_EQ(elementsCheckResults.size(), 3);
 
   bool checkResultForObject1Exist = false;
@@ -254,12 +254,13 @@ TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjD
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
-  SetCheckResult checkResult;
+  SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
   duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
 
   ASSERT_EQ(checkResult.setIdtf, "test_class");
-  ASSERT_EQ(checkResult.subjectDomainContainingAsMaximumClass, "subj_dom_1");
+  ASSERT_EQ(checkResult.subjectDomainsContainingAsMaximumClass.size(), 1);
+  ASSERT_EQ(checkResult.subjectDomainsContainingAsMaximumClass.front(), "subj_dom_1");
 
   ASSERT_EQ(checkResult.subjectDomainsContainingAsNotMaximumClass.size(), 2);
   std::string firstSubjDom = checkResult.subjectDomainsContainingAsNotMaximumClass.front();
@@ -271,7 +272,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjD
 
   ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1);
 
-  ElementCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
+  ElementDuplicationsCheckResult const & elementCheckResult = checkResult.elemtnsCheckResults.front();
 
   ASSERT_EQ(elementCheckResult.elementIdtf, "object1");
 

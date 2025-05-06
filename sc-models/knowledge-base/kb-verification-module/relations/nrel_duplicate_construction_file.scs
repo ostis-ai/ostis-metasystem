@@ -1,5 +1,5 @@
 nrel_duplicate_construction_file
-<- sc_node_norole_relation;
+<- sc_node_non_role_relation;
 => nrel_main_idtf:
     [файл дублирующихся конструкций*] (* <- lang_ru;; *);
     [duplicate constructions file*] (* <- lang_en;; *);
@@ -42,6 +42,6 @@ nrel_duplicate_construction_file
         {
            binary_relation;
            sc_node_class;
-           concept_text_file
+           file
         };;
     *);;

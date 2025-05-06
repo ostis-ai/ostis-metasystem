@@ -4,11 +4,13 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
+#include "keynodes/verification_keynodes.hpp"
+
 #include "identifier_utils.hpp"
 
 namespace verificationModule
 {
-std::string IdentifierUtils::getIdentifier(ScMemoryContext * context, ScAddr const & element)
+std::string IdentifierUtils::getUniqueIdentifier(ScMemoryContext * context, ScAddr const & element)
 {
   std::string identifier = context->GetElementSystemIdentifier(element);
 
@@ -16,6 +18,48 @@ std::string IdentifierUtils::getIdentifier(ScMemoryContext * context, ScAddr con
     identifier = std::to_string(element.Hash());
 
   return identifier;
+}
+
+std::string IdentifierUtils::getIdentifiersString(ScMemoryContext * context, ScAddr const & element)
+{
+  std::string uniqueIdentifier = getUniqueIdentifier(context, element);
+
+  std::list<std::string> mainIdentifiers;
+  getMainIdentifiers(context, element, mainIdentifiers);
+
+  if (mainIdentifiers.empty())
+    return uniqueIdentifier;
+
+  std::string identifiersString = uniqueIdentifier + " (";
+  for (auto const & mainIdentifier : mainIdentifiers)
+  {
+    identifiersString += mainIdentifier;
+    identifiersString += ", ";
+  }
+  identifiersString.erase(identifiersString.length() - 2);  // remove ", " after the last element
+  identifiersString += ")";
+
+  return identifiersString;
+}
+
+void IdentifierUtils::getMainIdentifiers(
+    ScMemoryContext * context,
+    ScAddr const & element,
+    std::list<std::string> & identifiers)
+{
+  ScIterator5Ptr identifiersIterator = context->CreateIterator5(
+      element,
+      ScType::ConstCommonArc,
+      ScType::ConstNodeLink,
+      ScType::ConstPermPosArc,
+      VerificationKeynodes::nrel_main_idtf);
+
+  std::string identifierString;
+  while (identifiersIterator->Next())
+  {
+    context->GetLinkContent(identifiersIterator->Get(2), identifierString);
+    identifiers.push_back(identifierString);
+  }
 }
 
 }  // namespace verificationModule

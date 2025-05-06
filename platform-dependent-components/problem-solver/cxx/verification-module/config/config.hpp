@@ -11,8 +11,6 @@ private:
 
   Config(std::string const & scConfig);
 
-  ~Config() {}
-
 public:
   Config(Config & other) = delete;
 

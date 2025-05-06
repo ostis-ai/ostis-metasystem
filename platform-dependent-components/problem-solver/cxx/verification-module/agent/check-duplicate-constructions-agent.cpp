@@ -9,10 +9,8 @@
 
 #include "constants/verification_constants.hpp"
 #include "keynodes/verification_keynodes.hpp"
-#include "manager/duplications_check_manager.hpp"
-#include "handler/verification_result_file_handler.hpp"
 #include "logger/verification_result_logger.hpp"
-#include "dataStructures/set_check_result.hpp"
+#include "dataStructures/set_duplications_check_result.hpp"
 #include "config/config.hpp"
 
 #include "check-duplicate-constructions-agent.hpp"
@@ -28,20 +26,27 @@ ScResult CheckDuplicateConstructionsAgent::DoProgram(ScActionInitiatedEvent cons
 
   auto [classAddr] = action.GetArguments<1>();
 
+  duplicationsCheckManager = std::make_unique<DuplicationsCheckManager>(&m_context);
+  fileHandler = std::make_unique<VerificationResultFileHandler>(&m_context);
+
+  ScAddrUnorderedSet resultElements;
   if (m_context.IsElement(classAddr))
-    runCheck(classAddr);
+    runCheck(classAddr, resultElements);
   else
   {
     m_logger.Info("Argument not found, running check for all classes");
-    // todo: replace specialized "class_node" with sc_node_class after corresponding changes to sc-machine
+    // todo (NikiforovSergei):
+    //  replace specialized "class_node" with sc_node_class after corresponding changes to sc-machine
     ScIterator3Ptr classesIterator =
         m_context.CreateIterator3(VerificationKeynodes::entity_class, ScType::ConstPermPosArc, ScType::Unknown);
     while (classesIterator->Next())
-      runCheck(classesIterator->Get(2));
+      runCheck(classesIterator->Get(2), resultElements);
   }
 
-  SC_LOG_DEBUG("CheckDuplicateConstructionsAgent finished");
+  ScAddr const & resultStructure = formResultStructure(resultElements);
+  action.SetResult(resultStructure);
 
+  SC_LOG_DEBUG("CheckDuplicateConstructionsAgent finished");
   return action.FinishSuccessfully();
 }
 
@@ -50,18 +55,27 @@ ScAddr CheckDuplicateConstructionsAgent::GetActionClass() const
   return VerificationKeynodes::action_check_duplicate_constructions;
 }
 
-void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr) const
+ScAddr CheckDuplicateConstructionsAgent::formResultStructure(ScAddrUnorderedSet const & answerElements) const
+{
+  ScAddr const & resultStructure = m_context.GenerateNode(ScType::ConstNodeStructure);
+  for (auto const & element : answerElements)
+    m_context.GenerateConnector(ScType::ConstPermPosArc, resultStructure, element);
+
+  return resultStructure;
+}
+
+void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr,  ScAddrUnorderedSet & resultElements) const
 {
   try
   {
-    m_logger.Info("Running check for " + IdentifierUtils::getIdentifier(&m_context, classAddr));
+    m_logger.Info("Running check for " + IdentifierUtils::getIdentifiersString(&m_context, classAddr));
 
-    SetCheckResult setCheckResult;
-    DuplicationsCheckManager duplicationsCheckManager(&m_context);
-    duplicationsCheckManager.checkSetElementsDuplications(classAddr, setCheckResult);
+    SetDuplicationsCheckResult setCheckResult;
+    if (!duplicationsCheckManager->checkSetElementsDuplications(classAddr, setCheckResult))
+      return;
 
-    VerificationResultFileHandler fileHandler(&m_context);
-    std::ofstream outputFile = fileHandler.createOutputFile(filePath, setCheckResult.setIdtf, classAddr);
+    std::ofstream outputFile = fileHandler->createOutputFile(
+        filePath, setCheckResult.setIdtf, classAddr, resultElements);
 
     VerificationResultLogger resultLogger;
     resultLogger.logSetCheckResult(setCheckResult, outputFile);
@@ -69,7 +83,7 @@ void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr) const
   catch (utils::ScException const & exception)
   {
     m_logger.Error(
-        "Error during " + IdentifierUtils::getIdentifier(&m_context, classAddr)
+        "Error during " + IdentifierUtils::getIdentifiersString(&m_context, classAddr)
         + " processing: " + exception.Description());
   }
 }
