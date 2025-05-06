@@ -8,6 +8,7 @@
 
 #include "keynodes/verification_keynodes.hpp"
 #include "constants/verification_constants.hpp"
+#include "utils/container_utils.hpp"
 
 #include "verification_result_file_handler.hpp"
 
@@ -22,7 +23,8 @@ VerificationResultFileHandler::VerificationResultFileHandler(ScMemoryContext * c
 std::ofstream VerificationResultFileHandler::createOutputFile(
     std::filesystem::path const & filePath,
     std::string const & checkedElementIdtf,
-    ScAddr const & checkedElementAddr) const
+    ScAddr const & checkedElementAddr,
+    ScAddrUnorderedSet & resultElements) const
 {
   std::filesystem::create_directories(filePath);
 
@@ -31,37 +33,58 @@ std::ofstream VerificationResultFileHandler::createOutputFile(
 
   SC_LOG_INFO("Duplications file for " << checkedElementIdtf << " is " << fileFullName.string());
 
-  resolveFileSpecification(checkedElementAddr, fileFullName);
+  resolveFileSpecification(checkedElementAddr, fileFullName, resultElements);
 
-  return std::ofstream(fileFullName, std::ios::app);
+  return {fileFullName, std::ios::app};
 }
 
 void VerificationResultFileHandler::resolveFileSpecification(
     ScAddr const & checkedElementAddr,
-    std::filesystem::path const & fileFullName) const
+    std::filesystem::path const & fileFullName,
+    ScAddrUnorderedSet & resultElements) const
 {
   ScAddr fileAddr;
   ScIterator5Ptr const & fileIterator = context->CreateIterator5(
       checkedElementAddr,
-      ScType::ConstPermPosArc,
-      ScType::ConstNodeLink,
       ScType::ConstCommonArc,
+      ScType::ConstNodeLink,
+      ScType::ConstPermPosArc,
       VerificationKeynodes::nrel_duplicate_construction_file);
   if (fileIterator->Next())
-    context->SetLinkContent(fileIterator->Get(2), fileFullName);
+  {
+    ScAddr const & fileAddrLink = fileIterator->Get(2);
+    context->SetLinkContent(fileAddrLink, fileFullName);
+
+    ContainerUtils::insertSeveral(
+        resultElements,
+        {checkedElementAddr,
+        fileIterator->Get(1),
+        fileAddrLink,
+        fileIterator->Get(3),
+        VerificationKeynodes::nrel_duplicate_construction_file});
+  }
   else
-    generateDuplicationFileSpecification(checkedElementAddr, fileFullName);
+    generateDuplicationFileSpecification(checkedElementAddr, fileFullName, resultElements);
 }
 
 void VerificationResultFileHandler::generateDuplicationFileSpecification(
     ScAddr const & checkedElementAddr,
-    std::filesystem::path const & fileFullName) const
+    std::filesystem::path const & fileFullName,
+    ScAddrUnorderedSet & resultElements) const
 {
-  ScAddr const & fileAddr = context->GenerateLink(ScType::ConstNodeLink);
-  context->SetLinkContent(fileAddr, fileFullName);
-  ScAddr const & edge = context->GenerateConnector(ScType::ConstCommonArc, checkedElementAddr, fileAddr);
-  ScAddr const & relationEdge =
-      context->GenerateConnector(ScType::ConstPermPosArc, VerificationKeynodes::nrel_duplicate_construction_file, edge);
-}
+  ScAddr const & fileAddrLink = context->GenerateLink(ScType::ConstNodeLink);
+  context->SetLinkContent(fileAddrLink, fileFullName);
+  ScAddr const & relationPair = context->GenerateConnector(ScType::ConstCommonArc, checkedElementAddr, fileAddrLink);
+  ScAddr const & relationAccessArc =
+      context->GenerateConnector(
+          ScType::ConstPermPosArc, VerificationKeynodes::nrel_duplicate_construction_file, relationPair);
 
+  ContainerUtils::insertSeveral(
+      resultElements,
+      {checkedElementAddr,
+      relationPair,
+      fileAddrLink,
+      relationAccessArc,
+      VerificationKeynodes::nrel_duplicate_construction_file});
+}
 }  // namespace verificationModule

@@ -16,7 +16,15 @@ namespace verificationModule
 class IdentifierUtils
 {
 public:
-  static std::string getIdentifier(ScMemoryContext * context, ScAddr const & element);
+  static std::string getUniqueIdentifier(ScMemoryContext * context, ScAddr const & element);
+
+  static std::string getIdentifiersString(ScMemoryContext * context, ScAddr const & element);
+
+private:
+  static void getMainIdentifiers(
+      ScMemoryContext * context,
+      ScAddr const & element,
+      std::list<std::string> & identifiers);
 };
 
 }  // namespace verificationModule

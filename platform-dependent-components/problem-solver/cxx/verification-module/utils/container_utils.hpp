@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include "sc-memory/sc_memory.hpp"
+#include <sc-memory/sc_addr.hpp>
 
 namespace verificationModule
 {
-class FileConfigs
+
+class ContainerUtils
 {
 public:
-  static std::string const FILE_PATH;
-  static std::string const VERIFICATION_ENDPOINT;
+  static void insertSeveral(ScAddrUnorderedSet & set, std::initializer_list<ScAddr> const & elements);
 };
 
 }  // namespace verificationModule

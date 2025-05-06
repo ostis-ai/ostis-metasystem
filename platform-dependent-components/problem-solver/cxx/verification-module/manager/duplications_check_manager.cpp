@@ -26,36 +26,49 @@ DuplicationsCheckManager::DuplicationsCheckManager(ScMemoryContext * context)
   SearchUtils::getQuasybinaryRelations(m_context, quasybinaryRelations);
 }
 
-void DuplicationsCheckManager::checkSetElementsDuplications(ScAddr const & checkedSet, SetCheckResult & setCheckResult)
+bool DuplicationsCheckManager::checkSetElementsDuplications(
+    ScAddr const & checkedSet,
+    SetDuplicationsCheckResult & setCheckResult) const
 {
-  fillCheckedSetInfo(checkedSet, setCheckResult);
+  bool foundDuplicationsAtLeastInOneElement = false;
 
   ScIterator3Ptr elementsIterator = m_context->CreateIterator3(checkedSet, ScType::ConstPermPosArc, ScType::Unknown);
   while (elementsIterator->Next())
   {
-    ElementCheckResult elementCheckResult;
+    ElementDuplicationsCheckResult elementCheckResult;
     if (checkElementDuplications(elementsIterator->Get(2), elementCheckResult))
+    {
+      foundDuplicationsAtLeastInOneElement = true;
       setCheckResult.elemtnsCheckResults.emplace_back(elementCheckResult);
+    }
   }
+
+  if (foundDuplicationsAtLeastInOneElement)
+    fillCheckedSetInfo(checkedSet, setCheckResult);
+
+  return foundDuplicationsAtLeastInOneElement;
 }
 
-bool DuplicationsCheckManager::checkElementDuplications(ScAddr const & checkedElement, ElementCheckResult & checkResult)
+bool DuplicationsCheckManager::checkElementDuplications(
+    ScAddr const & checkedElement,
+    ElementDuplicationsCheckResult & checkResult) const
 {
   /*
    * Each method does its own pass.
    * While it's possible to collect all necessary info in one pass, it's deemed suboptimal because:
-   *   - resulting datastructures containing infor about relation pairs with relations are not that simple
+   *   - resulting datastructures containing info about relation pairs with relations are not that simple
    *       and on big KBs can take alot of space;
    *   - introduction of new check (for a new kind of constructions) with high probability leads to changes
    *       in these structures thus leading to problems with future modifications.
    */
+  //todo(NikiforovSergei): add the ability to configure which checks to use
   checkConnectorsDuplications(checkedElement, checkResult);
   checkSingularRelations(checkedElement, checkResult);
   checkQuasybinaryRelations(checkedElement, checkResult);
 
   if (!checkResult.errorsDescriptions.empty() || !checkResult.warningDescriptions.empty())
   {
-    checkResult.elementIdtf = IdentifierUtils::getIdentifier(m_context, checkedElement);
+    checkResult.elementIdtf = IdentifierUtils::getIdentifiersString(m_context, checkedElement);
 
     return true;
   }
@@ -65,7 +78,7 @@ bool DuplicationsCheckManager::checkElementDuplications(ScAddr const & checkedEl
 
 void DuplicationsCheckManager::checkConnectorsDuplications(
     ScAddr const & checkedElement,
-    ElementCheckResult & checkResult)
+    ElementDuplicationsCheckResult & checkResult) const
 {
   ScAddrToValueUnorderedMap<ScAddrList> targetElementsWithConnectors;
 
@@ -75,7 +88,7 @@ void DuplicationsCheckManager::checkConnectorsDuplications(
   while (connectionsIterator->Next())
     targetElementsWithConnectors[connectionsIterator->Get(2)].emplace_back(connectionsIterator->Get(1));
 
-  processMultipleAccessArcs(checkedElement, targetElementsWithConnectors, checkResult);
+  processMultipleAccessArcs(targetElementsWithConnectors, checkResult);
 
   targetElementsWithConnectors.clear();
 
@@ -84,13 +97,12 @@ void DuplicationsCheckManager::checkConnectorsDuplications(
   while (connectionsIterator->Next())
     targetElementsWithConnectors[connectionsIterator->Get(2)].emplace_back(connectionsIterator->Get(1));
 
-  processMultipleCommonArcs(checkedElement, targetElementsWithConnectors, checkResult);
+  processMultipleCommonArcs(targetElementsWithConnectors, checkResult);
 }
 
 void DuplicationsCheckManager::processMultipleAccessArcs(
-    ScAddr const & checkedElement,
     ScAddrToValueUnorderedMap<ScAddrList> const & targetElementsWithConnectors,
-    ElementCheckResult & checkResult)
+    ElementDuplicationsCheckResult & checkResult) const
 {
   for (auto const & targetElementWithConnectors : targetElementsWithConnectors)
   {
@@ -101,30 +113,28 @@ void DuplicationsCheckManager::processMultipleAccessArcs(
       continue;
 
     checkResult.warningDescriptions.emplace_back(
-        "Found multiple access arcs to " + IdentifierUtils::getIdentifier(m_context, targetElement)
+        "Found multiple access arcs to " + IdentifierUtils::getIdentifiersString(m_context, targetElement)
         + ". Possible duplication if it was not meant as multiset.");
 
-    RelationsInfo relationsInfo;
+    RelationsDuplicationInfo relationsInfo;
     getRelationsInfo(connectors, ScType::ConstNodeRole, relationsInfo);
 
     for (auto const & relation : relationsInfo.duplicatingRelations)
       checkResult.errorsDescriptions.emplace_back(
-          "Found duplication of relation " + IdentifierUtils::getIdentifier(m_context, relation) + " to "
-          + IdentifierUtils::getIdentifier(m_context, targetElement));
+          "Found duplication of relation " + IdentifierUtils::getIdentifiersString(m_context, relation) + " to "
+          + IdentifierUtils::getIdentifiersString(m_context, targetElement));
 
-    if (relationsInfo.containsArcsWithoutIntersectingRelations)
+    if (relationsInfo.containsConnectorsWithoutIntersectingRelations)
       checkResult.warningDescriptions.emplace_back(
           "Found multiple access arcs of different relations to "
-          + IdentifierUtils::getIdentifier(m_context, targetElement)
+          + IdentifierUtils::getIdentifiersString(m_context, targetElement)
           + ". Possible it's better to use one arc belonging to several relations.");
   }
 }
 
-// todo: подумать как переработать чтобы убрать дублирование перд тем как делать ПР
 void DuplicationsCheckManager::processMultipleCommonArcs(
-    ScAddr const & checkedElement,
     ScAddrToValueUnorderedMap<ScAddrList> const & targetElementsWithConnectors,
-    ElementCheckResult & checkResult)
+    ElementDuplicationsCheckResult & checkResult) const
 {
   for (auto const & targetElementWithConnectors : targetElementsWithConnectors)
   {
@@ -134,25 +144,25 @@ void DuplicationsCheckManager::processMultipleCommonArcs(
     if (connectors.size() == 1)
       continue;
 
-    RelationsInfo relationsInfo;
+    RelationsDuplicationInfo relationsInfo;
     getRelationsInfo(connectors, ScType::ConstNodeNonRole, relationsInfo);
 
     for (auto const & relation : relationsInfo.duplicatingRelations)
       checkResult.errorsDescriptions.emplace_back(
-          "Found duplication of relation " + IdentifierUtils::getIdentifier(m_context, relation) + " to "
-          + IdentifierUtils::getIdentifier(m_context, targetElement));
+          "Found duplication of relation " + IdentifierUtils::getIdentifiersString(m_context, relation) + " to "
+          + IdentifierUtils::getIdentifiersString(m_context, targetElement));
 
     // Check logic a single common arc without relation, but this is not a kind of error we search here
     // but rather an accompanying one
-    if (relationsInfo.containsArcsWithoutRelations)
+    if (relationsInfo.containsConnectorsWithoutRelations)
       checkResult.warningDescriptions.emplace_back(
-          "Found common arcs to " + IdentifierUtils::getIdentifier(m_context, targetElement)
+          "Found common arcs to " + IdentifierUtils::getIdentifiersString(m_context, targetElement)
           + " not belonging to any relations. Possible incorrect construction.");
 
-    if (relationsInfo.containsArcsWithoutIntersectingRelations)
+    if (relationsInfo.containsConnectorsWithoutIntersectingRelations)
       checkResult.warningDescriptions.emplace_back(
           "Found multiple common arcs of different relations to "
-          + IdentifierUtils::getIdentifier(m_context, targetElement)
+          + IdentifierUtils::getIdentifiersString(m_context, targetElement)
           + ". Possible it's better to use one arc belonging to several relations.");
   }
 }
@@ -160,11 +170,11 @@ void DuplicationsCheckManager::processMultipleCommonArcs(
 void DuplicationsCheckManager::getRelationsInfo(
     ScAddrList const & connectors,
     ScType const & relationType,
-    RelationsInfo & relationsInfo)
+    RelationsDuplicationInfo & relationsInfo) const
 {
   ScAddrSet foundRelations;
-  relationsInfo.containsArcsWithoutRelations = false;
-  relationsInfo.containsArcsWithoutIntersectingRelations = false;
+  relationsInfo.containsConnectorsWithoutRelations = false;
+  relationsInfo.containsConnectorsWithoutIntersectingRelations = false;
   bool insertedOnCurrentStep = false;
 
   for (auto const & connector : connectors)
@@ -179,19 +189,20 @@ void DuplicationsCheckManager::getRelationsInfo(
       auto const & insertionResult = foundRelations.insert(relationIterator->Get(0));
       if (!insertionResult.second)
         relationsInfo.duplicatingRelations.insert(relationIterator->Get(0));
-
       else
       {
-        relationsInfo.containsArcsWithoutIntersectingRelations = insertedOnPreviousStep;
+        relationsInfo.containsConnectorsWithoutIntersectingRelations = insertedOnPreviousStep;
         insertedOnCurrentStep = true;
       }
     }
 
-    relationsInfo.containsArcsWithoutRelations |= !arcContainsRelations;
+    relationsInfo.containsConnectorsWithoutRelations |= !arcContainsRelations;
   }
 }
 
-void DuplicationsCheckManager::checkSingularRelations(ScAddr const & checkedElement, ElementCheckResult & checkResult)
+void DuplicationsCheckManager::checkSingularRelations(
+    ScAddr const & checkedElement,
+    ElementDuplicationsCheckResult & checkResult) const
 {
   // presumably there are less singular relations than connectors, outgoing from the checked element
   for (auto const & relation : singularRelations)
@@ -209,8 +220,8 @@ void DuplicationsCheckManager::checkSingularRelations(ScAddr const & checkedElem
       if (relationPairsNum > 1)
       {
         checkResult.errorsDescriptions.emplace_back(
-            "Duplicating relation " + IdentifierUtils::getIdentifier(m_context, relation) + " from "
-            + IdentifierUtils::getIdentifier(m_context, checkedElement)
+            "Duplicating relation " + IdentifierUtils::getIdentifiersString(m_context, relation) + " from "
+            + IdentifierUtils::getIdentifiersString(m_context, checkedElement)
             + ". Expected only one outgoing relation pair per element.");
 
         break;
@@ -221,7 +232,7 @@ void DuplicationsCheckManager::checkSingularRelations(ScAddr const & checkedElem
 
 void DuplicationsCheckManager::checkQuasybinaryRelations(
     ScAddr const & checkedElement,
-    ElementCheckResult & checkResult)
+    ElementDuplicationsCheckResult & checkResult) const
 {
   auto processRelationPair = [this](
                                  ScAddr const & relation,
@@ -236,7 +247,7 @@ void DuplicationsCheckManager::checkQuasybinaryRelations(
 
   auto checkRelationsSets = [this](
                                 ScAddrToValueUnorderedMap<ScAddrList> const & foundQuasybinaryRelationsTuples,
-                                ElementCheckResult & checkResult) -> void
+                                ElementDuplicationsCheckResult & checkResult) -> void
   {
     for (auto const & relationWithTuple : foundQuasybinaryRelationsTuples)
       checkDuplicationInQuasybinaryRelationSets(relationWithTuple.first, relationWithTuple.second, checkResult);
@@ -266,7 +277,7 @@ void DuplicationsCheckManager::checkQuasybinaryRelations(
 void DuplicationsCheckManager::checkDuplicationInQuasybinaryRelationSets(
     ScAddr const & relation,
     ScAddrList const & checkedTuples,
-    ElementCheckResult & checkResult)
+    ElementDuplicationsCheckResult & checkResult) const
 {
   ScAddrUnorderedSet tupleElements;
   std::map<ScAddr::HashType, ScAddrVector> tuplesHashes;
@@ -282,7 +293,8 @@ void DuplicationsCheckManager::checkDuplicationInQuasybinaryRelationSets(
       auto const & insertionResult = tupleElements.insert(element);
       if (!insertionResult.second)
         checkResult.warningDescriptions.emplace_back(
-            "Found duplication of " + IdentifierUtils::getIdentifier(m_context, relation) + "'s tuple elements.");
+            "Found duplication of " + IdentifierUtils::getIdentifiersString(m_context, relation)
+            + "'s tuple elements.");
     }
 
     tuplesHashes[tupleHash].push_back(tuple);
@@ -296,12 +308,12 @@ void DuplicationsCheckManager::checkDuplicationInQuasybinaryRelationSets(
 
     if (atleastTwoSetsAreEqual(hashWithCorrespondingTuples.second))
       checkResult.errorsDescriptions.emplace_back(
-          "Two or more " + IdentifierUtils::getIdentifier(m_context, relation)
+          "Two or more " + IdentifierUtils::getIdentifiersString(m_context, relation)
           + "'s tuples are equal. Likely duplication.");
   }
 }
 
-bool DuplicationsCheckManager::atleastTwoSetsAreEqual(ScAddrVector const & setsToCompare)
+bool DuplicationsCheckManager::atleastTwoSetsAreEqual(ScAddrVector const & setsToCompare) const
 {
   for (size_t first = 0; first < setsToCompare.size() - 1; ++first)
   {
@@ -314,7 +326,7 @@ bool DuplicationsCheckManager::atleastTwoSetsAreEqual(ScAddrVector const & setsT
   return false;
 }
 
-std::string DuplicationsCheckManager::getCurrentDatetimeString()
+std::string DuplicationsCheckManager::getCurrentDatetimeString() const
 {
   std::time_t now = std::time(nullptr);
   std::tm * localTime = std::localtime(&now);
@@ -325,51 +337,52 @@ std::string DuplicationsCheckManager::getCurrentDatetimeString()
   return oss.str();
 }
 
-bool DuplicationsCheckManager::findMaxObjectClassSubjectDomain(
-    ScAddr const & checkedSet,
-    std::string & subjectDomainContainingAsMaximumClass)
+void DuplicationsCheckManager::findStructuresContainingElementByRoleRelationIdentifiers(
+    ScAddr const & element,
+    ScAddr const & relation,
+    std::list<std::string> & structuresIdentifiers) const
 {
-  ScIterator5Ptr const & subjectDomainClassIterator = m_context->CreateIterator5(
+  ScIterator5Ptr const & structuresIterator = m_context->CreateIterator5(
       ScType::Node,
       ScType::ConstPermPosArc,
-      checkedSet,
+      element,
       ScType::ConstPermPosArc,
-      VerificationKeynodes::rrel_maximum_studied_object_class);
-  if (subjectDomainClassIterator->Next())
-  {
-    ScAddr domainSection = subjectDomainClassIterator->Get(0);
-    subjectDomainContainingAsMaximumClass = IdentifierUtils::getIdentifier(m_context, domainSection);
-    return true;
-  }
+      relation);
 
-  return false;
+  while (structuresIterator->Next())
+  {
+    ScAddr const & structure = structuresIterator->Get(0);
+    structuresIdentifiers.emplace_back(
+        IdentifierUtils::getIdentifiersString(m_context, structure));
+  }
+}
+
+void DuplicationsCheckManager::findMaxObjectClassSubjectDomain(
+    ScAddr const & checkedSet,
+    std::list<std::string> & subjectDomainContainingAsMaximumClass) const
+{
+  findStructuresContainingElementByRoleRelationIdentifiers(
+      checkedSet,
+      VerificationKeynodes::rrel_maximum_studied_object_class,
+      subjectDomainContainingAsMaximumClass);
 }
 
 void DuplicationsCheckManager::findNonMaxObjectClassSubjectDomains(
     ScAddr const & checkedSet,
-    std::list<std::string> & subjectDomainsContainingAsNotMaximumClass)
+    std::list<std::string> & subjectDomainsContainingAsNotMaximumClass) const
 {
-  ScIterator5Ptr const & subjectDomainClassIterator = m_context->CreateIterator5(
-      ScType::Node,
-      ScType::ConstPermPosArc,
+  findStructuresContainingElementByRoleRelationIdentifiers(
       checkedSet,
-      ScType::ConstPermPosArc,
-      VerificationKeynodes::rrel_not_maximum_studied_object_class);
-
-  while (subjectDomainClassIterator->Next())
-  {
-    ScAddr domainSection = subjectDomainClassIterator->Get(0);
-    subjectDomainsContainingAsNotMaximumClass.emplace_back(IdentifierUtils::getIdentifier(m_context, domainSection));
-  }
+      VerificationKeynodes::rrel_not_maximum_studied_object_class,
+      subjectDomainsContainingAsNotMaximumClass);
 }
 
-void DuplicationsCheckManager::fillCheckedSetInfo(ScAddr const & checkedSet, SetCheckResult & setCheckResult)
+void DuplicationsCheckManager::fillCheckedSetInfo(ScAddr const & checkedSet,
+    SetDuplicationsCheckResult & setCheckResult) const
 {
-  setCheckResult.setIdtf = IdentifierUtils::getIdentifier(m_context, checkedSet);
+  setCheckResult.setIdtf = IdentifierUtils::getIdentifiersString(m_context, checkedSet);
   setCheckResult.checkTime = getCurrentDatetimeString();
-  std::string subjectDomainContainingAsMaximumClass;
-  if (findMaxObjectClassSubjectDomain(checkedSet, subjectDomainContainingAsMaximumClass))
-    setCheckResult.subjectDomainContainingAsMaximumClass = subjectDomainContainingAsMaximumClass;
+  findMaxObjectClassSubjectDomain(checkedSet, setCheckResult.subjectDomainsContainingAsMaximumClass);
   findNonMaxObjectClassSubjectDomains(checkedSet, setCheckResult.subjectDomainsContainingAsNotMaximumClass);
 }
 

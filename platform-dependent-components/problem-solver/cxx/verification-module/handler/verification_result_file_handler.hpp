@@ -21,13 +21,20 @@ public:
   std::ofstream createOutputFile(
       std::filesystem::path const & filePath,
       std::string const & checkedElementIdtf,
-      ScAddr const & checkedElementAddr) const;
+      ScAddr const & checkedElementAddr,
+      ScAddrUnorderedSet & resultElements) const;
 
 private:
   ScMemoryContext * context;
 
-  void resolveFileSpecification(ScAddr const & checkedElementAddr, std::filesystem::path const & fileFullName) const;
+  void resolveFileSpecification(
+      ScAddr const & checkedElementAddr,
+      std::filesystem::path const & fileFullName,
+      ScAddrUnorderedSet & resultElements) const;
 
-  void generateDuplicationFileSpecification(ScAddr const &, std::filesystem::path const & fileFullName) const;
+  void generateDuplicationFileSpecification(
+      ScAddr const & checkedElementAddr,
+      std::filesystem::path const & fileFullName,
+      ScAddrUnorderedSet & resultElements) const;
 };
 }  // namespace verificationModule

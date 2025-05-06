@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include "dataStructures/set_check_result.hpp"
-#include "dataStructures/element_check_result.hpp"
-#include "dataStructures/relations_info.hpp"
+#include "dataStructures/set_duplications_check_result.hpp"
+#include "dataStructures/element_duplications_check_result.hpp"
+#include "dataStructures/relations_duplications_info.hpp"
 
 #include "sc-memory/sc_memory.hpp"
 
@@ -19,48 +19,55 @@ class DuplicationsCheckManager
 public:
   explicit DuplicationsCheckManager(ScMemoryContext * context);
 
-  void checkSetElementsDuplications(ScAddr const & checkedSet, SetCheckResult & checkResult);
+  bool checkSetElementsDuplications(ScAddr const & checkedSet, SetDuplicationsCheckResult & checkResult) const;
 
 private:
   ScMemoryContext * m_context;
   ScAddrList singularRelations;
   ScAddrUnorderedSet quasybinaryRelations;
 
-  bool checkElementDuplications(ScAddr const & checkedElement, ElementCheckResult & checkResult);
+  bool checkElementDuplications(ScAddr const & checkedElement, ElementDuplicationsCheckResult & checkResult) const;
 
-  void checkConnectorsDuplications(ScAddr const & checkedElement, ElementCheckResult & checkResult);
+  void checkConnectorsDuplications(ScAddr const & checkedElement, ElementDuplicationsCheckResult & checkResult) const;
 
   void processMultipleAccessArcs(
-      ScAddr const & checkedElement,
       ScAddrToValueUnorderedMap<ScAddrList> const & targetElementsWithConnectors,
-      ElementCheckResult & checkResult);
+      ElementDuplicationsCheckResult & checkResult) const;
 
   void processMultipleCommonArcs(
-      ScAddr const & checkedElement,
       ScAddrToValueUnorderedMap<ScAddrList> const & targetElementsWithConnectors,
-      ElementCheckResult & checkResult);
+      ElementDuplicationsCheckResult & checkResult) const;
 
-  void getRelationsInfo(ScAddrList const & connectors, ScType const & relationType, RelationsInfo & relationsInfo);
+  void getRelationsInfo(
+      ScAddrList const & connectors,ScType const & relationType,
+      RelationsDuplicationInfo & relationsInfo) const;
 
-  void checkSingularRelations(ScAddr const & checkedElement, ElementCheckResult & checkResult);
+  void checkSingularRelations(ScAddr const & checkedElement, ElementDuplicationsCheckResult & checkResult) const;
 
-  void checkQuasybinaryRelations(ScAddr const & checkedElement, ElementCheckResult & checkResult);
+  void checkQuasybinaryRelations(ScAddr const & checkedElement, ElementDuplicationsCheckResult & checkResult) const;
 
   void checkDuplicationInQuasybinaryRelationSets(
       ScAddr const & relation,
       ScAddrList const & checkedTuples,
-      ElementCheckResult & checkResult);
+      ElementDuplicationsCheckResult & checkResult) const;
 
-  bool atleastTwoSetsAreEqual(ScAddrVector const & setsToCompare);
+  bool atleastTwoSetsAreEqual(ScAddrVector const & setsToCompare) const;
 
-  void fillCheckedSetInfo(ScAddr const & checkedSet, SetCheckResult & checkResult);
+  std::string getCurrentDatetimeString() const;
 
-  std::string getCurrentDatetimeString();
+  void fillCheckedSetInfo(ScAddr const & checkedSet, SetDuplicationsCheckResult & checkResult) const;
 
-  bool findMaxObjectClassSubjectDomain(ScAddr const & checkedSet, std::string & subjectDomainContainingAsMaximumClass);
+  void findMaxObjectClassSubjectDomain(
+      ScAddr const & checkedSet,
+      std::list<std::string> & subjectDomainContainingAsMaximumClass) const;
 
   void findNonMaxObjectClassSubjectDomains(
       ScAddr const & checkedSet,
-      std::list<std::string> & subjectDomainsContainingAsNotMaximumClass);
+      std::list<std::string> & subjectDomainsContainingAsNotMaximumClass) const;
+
+  void findStructuresContainingElementByRoleRelationIdentifiers(
+      ScAddr const & element,
+      ScAddr const & relation,
+      std::list<std::string> & structuresIdentifiers) const;
 };
 }  // namespace verificationModule

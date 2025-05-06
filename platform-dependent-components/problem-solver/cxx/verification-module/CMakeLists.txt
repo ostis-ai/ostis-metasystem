@@ -8,6 +8,7 @@ set(HEADERS
         "logger/verification_result_logger.hpp"
         "utils/search_utils.hpp"
         "utils/identifier_utils.hpp"
+        "utils/container_utils.hpp"
         "verification_module.hpp"
 )
 
@@ -20,6 +21,7 @@ set(SOURCES
         "logger/verification_result_logger.cpp"
         "utils/search_utils.cpp"
         "utils/identifier_utils.cpp"
+        "utils/container_utils.cpp"
         "verification_module.cpp"
 )
 

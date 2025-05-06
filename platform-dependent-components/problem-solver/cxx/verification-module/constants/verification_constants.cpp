@@ -9,8 +9,6 @@
 
 namespace verificationModule
 {
-ScAddr const VerificationConstants::LANG = VerificationKeynodes::lang_en;
-
 std::string const FileConfigs::FILE_PATH = "file_path";
 std::string const FileConfigs::VERIFICATION_ENDPOINT = "verification";
 
