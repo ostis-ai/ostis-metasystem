@@ -20,7 +20,7 @@ public:
 class Formats
 {
 public:
-  static const char* const  TIME;
+  static char const * const TIME;
 };
 
 }  // namespace verificationModule

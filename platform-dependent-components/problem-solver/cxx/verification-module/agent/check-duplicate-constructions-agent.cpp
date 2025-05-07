@@ -83,8 +83,10 @@ void CheckDuplicateConstructionsAgent::RunCheck(ScAddr const & classAddr, ScAddr
   catch (utils::ScException const & exception)
   {
     m_logger.Error(
-        "Error during ", IdentifierUtils::GetIdentifiersString(&m_context, classAddr),
-        " processing: ", exception.Description());
+        "Error during ",
+        IdentifierUtils::GetIdentifiersString(&m_context, classAddr),
+        " processing: ",
+        exception.Description());
   }
 }
 
