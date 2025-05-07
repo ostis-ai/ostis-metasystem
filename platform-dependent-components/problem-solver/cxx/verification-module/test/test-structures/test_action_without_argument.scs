@@ -1,0 +1,5 @@
+test_verification_action_node
+<- action;
+<- action_check_duplicate_constructions;;
+
+entity_class -> test_class;;
