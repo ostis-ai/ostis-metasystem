@@ -77,12 +77,12 @@ TEST_F(DuplicatingConstructionCheckAgentTest, NoMembersTest)
   ASSERT_TRUE(checkResult.elemtnsCheckResults.empty());
 }
 
-TEST_F(DuplicatingConstructionCheckAgentTest, AccessArcsWithoutRelationsTest)
+TEST_F(DuplicatingConstructionCheckAgentTest, MembershipArcsWithoutRelationsTest)
 {
   ScAgentContext & context = *m_ctx;
 
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "access_arcs_without_relations.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "membership_arcs_without_relations.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
@@ -103,7 +103,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, AccessArcsWithoutRelationsTest)
 
   ASSERT_EQ(
       warningDescription,
-      "Found multiple access arcs to object3. Duplication is possible if it was not intended as a multiset.");
+      "Found multiple membership arcs to object3. Duplication is possible if it was not intended as a multiset.");
 }
 
 TEST_F(DuplicatingConstructionCheckAgentTest, CommonArcsWithoutRelationsTest)
@@ -190,7 +190,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingRoleRelationsTest)
   std::string const & warningDescription = elementCheckResult.warningDescriptions.front();
   ASSERT_EQ(
       warningDescription,
-      "Found multiple access arcs to object3. Duplication is possible if it was not intended as a multiset.");
+      "Found multiple membership arcs to object3. Duplication is possible if it was not intended as a multiset.");
 }
 
 TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
@@ -304,6 +304,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithArgument)
   ScAgentContext & context = *m_ctx;
 
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_class_main_idtf.scs");
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "multiple_duplications.scs");
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_action_with_argument.scs");
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subject_domains.scs");
@@ -318,7 +319,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithArgument)
   ASSERT_TRUE(testAction.IsFinishedSuccessfully());
 
   compareResultFiles(
-      GENERATED_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class",
+      GENERATED_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class (test class)",
       REFERENCE_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class_example.txt");
 }
 
@@ -327,6 +328,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithoutArgument)
   ScAgentContext & context = *m_ctx;
 
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_class_main_idtf.scs");
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "multiple_duplications.scs");
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_action_without_argument.scs");
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subject_domains.scs");
@@ -341,7 +343,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithoutArgument)
   ASSERT_TRUE(testAction.IsFinishedSuccessfully());
 
   compareResultFiles(
-      GENERATED_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class",
+      GENERATED_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class (test class)",
       REFERENCE_RESULT_FILES_PATH + "duplications_check_result_file_for_test_class_example.txt");
 }
 

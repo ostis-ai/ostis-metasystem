@@ -10,6 +10,7 @@
 
 #include "sc-agents-common/utils/SetOperationsUtils.hpp"
 
+#include "constants/verification_constants.hpp"
 #include "utils/search_utils.hpp"
 #include "utils/identifier_utils.hpp"
 #include "keynodes/verification_keynodes.hpp"
@@ -88,7 +89,7 @@ void DuplicationsCheckManager::CheckConnectorsDuplications(
   while (connectionsIterator->Next())
     targetElementsWithConnectors[connectionsIterator->Get(2)].emplace_back(connectionsIterator->Get(1));
 
-  ProcessMultipleAccessArcs(targetElementsWithConnectors, checkResult);
+  ProcessMultipleMembershipArcs(targetElementsWithConnectors, checkResult);
 
   targetElementsWithConnectors.clear();
 
@@ -100,7 +101,7 @@ void DuplicationsCheckManager::CheckConnectorsDuplications(
   ProcessMultipleCommonArcs(targetElementsWithConnectors, checkResult);
 }
 
-void DuplicationsCheckManager::ProcessMultipleAccessArcs(
+void DuplicationsCheckManager::ProcessMultipleMembershipArcs(
     ScAddrToValueUnorderedMap<ScAddrList> const & targetElementsWithConnectors,
     ElementDuplicationsCheckResult & checkResult) const
 {
@@ -113,7 +114,7 @@ void DuplicationsCheckManager::ProcessMultipleAccessArcs(
       continue;
 
     checkResult.warningDescriptions.emplace_back(
-        "Found multiple access arcs to " + IdentifierUtils::GetIdentifiersString(m_context, targetElement)
+        "Found multiple membership arcs to " + IdentifierUtils::GetIdentifiersString(m_context, targetElement)
         + ". Duplication is possible if it was not intended as a multiset.");
 
     RelationsDuplicationInfo relationsInfo;
@@ -126,7 +127,7 @@ void DuplicationsCheckManager::ProcessMultipleAccessArcs(
 
     if (relationsInfo.containsConnectorsWithoutIntersectingRelations)
       checkResult.warningDescriptions.emplace_back(
-          "Found multiple access arcs of different relations to "
+          "Found multiple membership arcs of different relations to "
           + IdentifierUtils::GetIdentifiersString(m_context, targetElement)
           + ". It might be better to use a single arc belonging to multiple relations.");
   }
@@ -332,7 +333,7 @@ std::string DuplicationsCheckManager::GetCurrentDatetimeString() const
   std::tm * localTime = std::localtime(&now);
 
   std::ostringstream oss;
-  oss << std::put_time(localTime, "%Y-%m-%d %H:%M:%S");
+  oss << std::put_time(localTime, Formats::TIME);
 
   return oss.str();
 }

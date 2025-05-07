@@ -23,13 +23,19 @@ void VerificationResultLogger::LogSetInfo(SetDuplicationsCheckResult const & che
   descriptionStream << "Check results for " << checkResult.setIdtf << ". Check performed at " << checkResult.checkTime
                     << ".\n";
 
-  descriptionStream << "Checked set belong to ";
-  AddEnumeration(checkResult.subjectDomainsContainingAsMaximumClass, descriptionStream);
-  descriptionStream << " as maximum studied object class.\n";
+  if (!checkResult.subjectDomainsContainingAsMaximumClass.empty())
+  {
+    descriptionStream << "Checked set belong to ";
+    AddEnumeration(checkResult.subjectDomainsContainingAsMaximumClass, descriptionStream);
+    descriptionStream << " as maximum studied object class.\n";
+  }
 
-  descriptionStream << "Checked set belong to ";
-  AddEnumeration(checkResult.subjectDomainsContainingAsNotMaximumClass, descriptionStream);
-  descriptionStream << " as not maximum studied object class.\n";
+  if (!checkResult.subjectDomainsContainingAsNotMaximumClass.empty())
+  {
+    descriptionStream << "Checked set belong to ";
+    AddEnumeration(checkResult.subjectDomainsContainingAsNotMaximumClass, descriptionStream);
+    descriptionStream << " as not maximum studied object class.\n";
+  }
 
   logFile << descriptionStream.rdbuf();
 }
@@ -60,7 +66,6 @@ void VerificationResultLogger::AddEnumeration(
     std::list<std::string> const & enumerationElements,
     std::stringstream & stringStream) const
 {
-  ;
   bool first = true;
   for (auto const & subjectDomain : enumerationElements)
   {

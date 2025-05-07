@@ -30,16 +30,21 @@ std::string IdentifierUtils::GetIdentifiersString(ScMemoryContext * context, ScA
   if (mainIdentifiers.empty())
     return uniqueIdentifier;
 
-  std::string identifiersString = uniqueIdentifier + " (";
+  std::stringstream identifiersStream;
+  identifiersStream << uniqueIdentifier << " (";
+  bool first = true;
   for (auto const & mainIdentifier : mainIdentifiers)
   {
-    identifiersString += mainIdentifier;
-    identifiersString += ", ";
-  }
-  identifiersString.erase(identifiersString.length() - 2);  // remove ", " after the last element
-  identifiersString += ")";
+    if (!first)
+      identifiersStream << ", ";
 
-  return identifiersString;
+    identifiersStream << mainIdentifier;
+
+    first = false;
+  }
+  identifiersStream << ")";
+
+  return identifiersStream.str();
 }
 
 void IdentifierUtils::GetMainIdentifiers(

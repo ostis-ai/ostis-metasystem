@@ -43,7 +43,6 @@ void VerificationResultFileHandler::ResolveFileSpecification(
     std::filesystem::path const & fileFullName,
     ScAddrUnorderedSet & resultElements) const
 {
-  ScAddr fileAddr;
   ScIterator5Ptr const & fileIterator = context->CreateIterator5(
       checkedElementAddr,
       ScType::ConstCommonArc,
@@ -75,7 +74,7 @@ void VerificationResultFileHandler::GenerateDuplicationFileSpecification(
   ScAddr const & fileAddrLink = context->GenerateLink(ScType::ConstNodeLink);
   context->SetLinkContent(fileAddrLink, fileFullName);
   ScAddr const & relationPair = context->GenerateConnector(ScType::ConstCommonArc, checkedElementAddr, fileAddrLink);
-  ScAddr const & relationAccessArc = context->GenerateConnector(
+  ScAddr const & relationMembershipArc = context->GenerateConnector(
       ScType::ConstPermPosArc, VerificationKeynodes::nrel_duplicate_construction_file, relationPair);
 
   ContainerUtils::InsertSeveral(
@@ -83,7 +82,7 @@ void VerificationResultFileHandler::GenerateDuplicationFileSpecification(
       {checkedElementAddr,
        relationPair,
        fileAddrLink,
-       relationAccessArc,
+       relationMembershipArc,
        VerificationKeynodes::nrel_duplicate_construction_file});
 }
 }  // namespace verificationModule
