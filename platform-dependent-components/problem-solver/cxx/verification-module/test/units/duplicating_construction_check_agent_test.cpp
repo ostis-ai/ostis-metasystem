@@ -291,10 +291,12 @@ TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjD
 
   // Descriptions order is not defined
   ASSERT_TRUE(firstErrorDescription != secondErrorDescription);
-  ASSERT_TRUE((firstErrorDescription == firstExpectedErrorDescription)
-              || (firstErrorDescription == secondExpectedErrorDescription));
-  ASSERT_TRUE((secondErrorDescription == firstExpectedErrorDescription)
-              || (secondErrorDescription == secondExpectedErrorDescription));
+  ASSERT_TRUE(
+      (firstErrorDescription == firstExpectedErrorDescription)
+      || (firstErrorDescription == secondExpectedErrorDescription));
+  ASSERT_TRUE(
+      (secondErrorDescription == firstExpectedErrorDescription)
+      || (secondErrorDescription == secondExpectedErrorDescription));
 }
 
 TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithArgument)
@@ -354,8 +356,8 @@ TEST_F(DuplicatingConstructionCheckAgentTest, GetUniqueIdentifierTest)
   ScAddr const & nodeWithIdtf = utils::IteratorUtils::getAnyFromSet(&context, nodesWithIdtfsSet);
   ASSERT_TRUE(context.IsElement(nodeWithIdtf));
 
-  std::string identifierOfNodeWithSystemId
-      = verificationModule::IdentifierUtils::getUniqueIdentifier(&context, nodeWithIdtf);
+  std::string identifierOfNodeWithSystemId =
+      verificationModule::IdentifierUtils::getUniqueIdentifier(&context, nodeWithIdtf);
   ASSERT_EQ(identifierOfNodeWithSystemId, "test_node");
 
   ScAddr const & nodesWithoutIdtfsSet = context.SearchElementBySystemIdentifier("node_without_system_id");
@@ -363,8 +365,8 @@ TEST_F(DuplicatingConstructionCheckAgentTest, GetUniqueIdentifierTest)
   ScAddr const & nodeWithoutIdtf = utils::IteratorUtils::getAnyFromSet(&context, nodesWithoutIdtfsSet);
   ASSERT_TRUE(context.IsElement(nodeWithoutIdtf));
 
-  std::string identifierOfNodeWithoutSystemId
-      = verificationModule::IdentifierUtils::getUniqueIdentifier(&context, nodeWithoutIdtf);
+  std::string identifierOfNodeWithoutSystemId =
+      verificationModule::IdentifierUtils::getUniqueIdentifier(&context, nodeWithoutIdtf);
   ASSERT_EQ(identifierOfNodeWithoutSystemId, std::to_string(nodeWithoutIdtf.Hash()));
 }
 

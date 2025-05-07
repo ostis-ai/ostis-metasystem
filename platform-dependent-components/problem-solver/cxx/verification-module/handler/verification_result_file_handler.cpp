@@ -58,10 +58,10 @@ void VerificationResultFileHandler::resolveFileSpecification(
     ContainerUtils::insertSeveral(
         resultElements,
         {checkedElementAddr,
-        fileIterator->Get(1),
-        fileAddrLink,
-        fileIterator->Get(3),
-        VerificationKeynodes::nrel_duplicate_construction_file});
+         fileIterator->Get(1),
+         fileAddrLink,
+         fileIterator->Get(3),
+         VerificationKeynodes::nrel_duplicate_construction_file});
   }
   else
     generateDuplicationFileSpecification(checkedElementAddr, fileFullName, resultElements);
@@ -75,16 +75,15 @@ void VerificationResultFileHandler::generateDuplicationFileSpecification(
   ScAddr const & fileAddrLink = context->GenerateLink(ScType::ConstNodeLink);
   context->SetLinkContent(fileAddrLink, fileFullName);
   ScAddr const & relationPair = context->GenerateConnector(ScType::ConstCommonArc, checkedElementAddr, fileAddrLink);
-  ScAddr const & relationAccessArc =
-      context->GenerateConnector(
-          ScType::ConstPermPosArc, VerificationKeynodes::nrel_duplicate_construction_file, relationPair);
+  ScAddr const & relationAccessArc = context->GenerateConnector(
+      ScType::ConstPermPosArc, VerificationKeynodes::nrel_duplicate_construction_file, relationPair);
 
   ContainerUtils::insertSeveral(
       resultElements,
       {checkedElementAddr,
-      relationPair,
-      fileAddrLink,
-      relationAccessArc,
-      VerificationKeynodes::nrel_duplicate_construction_file});
+       relationPair,
+       fileAddrLink,
+       relationAccessArc,
+       VerificationKeynodes::nrel_duplicate_construction_file});
 }
 }  // namespace verificationModule

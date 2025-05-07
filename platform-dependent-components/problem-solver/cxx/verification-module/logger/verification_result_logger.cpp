@@ -9,7 +9,8 @@
 namespace verificationModule
 {
 void VerificationResultLogger::logSetCheckResult(
-    SetDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const
+    SetDuplicationsCheckResult const & checkResult,
+    std::ofstream & logFile) const
 {
   logSetInfo(checkResult, logFile);
   for (auto const & elementCheckResult : checkResult.elemtnsCheckResults)
@@ -19,8 +20,8 @@ void VerificationResultLogger::logSetCheckResult(
 void VerificationResultLogger::logSetInfo(SetDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const
 {
   std::stringstream descriptionStream;
-  descriptionStream << "Check results for " << checkResult.setIdtf
-                    << ". Check performed at " << checkResult.checkTime << ".\n";
+  descriptionStream << "Check results for " << checkResult.setIdtf << ". Check performed at " << checkResult.checkTime
+                    << ".\n";
 
   descriptionStream << "Checked set belong to ";
   addEnumeration(checkResult.subjectDomainsContainingAsMaximumClass, descriptionStream);
@@ -34,7 +35,8 @@ void VerificationResultLogger::logSetInfo(SetDuplicationsCheckResult const & che
 }
 
 void VerificationResultLogger::logElementCheckResult(
-    ElementDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const
+    ElementDuplicationsCheckResult const & checkResult,
+    std::ofstream & logFile) const
 {
   std::stringstream errorsStream;
   if (!checkResult.errorsDescriptions.empty())
@@ -55,7 +57,8 @@ void VerificationResultLogger::logElementCheckResult(
 }
 
 void VerificationResultLogger::addEnumeration(
-    std::list<std::string> const & enumerationElements, std::stringstream & stringStream) const
+    std::list<std::string> const & enumerationElements,
+    std::stringstream & stringStream) const
 {
   ;
   bool first = true;
