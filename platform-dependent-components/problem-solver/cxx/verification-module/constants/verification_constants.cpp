@@ -12,4 +12,5 @@ namespace verificationModule
 std::string const FileConfigs::FILE_PATH = "file_path";
 std::string const FileConfigs::VERIFICATION_ENDPOINT = "verification";
 
+const char* const Formats::TIME = "%Y-%m-%d %H:%M:%S";
 }  // namespace verificationModule

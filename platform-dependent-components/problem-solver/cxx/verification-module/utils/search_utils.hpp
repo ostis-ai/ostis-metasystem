@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <string>
-
 #include <sc-memory/sc_memory.hpp>
 
 namespace verificationModule

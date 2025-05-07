@@ -17,4 +17,10 @@ public:
   static std::string const VERIFICATION_ENDPOINT;
 };
 
+class Formats
+{
+public:
+  static const char* const  TIME;
+};
+
 }  // namespace verificationModule

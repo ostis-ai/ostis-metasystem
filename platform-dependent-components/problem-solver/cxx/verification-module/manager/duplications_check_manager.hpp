@@ -30,7 +30,7 @@ private:
 
   void CheckConnectorsDuplications(ScAddr const & checkedElement, ElementDuplicationsCheckResult & checkResult) const;
 
-  void ProcessMultipleAccessArcs(
+  void ProcessMultipleMembershipArcs(
       ScAddrToValueUnorderedMap<ScAddrList> const & targetElementsWithConnectors,
       ElementDuplicationsCheckResult & checkResult) const;
 

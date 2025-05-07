@@ -1,4 +1,4 @@
-Check results for test_class. Check performed at 2025-04-04 14:04:42.
+Check results for test_class (test class). Check performed at 2025-04-04 14:04:42.
 Checked set belong to subj_dom_1 as maximum studied object class.
 Checked set belong to subj_dom_3, subj_dom_2 as not maximum studied object class.
 Found next errors in checked set element object1:
