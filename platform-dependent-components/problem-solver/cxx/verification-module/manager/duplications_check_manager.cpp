@@ -61,7 +61,7 @@ bool DuplicationsCheckManager::checkElementDuplications(
    *   - introduction of new check (for a new kind of constructions) with high probability leads to changes
    *       in these structures thus leading to problems with future modifications.
    */
-  //todo(NikiforovSergei): add the ability to configure which checks to use
+  // todo(NikiforovSergei): add the ability to configure which checks to use
   checkConnectorsDuplications(checkedElement, checkResult);
   checkSingularRelations(checkedElement, checkResult);
   checkQuasybinaryRelations(checkedElement, checkResult);
@@ -342,18 +342,13 @@ void DuplicationsCheckManager::findStructuresContainingElementByRoleRelationIden
     ScAddr const & relation,
     std::list<std::string> & structuresIdentifiers) const
 {
-  ScIterator5Ptr const & structuresIterator = m_context->CreateIterator5(
-      ScType::Node,
-      ScType::ConstPermPosArc,
-      element,
-      ScType::ConstPermPosArc,
-      relation);
+  ScIterator5Ptr const & structuresIterator =
+      m_context->CreateIterator5(ScType::Node, ScType::ConstPermPosArc, element, ScType::ConstPermPosArc, relation);
 
   while (structuresIterator->Next())
   {
     ScAddr const & structure = structuresIterator->Get(0);
-    structuresIdentifiers.emplace_back(
-        IdentifierUtils::getIdentifiersString(m_context, structure));
+    structuresIdentifiers.emplace_back(IdentifierUtils::getIdentifiersString(m_context, structure));
   }
 }
 
@@ -362,9 +357,7 @@ void DuplicationsCheckManager::findMaxObjectClassSubjectDomain(
     std::list<std::string> & subjectDomainContainingAsMaximumClass) const
 {
   findStructuresContainingElementByRoleRelationIdentifiers(
-      checkedSet,
-      VerificationKeynodes::rrel_maximum_studied_object_class,
-      subjectDomainContainingAsMaximumClass);
+      checkedSet, VerificationKeynodes::rrel_maximum_studied_object_class, subjectDomainContainingAsMaximumClass);
 }
 
 void DuplicationsCheckManager::findNonMaxObjectClassSubjectDomains(
@@ -377,7 +370,8 @@ void DuplicationsCheckManager::findNonMaxObjectClassSubjectDomains(
       subjectDomainsContainingAsNotMaximumClass);
 }
 
-void DuplicationsCheckManager::fillCheckedSetInfo(ScAddr const & checkedSet,
+void DuplicationsCheckManager::fillCheckedSetInfo(
+    ScAddr const & checkedSet,
     SetDuplicationsCheckResult & setCheckResult) const
 {
   setCheckResult.setIdtf = IdentifierUtils::getIdentifiersString(m_context, checkedSet);

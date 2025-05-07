@@ -64,7 +64,7 @@ ScAddr CheckDuplicateConstructionsAgent::formResultStructure(ScAddrUnorderedSet 
   return resultStructure;
 }
 
-void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr,  ScAddrUnorderedSet & resultElements) const
+void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr, ScAddrUnorderedSet & resultElements) const
 {
   try
   {
@@ -74,8 +74,8 @@ void CheckDuplicateConstructionsAgent::runCheck(ScAddr const & classAddr,  ScAdd
     if (!duplicationsCheckManager->checkSetElementsDuplications(classAddr, setCheckResult))
       return;
 
-    std::ofstream outputFile = fileHandler->createOutputFile(
-        filePath, setCheckResult.setIdtf, classAddr, resultElements);
+    std::ofstream outputFile =
+        fileHandler->createOutputFile(filePath, setCheckResult.setIdtf, classAddr, resultElements);
 
     VerificationResultLogger resultLogger;
     resultLogger.logSetCheckResult(setCheckResult, outputFile);

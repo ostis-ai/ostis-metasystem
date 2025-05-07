@@ -39,7 +39,8 @@ private:
       ElementDuplicationsCheckResult & checkResult) const;
 
   void getRelationsInfo(
-      ScAddrList const & connectors,ScType const & relationType,
+      ScAddrList const & connectors,
+      ScType const & relationType,
       RelationsDuplicationInfo & relationsInfo) const;
 
   void checkSingularRelations(ScAddr const & checkedElement, ElementDuplicationsCheckResult & checkResult) const;
