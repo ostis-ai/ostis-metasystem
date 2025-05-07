@@ -64,15 +64,15 @@ TEST_F(DuplicatingConstructionCheckAgentTest, NoMembersTest)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "noMembers.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "no_members.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
   SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
-  duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
+  ASSERT_FALSE(duplicationsCheckManager.CheckSetElementsDuplications(testClass, checkResult));
 
   ASSERT_TRUE(checkResult.elemtnsCheckResults.empty());
 }
@@ -81,15 +81,15 @@ TEST_F(DuplicatingConstructionCheckAgentTest, AccessArcsWithoutRelationsTest)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "accessArcsWithoutRelations.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "access_arcs_without_relations.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
   SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
-  duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
+  ASSERT_TRUE(duplicationsCheckManager.CheckSetElementsDuplications(testClass, checkResult));
 
   ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1u);
 
@@ -110,15 +110,15 @@ TEST_F(DuplicatingConstructionCheckAgentTest, CommonArcsWithoutRelationsTest)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "commonArcsWithoutRelations.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "common_arcs_without_relations.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
   SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
-  duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
+  ASSERT_TRUE(duplicationsCheckManager.CheckSetElementsDuplications(testClass, checkResult));
 
   ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1u);
 
@@ -139,15 +139,15 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingNonRoleRelationsTest)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "duplicatingNonRoleRelations.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "duplicate_non_role_relations.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
   SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
-  duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
+  ASSERT_TRUE(duplicationsCheckManager.CheckSetElementsDuplications(testClass, checkResult));
 
   ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1u);
 
@@ -166,15 +166,15 @@ TEST_F(DuplicatingConstructionCheckAgentTest, DuplicatingRoleRelationsTest)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "duplicatingRoleRelations.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "duplicate_role_relations.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
   SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
-  duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
+  ASSERT_TRUE(duplicationsCheckManager.CheckSetElementsDuplications(testClass, checkResult));
 
   ASSERT_EQ(checkResult.elemtnsCheckResults.size(), 1u);
 
@@ -197,15 +197,15 @@ TEST_F(DuplicatingConstructionCheckAgentTest, EqualSetQuasybinariesTest)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "equalSetQuasybinaries.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "equal_set_quasybinaries.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
   SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
-  duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
+  ASSERT_TRUE(duplicationsCheckManager.CheckSetElementsDuplications(testClass, checkResult));
 
   std::list<ElementDuplicationsCheckResult> const & elementsCheckResults = checkResult.elemtnsCheckResults;
   ASSERT_EQ(elementsCheckResults.size(), 3u);
@@ -251,16 +251,16 @@ TEST_F(DuplicatingConstructionCheckAgentTest, MultipleSingularRelationsWithSubjD
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "multipleSingularRelationsTest.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subjectDomains.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "multiple_singular_relations_test.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subject_domains.scs");
 
   ScAddr const & testClass = context.SearchElementBySystemIdentifier("test_class");
   ASSERT_TRUE(context.IsElement(testClass));
 
   SetDuplicationsCheckResult checkResult;
   DuplicationsCheckManager duplicationsCheckManager(&context);
-  duplicationsCheckManager.checkSetElementsDuplications(testClass, checkResult);
+  ASSERT_TRUE(duplicationsCheckManager.CheckSetElementsDuplications(testClass, checkResult));
 
   ASSERT_EQ(checkResult.setIdtf, "test_class");
   ASSERT_EQ(checkResult.subjectDomainsContainingAsMaximumClass.size(), 1u);
@@ -303,10 +303,10 @@ TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithArgument)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "multipleDuplications.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "testActionWithArgument.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subjectDomains.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "multiple_duplications.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_action_with_argument.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subject_domains.scs");
 
   ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_verification_action_node");
   ASSERT_TRUE(context.IsElement(testActionNode));
@@ -326,10 +326,10 @@ TEST_F(DuplicatingConstructionCheckAgentTest, ComplexAgentCallWithoutArgument)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elementsTypes.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "multipleDuplications.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "testActionWithoutArgument.scs");
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subjectDomains.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "elements_types.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "multiple_duplications.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "test_action_without_argument.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "subject_domains.scs");
 
   ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_verification_action_node");
   ASSERT_TRUE(context.IsElement(testActionNode));
@@ -349,7 +349,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, GetUniqueIdentifierTest)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "uniqueIdentifiersTest.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "unique_identifiers_test.scs");
 
   ScAddr const & nodesWithIdtfsSet = context.SearchElementBySystemIdentifier("node_with_system_id");
   ASSERT_TRUE(context.IsElement(nodesWithIdtfsSet));
@@ -357,7 +357,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, GetUniqueIdentifierTest)
   ASSERT_TRUE(context.IsElement(nodeWithIdtf));
 
   std::string identifierOfNodeWithSystemId =
-      verificationModule::IdentifierUtils::getUniqueIdentifier(&context, nodeWithIdtf);
+      verificationModule::IdentifierUtils::GetUniqueIdentifier(&context, nodeWithIdtf);
   ASSERT_EQ(identifierOfNodeWithSystemId, "test_node");
 
   ScAddr const & nodesWithoutIdtfsSet = context.SearchElementBySystemIdentifier("node_without_system_id");
@@ -366,7 +366,7 @@ TEST_F(DuplicatingConstructionCheckAgentTest, GetUniqueIdentifierTest)
   ASSERT_TRUE(context.IsElement(nodeWithoutIdtf));
 
   std::string identifierOfNodeWithoutSystemId =
-      verificationModule::IdentifierUtils::getUniqueIdentifier(&context, nodeWithoutIdtf);
+      verificationModule::IdentifierUtils::GetUniqueIdentifier(&context, nodeWithoutIdtf);
   ASSERT_EQ(identifierOfNodeWithoutSystemId, std::to_string(nodeWithoutIdtf.Hash()));
 }
 

@@ -10,7 +10,7 @@
 
 namespace verificationModule
 {
-void SearchUtils::getSingularRelations(ScMemoryContext * context, ScAddrList & singularRelations)
+void SearchUtils::GetSingularRelations(ScMemoryContext * context, ScAddrList & singularRelations)
 {
   ScIterator3Ptr relationsIterator = context->CreateIterator3(
       VerificationKeynodes::concept_singular_relation, ScType::ConstPermPosArc, ScType::Unknown);
@@ -19,7 +19,7 @@ void SearchUtils::getSingularRelations(ScMemoryContext * context, ScAddrList & s
     singularRelations.push_back(relationsIterator->Get(2));
 }
 
-void SearchUtils::getQuasybinaryRelations(ScMemoryContext * context, ScAddrUnorderedSet & quasybinaryRelations)
+void SearchUtils::GetQuasybinaryRelations(ScMemoryContext * context, ScAddrUnorderedSet & quasybinaryRelations)
 {
   ScIterator3Ptr relationsIterator = context->CreateIterator3(
       VerificationKeynodes::quasybinary_relation, ScType::ConstPermPosArc, ScType::ConstNodeNonRole);

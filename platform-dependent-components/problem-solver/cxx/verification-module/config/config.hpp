@@ -16,7 +16,7 @@ public:
 
   void operator=(Config const &) = delete;
 
-  static Config * getInstance();
+  static Config * GetInstance();
 
-  std::string getValue(std::string const & group, std::string const & field);
+  std::string GetValue(std::string const & groupName, std::string const & fieldName);
 };

@@ -16,12 +16,12 @@ namespace verificationModule
 class IdentifierUtils
 {
 public:
-  static std::string getUniqueIdentifier(ScMemoryContext * context, ScAddr const & element);
+  static std::string GetUniqueIdentifier(ScMemoryContext * context, ScAddr const & element);
 
-  static std::string getIdentifiersString(ScMemoryContext * context, ScAddr const & element);
+  static std::string GetIdentifiersString(ScMemoryContext * context, ScAddr const & element);
 
 private:
-  static void getMainIdentifiers(
+  static void GetMainIdentifiers(
       ScMemoryContext * context,
       ScAddr const & element,
       std::list<std::string> & identifiers);

@@ -8,33 +8,33 @@
 
 namespace verificationModule
 {
-void VerificationResultLogger::logSetCheckResult(
+void VerificationResultLogger::LogSetCheckResult(
     SetDuplicationsCheckResult const & checkResult,
     std::ofstream & logFile) const
 {
-  logSetInfo(checkResult, logFile);
+  LogSetInfo(checkResult, logFile);
   for (auto const & elementCheckResult : checkResult.elemtnsCheckResults)
-    logElementCheckResult(elementCheckResult, logFile);
+    LogElementCheckResult(elementCheckResult, logFile);
 }
 
-void VerificationResultLogger::logSetInfo(SetDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const
+void VerificationResultLogger::LogSetInfo(SetDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const
 {
   std::stringstream descriptionStream;
   descriptionStream << "Check results for " << checkResult.setIdtf << ". Check performed at " << checkResult.checkTime
                     << ".\n";
 
   descriptionStream << "Checked set belong to ";
-  addEnumeration(checkResult.subjectDomainsContainingAsMaximumClass, descriptionStream);
+  AddEnumeration(checkResult.subjectDomainsContainingAsMaximumClass, descriptionStream);
   descriptionStream << " as maximum studied object class.\n";
 
   descriptionStream << "Checked set belong to ";
-  addEnumeration(checkResult.subjectDomainsContainingAsNotMaximumClass, descriptionStream);
+  AddEnumeration(checkResult.subjectDomainsContainingAsNotMaximumClass, descriptionStream);
   descriptionStream << " as not maximum studied object class.\n";
 
   logFile << descriptionStream.rdbuf();
 }
 
-void VerificationResultLogger::logElementCheckResult(
+void VerificationResultLogger::LogElementCheckResult(
     ElementDuplicationsCheckResult const & checkResult,
     std::ofstream & logFile) const
 {
@@ -56,7 +56,7 @@ void VerificationResultLogger::logElementCheckResult(
   logFile << errorsStream.rdbuf();
 }
 
-void VerificationResultLogger::addEnumeration(
+void VerificationResultLogger::AddEnumeration(
     std::list<std::string> const & enumerationElements,
     std::stringstream & stringStream) const
 {

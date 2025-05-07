@@ -18,7 +18,7 @@ class VerificationResultFileHandler
 public:
   explicit VerificationResultFileHandler(ScMemoryContext * context);
 
-  std::ofstream createOutputFile(
+  std::ofstream CreateOutputFile(
       std::filesystem::path const & filePath,
       std::string const & checkedElementIdtf,
       ScAddr const & checkedElementAddr,
@@ -27,12 +27,12 @@ public:
 private:
   ScMemoryContext * context;
 
-  void resolveFileSpecification(
+  void ResolveFileSpecification(
       ScAddr const & checkedElementAddr,
       std::filesystem::path const & fileFullName,
       ScAddrUnorderedSet & resultElements) const;
 
-  void generateDuplicationFileSpecification(
+  void GenerateDuplicationFileSpecification(
       ScAddr const & checkedElementAddr,
       std::filesystem::path const & fileFullName,
       ScAddrUnorderedSet & resultElements) const;

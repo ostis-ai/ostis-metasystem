@@ -8,7 +8,7 @@
 
 #include <sc-memory/sc_addr.hpp>
 
-#include "dataStructures/element_duplications_check_result.hpp"
+#include "data-structures/element_duplications_check_result.hpp"
 
 struct RelationsDuplicationInfo
 {
