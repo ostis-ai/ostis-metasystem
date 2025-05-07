@@ -20,7 +20,7 @@ VerificationResultFileHandler::VerificationResultFileHandler(ScMemoryContext * c
 {
 }
 
-std::ofstream VerificationResultFileHandler::createOutputFile(
+std::ofstream VerificationResultFileHandler::CreateOutputFile(
     std::filesystem::path const & filePath,
     std::string const & checkedElementIdtf,
     ScAddr const & checkedElementAddr,
@@ -33,12 +33,12 @@ std::ofstream VerificationResultFileHandler::createOutputFile(
 
   SC_LOG_INFO("Duplications file for " << checkedElementIdtf << " is " << fileFullName.string());
 
-  resolveFileSpecification(checkedElementAddr, fileFullName, resultElements);
+  ResolveFileSpecification(checkedElementAddr, fileFullName, resultElements);
 
   return {fileFullName, std::ios::app};
 }
 
-void VerificationResultFileHandler::resolveFileSpecification(
+void VerificationResultFileHandler::ResolveFileSpecification(
     ScAddr const & checkedElementAddr,
     std::filesystem::path const & fileFullName,
     ScAddrUnorderedSet & resultElements) const
@@ -55,7 +55,7 @@ void VerificationResultFileHandler::resolveFileSpecification(
     ScAddr const & fileAddrLink = fileIterator->Get(2);
     context->SetLinkContent(fileAddrLink, fileFullName);
 
-    ContainerUtils::insertSeveral(
+    ContainerUtils::InsertSeveral(
         resultElements,
         {checkedElementAddr,
          fileIterator->Get(1),
@@ -64,10 +64,10 @@ void VerificationResultFileHandler::resolveFileSpecification(
          VerificationKeynodes::nrel_duplicate_construction_file});
   }
   else
-    generateDuplicationFileSpecification(checkedElementAddr, fileFullName, resultElements);
+    GenerateDuplicationFileSpecification(checkedElementAddr, fileFullName, resultElements);
 }
 
-void VerificationResultFileHandler::generateDuplicationFileSpecification(
+void VerificationResultFileHandler::GenerateDuplicationFileSpecification(
     ScAddr const & checkedElementAddr,
     std::filesystem::path const & fileFullName,
     ScAddrUnorderedSet & resultElements) const
@@ -78,7 +78,7 @@ void VerificationResultFileHandler::generateDuplicationFileSpecification(
   ScAddr const & relationAccessArc = context->GenerateConnector(
       ScType::ConstPermPosArc, VerificationKeynodes::nrel_duplicate_construction_file, relationPair);
 
-  ContainerUtils::insertSeveral(
+  ContainerUtils::InsertSeveral(
       resultElements,
       {checkedElementAddr,
        relationPair,

@@ -14,7 +14,7 @@ namespace verificationModule
 class ContainerUtils
 {
 public:
-  static void insertSeveral(ScAddrUnorderedSet & set, std::initializer_list<ScAddr> const & elements);
+  static void InsertSeveral(ScAddrUnorderedSet & set, std::initializer_list<ScAddr> const & elements);
 };
 
 }  // namespace verificationModule

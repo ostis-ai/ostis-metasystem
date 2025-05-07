@@ -16,9 +16,9 @@ namespace verificationModule
 class SearchUtils
 {
 public:
-  static void getSingularRelations(ScMemoryContext * context, ScAddrList & singularRelations);
+  static void GetSingularRelations(ScMemoryContext * context, ScAddrList & singularRelations);
 
-  static void getQuasybinaryRelations(ScMemoryContext * context, ScAddrUnorderedSet & quasybinaryRelations);
+  static void GetQuasybinaryRelations(ScMemoryContext * context, ScAddrUnorderedSet & quasybinaryRelations);
 };
 
 }  // namespace verificationModule

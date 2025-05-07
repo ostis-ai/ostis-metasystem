@@ -8,7 +8,7 @@
 
 namespace verificationModule
 {
-void ContainerUtils::insertSeveral(ScAddrUnorderedSet & set, std::initializer_list<ScAddr> const & elements)
+void ContainerUtils::InsertSeveral(ScAddrUnorderedSet & set, std::initializer_list<ScAddr> const & elements)
 {
   set.insert(elements.begin(), elements.end());
 }

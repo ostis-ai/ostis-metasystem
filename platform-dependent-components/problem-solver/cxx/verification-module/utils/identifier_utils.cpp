@@ -10,7 +10,7 @@
 
 namespace verificationModule
 {
-std::string IdentifierUtils::getUniqueIdentifier(ScMemoryContext * context, ScAddr const & element)
+std::string IdentifierUtils::GetUniqueIdentifier(ScMemoryContext * context, ScAddr const & element)
 {
   std::string identifier = context->GetElementSystemIdentifier(element);
 
@@ -20,12 +20,12 @@ std::string IdentifierUtils::getUniqueIdentifier(ScMemoryContext * context, ScAd
   return identifier;
 }
 
-std::string IdentifierUtils::getIdentifiersString(ScMemoryContext * context, ScAddr const & element)
+std::string IdentifierUtils::GetIdentifiersString(ScMemoryContext * context, ScAddr const & element)
 {
-  std::string uniqueIdentifier = getUniqueIdentifier(context, element);
+  std::string uniqueIdentifier = GetUniqueIdentifier(context, element);
 
   std::list<std::string> mainIdentifiers;
-  getMainIdentifiers(context, element, mainIdentifiers);
+  GetMainIdentifiers(context, element, mainIdentifiers);
 
   if (mainIdentifiers.empty())
     return uniqueIdentifier;
@@ -42,7 +42,7 @@ std::string IdentifierUtils::getIdentifiersString(ScMemoryContext * context, ScA
   return identifiersString;
 }
 
-void IdentifierUtils::getMainIdentifiers(
+void IdentifierUtils::GetMainIdentifiers(
     ScMemoryContext * context,
     ScAddr const & element,
     std::list<std::string> & identifiers)

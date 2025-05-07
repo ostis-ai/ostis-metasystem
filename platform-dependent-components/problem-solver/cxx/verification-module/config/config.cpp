@@ -9,13 +9,13 @@ Config::Config(std::string const & path)
 {
 }
 
-Config * Config::getInstance()
+Config * Config::GetInstance()
 {
   static Config instance(ScMemory::ms_configPath);
   return &instance;
 }
 
-std::string Config::getValue(std::string const & groupName, std::string const & fieldName)
+std::string Config::GetValue(std::string const & groupName, std::string const & fieldName)
 {
   std::lock_guard<std::mutex> lock(mutex);
 

@@ -9,7 +9,7 @@
 #include <list>
 #include <string>
 
-#include "dataStructures/element_duplications_check_result.hpp"
+#include "data-structures/element_duplications_check_result.hpp"
 
 struct SetDuplicationsCheckResult
 {

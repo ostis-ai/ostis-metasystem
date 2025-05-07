@@ -27,9 +27,9 @@ private:
   std::unique_ptr<DuplicationsCheckManager> duplicationsCheckManager;
   std::unique_ptr<VerificationResultFileHandler> fileHandler;
 
-  ScAddr formResultStructure(ScAddrUnorderedSet const & resultElements) const;
+  ScAddr FormResultStructure(ScAddrUnorderedSet const & resultElements) const;
 
-  void runCheck(ScAddr const & classAddr, ScAddrUnorderedSet & resultElements) const;
+  void RunCheck(ScAddr const & classAddr, ScAddrUnorderedSet & resultElements) const;
 };
 
 }  // namespace verificationModule

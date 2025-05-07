@@ -9,21 +9,21 @@
 #include <fstream>
 #include <sstream>
 
-#include "dataStructures/set_duplications_check_result.hpp"
+#include "data-structures/set_duplications_check_result.hpp"
 
 namespace verificationModule
 {
 class VerificationResultLogger
 {
 public:
-  void logSetCheckResult(SetDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const;
+  void LogSetCheckResult(SetDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const;
 
-  void logSetInfo(SetDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const;
+  void LogSetInfo(SetDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const;
 
 private:
-  void addEnumeration(std::list<std::string> const & enumerationElements, std::stringstream & stringStream) const;
+  void AddEnumeration(std::list<std::string> const & enumerationElements, std::stringstream & stringStream) const;
 
-  void logElementCheckResult(ElementDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const;
+  void LogElementCheckResult(ElementDuplicationsCheckResult const & checkResult, std::ofstream & logFile) const;
 
   std::string const INDENT = "    ";
 };
