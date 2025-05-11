@@ -46,7 +46,6 @@ ScResult CheckDuplicateConstructionsAgent::DoProgram(ScActionInitiatedEvent cons
   ScAddr const & resultStructure = FormResultStructure(resultElements);
   action.SetResult(resultStructure);
 
-  SC_LOG_DEBUG("CheckDuplicateConstructionsAgent finished");
   return action.FinishSuccessfully();
 }
 
