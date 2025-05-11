@@ -1,0 +1,4 @@
+test_verification_action_node
+-> rrel_1: test_class;
+<- action;
+<- action_check_duplicate_constructions;;
