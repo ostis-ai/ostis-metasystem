@@ -1,0 +1,103 @@
+\scnheader{Агент перевода структуры на естественный язык}
+
+\scntext{примечание}{Данный агент переводит переданные ему структуры в текст естественного языка}
+
+\scntext{класс действия}{action\_translate\_structures\_into\_natural\_language}
+
+\begin{scnrelfromvector}{задачи}
+  \scnitem{перевести структуры на естественный язык}
+\end{scnrelfromvector}
+
+\begin{scnrelfromvector}{аргументы агента}
+  \scnitem{structuresSet}
+  \begin{scnindent}
+    \scntext{пояснение}{structuresSet - sc-множество, содержащее структуры для перевода}
+  \end{scnindent}
+\end{scnrelfromvector}
+
+\begin{scnrelfromvector}{алгоритм}
+  \scnfileitem{Поиск для каждой структуры связей определенного вида и перевод данных связей в строку}
+  \scnfileitem{Добавление полученной строки к ответному тексту}
+  \scnfileitem{Формирование sc-ссылки с ответным текстом}
+\end{scnrelfromvector}
+
+\scnrelfrom{пример входной конструкции}{\scnfileimage[30em]{images/structure-translation-agent/input.png}}
+
+\scnrelfrom{пример выходной конструкции}{\scnfileimage[30em]{images/structure-translation-agent/output.png}}
+
+\begin{scnrelfromset}{Примеры связей, переводимые трансляторами}
+
+  \scnfileitem{FromConceptTranslator}
+  \begin{scnindent}
+    {\scnfileimage[7em]{images/structure-translation-agent/from_concept_translator.png}}
+  \end{scnindent}
+  \begin{scnindent}
+    \scntext{перевод}{apple is fruit. }
+  \end{scnindent}
+
+  \scnfileitem{NrelFromNodeTranslator}
+  \begin{scnindent}
+    {\scnfileimage[13em]{images/structure-translation-agent/nrel_from_node_translator.png}}
+  \end{scnindent}
+  \begin{scnindent}
+    \scntext{перевод}{man likes pizza. }
+  \end{scnindent}
+ \end{scnrelfromset}
+
+  \scnfileitem{NrelInLinkTranslator}
+  \begin{scnindent}
+    {\scnfileimage[12em]{images/structure-translation-agent/nrel_in_link_translator.png}}
+  \end{scnindent}
+  \begin{scnindent}
+    \scntext{перевод}{apple name Arnold. }
+  \end{scnindent}
+
+  \scnfileitem{NrelInQuasybinaryNodeTranslator}
+  \begin{scnindent}
+    {\scnfileimage[15em]{images/structure-translation-agent/nrel_in_quasybinary_node_translator.png}}
+  \end{scnindent}
+  \begin{scnindent}
+    \scntext{перевод}{human parents first parent. human parents second parent. }
+  \end{scnindent}
+
+  \scnfileitem{NrelFromQuasybinaryNodeTranslator}
+  \begin{scnindent}
+    {\scnfileimage[15em]{images/structure-translation-agent/nrel_from_quasybinary_node_translator.png}}
+  \end{scnindent}
+  \begin{scnindent}
+    \scntext{перевод}{thing parts decomposition big part. thing parts decomposition little part. }
+  \end{scnindent}
+  
+  \scnfileitem{NrelInQuasybinaryLinkTranslator}
+  \begin{scnindent}
+    {\scnfileimage[15em]{images/structure-translation-agent/nrel_in_quasybinary_link_translator.png}}
+  \end{scnindent}
+  \begin{scnindent}
+    \scntext{перевод}{man synonyms human. man synonyms guy. }
+  \end{scnindent}
+  
+  \scnfileitem{NrelFromQuasybinaryLinkTranslator}
+  \begin{scnindent}
+    {\scnfileimage[15em]{images/structure-translation-agent/nrel_from_quasybinary_link_translator.png}}
+  \end{scnindent}
+  \begin{scnindent}
+    \scntext{перевод}{apple decomposition pulp. apple decomposition peel. }
+  \end{scnindent}
+
+\end{scnrelfromset}
+\begin{scnindent}
+  \scntext{примечание}{Для перевода используются главные идентификаторы узлов. Если у какого-либо узла в связи нет идентификатора, перевод не будет выполнен. Идентификаторы могут быть за пределами структуры.}
+\end{scnindent}
+
+\scntext{язык реализации агента}{c++}
+
+\begin{scnrelfromvector}{возможные результаты}
+  \scnitem{SC\_RESULT\_OK}
+  \begin{scnindent}
+    \scntext{пояснение}{структуры переведены}
+  \end{scnindent}
+  \scnitem{SC\_RESULT\_ERROR}
+  \begin{scnindent}
+    \scntext{пояснение}{внутренняя ошибка}
+  \end{scnindent}
+\end{scnrelfromvector}

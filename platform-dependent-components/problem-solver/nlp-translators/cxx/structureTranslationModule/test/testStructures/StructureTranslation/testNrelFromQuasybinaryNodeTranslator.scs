@@ -1,0 +1,23 @@
+sc_node_class
+    -> concept_thing;
+    -> lang_ru;;
+
+sc_node_norole_relation
+    -> nrel_parts_decomposition;;
+
+test_structure = [*
+    concept_thing <= nrel_parts_decomposition:
+    {
+        part1;
+        part2
+    };;
+    *];;
+
+concept_thing
+    => nrel_main_idtf: [штука] (* <- lang_ru;; *);;
+nrel_parts_decomposition
+    => nrel_main_idtf: [декомпозиция на части] (* <- lang_ru;; *);;
+part1
+    => nrel_main_idtf: [большая часть] (* <- lang_ru;; *);;
+part2
+    => nrel_main_idtf: [маленькая часть] (* <- lang_ru;; *);;

@@ -1,0 +1,42 @@
+concept_intent_possible_class
+<- sc_node_class;;
+
+concept_entity_possible_class
+<- sc_node_class;
+-> concept_test_entity_class;;
+
+concept_test_entity_class
+<- sc_node_class;
+=> nrel_entity_possible_role: ..posible_role_tuple(* 
+  <- sc_node_tuple;;
+  -> rrel_entity;; *);;
+
+nrel_entity_possible_role
+<- sc_node_non_role_relation;;
+
+nrel_response_action
+<- sc_node_non_role_relation;;
+
+nrel_response
+<- sc_node_non_role_relation;;
+
+rrel_entity
+<- sc_node_role_relation;;
+
+rrel_1
+<- sc_node_role_relation;;
+
+rrel_2
+<- sc_node_role_relation;;
+
+nrel_response_action
+<- sc_node_non_role_relation;;
+
+nrel_contained_role
+<- sc_node_non_role_relation;;
+
+nrel_corresponding_role
+<- sc_node_non_role_relation;;
+
+nrel_default_arg_value
+<- sc_node_non_role_relation;;

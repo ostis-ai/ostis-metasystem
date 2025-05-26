@@ -1,0 +1,24 @@
+sc_node_class
+    -> concept_apple;
+    -> concept_red;
+    -> color;
+    -> parameter;
+    -> concept_fruit;
+    -> lang_en;;
+
+test_question_node
+    <- concept_apple;
+    <- concept_red;
+    <- concept_fruit;;
+
+concept_red <- color;;
+color <- parameter;;
+
+concept_apple
+    => nrel_main_idtf: [apple] (* <- lang_en;; *);;
+concept_red
+    => nrel_main_idtf: [red] (* <- lang_en;; *);;
+concept_fruit
+    => nrel_main_idtf: [fruit] (* <- lang_en;; *);;
+color
+    => nrel_main_idtf: [color] (* <- lang_en;; *);;

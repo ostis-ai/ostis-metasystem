@@ -1,0 +1,9 @@
+translation_ignored_keynodes
+    -> nrel_system_identifier;
+    -> concept_apple;;
+
+sc_node_norole_relation
+    -> nrel_system_identifier;;
+
+nrel_system_identifier
+=> nrel_main_idtf: [system identifier] (* <- lang_en;; *);;

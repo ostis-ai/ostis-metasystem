@@ -1,0 +1,95 @@
+sc_node_class
+    -> concept_apple;
+    -> concept_red;
+    -> concept_man;
+    -> concept_human;
+    -> concept_thing;
+    -> concept_fruit;
+    -> color;
+    -> lang_ru;;
+
+sc_node_norole_relation
+    -> nrel_name;
+    -> nrel_synonyms;
+    -> nrel_decomposition;
+    -> nrel_parents;
+    -> nrel_parts_decomposition;
+    -> nrel_likes;
+    -> nrel_likes_to_eat;
+    -> nrel_parent;;
+
+test_question_node
+    <- question;
+    <- action_translate_structures_into_natural_language;
+    -> rrel_1: {
+    test_structure
+    };
+    -> rrel_2:: rrel_dynamic_argument:: test_answer_node;;
+
+test_structure = [*
+    concept_red <- color;;
+    concept_apple <- concept_fruit;;
+    concept_apple <= nrel_decomposition:
+    {
+       [кожура] (* <- lang_ru;; *);
+       [мякоть] (* <- lang_ru;; *)
+    };;
+    concept_apple => nrel_name: [Арнольд] (* <- lang_ru;; *);;
+    concept_man => nrel_likes: nrel_likes_to_eat: pizza;;
+    concept_thing <= nrel_parts_decomposition:
+    {
+        part1;
+        part2
+    };;
+    concept_man => nrel_synonyms:
+    {
+       [хомо сапиенс] (* <- lang_ru;; *);
+       [людь] (* <- lang_ru;; *)
+    };;
+    concept_human => nrel_parents:
+    {
+        parent1;
+        parent2
+    };;
+    *];;
+
+concept_man
+    => nrel_main_idtf: [мужчина] (* <- lang_ru;; *);;
+concept_human
+    => nrel_main_idtf: [человек] (* <- lang_ru;; *);;
+concept_thing
+    => nrel_main_idtf: [штука] (* <- lang_ru;; *);;
+concept_apple
+    => nrel_main_idtf: [яблоко] (* <- lang_ru;; *);;
+concept_red
+    => nrel_main_idtf: [красный] (* <- lang_ru;; *);;
+concept_fruit
+    => nrel_main_idtf: [фрукт] (* <- lang_ru;; *);;
+color
+    => nrel_main_idtf: [цвет] (* <- lang_ru;; *);;
+nrel_name
+    => nrel_main_idtf: [имя] (* <- lang_ru;; *);;
+nrel_synonyms
+    => nrel_main_idtf: [синонимы] (* <- lang_ru;; *);;
+nrel_decomposition
+    => nrel_main_idtf: [декомпозиция] (* <- lang_ru;; *);;
+nrel_parents
+    => nrel_main_idtf: [родители] (* <- lang_ru;; *);;
+parent1
+    => nrel_main_idtf: [первый родитель] (* <- lang_ru;; *);;
+parent2
+    => nrel_main_idtf: [второй родитель] (* <- lang_ru;; *);;
+nrel_parts_decomposition
+    => nrel_main_idtf: [декомпозиция на части] (* <- lang_ru;; *);;
+part1
+    => nrel_main_idtf: [большая часть] (* <- lang_ru;; *);;
+part2
+    => nrel_main_idtf: [маленькая часть] (* <- lang_ru;; *);;
+nrel_likes
+    => nrel_main_idtf: [любит] (* <- lang_ru;; *);;
+nrel_likes_to_eat
+    => nrel_main_idtf: [любит есть] (* <- lang_ru;; *);;
+pizza
+    => nrel_main_idtf: [пицца] (* <- lang_ru;; *);;
+nrel_parent
+    => nrel_main_idtf: [родитель] (* <- lang_ru;; *);;

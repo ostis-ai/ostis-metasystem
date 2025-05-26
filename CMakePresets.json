@@ -19,7 +19,11 @@
       "description": "Release config (Conan dependencies used)",
       "installDir": "${sourceDir}/build/Release/install",
       "inherits": "conan-release",
-      "generator": "Ninja"
+      "generator": "Ninja",
+      "cacheVariables": {
+        "sc-machine_DIR": "${sourceDir}/../sc-machine/build/Release",
+        "non-atomic-action-interpreter-module_DIR": "/home/iran/job/newest_metasystem/ostis-ps-lib/non-atomic-action-interpreter-module/build/Release"
+      }
     },
     {
       "name": "release-with-tests-conan",

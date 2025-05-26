@@ -1,0 +1,24 @@
+site_name: ostis-ps-lib
+
+dev_addr: 127.0.0.1:8002
+
+extra_css:
+  - _assets/main.css
+extra_javascript:
+  - _assets/scg.min.js
+  - _assets/main.js
+
+nav:
+  - Introduction: index.md
+  - Software Components:
+    - Agents: software_components/agents.md
+
+theme:
+  name: material
+  language: en
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.details
+  - pymdownx.superfences
