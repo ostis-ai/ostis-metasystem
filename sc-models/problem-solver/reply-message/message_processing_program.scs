@@ -38,6 +38,7 @@ message_processing_program = [*
     _<- action_translate_structures_into_natural_language;
     _-> rrel_1:: _structures_set;
     _-> rrel_2:: rrel_dynamic_argument:: _translation_node;
+    _-> rrel_3:: lang_ru;
     _=> nrel_then:: .._action_get_clean_text;;
 
   .._action_get_clean_text

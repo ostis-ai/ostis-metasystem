@@ -10,9 +10,7 @@ class ostis_metasystemRecipe(ConanFile):
         return tools.get_env("CONAN_RUN_TESTS", False)
     
     def requirements(self):
-        self.requires("sc-machine/0.10.3")
-        self.requires("ps-common-lib/0.1.0")
-        self.requires("non-atomic-action-iterpreter/0.1.0")
+        self.requires("sc-machine/0.10.0")
         self.requires("nlohmann_json/3.11.3")
 
     def build_requirements(self):

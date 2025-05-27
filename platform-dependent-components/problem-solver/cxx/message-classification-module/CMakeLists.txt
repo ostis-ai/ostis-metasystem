@@ -50,7 +50,6 @@ add_library(message-classification-module SHARED ${SOURCES} ${HEADERS})
 
 target_link_libraries(message-classification-module
         LINK_PUBLIC local-common
-        LINK_PUBLIC ps-common-lib::common-utils
         LINK_PUBLIC sc-machine::sc-memory
         LINK_PUBLIC sc-machine::sc-agents-common
         LINK_PUBLIC sc-machine::sc-config)

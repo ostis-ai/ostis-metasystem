@@ -6,6 +6,8 @@ Distributed under the MIT License
 
 import argparse
 from sc_kpm import ScServer
+from modules.clean_text_generation_module.clean_text_generation_module import \
+    CleanTextGenerationModule
 from modules.example_module.example_module import ExampleModule
 
 SC_SERVER_PROTOCOL = "protocol"
@@ -23,7 +25,8 @@ def main(args: dict):
 
     with server.connect():
         modules = [
-            ExampleModule()
+            ExampleModule(),
+            CleanTextGenerationModule(),
         ]
         server.add_modules(*modules)
         with server.register_modules():

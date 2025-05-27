@@ -30,8 +30,7 @@ ScResult StructureTranslationAgent::DoProgram(ScActionInitiatedEvent const & eve
   {
     std::stringstream translation;
 
-    
-    ScIterator3Ptr const & structIterator = m_context.CreateIterator3(structuresSet, ScType::ConstPermPosArc, ScType::NodeConstStruct);
+    ScIterator3Ptr const & structIterator = m_context.CreateIterator3(structuresSet, ScType::ConstPermPosArc, ScType::ConstNode);
     while (structIterator->Next())
     {
       ScAddr const & structAddr = structIterator->Get(2);
