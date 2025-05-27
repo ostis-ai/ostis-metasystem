@@ -1,0 +1,9 @@
+test_action_node
+<- action;
+-> rrel_1: message;
+<- action_action_language_recognition;;
+
+message => nrel_sc_text_translation: translation(*->[какие отношения бывают?];;*);;
+
+sc_node_role_relation
+-> rrel_1;;
