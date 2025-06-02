@@ -56,24 +56,24 @@ std::stringstream NrelFromQuasybinaryNodeTranslator::translate(ScAddr const & st
         int count = 0;
         while (tupleNodeIterator->Next())
         {
-          ScAddr const & tupleNode = tupleNodeIterator->Get(2);
-          std::string const & tupleNodeMainIdtf =
-              utils::CommonUtils::getMainIdtf(context, tupleNode, {lang});
+          ScAddr const & tupleElement = tupleNodeIterator->Get(2);
+          std::string const & tupleElementMainIdtf =
+              utils::CommonUtils::getMainIdtf(context, tupleElement, {lang});
 
-          if (tupleNodeMainIdtf.empty())
+          if (tupleElementMainIdtf.empty())
               continue;
           if(count == 0)
-            translation << tupleNodeMainIdtf;
+            translation << tupleElementMainIdtf;
           else 
           {
             if (count == TranslationConstants::MAX_LISTING_COUNT)
               translation << "|";
-            translation << ", " << tupleNodeMainIdtf;
+            translation << ", " << tupleElementMainIdtf;
           }
           count++;
         }
         if (!(translation.tellp() == 0))
-          translations << nodeMainIdtf << " " << nrelMainIdtf << " " << translation.str();
+          translations << nodeMainIdtf << " " << nrelMainIdtf << " " << translation.str() << " ";
         translation.str("");
         return ScTemplateSearchRequest::CONTINUE;
       },
@@ -81,7 +81,7 @@ std::stringstream NrelFromQuasybinaryNodeTranslator::translate(ScAddr const & st
       {
         return isInStructure(structAddr, element);
       });
-  SC_LOG_DEBUG("NrelFromQuasybinaryNodeTranslator" << translations.str());
+  SC_LOG_DEBUG("NrelFromQuasybinaryNodeTranslator " << translations.str());
   return translations;
 }
 }  // namespace structureTranslationModule

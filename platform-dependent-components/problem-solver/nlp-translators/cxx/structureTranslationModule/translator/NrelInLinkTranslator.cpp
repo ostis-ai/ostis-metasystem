@@ -43,6 +43,8 @@ std::stringstream NrelInLinkTranslator::translate(ScAddr const & structAddr, ScA
         if (context->HelperCheckEdge(
                 TranslationKeynodes::translation_ignored_keynodes, nrelNode, ScType::EdgeAccessConstPosPerm))
           return ScTemplateSearchRequest::CONTINUE;
+        if (!context->HelperCheckEdge(lang, linkNode, ScType::EdgeAccessConstPosPerm))
+          return ScTemplateSearchRequest::CONTINUE;
         std::string const & nodeMainIdtf =
             utils::CommonUtils::getMainIdtf(context, node, {lang});
         if (nodeMainIdtf.empty())
@@ -52,8 +54,7 @@ std::stringstream NrelInLinkTranslator::translate(ScAddr const & structAddr, ScA
         if (nrelMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
         std::string linkContent;
-        if (context->HelperCheckEdge(lang, linkNode, ScType::EdgeAccessConstPosPerm))
-          context->GetLinkContent(linkNode, linkContent);
+        context->GetLinkContent(linkNode, linkContent);
         if (linkContent.empty())
           return ScTemplateSearchRequest::CONTINUE;
         translations << nodeMainIdtf << " " << nrelMainIdtf << " " << linkContent << ". ";
@@ -63,7 +64,7 @@ std::stringstream NrelInLinkTranslator::translate(ScAddr const & structAddr, ScA
       {
         return isInStructure(structAddr, element);
       });
-  SC_LOG_DEBUG("NrelInLinkTranslator" << translations.str());
+  SC_LOG_DEBUG("NrelInLinkTranslator " << translations.str());
   return translations;
 }
 }  // namespace structureTranslationModule

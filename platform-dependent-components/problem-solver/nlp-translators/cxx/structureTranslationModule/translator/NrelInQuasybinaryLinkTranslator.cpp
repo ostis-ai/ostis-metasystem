@@ -22,9 +22,7 @@ std::stringstream NrelInQuasybinaryLinkTranslator::translate(ScAddr const & stru
   std::stringstream translation;
   ScAddr tupleNode;
   ScAddr node;
-  ScAddr firstEdge;
   ScAddr nrelNode;
-  ScAddr secondEdge;
 
   ScTemplate scTemplate;
   scTemplate.Triple(
@@ -58,6 +56,8 @@ std::stringstream NrelInQuasybinaryLinkTranslator::translate(ScAddr const & stru
         while (linkIterator->Next())
         {
           ScAddr const & linkNode = linkIterator->Get(2);
+          if (!context->CheckConnector(lang, linkNode, ScType::ConstPermPosArc))
+            continue;
           std::string linkContent;
           context->GetLinkContent(linkNode, linkContent);
           if (linkContent.empty())
@@ -74,7 +74,7 @@ std::stringstream NrelInQuasybinaryLinkTranslator::translate(ScAddr const & stru
           count++;
         }
         if (!(translation.tellp() == 0))
-          translations << nodeMainIdtf << " " << nrelMainIdtf << " " << translation.str();
+          translations << nodeMainIdtf << " " << nrelMainIdtf << " " << translation.str() << " ";
         translation.str("");
         return ScTemplateSearchRequest::CONTINUE;
       },

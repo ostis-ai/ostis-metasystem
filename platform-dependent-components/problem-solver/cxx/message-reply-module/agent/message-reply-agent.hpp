@@ -27,7 +27,7 @@ private:
 
   ScAddr generateMessage(ScAddr const & linkAddr);
 
-  ScAddr generateNonAtomicActionArgsSet(ScAddr const & messageAddr);
+  ScAddr generateNonAtomicActionArgsSet(ScAddr const & messageAddr, ScAddr const & languageAddr);
 
   ScAddr generateAnswer(ScAddr const & messageAddr);
 

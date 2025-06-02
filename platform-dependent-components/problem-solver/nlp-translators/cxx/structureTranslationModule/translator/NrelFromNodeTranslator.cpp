@@ -26,7 +26,6 @@ std::stringstream NrelFromNodeTranslator::translate(ScAddr const & structAddr, S
   std::stringstream translations;
   std::string relationTranslation;
   ScAddr sourceNode;
-  ScAddr node;
   ScAddr nrelNode;
 
   ScTemplate scTemplate;
@@ -42,7 +41,6 @@ std::stringstream NrelFromNodeTranslator::translate(ScAddr const & structAddr, S
       scTemplate,
       [&](ScTemplateResultItem const & searchResult)
       {
-        node = searchResult[TranslationConstants::NODE_ALIAS];
         sourceNode = searchResult[TranslationConstants::SOURCE_ALIAS];
         nrelNode = searchResult[TranslationConstants::NREL_ALIAS];
         if (context->HelperCheckEdge(
@@ -56,10 +54,11 @@ std::stringstream NrelFromNodeTranslator::translate(ScAddr const & structAddr, S
             utils::CommonUtils::getMainIdtf(context, sourceNode, {lang});
         if (sourceMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
-        if (used.find(nrelMainIdtf) == used.end())
+        auto const & usedKey = sourceMainIdtf + nrelMainIdtf;
+        if (used.find(usedKey) == used.end())
         {
-          used.insert(nrelMainIdtf);
-          relationTranslation = get_translation_of_relation(structAddr, nrelNode, sourceNode, lang);
+          used.insert(usedKey);
+          relationTranslation = getTranslationOfRelation(structAddr, nrelNode, sourceNode, lang);
           if (!relationTranslation.empty())
             translations << sourceMainIdtf << " " << nrelMainIdtf << " " << relationTranslation;
         }
@@ -69,11 +68,11 @@ std::stringstream NrelFromNodeTranslator::translate(ScAddr const & structAddr, S
       {
         return isInStructure(structAddr, element);
       });
-  SC_LOG_DEBUG("NrelFromNodeTranslator" << translations.str());
+  SC_LOG_DEBUG("NrelFromNodeTranslator " << translations.str());
   return translations;
 }
 
-std::string NrelFromNodeTranslator::get_translation_of_relation(
+std::string NrelFromNodeTranslator::getTranslationOfRelation(
     ScAddr const & structAddr,
     ScAddr const & nrelNode,
     ScAddr const & sourceNode,

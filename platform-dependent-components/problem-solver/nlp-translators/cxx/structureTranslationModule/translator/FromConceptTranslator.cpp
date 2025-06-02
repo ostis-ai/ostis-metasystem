@@ -21,24 +21,19 @@ FromConceptTranslator::FromConceptTranslator(ScMemoryContext * context)
 std::stringstream FromConceptTranslator::translate(ScAddr const & structAddr, ScAddr const & lang) const
 {
   std::stringstream translations;
-  ScAddr classNode;
-  ScAddr node;
 
   ScTemplate scTemplate;
-  scTemplate.Triple(
-      ScType::NodeVarClass >> TranslationConstants::CLASS_ALIAS,
-      ScType::EdgeAccessVarPosPerm >> TranslationConstants::EDGE_ALIAS,
-      ScType::NodeVar >> TranslationConstants::NODE_ALIAS);
-  scTemplate.Triple(structAddr, ScType::EdgeAccessVarPosPerm, TranslationConstants::EDGE_ALIAS);
-  ScTemplateSearchResult searchResult;
-  context->HelperSmartSearchTemplate(
+  scTemplate.Triple(structAddr, ScType::VarPermPosArc, ScType::VarPermPosArc >> TranslationConstants::EDGE_ALIAS);
+  context->SearchByTemplate(
       scTemplate,
       [&](ScTemplateResultItem const & searchResult)
       {
-        classNode = searchResult[TranslationConstants::CLASS_ALIAS];
+        ScAddr const & connector = searchResult[TranslationConstants::EDGE_ALIAS];
+        auto const & [classNode, node] = context->GetConnectorIncidentElements(connector);
+        if (!(context->GetElementType(classNode).BitAnd(ScType::NodeClass) == ScType::NodeClass) || !context->GetElementType(node).IsNode())
+          return ScTemplateSearchRequest::CONTINUE;
         if (isIgnored(classNode))
           return ScTemplateSearchRequest::CONTINUE;
-        node = searchResult[TranslationConstants::NODE_ALIAS];
         std::string const & classMainIdtf =
             utils::CommonUtils::getMainIdtf(context, classNode, {lang});
         if (classMainIdtf.empty())
@@ -48,14 +43,14 @@ std::stringstream FromConceptTranslator::translate(ScAddr const & structAddr, Sc
         if (nodeMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
         translations << nodeMainIdtf << " это " << classMainIdtf << ". ";
-        SC_LOG_DEBUG("FromConceptTranslator" << translations.str());
+        SC_LOG_DEBUG("FromConceptTranslator " << translations.str());
         return ScTemplateSearchRequest::CONTINUE;
       },
       [&](ScAddr const & element)
       {
         return isInStructure(structAddr, element);
       });
-  SC_LOG_DEBUG("FromConceptTranslator" << translations.str());
+  SC_LOG_DEBUG("FromConceptTranslator " << translations.str());
   return translations;
 }
 

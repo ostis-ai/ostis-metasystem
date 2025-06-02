@@ -17,7 +17,7 @@ using namespace messageReplyModule;
 
 ScResult MessageReplyAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  auto [linkAddr] = action.GetArguments<1>();
+  auto const & [linkAddr, langAddr] = action.GetArguments<2>();
 
   SC_LOG_DEBUG("MessageReplyAgent started");
 
@@ -30,6 +30,11 @@ ScResult MessageReplyAgent::DoProgram(ScActionInitiatedEvent const & event, ScAc
   if (!linkIsValid(linkAddr))
   {
     SC_LOG_ERROR("Message link not found.");
+    return action.FinishWithError();
+  }
+  if (!langAddr.IsValid())
+  {
+    SC_LOG_ERROR("Language not found.");
     return action.FinishWithError();
   }
 
@@ -51,7 +56,7 @@ ScResult MessageReplyAgent::DoProgram(ScActionInitiatedEvent const & event, ScAc
   // ScAction nonAtomicAction = m_context.GenerateAction(MessageReplyKeynodes::action_interpret_non_atomic_action);
   ScAction nonAtomicAction = m_context.GenerateAction(MessageReplyKeynodes::action_interpret_non_atomic_action);
   SC_LOG_DEBUG("te");
-  nonAtomicAction.SetArguments(processingProgramAddr, generateNonAtomicActionArgsSet(messageAddr));
+  nonAtomicAction.SetArguments(processingProgramAddr, generateNonAtomicActionArgsSet(messageAddr, langAddr));
   SC_LOG_DEBUG("ty");
   if (!nonAtomicAction.InitiateAndWait(WAIT_TIME))
   {
@@ -111,7 +116,7 @@ ScAddr MessageReplyAgent::generateMessage(ScAddr const & linkAddr)
   return templateGenResult[USER_MESSAGE_ALIAS];
 }
 
-ScAddr MessageReplyAgent::generateNonAtomicActionArgsSet(ScAddr const & messageAddr)
+ScAddr MessageReplyAgent::generateNonAtomicActionArgsSet(ScAddr const & messageAddr, ScAddr const & languageAddr)
 {
   std::string const ARGS_SET_ALIAS = "_args_set";
 
@@ -122,6 +127,12 @@ ScAddr MessageReplyAgent::generateNonAtomicActionArgsSet(ScAddr const & messageA
       messageAddr,
       ScType::EdgeAccessVarPosPerm,
       ScKeynodes::rrel_1);
+  argsSetTemplate.Quintuple(
+      ARGS_SET_ALIAS,
+      ScType::EdgeAccessVarPosPerm,
+      languageAddr,
+      ScType::EdgeAccessVarPosPerm,
+      ScKeynodes::rrel_2);
   ScTemplateGenResult templateGenResult;
   if (!m_context.HelperGenTemplate(argsSetTemplate, templateGenResult))
   {

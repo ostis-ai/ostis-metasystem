@@ -54,6 +54,8 @@ std::stringstream NrelFromQuasybinaryLinkTranslator::translate(ScAddr const & st
         while (linkIterator->Next())
         {
           ScAddr const & linkNode = linkIterator->Get(2);
+          if (!context->CheckConnector(lang, linkNode, ScType::ConstPermPosArc))
+            continue;
           std::string linkContent;
           context->GetLinkContent(linkNode, linkContent);
           if (linkContent.empty())
@@ -70,7 +72,7 @@ std::stringstream NrelFromQuasybinaryLinkTranslator::translate(ScAddr const & st
           count++;
         }
         if (!(translation.tellp() == 0))
-          translations << nodeMainIdtf << " " << nrelMainIdtf << " " << translation.str();
+          translations << nodeMainIdtf << " " << nrelMainIdtf << " " << translation.str() << " ";
         translation.str("");
         return ScTemplateSearchRequest::CONTINUE;
       },
@@ -78,7 +80,7 @@ std::stringstream NrelFromQuasybinaryLinkTranslator::translate(ScAddr const & st
       {
         return isInStructure(structAddr, element);
       });
-  SC_LOG_DEBUG("NrelFromQuasybinaryLinkTranslator" << translations.str());
+  SC_LOG_DEBUG("NrelFromQuasybinaryLinkTranslator " << translations.str());
   return translations;
 }
 }  // namespace structureTranslationModule

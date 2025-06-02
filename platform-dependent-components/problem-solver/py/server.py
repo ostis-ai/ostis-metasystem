@@ -4,6 +4,9 @@ Distributed under the MIT License
 (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
 """
 
+from dotenv import load_dotenv
+load_dotenv()
+
 import argparse
 from sc_kpm import ScServer
 from modules.clean_text_generation_module.clean_text_generation_module import \
