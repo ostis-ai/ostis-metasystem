@@ -26,8 +26,8 @@
 4. Run C++ problem solver:
 
     ```sh
-    LD_LIBRARY_PATH=./install/sc-machine/lib ./install/sc-machine/bin/sc-machine -s kb.bin -c ostis-metasystem.ini \
-        -e "install/sc-machine/lib/extensions;install/sc-component-manager/lib/extensions;install/scp-machine/lib/extensions;install/problem-solver/lib/extensions"
+    LD_LIBRARY_PATH=./install/sc-machine/lib:./install/ps-common-lib/lib ./install/sc-machine/bin/sc-machine -s kb.bin -c ostis-metasystem.ini \
+        -e "install/sc-machine/lib/extensions;install/sc-component-manager/lib/extensions;install/scp-machine/lib/extensions;install/problem-solver/lib/extensions;install/non-atomic-action-interpreter-module/lib/extensions"
     ```
 
 5. Download component specifications from repositories. Execute the following command in a running terminal:
