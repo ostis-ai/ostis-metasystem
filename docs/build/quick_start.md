@@ -218,7 +218,7 @@ Before launching ostis-metasystem:
 - [extract ps-common-lib from GitHub Releases](https://github.com/ostis-ai/ostis-ps-lib/releases) or [build it](https://ostis-ai.github.io/ostis-ps-lib/ps-common-lib/#installation-build).
 - [extract non-atomic-action-interpreter-module from GitHub Releases](https://ostis-ai.github.io/ostis-ps-lib/non-atomic-action-interpreter-module/#using-module-as-an-extension-for-sc-machine) or [build it](https://ostis-ai.github.io/ostis-ps-lib/non-atomic-action-interpreter-module/#installation-build).
 
-Firstly, build knowledge base:
+Firstly, build knowledge base, make sure `repo.path` file contains paths to `section_subject_domain_of_messages` and `non_subject_domain_concepts` folders of [nika](https://github.com/ostis-apps/nika/):
 
 ```sh
 ./path/to/sc-builder/binary -i repo.path -o kb.bin --clear

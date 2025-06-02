@@ -17,7 +17,7 @@
     ./scripts/install_cxx_problem_solver.sh
     ```
 
-3. Build knowledge base:
+3. Build knowledge base, make sure `repo.path` file contains paths to `section_subject_domain_of_messages` and `non_subject_domain_concepts` folders of [nika](https://github.com/ostis-apps/nika/):
 
     ```sh
     ./install/sc-machine/bin/sc-builder -i repo.path -o kb.bin --clear
