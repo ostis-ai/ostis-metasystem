@@ -1,0 +1,23 @@
+sc_node_class
+    -> concept_human;
+    -> lang_ru;;
+
+sc_node_norole_relation
+    -> nrel_parents;;
+
+test_structure = [*
+    concept_human => nrel_parents:
+    {
+        parent1;
+        parent2
+    };;
+    *];;
+
+concept_human
+    => nrel_main_idtf: [человек] (* <- lang_ru;; *);;
+nrel_parents
+    => nrel_main_idtf: [родители] (* <- lang_ru;; *);;
+parent1
+    => nrel_main_idtf: [первый родитель] (* <- lang_ru;; *);;
+parent2
+    => nrel_main_idtf: [второй родитель] (* <- lang_ru;; *);;

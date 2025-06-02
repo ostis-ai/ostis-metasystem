@@ -29,6 +29,7 @@ add_library(verification-module SHARED ${HEADERS} ${SOURCES})
 
 target_link_libraries(verification-module
         LINK_PUBLIC sc-machine::sc-memory
+        LINK_PUBLIC sc-machine::sc-config
         LINK_PUBLIC sc-machine::sc-agents-common)
 target_include_directories(verification-module
         PUBLIC ${CMAKE_CURRENT_LIST_DIR}

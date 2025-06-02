@@ -1,0 +1,19 @@
+test_action_node
+<- action;
+-> rrel_1: relation;
+-> rrel_2: lang_ru;
+<- action_derive_variable_from_formula;;
+
+relation
+<- sc_node_norole_relation;
+<- binary_relation;
+<- oriented_relation;
+<- antireflexive_relation;
+<- asymmetric_relation;
+<- antitransitive_relation;;
+
+sc_node_role_relation
+-> rrel_1;
+-> rrel_2;;
+
+sc_node_class -> lang_ru;;

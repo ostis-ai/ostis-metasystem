@@ -17,7 +17,7 @@
     ./scripts/install_cxx_problem_solver.sh
     ```
 
-3. Build knowledge base:
+3. Build knowledge base, make sure `repo.path` file contains paths to `section_subject_domain_of_messages` and `non_subject_domain_concepts` folders of [nika](https://github.com/ostis-apps/nika/):
 
     ```sh
     ./install/sc-machine/bin/sc-builder -i repo.path -o kb.bin --clear
@@ -26,8 +26,8 @@
 4. Run C++ problem solver:
 
     ```sh
-    LD_LIBRARY_PATH=./install/sc-machine/lib ./install/sc-machine/bin/sc-machine -s kb.bin -c ostis-metasystem.ini \
-        -e "install/sc-machine/lib/extensions;install/sc-component-manager/lib/extensions;install/scp-machine/lib/extensions;install/problem-solver/lib/extensions"
+    LD_LIBRARY_PATH=./install/sc-machine/lib:./install/ps-common-lib/lib ./install/sc-machine/bin/sc-machine -s kb.bin -c ostis-metasystem.ini \
+        -e "install/sc-machine/lib/extensions;install/sc-component-manager/lib/extensions;install/scp-machine/lib/extensions;install/problem-solver/lib/extensions;install/non-atomic-action-interpreter-module/lib/extensions"
     ```
 
 5. Download component specifications from repositories. Execute the following command in a running terminal:
@@ -64,13 +64,17 @@
     pip3 install -r platform-dependent-components/problem-solver/py/requirements.txt
     ```
 
-10. Run Python problem-solver:
+10.
+
+Configure environment variables in `.env` to use any LLM for ask-ai replies.
+
+11. Run Python problem-solver:
     
     ```sh
     python3 platform-dependent-components/problem-solver/py/server.py
     ```
 
-11. Install and build react interface. Open new terminal and run:
+12. Install and build react interface. Open new terminal and run:
 
     ```sh
     cd platform-dependent-components/interface/react-sc-web
@@ -78,7 +82,7 @@
     npm run build
     ```
 
-12. Run react interface:
+13. Run react interface:
 
     ```sh
     npm run start

@@ -1,0 +1,22 @@
+concept_message_with_one_param
+<- sc_node_class;
+<- concept_intent_possible_class;
+=> nrel_response_action: action_one_param;
+=> nrel_contained_role: ..contained_role_tuple(* <- sc_node_tuple;; *);;
+
+action_one_param
+=> nrel_required_arg_role: ..required_arg_tuple(* <- sc_node_tuple;; *);;
+
+@edge1 = (..contained_role_tuple -> rrel_entity);;
+@edge2 = (..required_arg_tuple -> rrel_1);;
+
+@edge1 => nrel_corresponding_role: @edge2;;
+
+message
+<- concept_message_with_one_param;
+-> rrel_entity:test_entity;;
+
+one_param_action_node
+<- action_generate_response;
+-> rrel_1: message;
+-> rrel_2:rrel_dynamic_argument: _answer;;

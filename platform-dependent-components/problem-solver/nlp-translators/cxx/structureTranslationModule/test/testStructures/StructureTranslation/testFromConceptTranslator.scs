@@ -1,0 +1,20 @@
+sc_node_class
+    -> concept_apple;
+    -> concept_red;
+    -> color;
+    -> concept_fruit;
+    -> lang_ru;;
+
+test_structure = [*
+    concept_red <- color;;
+    concept_apple <- concept_fruit;;
+    *];;
+
+concept_apple
+    => nrel_main_idtf: [яблоко] (* <- lang_ru;; *);;
+concept_red
+    => nrel_main_idtf: [красный] (* <- lang_ru;; *);;
+concept_fruit
+    => nrel_main_idtf: [фрукт] (* <- lang_ru;; *);;
+color
+    => nrel_main_idtf: [цвет] (* <- lang_ru;; *);;

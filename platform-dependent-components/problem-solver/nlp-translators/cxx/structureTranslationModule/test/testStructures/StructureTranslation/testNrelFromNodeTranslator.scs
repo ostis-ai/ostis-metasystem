@@ -1,0 +1,20 @@
+sc_node_class
+    -> concept_man;
+    -> lang_ru;;
+
+sc_node_norole_relation
+    -> nrel_likes;
+    -> nrel_likes_to_eat;;
+
+test_structure = [*
+    concept_man => nrel_likes: nrel_likes_to_eat: pizza;;
+    *];;
+
+concept_man
+    => nrel_main_idtf: [мужчина] (* <- lang_ru;; *);;
+nrel_likes
+    => nrel_main_idtf: [любит] (* <- lang_ru;; *);;
+nrel_likes_to_eat
+    => nrel_main_idtf: [любит есть пицца] (* <- lang_ru;; *);;
+pizza
+    => nrel_main_idtf: [пицца] (* <- lang_ru;; *);;

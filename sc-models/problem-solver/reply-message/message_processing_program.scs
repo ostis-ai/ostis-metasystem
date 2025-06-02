@@ -1,0 +1,51 @@
+concept_message_processing_program
+<- sc_node_class;
+-> message_processing_program(*
+  -> rrel_key_sc_element: _compound_action_message_processing;;
+*);;
+
+.._tuple_of_actions
+  <- sc_node_tuple;;
+
+message_processing_program = [*
+  _compound_action_message_processing 
+    _-> rrel_1:: _message;
+    _-> rrel_2:: _language;
+    _<- action;
+    _<- action_process_message;
+    _=> nrel_decomposition_of_action:: .._tuple_of_actions;;
+  
+  .._tuple_of_actions
+    _-> rrel_1:: .._action_message_topic_classification;
+    _-> .._action_generate_response;
+    _-> .._action_get_clean_text;
+    _-> .._action_translate_structures_into_natural_language;;
+  
+  .._action_message_topic_classification
+    _<- action;
+    _<- action_message_topic_classification;
+    _-> rrel_1:: _message;
+    _=> nrel_then:: .._action_generate_response;;
+
+  .._action_generate_response
+    _<- action;
+    _<- action_generate_response;
+    _-> rrel_1:: _message;
+    _-> rrel_2:: rrel_dynamic_argument:: _structures_set;
+    _=> nrel_then:: .._action_translate_structures_into_natural_language;;
+
+    .._action_translate_structures_into_natural_language
+    _<- action;
+    _<- action_translate_structures_into_natural_language;
+    _-> rrel_1:: _structures_set;
+    _-> rrel_2:: rrel_dynamic_argument:: _translation_node;
+    _-> rrel_3:: _language;
+    _=> nrel_then:: .._action_get_clean_text;;
+
+  .._action_get_clean_text
+    _<- action;
+    _<- action_get_clean_text;
+    _-> rrel_1:: _translation_node;
+    _-> rrel_2:: _language;
+    _-> rrel_3:: _message;;
+  *];;

@@ -14,6 +14,12 @@ SCP_MACHINE_DESTINATION_DIR="install/scp-machine"
 OSTIS_METASYSTEM_VERSION="0.2.0"
 OSTIS_METASYSTEM_DESTINATION_DIR="install/problem-solver"
 
+PS_COMMON_LIB_VERSION="0.1.0"
+PS_COMMON_LIB_DESTINATION_DIR="install/ps-common-lib"
+
+NON_ATOMIC_ACTION_INTERPRETER_MODULE_VERSION="0.1.0"
+NON_ATOMIC_ACTION_INTERPRETER_MODULE_DESTINATION_DIR="install/non-atomic-action-interpreter-module"
+
 get_archive_name() {
     local os_name=$(uname -s)
     case "$os_name" in
@@ -81,5 +87,19 @@ OSTIS_METASYSTEM_URL="https://github.com/ostis-ai/ostis-metasystem/releases/down
 download_archive "${OSTIS_METASYSTEM_URL}"
 extract_archive "${OSTIS_METASYSTEM_ARCHIVE}" "${OSTIS_METASYSTEM_DESTINATION_DIR}"
 cleanup "${OSTIS_METASYSTEM_ARCHIVE}" "${OSTIS_METASYSTEM_DESTINATION_DIR}"
+
+PS_COMMON_LIB_ARCHIVE=$(get_archive_name "ps-common-lib" "${PS_COMMON_LIB_VERSION}")
+PS_COMMON_LIB_URL="https://github.com/ostis-ai/ostis-ps-lib/releases/download/${PS_COMMON_LIB_VERSION}/${PS_COMMON_LIB_ARCHIVE}"
+
+download_archive "${PS_COMMON_LIB_URL}"
+extract_archive "${PS_COMMON_LIB_ARCHIVE}" "${PS_COMMON_LIB_DESTINATION_DIR}"
+cleanup "${PS_COMMON_LIB_ARCHIVE}" "${PS_COMMON_LIB_DESTINATION_DIR}"
+
+NON_ATOMIC_ACTION_INTERPRETER_MODULE_ARCHIVE=$(get_archive_name "non-atomic-action-interpreter-module" "${NON_ATOMIC_ACTION_INTERPRETER_MODULE_VERSION}")
+NON_ATOMIC_ACTION_INTERPRETER_MODULE_URL="https://github.com/ostis-ai/ostis-ps-lib/releases/download/${NON_ATOMIC_ACTION_INTERPRETER_MODULE_VERSION}/${NON_ATOMIC_ACTION_INTERPRETER_MODULE_ARCHIVE}"
+
+download_archive "${NON_ATOMIC_ACTION_INTERPRETER_MODULE_URL}"
+extract_archive "${NON_ATOMIC_ACTION_INTERPRETER_MODULE_ARCHIVE}" "${NON_ATOMIC_ACTION_INTERPRETER_MODULE_DESTINATION_DIR}"
+cleanup "${NON_ATOMIC_ACTION_INTERPRETER_MODULE_ARCHIVE}" "${NON_ATOMIC_ACTION_INTERPRETER_MODULE_DESTINATION_DIR}"
 
 echo "Installation of ostis-metasystem complete!"
