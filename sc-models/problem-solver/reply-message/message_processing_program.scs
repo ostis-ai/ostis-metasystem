@@ -10,6 +10,7 @@ concept_message_processing_program
 message_processing_program = [*
   _compound_action_message_processing 
     _-> rrel_1:: _message;
+    _-> rrel_2:: _language;
     _<- action;
     _<- action_process_message;
     _=> nrel_decomposition_of_action:: .._tuple_of_actions;;
@@ -38,13 +39,13 @@ message_processing_program = [*
     _<- action_translate_structures_into_natural_language;
     _-> rrel_1:: _structures_set;
     _-> rrel_2:: rrel_dynamic_argument:: _translation_node;
-    _-> rrel_3:: lang_ru;
+    _-> rrel_3:: _language;
     _=> nrel_then:: .._action_get_clean_text;;
 
   .._action_get_clean_text
     _<- action;
     _<- action_get_clean_text;
     _-> rrel_1:: _translation_node;
-    _-> rrel_2:: lang_ru;
+    _-> rrel_2:: _language;
     _-> rrel_3:: _message;;
   *];;
