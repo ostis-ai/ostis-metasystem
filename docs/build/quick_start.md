@@ -233,6 +233,8 @@ After run C++ problem solver:
 # by semicolon and wrapped in double quotes
 ```
 
+Configure environment variables in `.env` to use any LLM for ask-ai replies.
+
 Run Python problem solver in new terminal:
 
 ```sh

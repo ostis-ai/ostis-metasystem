@@ -64,13 +64,17 @@
     pip3 install -r platform-dependent-components/problem-solver/py/requirements.txt
     ```
 
-10. Run Python problem-solver:
+10.
+
+Configure environment variables in `.env` to use any LLM for ask-ai replies.
+
+11. Run Python problem-solver:
     
     ```sh
     python3 platform-dependent-components/problem-solver/py/server.py
     ```
 
-11. Install and build react interface. Open new terminal and run:
+12. Install and build react interface. Open new terminal and run:
 
     ```sh
     cd platform-dependent-components/interface/react-sc-web
@@ -78,7 +82,7 @@
     npm run build
     ```
 
-12. Run react interface:
+13. Run react interface:
 
     ```sh
     npm run start
