@@ -26,13 +26,13 @@ std::stringstream NrelFromQuasybinaryLinkTranslator::translate(ScAddr const & st
 
   ScTemplate scTemplate;
   scTemplate.Quintuple(
-      ScType::NodeVarTuple >> TranslationConstants::TUPLE_ALIAS,
-      ScType::EdgeDCommonVar >> TranslationConstants::EDGE_ALIAS,
-      ScType::NodeVar >> TranslationConstants::NODE_ALIAS,
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVarNoRole >> TranslationConstants::NREL_ALIAS);
-  scTemplate.Triple(structAddr, ScType::EdgeAccessVarPosPerm, TranslationConstants::EDGE_ALIAS);
-  context->HelperSmartSearchTemplate(
+      ScType::VarNodeTuple >> TranslationConstants::TUPLE_ALIAS,
+      ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS,
+      ScType::VarNode >> TranslationConstants::NODE_ALIAS,
+      ScType::VarPermPosArc,
+      ScType::VarNodeNonRole >> TranslationConstants::NREL_ALIAS);
+  scTemplate.Triple(structAddr, ScType::VarPermPosArc, TranslationConstants::EDGE_ALIAS);
+  context->SearchByTemplateInterruptibly(
       scTemplate,
       [&](ScTemplateResultItem const & searchResult)
       {
@@ -48,7 +48,7 @@ std::stringstream NrelFromQuasybinaryLinkTranslator::translate(ScAddr const & st
         if (nrelMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
 
-        auto const & linkIterator = context->Iterator3(tupleNode, ScType::EdgeAccessConstPosPerm, ScType::LinkConst);
+        auto const & linkIterator = context->CreateIterator3(tupleNode, ScType::ConstPermPosArc, ScType::ConstNodeLink);
 
         int count = 0;
         while (linkIterator->Next())

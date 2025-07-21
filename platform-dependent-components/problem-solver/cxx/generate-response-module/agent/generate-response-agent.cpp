@@ -51,7 +51,7 @@ void GenerateResponseAgent::validateAddrWithInvalidParamException(ScAddr const &
 
 bool GenerateResponseAgent::checkAction(ScAddr const & actionAddr)
 {
-  return m_context.HelperCheckEdge(GenerateResponseKeynodes::action_generate_response, actionAddr, ScType::EdgeAccessConstPosPerm);
+  return m_context.CheckConnector(GenerateResponseKeynodes::action_generate_response, actionAddr, ScType::ConstPermPosArc);
 }
 
 void GenerateResponseAgent::attachAnswer(
@@ -61,7 +61,7 @@ void GenerateResponseAgent::attachAnswer(
 {
   utils::GenerationUtils::generateRelationBetween(
       &m_context, messageAddr, messageAnswer, GenerateResponseKeynodes::nrel_reply_structure);
-      m_context.CreateEdge(ScType::EdgeAccessConstPosPerm, answerAddr, messageAnswer);
+      m_context.GenerateConnector(ScType::ConstPermPosArc, answerAddr, messageAnswer);
 }
 
 ScAction GenerateResponseAgent::createActionNode(ScAddr const & message)
@@ -84,17 +84,17 @@ ScAddr GenerateResponseAgent::FindResponseActionClass(ScAddr const & message)
   ScTemplate responseActionTemplate;
   responseActionTemplate.Triple(
     GenerateResponseKeynodes::concept_intent_possible_class,
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVarClass >> GenerateResponseConstants::messageClassVarName);
+      ScType::VarPermPosArc,
+      ScType::VarNodeClass >> GenerateResponseConstants::messageClassVarName);
   responseActionTemplate.Quintuple(
     GenerateResponseConstants::messageClassVarName,
-      ScType::EdgeDCommonVar,
-      ScType::NodeVar >> GenerateResponseConstants::actionClassVarName,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarCommonArc,
+      ScType::VarNode >> GenerateResponseConstants::actionClassVarName,
+      ScType::VarPermPosArc,
       GenerateResponseKeynodes::nrel_response_action);
-  responseActionTemplate.Triple(GenerateResponseConstants::messageClassVarName, ScType::EdgeAccessVarPosPerm, message);
+  responseActionTemplate.Triple(GenerateResponseConstants::messageClassVarName, ScType::VarPermPosArc, message);
 
-  m_context.HelperSmartSearchTemplate(
+  m_context.SearchByTemplateInterruptibly(
       responseActionTemplate,
       [&actionClass](ScTemplateResultItem const & resultItem) -> ScTemplateSearchRequest
       {
@@ -105,7 +105,7 @@ ScAddr GenerateResponseAgent::FindResponseActionClass(ScAddr const & message)
   if (!m_context.IsElement(actionClass))
     SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "response action class not found");
 
-    SC_LOG_INFO("\n\n\n\nFound action " << m_context.HelperGetSystemIdtf(actionClass));
+    SC_LOG_INFO("\n\n\n\nFound action " << m_context.GetElementSystemIdentifier(actionClass));
   return actionClass;
 }
 
@@ -119,21 +119,21 @@ void GenerateResponseAgent::processParamsFromMessage(
   params.Add(GenerateResponseConstants::messageVarName, message);
   params.Add(GenerateResponseConstants::actionClassVarName, action);
 
-  SC_LOG_DEBUG(m_context.HelperGetSystemIdtf(action));
+  SC_LOG_DEBUG(m_context.GetElementSystemIdentifier(action));
 
   ScTemplate templ;
-  m_context.HelperBuildTemplate(
-      templ, m_context.HelperFindBySystemIdtf(GenerateResponseConstants::roleRelationMappingTemplateName), params);
+  m_context.BuildTemplate(
+      templ, m_context.SearchElementBySystemIdentifier(GenerateResponseConstants::roleRelationMappingTemplateName), params);
 
-      m_context.HelperSearchTemplate(
+      m_context.SearchByTemplate(
       templ,
       [this, &actionNode, &mappedRelations](ScTemplateResultItem const & resultItem)
       {
         ScAddr const param = resultItem[GenerateResponseConstants::paramVarName];
         ScAddr const targetRole = resultItem[GenerateResponseConstants::targetRoleRelationVarName];
 
-        ScAddr actionNodeToParamEdge = m_context.CreateEdge(ScType::EdgeAccessConstPosPerm, actionNode, param);
-        m_context.CreateEdge(ScType::EdgeAccessConstPosPerm, targetRole, actionNodeToParamEdge);
+        ScAddr actionNodeToParamEdge = m_context.GenerateConnector(ScType::ConstPermPosArc, actionNode, param);
+        m_context.GenerateConnector(ScType::ConstPermPosArc, targetRole, actionNodeToParamEdge);
 
         mappedRelations.insert(targetRole);
       });

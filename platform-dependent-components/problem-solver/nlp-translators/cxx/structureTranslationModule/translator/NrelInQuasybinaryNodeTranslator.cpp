@@ -26,14 +26,14 @@ std::stringstream NrelInQuasybinaryNodeTranslator::translate(ScAddr const & stru
   ScAddr nrelNode;
 
   ScTemplate scTemplate;
-  scTemplate.Triple(structAddr, ScType::EdgeAccessVarPosPerm, TranslationConstants::EDGE_ALIAS);
+  scTemplate.Triple(structAddr, ScType::VarPermPosArc, TranslationConstants::EDGE_ALIAS);
   scTemplate.Quintuple(
-      ScType::NodeVar >> TranslationConstants::NODE_ALIAS,
+      ScType::VarNode >> TranslationConstants::NODE_ALIAS,
       TranslationConstants::EDGE_ALIAS,
-      ScType::NodeVarTuple >> TranslationConstants::TUPLE_ALIAS,
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVarNoRole >> TranslationConstants::NREL_ALIAS);
-  context->HelperSmartSearchTemplate(
+      ScType::VarNodeTuple >> TranslationConstants::TUPLE_ALIAS,
+      ScType::VarPermPosArc,
+      ScType::VarNodeNonRole >> TranslationConstants::NREL_ALIAS);
+  context->SearchByTemplateInterruptibly(
       scTemplate,
       [&](ScTemplateResultItem const & searchResult)
       {
@@ -42,8 +42,8 @@ std::stringstream NrelInQuasybinaryNodeTranslator::translate(ScAddr const & stru
           return ScTemplateSearchRequest::CONTINUE;
         tupleNode = searchResult[TranslationConstants::TUPLE_ALIAS];
         nrelNode = searchResult[TranslationConstants::NREL_ALIAS];
-        if (context->HelperCheckEdge(
-                TranslationKeynodes::translation_ignored_keynodes, nrelNode, ScType::EdgeAccessConstPosPerm))
+        if (context->CheckConnector(
+                TranslationKeynodes::translation_ignored_keynodes, nrelNode, ScType::ConstPermPosArc))
           return ScTemplateSearchRequest::CONTINUE;
         std::string const & nodeMainIdtf =
             utils::CommonUtils::getMainIdtf(context, node, {lang});
@@ -55,7 +55,7 @@ std::stringstream NrelInQuasybinaryNodeTranslator::translate(ScAddr const & stru
           return ScTemplateSearchRequest::CONTINUE;
 
         auto const & tupleNodeIterator =
-            context->Iterator3(tupleNode, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+            context->CreateIterator3(tupleNode, ScType::ConstPermPosArc, ScType::ConstNode);
 
         int count = 0;
         while (tupleNodeIterator->Next())

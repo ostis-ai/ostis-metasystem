@@ -44,16 +44,16 @@ TEST_F(AgentTest, RelationWithPropertiesTest)
   ScTemplate propertiesTemplate;
     propertiesTemplate.Triple(
         answerStruct,
-        ScType::EdgeAccessVarPosPerm,
-        ScType::NodeVar >> "set_node");
+        ScType::VarPermPosArc,
+        ScType::VarNode >> "set_node");
     propertiesTemplate.Quintuple(
         relationAddr,
-        ScType::EdgeDCommonVar,
+        ScType::VarCommonArc,
         "set_node",
-        ScType::EdgeAccessVarPosPerm,
+        ScType::VarPermPosArc,
         searchAnswerModule::SearchAnswerKeynodes::nrel_properties);
     ScTemplateSearchResult result;
-    context.HelperSearchTemplate(propertiesTemplate, result);
+    context.SearchByTemplate(propertiesTemplate, result);
 
     EXPECT_TRUE(!result.IsEmpty());
 
@@ -101,16 +101,16 @@ TEST_F(AgentTest, NoPropertiesEnTest)
     ScTemplate propertiesTemplate;
       propertiesTemplate.Triple(
           answerStruct,
-          ScType::EdgeAccessVarPosPerm,
-          ScType::NodeVar >> "set_node");
+          ScType::VarPermPosArc,
+          ScType::VarNode >> "set_node");
       propertiesTemplate.Quintuple(
           relationAddr,
-          ScType::EdgeDCommonVar,
+          ScType::VarCommonArc,
           "set_node",
-          ScType::EdgeAccessVarPosPerm,
+          ScType::VarPermPosArc,
           searchAnswerModule::SearchAnswerKeynodes::nrel_properties);
       ScTemplateSearchResult result;
-      context.HelperSearchTemplate(propertiesTemplate, result);
+      context.SearchByTemplate(propertiesTemplate, result);
     
       EXPECT_TRUE(!result.IsEmpty());
   
@@ -154,16 +154,16 @@ TEST_F(AgentTest, NoPropertiesRuTest)
     ScTemplate propertiesTemplate;
       propertiesTemplate.Triple(
           answerStruct,
-          ScType::EdgeAccessVarPosPerm,
-          ScType::NodeVar >> "set_node");
+          ScType::VarPermPosArc,
+          ScType::VarNode >> "set_node");
       propertiesTemplate.Quintuple(
           relationAddr,
-          ScType::EdgeDCommonVar,
+          ScType::VarCommonArc,
           "set_node",
-          ScType::EdgeAccessVarPosPerm,
+          ScType::VarPermPosArc,
           searchAnswerModule::SearchAnswerKeynodes::nrel_properties);
       ScTemplateSearchResult result;
-      context.HelperSearchTemplate(propertiesTemplate, result);
+      context.SearchByTemplate(propertiesTemplate, result);
     
       EXPECT_TRUE(!result.IsEmpty());
   

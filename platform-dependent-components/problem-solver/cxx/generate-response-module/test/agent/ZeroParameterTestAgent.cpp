@@ -10,8 +10,8 @@ ScResult ZeroParameterTestAgent::DoProgram(ScActionInitiatedEvent const & event,
 {
   SC_LOG_DEBUG("ZeroParameterTestAgent started");
 
-  ScAddr successNode = m_context.CreateNode(ScType::NodeConst);
-  m_context.HelperSetSystemIdtf("test_success", successNode);
+  ScAddr successNode = m_context.GenerateNode(ScType::ConstNode);
+  m_context.SetElementSystemIdentifier("test_success", successNode);
 
   SC_LOG_DEBUG("ZeroParameterTestAgent ended");
 
@@ -26,9 +26,9 @@ ScAddr ZeroParameterTestAgent::GetActionClass() const
 
 bool ZeroParameterTestAgent::checkAction(ScAddr const & action) 
 {
-    return m_context.HelperCheckEdge(
+    return m_context.CheckConnector(
             TestKeynodes::action_zero_param,
             action,
-            ScType::EdgeAccessConstPosPerm
+            ScType::ConstPermPosArc
             );
 }

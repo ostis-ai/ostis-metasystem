@@ -84,7 +84,7 @@ ScResult MessageReplyAgent::DoProgram(ScActionInitiatedEvent const & event, ScAc
 
 bool MessageReplyAgent::checkActionClass(ScAddr const & actionAddr)
 {
-  return m_context.CheckConnector(MessageReplyKeynodes::action_reply_to_message, actionAddr, ScType::EdgeAccessConstPosPerm);
+  return m_context.CheckConnector(MessageReplyKeynodes::action_reply_to_message, actionAddr, ScType::ConstPermPosArc);
 }
 
 ScAddr MessageReplyAgent::getMessageProcessingProgram()
@@ -99,19 +99,16 @@ ScAddr MessageReplyAgent::generateMessage(ScAddr const & linkAddr)
 
   ScTemplate userMessageTemplate;
   userMessageTemplate.Triple(
-      MessageReplyKeynodes::concept_message, ScType::EdgeAccessVarPosPerm, ScType::NodeVar >> USER_MESSAGE_ALIAS);
+      MessageReplyKeynodes::concept_message, ScType::VarPermPosArc, ScType::VarNode >> USER_MESSAGE_ALIAS);
   userMessageTemplate.Quintuple(
-      ScType::NodeVar >> TRANSLATION_NODE_ALIAS,
-      ScType::EdgeDCommonVar,
+      ScType::VarNode >> TRANSLATION_NODE_ALIAS,
+      ScType::VarCommonArc,
       USER_MESSAGE_ALIAS,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarPermPosArc,
       MessageReplyKeynodes::nrel_sc_text_translation);
-  userMessageTemplate.Triple(TRANSLATION_NODE_ALIAS, ScType::EdgeAccessVarPosPerm, linkAddr);
+  userMessageTemplate.Triple(TRANSLATION_NODE_ALIAS, ScType::VarPermPosArc, linkAddr);
   ScTemplateGenResult templateGenResult;
-  if (!m_context.HelperGenTemplate(userMessageTemplate, templateGenResult))
-  {
-    SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "Unable to generate message");
-  }
+  m_context.GenerateByTemplate(userMessageTemplate, templateGenResult);
 
   return templateGenResult[USER_MESSAGE_ALIAS];
 }
@@ -122,22 +119,19 @@ ScAddr MessageReplyAgent::generateNonAtomicActionArgsSet(ScAddr const & messageA
 
   ScTemplate argsSetTemplate;
   argsSetTemplate.Quintuple(
-      ScType::NodeVar >> ARGS_SET_ALIAS,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarNode >> ARGS_SET_ALIAS,
+      ScType::VarPermPosArc,
       messageAddr,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarPermPosArc,
       ScKeynodes::rrel_1);
   argsSetTemplate.Quintuple(
       ARGS_SET_ALIAS,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarPermPosArc,
       languageAddr,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarPermPosArc,
       ScKeynodes::rrel_2);
   ScTemplateGenResult templateGenResult;
-  if (!m_context.HelperGenTemplate(argsSetTemplate, templateGenResult))
-  {
-    SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "Unable to generate arguments set for interpreter agent action");
-  }
+  m_context.GenerateByTemplate(argsSetTemplate, templateGenResult);
   return templateGenResult[ARGS_SET_ALIAS];
 }
 
@@ -151,29 +145,29 @@ ScAddr MessageReplyAgent::generateAnswer(ScAddr const & messageAddr)
   ScTemplate replySearchTemplate;
   replySearchTemplate.Quintuple(
       messageAddr,
-      ScType::EdgeDCommonVar >> REPLY_MESSAGE_RELATION_PAIR_ARC_ALIAS,
-      ScType::NodeVar >> REPLY_MESSAGE_ALIAS,
-      ScType::EdgeAccessVarPosPerm >> REPLY_MESSAGE_RELATION_ACCESS_ARC_ALIAS,
+      ScType::VarCommonArc >> REPLY_MESSAGE_RELATION_PAIR_ARC_ALIAS,
+      ScType::VarNode >> REPLY_MESSAGE_ALIAS,
+      ScType::VarPermPosArc >> REPLY_MESSAGE_RELATION_ACCESS_ARC_ALIAS,
       MessageReplyKeynodes::nrel_reply);
   ScTemplateSearchResult searchResult;
-  m_context.HelperSearchTemplate(replySearchTemplate, searchResult);
+  m_context.SearchByTemplate(replySearchTemplate, searchResult);
   if (searchResult.Size() != 1)
   {
     SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Reply message not generated.");
   }
 
   ScTemplate answerGenerationTemplate;
-  answerGenerationTemplate.Triple(ScType::NodeVarStruct >> ANSWER_ALIAS, ScType::EdgeAccessVarPosPerm, messageAddr);
+  answerGenerationTemplate.Triple(ScType::VarNodeStructure >> ANSWER_ALIAS, ScType::VarPermPosArc, messageAddr);
   answerGenerationTemplate.Triple(
-      ANSWER_ALIAS, ScType::EdgeAccessVarPosPerm, searchResult[0][REPLY_MESSAGE_RELATION_PAIR_ARC_ALIAS]);
-  answerGenerationTemplate.Triple(ANSWER_ALIAS, ScType::EdgeAccessVarPosPerm, searchResult[0][REPLY_MESSAGE_ALIAS]);
+      ANSWER_ALIAS, ScType::VarPermPosArc, searchResult[0][REPLY_MESSAGE_RELATION_PAIR_ARC_ALIAS]);
+  answerGenerationTemplate.Triple(ANSWER_ALIAS, ScType::VarPermPosArc, searchResult[0][REPLY_MESSAGE_ALIAS]);
   answerGenerationTemplate.Triple(
-      ANSWER_ALIAS, ScType::EdgeAccessVarPosPerm, searchResult[0][REPLY_MESSAGE_RELATION_ACCESS_ARC_ALIAS]);
-  answerGenerationTemplate.Triple(ANSWER_ALIAS, ScType::EdgeAccessVarPosPerm, MessageReplyKeynodes::nrel_reply);
+      ANSWER_ALIAS, ScType::VarPermPosArc, searchResult[0][REPLY_MESSAGE_RELATION_ACCESS_ARC_ALIAS]);
+  answerGenerationTemplate.Triple(ANSWER_ALIAS, ScType::VarPermPosArc, MessageReplyKeynodes::nrel_reply);
 
   ScAddrVector classes;
   ScAddrVector classesArcs;
-  ScIterator3Ptr classesIt = m_context.CreateIterator3(ScType::NodeConstClass, ScType::ConstPermPosArc, messageAddr);
+  ScIterator3Ptr classesIt = m_context.CreateIterator3(ScType::ConstNodeClass, ScType::ConstPermPosArc, messageAddr);
 
   while (classesIt->Next())
   {
@@ -183,21 +177,18 @@ ScAddr MessageReplyAgent::generateAnswer(ScAddr const & messageAddr)
 
   for (size_t i = 0; i < classes.size(); i++)
   {
-    answerGenerationTemplate.Triple(ANSWER_ALIAS, ScType::EdgeAccessVarPosPerm, classes.at(i));
-    answerGenerationTemplate.Triple(ANSWER_ALIAS, ScType::EdgeAccessVarPosPerm, classesArcs.at(i));
+    answerGenerationTemplate.Triple(ANSWER_ALIAS, ScType::VarPermPosArc, classes.at(i));
+    answerGenerationTemplate.Triple(ANSWER_ALIAS, ScType::VarPermPosArc, classesArcs.at(i));
   }
 
   ScTemplateGenResult templateGenResult;
-  if (!m_context.HelperGenTemplate(answerGenerationTemplate, templateGenResult))
-  {
-    SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Unable to generate answer.");
-  }
+  m_context.GenerateByTemplate(answerGenerationTemplate, templateGenResult);
   return templateGenResult[ANSWER_ALIAS];
 }
 
 bool MessageReplyAgent::linkIsValid(ScAddr const & linkAddr)
 {
-  if (!utils::CommonUtils::checkType(&m_context, linkAddr, ScType::LinkConst))
+  if (!utils::CommonUtils::checkType(&m_context, linkAddr, ScType::ConstNodeLink))
   {
     SC_LOG_ERROR("LinkAddr is not LinkConst.");
     return false;

@@ -29,9 +29,9 @@ ScResult SearchPropertiesAgent::DoProgram(ScActionInitiatedEvent const & event, 
   ScTemplate answerTemplate;
   answerTemplate.Quintuple(
         conceptAddr,
-        ScType::EdgeDCommonVar >> SearchAnswerConstants::COMMON_EDGE,
-        ScType::NodeVar >> SearchAnswerConstants::SET_NODE,
-        ScType::EdgeAccessVarPosPerm >> SearchAnswerConstants::RREL_EDGE,
+        ScType::VarCommonArc >> SearchAnswerConstants::COMMON_EDGE,
+        ScType::VarNode >> SearchAnswerConstants::SET_NODE,
+        ScType::VarPermPosArc >> SearchAnswerConstants::RREL_EDGE,
         SearchAnswerKeynodes::nrel_properties);
 
   ScAddrVector propertiesVector = findProperties(conceptAddr, langAddr);
@@ -39,16 +39,15 @@ ScResult SearchPropertiesAgent::DoProgram(ScActionInitiatedEvent const & event, 
   size_t i = 0;
   while (i < propertiesVector.size())
   {
-    // ScAddr const propertyLink = m_context->CreateLink();
+    // ScAddr const propertyLink = m_context->GenerateLink();
     // m_context->SetLinkContent(propertyLink, propertiesVector[i]);
     std::string EDGE_ALIAS = SearchAnswerConstants::VAR_EDGE + std::to_string(i);
-    answerTemplate.Triple(SearchAnswerConstants::SET_NODE, ScType::EdgeAccessVarPosPerm >> EDGE_ALIAS, propertiesVector[i]);
+    answerTemplate.Triple(SearchAnswerConstants::SET_NODE, ScType::VarPermPosArc >> EDGE_ALIAS, propertiesVector[i]);
     i++;
   }
 
   ScTemplateGenResult templateGenResult;
-  if (!m_context.HelperGenTemplate(answerTemplate, templateGenResult))
-    SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "Unable to generate formula");
+  m_context.GenerateByTemplate(answerTemplate, templateGenResult);
   answer << templateGenResult;
 
   action.SetResult(answer);
@@ -66,17 +65,17 @@ ScAddrVector SearchPropertiesAgent::findProperties(ScAddr const & conceptAddr, S
   ScAddrVector propertiesVector;
   std::string propertyName;
   
-  auto const & propertiesIterator = m_context.Iterator3(ScType::NodeConstClass, ScType::EdgeAccessConstPosPerm, conceptAddr);
+  auto const & propertiesIterator = m_context.CreateIterator3(ScType::ConstNodeClass, ScType::ConstPermPosArc, conceptAddr);
   while (propertiesIterator->Next())
   {
     ScAddr const & propertyNode = propertiesIterator->Get(0);
-    if (m_context.HelperCheckEdge(SearchAnswerKeynodes::concept_property, propertyNode, ScType::EdgeAccessConstPosPerm))
+    if (m_context.CheckConnector(SearchAnswerKeynodes::concept_property, propertyNode, ScType::ConstPermPosArc))
     {
       propertyName = utils::CommonUtils::getMainIdtf(&m_context, propertyNode, {langAddr});
       // propertyName = strchr(propertyName, " ");
       propertyName = propertyName.substr(0, propertyName.find(" "));
 
-      ScAddr const propertyLink = m_context.CreateLink();
+      ScAddr const propertyLink = m_context.GenerateLink();
       m_context.SetLinkContent(propertyLink, propertyName);
       propertiesVector.push_back(propertyLink);
     }
@@ -84,7 +83,7 @@ ScAddrVector SearchPropertiesAgent::findProperties(ScAddr const & conceptAddr, S
 
   if (propertiesVector.empty())
   {
-    ScAddr const propertyLink = m_context.CreateLink();
+    ScAddr const propertyLink = m_context.GenerateLink();
     auto const & noneIterator = none.find(langAddr);
     m_context.SetLinkContent(propertyLink, ((noneIterator != none.cend()) ? noneIterator->second : "none"));
     propertiesVector.push_back(propertyLink);
@@ -98,11 +97,11 @@ ScAddrVector SearchPropertiesAgent::findProperties(ScAddr const & conceptAddr, S
 //   std::vector<std::string> propertiesVector;
 //   std::string propertyName;
   
-//   auto const & propertiesIterator = m_context.Iterator3(ScType::NodeConstClass, ScType::EdgeAccessConstPosPerm, conceptAddr);
+//   auto const & propertiesIterator = m_context.CreateIterator3(ScType::ConstNodeClass, ScType::ConstPermPosArc, conceptAddr);
 //   while (propertiesIterator->Next())
 //   {
 //     ScAddr const & propertyNode = variablesIterator->Get(2);
-//     if (m_context.HelperCheckEdge(SearchAnswerKeynodes::concept_property, propertyNode, ScType::EdgeAccessConstPosPerm))
+//     if (m_context.CheckConnector(SearchAnswerKeynodes::concept_property, propertyNode, ScType::ConstPermPosArc))
 //     {
 //       propertyName = utils::CommonUtils::getMainIdtf(&m_context, propertyNode, {langAddr});
 //       propertyName = strchr(propertyName, " ");
@@ -118,7 +117,7 @@ ScAddrVector SearchPropertiesAgent::findProperties(ScAddr const & conceptAddr, S
 
 bool SearchPropertiesAgent::checkAction(ScAddr const & actionAddr)
 {
-  return m_context.HelperCheckEdge(SearchAnswerKeynodes::action_search_properties, actionAddr, ScType::EdgeAccessConstPosPerm);
+  return m_context.CheckConnector(SearchAnswerKeynodes::action_search_properties, actionAddr, ScType::ConstPermPosArc);
 }
 
 

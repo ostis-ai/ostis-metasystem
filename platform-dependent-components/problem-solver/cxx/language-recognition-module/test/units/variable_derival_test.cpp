@@ -40,7 +40,7 @@ TEST_F(AgentTest, DISABLED_EnglishMessageTest)
 
   ScAddr const & message = context.SearchElementBySystemIdentifier("message");
   
-  EXPECT_TRUE(context.HelperCheckEdge(LanguageRecognitionKeynodes::lang_en, message, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.CheckConnector(LanguageRecognitionKeynodes::lang_en, message, ScType::ConstPermPosArc));
   
   context.UnsubscribeAgent<languageRecognitionModule::LanguageRecognitionAgent>();
 }
@@ -60,7 +60,7 @@ TEST_F(AgentTest, DISABLED_RussianMessageTest)
 
   ScAddr const & message = context.SearchElementBySystemIdentifier("message");
   
-  EXPECT_TRUE(context.HelperCheckEdge(ScKeynodes::lang_ru, message, ScType::EdgeAccessConstPosPerm));
+  EXPECT_TRUE(context.CheckConnector(ScKeynodes::lang_ru, message, ScType::ConstPermPosArc));
   
   context.UnsubscribeAgent<languageRecognitionModule::LanguageRecognitionAgent>();
 }

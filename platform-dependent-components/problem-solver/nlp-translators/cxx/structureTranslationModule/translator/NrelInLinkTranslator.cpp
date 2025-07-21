@@ -26,24 +26,24 @@ std::stringstream NrelInLinkTranslator::translate(ScAddr const & structAddr, ScA
 
   ScTemplate scTemplate;
   scTemplate.Triple(
-      structAddr, ScType::EdgeAccessVarPosPerm, ScType::EdgeDCommonVar >> TranslationConstants::EDGE_ALIAS);
+      structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
   scTemplate.Quintuple(
-      ScType::NodeVar >> TranslationConstants::NODE_ALIAS,
+      ScType::VarNode >> TranslationConstants::NODE_ALIAS,
       TranslationConstants::EDGE_ALIAS,
-      ScType::LinkVar >> TranslationConstants::LINK_ALIAS,
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVarNoRole >> TranslationConstants::NREL_ALIAS);
-  context->HelperSmartSearchTemplate(
+      ScType::VarNodeLink >> TranslationConstants::LINK_ALIAS,
+      ScType::VarPermPosArc,
+      ScType::VarNodeNonRole >> TranslationConstants::NREL_ALIAS);
+  context->SearchByTemplateInterruptibly(
       scTemplate,
       [&](ScTemplateResultItem const & searchResult)
       {
         node = searchResult[TranslationConstants::NODE_ALIAS];
         linkNode = searchResult[TranslationConstants::LINK_ALIAS];
         nrelNode = searchResult[TranslationConstants::NREL_ALIAS];
-        if (context->HelperCheckEdge(
-                TranslationKeynodes::translation_ignored_keynodes, nrelNode, ScType::EdgeAccessConstPosPerm))
+        if (context->CheckConnector(
+                TranslationKeynodes::translation_ignored_keynodes, nrelNode, ScType::ConstPermPosArc))
           return ScTemplateSearchRequest::CONTINUE;
-        if (!context->HelperCheckEdge(lang, linkNode, ScType::EdgeAccessConstPosPerm))
+        if (!context->CheckConnector(lang, linkNode, ScType::ConstPermPosArc))
           return ScTemplateSearchRequest::CONTINUE;
         std::string const & nodeMainIdtf =
             utils::CommonUtils::getMainIdtf(context, node, {lang});

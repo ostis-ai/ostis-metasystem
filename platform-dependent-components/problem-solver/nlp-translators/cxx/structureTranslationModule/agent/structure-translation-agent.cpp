@@ -39,7 +39,7 @@ ScResult StructureTranslationAgent::DoProgram(ScActionInitiatedEvent const & eve
 
     SC_LOG_DEBUG("StructureTranslationAgent: translation result is " << translation.str());
 
-    ScAddr const & translationLink = m_context.CreateLink();
+    ScAddr const & translationLink = m_context.GenerateLink();
     if (m_context.IsElement(translationLink) == SC_FALSE)
       SC_THROW_EXCEPTION(utils::ScException, "StructureTranslationAgent: cannot create answer link");
     if (m_context.SetLinkContent(translationLink, translation.str()) == SC_FALSE)

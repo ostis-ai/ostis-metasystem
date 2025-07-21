@@ -40,8 +40,8 @@ void MessageTopicClassificationAgent::initFields()
 
 bool MessageTopicClassificationAgent::checkActionClass(ScAddr const & actionAddr)
 {
-  return m_context.HelperCheckEdge(
-      MessageClassificationKeynodes::action_message_topic_classification, actionAddr, ScType::EdgeAccessConstPosPerm);
+  return m_context.CheckConnector(
+      MessageClassificationKeynodes::action_message_topic_classification, actionAddr, ScType::ConstPermPosArc);
 }
 
 

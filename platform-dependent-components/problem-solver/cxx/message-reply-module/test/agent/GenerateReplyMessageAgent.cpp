@@ -15,8 +15,8 @@ using namespace messageReplyModuleTest;
 
 ScResult GenerateReplyMessageAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  if (!m_context.HelperCheckEdge(
-        messageReplyModule::MessageReplyKeynodes::action_interpret_non_atomic_action, action, ScType::EdgeAccessConstPosPerm))
+  if (!m_context.CheckConnector(
+        messageReplyModule::MessageReplyKeynodes::action_interpret_non_atomic_action, action, ScType::ConstPermPosArc))
   {
       return action.FinishSuccessfully();
   }
@@ -38,13 +38,13 @@ ScResult GenerateReplyMessageAgent::DoProgram(ScActionInitiatedEvent const & eve
   ScTemplate scTemplate;
   scTemplate.Quintuple(
       messageAddr,
-      ScType::EdgeDCommonVar,
-      ScType::NodeVar,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarCommonArc,
+      ScType::VarNode,
+      ScType::VarPermPosArc,
       messageReplyModule::MessageReplyKeynodes::nrel_reply);
   ScTemplateParams templateParams;
   ScTemplateGenResult templateGenResult;
-  m_context.HelperGenTemplate(scTemplate, templateGenResult, templateParams);
+  m_context.GenerateByTemplate(scTemplate, templateGenResult, templateParams);
   SC_LOG_DEBUG("GenerateMessageReplyAgent finished");
   return action.FinishSuccessfully();
 }
@@ -59,28 +59,28 @@ bool GenerateReplyMessageAgent::actionIsValid(const ScAddr & actionAddr)
   ScTemplate scTemplate;
   scTemplate.Quintuple(
         actionAddr,
-        ScType::EdgeAccessVarPosPerm,
+        ScType::VarPermPosArc,
         messageReplyModule::MessageReplyKeynodes::message_processing_program,
-        ScType::EdgeAccessVarPosPerm,
+        ScType::VarPermPosArc,
         ScKeynodes::rrel_1);
   scTemplate.Quintuple(
         actionAddr,
-        ScType::EdgeAccessVarPosPerm,
-        ScType::NodeVar >> "_args_set",
-        ScType::EdgeAccessVarPosPerm,
+        ScType::VarPermPosArc,
+        ScType::VarNode >> "_args_set",
+        ScType::VarPermPosArc,
         ScKeynodes::rrel_2);
   scTemplate.Quintuple(
         "_args_set",
-        ScType::EdgeAccessVarPosPerm,
-        ScType::NodeVar >> "_message",
-        ScType::EdgeAccessVarPosPerm,
+        ScType::VarPermPosArc,
+        ScType::VarNode >> "_message",
+        ScType::VarPermPosArc,
         ScKeynodes::rrel_1);
   scTemplate.Triple(
         messageReplyModule::MessageReplyKeynodes::concept_message,
-        ScType::EdgeAccessVarPosPerm,
+        ScType::VarPermPosArc,
         "_message");
   ScTemplateSearchResult searchResult;
-  m_context.HelperSearchTemplate(scTemplate, searchResult);
+  m_context.SearchByTemplate(scTemplate, searchResult);
   return searchResult.Size() == 1;
 }
 

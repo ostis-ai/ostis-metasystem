@@ -38,9 +38,9 @@ ScAddr OneParameterTestAgent::GetActionClass() const
 
 bool OneParameterTestAgent::checkAction(ScAddr const & actionAddr) 
 {
-    return m_context.HelperCheckEdge(
+    return m_context.CheckConnector(
             TestKeynodes::action_one_param,
             actionAddr,
-            ScType::EdgeAccessConstPosPerm
+            ScType::ConstPermPosArc
             );
 }

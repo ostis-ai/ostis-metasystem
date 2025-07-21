@@ -26,21 +26,21 @@ bool StructureTranslator::operator<(StructureTranslator const & other) const
 bool StructureTranslator::isInStructure(ScAddr const & structAddr, ScAddr const & elementAddr) const
 {
   return elementAddr == structAddr
-         or (context->GetElementType(elementAddr) == ScType::EdgeAccessConstPosPerm
-             and context->GetEdgeSource(elementAddr) == structAddr)
-         or context->HelperCheckEdge(structAddr, elementAddr, ScType::EdgeAccessConstPosPerm);
+         or (context->GetElementType(elementAddr) == ScType::ConstPermPosArc
+             and context->GetArcSourceElement(elementAddr) == structAddr)
+         or context->CheckConnector(structAddr, elementAddr, ScType::ConstPermPosArc);
 }
 
 bool StructureTranslator::isIgnored(ScAddr const & nodeAddr) const
 {
-  auto const & ignoredIterator = context->Iterator3(
-      TranslationKeynodes::translation_ignored_keynodes, ScType::EdgeAccessConstPosPerm, ScType::NodeConst);
+  auto const & ignoredIterator = context->CreateIterator3(
+      TranslationKeynodes::translation_ignored_keynodes, ScType::ConstPermPosArc, ScType::ConstNode);
   while (ignoredIterator->Next())
   {
     ScAddr const & ignoredKeynode = ignoredIterator->Get(2);
-    if (context->HelperCheckEdge(nodeAddr, ignoredKeynode, ScType::EdgeAccessConstPosPerm))
+    if (context->CheckConnector(nodeAddr, ignoredKeynode, ScType::ConstPermPosArc))
       return true;
-    if (context->HelperCheckEdge(ignoredKeynode, nodeAddr, ScType::EdgeAccessConstPosPerm))
+    if (context->CheckConnector(ignoredKeynode, nodeAddr, ScType::ConstPermPosArc))
       return true;
   }
   return false;

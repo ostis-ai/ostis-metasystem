@@ -19,21 +19,21 @@ ScAddr MessageSearcher::getFirstMessage(ScAddr const & nonAtomicMessageNode)
   std::string const VAR_MESSAGE = "_message";
   ScTemplate templ;
   templ.Quintuple(
-      ScType::NodeVarTuple >> VAR_TUPLE,
-      ScType::EdgeDCommonVar,
+      ScType::VarNodeTuple >> VAR_TUPLE,
+      ScType::VarCommonArc,
       nonAtomicMessageNode,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarPermPosArc,
       MessageKeynodes::nrel_message_decomposition);
   templ.Quintuple(
       VAR_TUPLE,
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVar >> VAR_MESSAGE,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarPermPosArc,
+      ScType::VarNode >> VAR_MESSAGE,
+      ScType::VarPermPosArc,
       ScKeynodes::rrel_1);
 
   ScAddr resultMessageNode;
 
-  context->HelperSmartSearchTemplate(
+  context->SearchByTemplateInterruptibly(
       templ,
       [&resultMessageNode, &VAR_MESSAGE](ScTemplateResultItem const & resultItem)
       {
@@ -59,17 +59,17 @@ ScAddr MessageSearcher::getNextMessage(ScAddr const & messageNode)
   std::string const VAR_MESSAGE = "_message";
 
   ScTemplate templ;
-  templ.Triple(ScType::NodeVarTuple >> VAR_TUPLE, ScType::EdgeAccessVarPosPerm >> VAR_EDGE_1, messageNode);
+  templ.Triple(ScType::VarNodeTuple >> VAR_TUPLE, ScType::VarPermPosArc >> VAR_EDGE_1, messageNode);
   templ.Quintuple(
       VAR_EDGE_1,
-      ScType::EdgeDCommonVar >> VAR_D_COMMON_EDGE,
-      ScType::EdgeAccessVarPosPerm >> VAR_EDGE_2,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarCommonArc >> VAR_D_COMMON_EDGE,
+      ScType::VarPermPosArc >> VAR_EDGE_2,
+      ScType::VarPermPosArc,
       MessageKeynodes::nrel_message_sequence);
-  templ.Triple(VAR_TUPLE, VAR_EDGE_2, ScType::NodeVar >> VAR_MESSAGE);
+  templ.Triple(VAR_TUPLE, VAR_EDGE_2, ScType::VarNode >> VAR_MESSAGE);
 
   ScAddr resultMessageNode;
-  context->HelperSmartSearchTemplate(
+  context->SearchByTemplateInterruptibly(
       templ,
       [&resultMessageNode, &VAR_MESSAGE](ScTemplateResultItem const & resultItem)
       {
@@ -92,13 +92,13 @@ ScAddr MessageSearcher::getMessageAuthor(ScAddr const & messageNode)
   std::string const VAR_AUTHOR = "_author";
   templ.Quintuple(
       messageNode,
-      ScType::EdgeDCommonVar,
-      ScType::NodeVar >> VAR_AUTHOR,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarCommonArc,
+      ScType::VarNode >> VAR_AUTHOR,
+      ScType::VarPermPosArc,
       MessageKeynodes::nrel_authors);
 
   ScAddr resultAuthorNode;
-  context->HelperSmartSearchTemplate(
+  context->SearchByTemplateInterruptibly(
       templ,
       [&resultAuthorNode, &VAR_AUTHOR](ScTemplateResultItem const & resultItem)
       {
@@ -122,13 +122,13 @@ ScAddr MessageSearcher::getMessageTheme(ScAddr const & messageNode)
   std::string const VAR_THEME = "_theme";
   templ.Quintuple(
       messageNode,
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVar >> VAR_THEME,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarPermPosArc,
+      ScType::VarNode >> VAR_THEME,
+      ScType::VarPermPosArc,
       MessageKeynodes::rrel_message_theme);
 
   ScAddr resultThemeNode;
-  context->HelperSmartSearchTemplate(
+  context->SearchByTemplateInterruptibly(
       templ,
       [&resultThemeNode, &VAR_THEME](ScTemplateResultItem const & resultItem)
       {
@@ -158,7 +158,7 @@ ScAddrVector MessageSearcher::getMessageLinks(ScAddr const & message, ScAddrVect
   }
 
   ScIterator3Ptr const linkIterator =
-      context->Iterator3(translationNode, ScType::EdgeAccessConstPosPerm, ScType::LinkConst);
+      context->CreateIterator3(translationNode, ScType::ConstPermPosArc, ScType::ConstNodeLink);
   while (linkIterator->Next())
   {
     ScAddr const & linkAddr = linkIterator->Get(2);
@@ -167,7 +167,7 @@ ScAddrVector MessageSearcher::getMessageLinks(ScAddr const & message, ScAddrVect
         linkClasses.cend(),
         [this, &linkAddr](auto const & addr)
         {
-          return context->HelperCheckEdge(addr, linkAddr, ScType::EdgeAccessConstPosPerm);
+          return context->CheckConnector(addr, linkAddr, ScType::ConstPermPosArc);
         });
 
     if (result == SC_TRUE)

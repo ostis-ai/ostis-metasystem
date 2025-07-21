@@ -83,9 +83,9 @@ TEST_F(AgentTest, OneParameterAgentTest)
 
     EXPECT_TRUE(testEntity.IsValid());
 
-    EXPECT_EQ(context.HelperGetSystemIdtf(testEntity), "test_entity");
+    EXPECT_EQ(context.GetElementSystemIdentifier(testEntity), "test_entity");
 
-    EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosPerm));
+    EXPECT_TRUE(context.CheckConnector(answer, messageAnswer, ScType::ConstPermPosArc));
     
     context.UnsubscribeAgent<generateResponseModuleTest::OneParameterTestAgent>();
     shutdown(context);
@@ -118,11 +118,11 @@ TEST_F(AgentTest, ZeroParameterTestAgent)
 
     ScAddr testSuccess = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
-    ScAddr correctTestSuccess = context.HelperFindBySystemIdtf("test_success");
+    ScAddr correctTestSuccess = context.SearchElementBySystemIdentifier("test_success");
     EXPECT_TRUE(correctTestSuccess.IsValid());
     EXPECT_TRUE(testSuccess == correctTestSuccess);
 
-    EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosPerm));
+    EXPECT_TRUE(context.CheckConnector(answer, messageAnswer, ScType::ConstPermPosArc));
 
     context.UnsubscribeAgent<generateResponseModuleTest::ZeroParameterTestAgent>();
     shutdown(context);

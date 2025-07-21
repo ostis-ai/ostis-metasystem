@@ -16,8 +16,8 @@ using namespace messageReplyModuleTest;
 
 ScResult NotGenerateReplyMessageAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  if(!m_context.HelperCheckEdge(
-        messageReplyModule::MessageReplyKeynodes::action_interpret_non_atomic_action, action, ScType::EdgeAccessConstPosPerm))
+  if(!m_context.CheckConnector(
+        messageReplyModule::MessageReplyKeynodes::action_interpret_non_atomic_action, action, ScType::ConstPermPosArc))
   {
     return action.FinishSuccessfully();
   }

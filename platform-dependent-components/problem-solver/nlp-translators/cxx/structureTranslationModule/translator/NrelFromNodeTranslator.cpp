@@ -30,21 +30,21 @@ std::stringstream NrelFromNodeTranslator::translate(ScAddr const & structAddr, S
 
   ScTemplate scTemplate;
   scTemplate.Triple(
-      structAddr, ScType::EdgeAccessVarPosPerm, ScType::EdgeDCommonVar >> TranslationConstants::EDGE_ALIAS);
+      structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
   scTemplate.Quintuple(
-      ScType::NodeVar >> TranslationConstants::SOURCE_ALIAS,
+      ScType::VarNode >> TranslationConstants::SOURCE_ALIAS,
       TranslationConstants::EDGE_ALIAS,
-      ScType::NodeVar >> TranslationConstants::NODE_ALIAS,
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVarNoRole >> TranslationConstants::NREL_ALIAS);
-  context->HelperSmartSearchTemplate(
+      ScType::VarNode >> TranslationConstants::NODE_ALIAS,
+      ScType::VarPermPosArc,
+      ScType::VarNodeNonRole >> TranslationConstants::NREL_ALIAS);
+  context->SearchByTemplateInterruptibly(
       scTemplate,
       [&](ScTemplateResultItem const & searchResult)
       {
         sourceNode = searchResult[TranslationConstants::SOURCE_ALIAS];
         nrelNode = searchResult[TranslationConstants::NREL_ALIAS];
-        if (context->HelperCheckEdge(
-                TranslationKeynodes::translation_ignored_keynodes, nrelNode, ScType::EdgeAccessConstPosPerm))
+        if (context->CheckConnector(
+                TranslationKeynodes::translation_ignored_keynodes, nrelNode, ScType::ConstPermPosArc))
           return ScTemplateSearchRequest::CONTINUE;
         std::string const & nrelMainIdtf =
             utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
@@ -83,14 +83,14 @@ std::string NrelFromNodeTranslator::getTranslationOfRelation(
 
   ScTemplate scTemplate;
   scTemplate.Triple(
-      structAddr, ScType::EdgeAccessVarPosPerm, ScType::EdgeDCommonVar >> TranslationConstants::EDGE_ALIAS);
+      structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
   scTemplate.Quintuple(
       sourceNode,
       TranslationConstants::EDGE_ALIAS,
-      ScType::NodeVar >> TranslationConstants::NODE_ALIAS,
-      ScType::EdgeAccessVarPosPerm,
+      ScType::VarNode >> TranslationConstants::NODE_ALIAS,
+      ScType::VarPermPosArc,
       nrelNode);
-  context->HelperSmartSearchTemplate(
+  context->SearchByTemplateInterruptibly(
       scTemplate,
       [&](ScTemplateResultItem const & searchResult)
       {
