@@ -57,7 +57,7 @@ TEST_F(AgentTest, RelationWithPropertiesTest)
 
     EXPECT_TRUE(!result.IsEmpty());
 
-    ScAddr setNode = result["set_node"];
+    ScAddr setNode = result[0]["set_node"];
 
     ScAddr propertyLink;
     std::string property;
@@ -71,7 +71,7 @@ TEST_F(AgentTest, RelationWithPropertiesTest)
         propertiesVector.push_back(property);
     }
 
-    EXPECT_TRUE(propertiesVector.size() == 5);
+    EXPECT_EQ(propertiesVector.size(), 5u);
 
     EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "бинарное") != propertiesVector.end());
     EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "ориентированное") != propertiesVector.end());
@@ -114,7 +114,7 @@ TEST_F(AgentTest, NoPropertiesEnTest)
     
       EXPECT_TRUE(!result.IsEmpty());
   
-      ScAddr setNode = result["set_node"];
+      ScAddr setNode = result[0]["set_node"];
   
       ScAddr propertyLink;
       std::string property;
@@ -128,7 +128,7 @@ TEST_F(AgentTest, NoPropertiesEnTest)
         propertiesVector.push_back(property);
       }
 
-      EXPECT_TRUE(propertiesVector.size() == 1);
+    EXPECT_EQ(propertiesVector.size(), 1u);
   
       EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "none") != propertiesVector.end());
   
@@ -167,7 +167,7 @@ TEST_F(AgentTest, NoPropertiesRuTest)
     
       EXPECT_TRUE(!result.IsEmpty());
   
-      ScAddr setNode = result["set_node"];
+      ScAddr setNode = result[0]["set_node"];
   
       ScAddr propertyLink;
       std::string property;
@@ -181,7 +181,7 @@ TEST_F(AgentTest, NoPropertiesRuTest)
         propertiesVector.push_back(property);
       }
 
-      EXPECT_TRUE(propertiesVector.size() == 1);
+      EXPECT_EQ(propertiesVector.size(), 1u);
   
       EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "нет") != propertiesVector.end());
   

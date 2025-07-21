@@ -25,7 +25,8 @@ std::string const TEST_FILES_DIR_PATH = MODULE_TEST_SRC_PATH "/testStructures/";
 
 int const WAIT_TIME = 1000;
 
-TEST_F(AgentTest, EnglishMessageTest)
+// This test is disabled because not all systems have `ru_RU.utf8` locale available
+TEST_F(AgentTest, DISABLED_EnglishMessageTest)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "english_message.scs");
@@ -44,7 +45,8 @@ TEST_F(AgentTest, EnglishMessageTest)
   context.UnsubscribeAgent<languageRecognitionModule::LanguageRecognitionAgent>();
 }
 
-TEST_F(AgentTest, RussianMessageTest)
+// This test is disabled because not all systems have `ru_RU.utf8` locale available
+TEST_F(AgentTest, DISABLED_RussianMessageTest)
 {
   ScAgentContext & context = *m_ctx;
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + "russian_message.scs");

@@ -15,7 +15,13 @@ ScResult ZeroParameterTestAgent::DoProgram(ScActionInitiatedEvent const & event,
 
   SC_LOG_DEBUG("ZeroParameterTestAgent ended");
 
+  action.FormResult(successNode);
   return action.FinishSuccessfully();
+}
+
+ScAddr ZeroParameterTestAgent::GetActionClass() const
+{
+  return TestKeynodes::action_zero_param;
 }
 
 bool ZeroParameterTestAgent::checkAction(ScAddr const & action) 

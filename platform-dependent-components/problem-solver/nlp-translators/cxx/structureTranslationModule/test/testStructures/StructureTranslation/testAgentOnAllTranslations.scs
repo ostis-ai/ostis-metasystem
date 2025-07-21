@@ -24,7 +24,8 @@ test_question_node
     -> rrel_1: {
     test_structure
     };
-    -> rrel_2:: rrel_dynamic_argument:: test_answer_node;;
+    -> rrel_2: rrel_dynamic_argument: test_answer_node;
+    -> rrel_3: lang_ru;;
 
 test_structure = [*
     concept_red <- color;;

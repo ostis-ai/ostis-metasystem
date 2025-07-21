@@ -14,7 +14,7 @@ namespace messageReplyModuleTest
 class GenerateReplyMessageAgent : public ScActionInitiatedAgent
 {
   public:
-  //ScAddr GetActionClass() const override;
+  ScAddr GetActionClass() const override;
 
   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 

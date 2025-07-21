@@ -17,7 +17,7 @@ include_directories(
         ${SC_TOOLS_SRC})
 
 add_library(naturalLanguageProcessingModule SHARED ${SOURCES} ${HEADERS})
-target_link_libraries(naturalLanguageProcessingModule sc-memory sc-agents-common)
+target_link_libraries(naturalLanguageProcessingModule sc-machine::sc-memory sc-machine::sc-agents-common)
 
 sc_codegen_ex(naturalLanguageProcessingModule ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/generated)
 

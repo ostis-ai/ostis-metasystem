@@ -4,7 +4,7 @@
 #include <sc-agents-common/utils/CommonUtils.hpp>
 #include <sc-agents-common/utils/IteratorUtils.hpp>
 #include "sc-memory/sc_keynodes.hpp"
-#include "sc-memory/utils/sc_log.hpp"
+#include "sc-memory/utils/sc_logger.hpp"
 
 #include "agent/generate-response-agent.hpp"
 #include "test/agent/OneParameterTestAgent.hpp"
@@ -63,6 +63,9 @@ TEST_F(AgentTest, OneParameterAgentTest)
     ScAddr const testActionNode = context.SearchElementBySystemIdentifier("one_param_action_node");
     ScAddr const message = context.SearchElementBySystemIdentifier("message");
     ScAddr const answer = context.SearchElementBySystemIdentifier("_answer");
+    EXPECT_TRUE(testActionNode.IsValid());
+    EXPECT_TRUE(message.IsValid());
+    EXPECT_TRUE(answer.IsValid());
     
     ScAction testAction = context.ConvertToAction(testActionNode);
 
@@ -78,9 +81,11 @@ TEST_F(AgentTest, OneParameterAgentTest)
 
     ScAddr testEntity = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
-    EXPECT_TRUE(context.HelperGetSystemIdtf(testEntity) == "test_entity");
+    EXPECT_TRUE(testEntity.IsValid());
 
-    EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosTemp));
+    EXPECT_EQ(context.HelperGetSystemIdtf(testEntity), "test_entity");
+
+    EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosPerm));
     
     context.UnsubscribeAgent<generateResponseModuleTest::OneParameterTestAgent>();
     shutdown(context);
@@ -98,6 +103,9 @@ TEST_F(AgentTest, ZeroParameterTestAgent)
     ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("zero_param_action_node");
     ScAddr const & message = context.SearchElementBySystemIdentifier("message");
     ScAddr const & answer = context.SearchElementBySystemIdentifier("_answer");
+    EXPECT_TRUE(testActionNode.IsValid());
+    EXPECT_TRUE(message.IsValid());
+    EXPECT_TRUE(answer.IsValid());
     
     ScAction testAction = context.ConvertToAction(testActionNode);
 
@@ -111,9 +119,10 @@ TEST_F(AgentTest, ZeroParameterTestAgent)
     ScAddr testSuccess = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
     ScAddr correctTestSuccess = context.HelperFindBySystemIdtf("test_success");
-    EXPECT_TRUE(correctTestSuccess.IsValid() && testSuccess == correctTestSuccess);
+    EXPECT_TRUE(correctTestSuccess.IsValid());
+    EXPECT_TRUE(testSuccess == correctTestSuccess);
 
-    EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosTemp));
+    EXPECT_TRUE(context.HelperCheckEdge(answer, messageAnswer, ScType::EdgeAccessConstPosPerm));
 
     context.UnsubscribeAgent<generateResponseModuleTest::ZeroParameterTestAgent>();
     shutdown(context);

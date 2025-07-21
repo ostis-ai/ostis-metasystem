@@ -2,10 +2,10 @@ test_action_node
 <- action;
 -> rrel_1: relation;
 -> rrel_2: lang_ru;
-<- action_derive_variable_from_formula;;
+<- action_search_properties;;
 
 relation
-<- sc_node_norole_relation;
+<- sc_node_non_role_relation;
 <- binary_relation;
 <- oriented_relation;
 <- antireflexive_relation;
@@ -16,4 +16,31 @@ sc_node_role_relation
 -> rrel_1;
 -> rrel_2;;
 
-sc_node_class -> lang_ru;;
+sc_node_class
+-> binary_relation;
+-> oriented_relation;
+-> antireflexive_relation;
+-> asymmetric_relation;
+-> antitransitive_relation;
+-> lang_ru;
+-> concept_property;;
+
+binary_relation
+<- concept_property;
+=> nrel_main_idtf: [бинарное отношение] (* <- lang_ru;; *);;
+
+oriented_relation
+<- concept_property;
+=> nrel_main_idtf: [ориентированное отношение] (* <- lang_ru;; *);;
+
+antireflexive_relation
+<- concept_property;
+=> nrel_main_idtf: [антирефлексивное отношение] (* <- lang_ru;; *);;
+
+asymmetric_relation
+<- concept_property;
+=> nrel_main_idtf: [асимметричное отношение] (* <- lang_ru;; *);;
+
+antitransitive_relation
+<- concept_property;
+=> nrel_main_idtf: [антитранзитивное отношение] (* <- lang_ru;; *);;

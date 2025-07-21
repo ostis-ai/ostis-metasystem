@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sc-memory/kpm/sc_agent.hpp"
-
 #include "sc-agents-common/keynodes/coreKeynodes.hpp"
 
 #include "FormSemanticNeighbourhoodTranslationAgent.generated.hpp"

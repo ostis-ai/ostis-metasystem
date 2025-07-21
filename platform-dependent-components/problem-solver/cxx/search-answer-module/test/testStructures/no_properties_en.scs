@@ -2,7 +2,7 @@ test_action_node
 <- action;
 -> rrel_1: relation;
 -> rrel_2: lang_en;
-<- action_derive_variable_from_formula;;
+<- action_search_properties;;
 
 relation
 <- sc_node_norole_relation;;

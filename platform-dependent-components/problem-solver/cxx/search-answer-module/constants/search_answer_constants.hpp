@@ -6,17 +6,13 @@
 
 #pragma once
 
-#include <map>
 #include <string>
-
-#include "sc-memory/sc_memory.hpp"
 
 namespace searchAnswerModule
 {
 class SearchAnswerConstants
 {
   public:
-    static ScAddrToValueUnorderedMap<std::string> none;
     static std::string const EDGE;
     static std::string const SET_NODE;
     static std::string const RREL_EDGE;

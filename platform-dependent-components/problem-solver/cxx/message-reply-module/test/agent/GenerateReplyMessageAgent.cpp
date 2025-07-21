@@ -49,6 +49,11 @@ ScResult GenerateReplyMessageAgent::DoProgram(ScActionInitiatedEvent const & eve
   return action.FinishSuccessfully();
 }
 
+ScAddr GenerateReplyMessageAgent::GetActionClass() const
+{
+  return messageReplyModule::MessageReplyKeynodes::action_interpret_non_atomic_action;
+}
+
 bool GenerateReplyMessageAgent::actionIsValid(const ScAddr & actionAddr)
 {
   ScTemplate scTemplate;

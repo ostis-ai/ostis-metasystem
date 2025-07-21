@@ -11,12 +11,6 @@
 
 namespace searchAnswerModule
 {
-ScAddrToValueUnorderedMap<std::string> SearchAnswerConstants::none = 
-{
-    {ScKeynodes::lang_ru, "нет"},
-    {SearchAnswerKeynodes::lang_en, "none"}
-};
-
 std::string const SearchAnswerConstants::EDGE = "edge";
 std::string const SearchAnswerConstants::SET_NODE = "set_node";
 std::string const SearchAnswerConstants::RREL_EDGE = "rrel_edge";

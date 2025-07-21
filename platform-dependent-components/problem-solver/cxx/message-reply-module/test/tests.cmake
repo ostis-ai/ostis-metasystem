@@ -6,7 +6,7 @@
 
 make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/units
     NAME message-reply-module-test-starter
-    DEPENDS sc-memory sc-core sc-builder-lib  message_reply_test_agents message-reply-module
+    DEPENDS sc-machine::sc-memory sc-machine::sc-core sc-machine::sc-builder-lib  message_reply_test_agents message-reply-module
     INCLUDES ${SC_MEMORY_INCLUDE} ${SC_BUILDER_INCLUDE}
 )
 
@@ -16,10 +16,10 @@ file(GLOB MESSAGE_REPLY_TEST_AGENTS_SOURCE
 )
 add_library(message_reply_test_agents ${MESSAGE_REPLY_TEST_AGENTS_SOURCE})
 target_link_libraries(
-    message_reply_test_agents
-    message-reply-module
-    sc-memory
-    sc-agents-common
+        message_reply_test_agents
+        message-reply-module
+        sc-machine::sc-memory
+        sc-machine::sc-agents-common
 )
 target_include_directories(message-reply-module
         PUBLIC ${MESSAGE_REPLY_TEST_AGENTS_SOURCE}

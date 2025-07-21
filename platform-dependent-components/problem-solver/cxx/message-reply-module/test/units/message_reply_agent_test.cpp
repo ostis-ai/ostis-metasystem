@@ -7,7 +7,7 @@
 #include <sc-builder/scs_loader.hpp>
 
 #include <sc-memory/test/sc_test.hpp>
-#include "sc-memory/utils/sc_log.hpp"
+#include "sc-memory/utils/sc_logger.hpp"
 
 #include <sc-agents-common/utils/CommonUtils.hpp>
 #include <sc-agents-common/utils/IteratorUtils.hpp>
@@ -60,6 +60,7 @@ TEST_F(AgentTest, messageProcessingWithTextLinkSuccessful)
   ScAction test_action = context.ConvertToAction(test_action_node);
 
   context.SubscribeAgent<messageReplyModule::MessageReplyAgent>();
+  context.SubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();
   
   EXPECT_TRUE(test_action.InitiateAndWait(WAIT_TIME));
   SC_LOG_DEBUG("5.5");
@@ -77,43 +78,24 @@ TEST_F(AgentTest, messageProcessingWithTextLinkSuccessful)
   SC_LOG_DEBUG("6");
 
   context.UnsubscribeAgent<messageReplyModule::MessageReplyAgent>();
-  // context.UnsubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();
+  context.UnsubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();
 }
 
 
 TEST_F(AgentTest, argumentIsNotALink)
 {
-  SC_LOG_DEBUG("1");
   ScAgentContext & context = *m_ctx;
-
-  SC_LOG_DEBUG("2");
 
   loader.loadScsFile(context,TEST_FILES_DIR_PATH + "replyMessageAgentTestStructureFirstArgumentIsNotALink.scs");
   context.SubscribeAgent<messageReplyModule::MessageReplyAgent>();
   context.SubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();
 
-  SC_LOG_DEBUG("3");
-
   ScAddr const & test_action_node = context.SearchElementBySystemIdentifier("test_action_node");
-
-  SC_LOG_DEBUG("4");
-
-  context.CreateEdge(
-      ScType::EdgeAccessConstPosPerm,
-      ScKeynodes::action_initiated,
-      test_action_node);
-  
-
-  SC_LOG_DEBUG("5");
 
   ScAction test_action = context.ConvertToAction(test_action_node);
   EXPECT_TRUE(test_action.InitiateAndWait(WAIT_TIME));
 
-  SC_LOG_DEBUG("6");
-  EXPECT_TRUE(test_action.IsFinishedUnsuccessfully());
-
-
-  SC_LOG_DEBUG("7");
+  EXPECT_TRUE(test_action.IsFinishedWithError());
 
   context.UnsubscribeAgent<messageReplyModule::MessageReplyAgent>();
   context.UnsubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();
@@ -131,14 +113,9 @@ TEST_F(AgentTest, linkSpecifiedIncorrectly)
   ScAddr const & test_action_node = context.SearchElementBySystemIdentifier("test_action_node");
   EXPECT_TRUE(test_action_node.IsValid());
 
-  context.CreateEdge(
-      ScType::EdgeAccessConstPosPerm,
-      ScKeynodes::action_initiated,
-      test_action_node);
-
   ScAction test_action = context.ConvertToAction(test_action_node);
   EXPECT_TRUE(test_action.InitiateAndWait(WAIT_TIME));
-  EXPECT_TRUE(test_action.IsFinishedUnsuccessfully());
+  EXPECT_TRUE(test_action.IsFinishedWithError());
 
   context.UnsubscribeAgent<messageReplyModule::MessageReplyAgent>();
   context.UnsubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();

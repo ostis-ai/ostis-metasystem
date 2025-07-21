@@ -6,8 +6,9 @@ namespace generateResponseModuleTest
 {
 class OneParameterTestAgent : public ScActionInitiatedAgent
 {
-  public:
-   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
+public:
+  ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
+  ScAddr GetActionClass() const override;
 
 private:
   bool checkAction(ScAddr const & actionAddr);

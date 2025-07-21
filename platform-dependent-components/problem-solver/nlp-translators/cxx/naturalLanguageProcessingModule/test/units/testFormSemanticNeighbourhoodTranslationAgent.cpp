@@ -20,8 +20,7 @@
 #include "translator/NrelFromNodeSemanticNeighbourhoodTranslator.hpp"
 #include "translator/NrelFromQuasybinaryLinkSemanticNeighbourhoodTranslator.hpp"
 
-#include "sc-memory/kpm/sc_agent.hpp"
-#include "sc_test.hpp"
+#include <sc-memory/test/sc_test.hpp>
 #include "translator/SemanticNeighbourhoodTranslatorSet.hpp"
 
 #include <algorithm>

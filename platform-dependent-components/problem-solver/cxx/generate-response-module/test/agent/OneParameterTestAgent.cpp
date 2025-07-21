@@ -27,7 +27,13 @@ ScResult OneParameterTestAgent::DoProgram(ScActionInitiatedEvent const & event, 
 
   SC_LOG_DEBUG("OneParameterTestAgent finished");
 
+  action.FormResult(parameterAddr);
   return action.FinishSuccessfully();
+}
+
+ScAddr OneParameterTestAgent::GetActionClass() const
+{
+  return TestKeynodes::action_one_param;
 }
 
 bool OneParameterTestAgent::checkAction(ScAddr const & actionAddr) 

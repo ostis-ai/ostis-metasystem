@@ -1,6 +1,6 @@
 make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/units
 NAME language-recognition-module-test-starter
-DEPENDS sc-memory sc-core sc-builder-lib language-recognition-module
+DEPENDS sc-machine::sc-memory sc-machine::sc-core sc-machine::sc-builder-lib language-recognition-module
 INCLUDES ${SC_MEMORY_INCLUDE} ${SC_BUILDER_INCLUDE}
 )
 
