@@ -12,12 +12,12 @@ namespace searchAnswerModule
 {
 class SearchAnswerConstants
 {
-  public:
-    static std::string const EDGE;
-    static std::string const SET_NODE;
-    static std::string const RREL_EDGE;
-    static std::string const COMMON_EDGE;
-    static std::string const VAR_EDGE;
+public:
+  static std::string const EDGE;
+  static std::string const SET_NODE;
+  static std::string const RREL_EDGE;
+  static std::string const COMMON_EDGE;
+  static std::string const VAR_EDGE;
 };
 
-}  // namespace SearchAnswerModule
+}  // namespace searchAnswerModule

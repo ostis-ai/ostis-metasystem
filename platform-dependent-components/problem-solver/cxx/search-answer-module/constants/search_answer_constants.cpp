@@ -17,4 +17,4 @@ std::string const SearchAnswerConstants::RREL_EDGE = "rrel_edge";
 std::string const SearchAnswerConstants::COMMON_EDGE = "common_edge";
 std::string const SearchAnswerConstants::VAR_EDGE = "var_edge";
 
-}  // namespace SearchAnswerModule
+}  // namespace searchAnswerModule

@@ -8,10 +8,10 @@ namespace messageClassificationModule
 {
 class MessageTopicClassificationAgent : public ScActionInitiatedAgent
 {
-  public:
-   ScAddr GetActionClass() const override;
- 
-   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
+public:
+  ScAddr GetActionClass() const override;
+
+  ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
 
 private:
   std::unique_ptr<MessageTopicClassificationManager> manager;

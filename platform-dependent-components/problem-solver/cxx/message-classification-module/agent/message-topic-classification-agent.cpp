@@ -25,11 +25,11 @@ ScResult MessageTopicClassificationAgent::DoProgram(ScActionInitiatedEvent const
   catch (utils::ScException & exception)
   {
     SC_LOG_ERROR(exception.Description());
-    SC_LOG_DEBUG("MessageTopicClassificationAgent finished");\
+    SC_LOG_DEBUG("MessageTopicClassificationAgent finished");
     return action.FinishWithError();
   }
 
-  SC_LOG_DEBUG("MessageTopicClassificationAgent finished");\
+  SC_LOG_DEBUG("MessageTopicClassificationAgent finished");
   return action.FinishSuccessfully();
 }
 
@@ -43,7 +43,6 @@ bool MessageTopicClassificationAgent::checkActionClass(ScAddr const & actionAddr
   return m_context.CheckConnector(
       MessageClassificationKeynodes::action_message_topic_classification, actionAddr, ScType::ConstPermPosArc);
 }
-
 
 ScAddr MessageTopicClassificationAgent::GetActionClass() const
 {

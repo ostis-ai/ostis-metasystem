@@ -13,8 +13,8 @@ namespace messageClassificationModule
 
 class MessageClassificationModule : public ScModule
 {
-    void Initialize(ScMemoryContext * m_context) override;
-    void Shutdown(ScMemoryContext * m_context) override;
+  void Initialize(ScMemoryContext * m_context) override;
+  void Shutdown(ScMemoryContext * m_context) override;
 };
 
 }  // namespace messageClassificationModule

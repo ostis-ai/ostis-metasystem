@@ -3,7 +3,7 @@
  * Distributed under the MIT License
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
- 
+
 #include <sc-agents-common/utils/GenerationUtils.hpp>
 #include <sc-agents-common/utils/CommonUtils.hpp>
 #include "sc-memory/sc_action.hpp"
@@ -48,7 +48,7 @@ ScResult MessageReplyAgent::DoProgram(ScActionInitiatedEvent const & event, ScAc
     SC_LOG_ERROR(exception.Description() << exception.Message());
     return action.FinishWithError();
   }
-  //ScAddrVector argsVector = {processingProgramAddr, generateNonAtomicActionArgsSet(messageAddr)};
+  // ScAddrVector argsVector = {processingProgramAddr, generateNonAtomicActionArgsSet(messageAddr)};
 
   SC_LOG_DEBUG("here");
 
@@ -63,7 +63,6 @@ ScResult MessageReplyAgent::DoProgram(ScActionInitiatedEvent const & event, ScAc
     SC_LOG_ERROR("Action wait time expired or action not finished successfully");
     return action.FinishWithError();
   }
-
 
   SC_LOG_DEBUG("there");
 
@@ -119,17 +118,9 @@ ScAddr MessageReplyAgent::generateNonAtomicActionArgsSet(ScAddr const & messageA
 
   ScTemplate argsSetTemplate;
   argsSetTemplate.Quintuple(
-      ScType::VarNode >> ARGS_SET_ALIAS,
-      ScType::VarPermPosArc,
-      messageAddr,
-      ScType::VarPermPosArc,
-      ScKeynodes::rrel_1);
+      ScType::VarNode >> ARGS_SET_ALIAS, ScType::VarPermPosArc, messageAddr, ScType::VarPermPosArc, ScKeynodes::rrel_1);
   argsSetTemplate.Quintuple(
-      ARGS_SET_ALIAS,
-      ScType::VarPermPosArc,
-      languageAddr,
-      ScType::VarPermPosArc,
-      ScKeynodes::rrel_2);
+      ARGS_SET_ALIAS, ScType::VarPermPosArc, languageAddr, ScType::VarPermPosArc, ScKeynodes::rrel_2);
   ScTemplateGenResult templateGenResult;
   m_context.GenerateByTemplate(argsSetTemplate, templateGenResult);
   return templateGenResult[ARGS_SET_ALIAS];
@@ -194,8 +185,8 @@ bool MessageReplyAgent::linkIsValid(ScAddr const & linkAddr)
     return false;
   }
 
-  ScIterator3Ptr const conceptTextFileIterator = m_context.CreateIterator3(
-      MessageReplyKeynodes::concept_text_file, ScType::ConstPermPosArc, linkAddr);
+  ScIterator3Ptr const conceptTextFileIterator =
+      m_context.CreateIterator3(MessageReplyKeynodes::concept_text_file, ScType::ConstPermPosArc, linkAddr);
   if (!conceptTextFileIterator->Next())
   {
     SC_LOG_ERROR("LinkAddr doesn't belong concept_text_file class.");

@@ -1,6 +1,6 @@
 #include "WitAiClient.hpp"
 
-#include "sc-config/sc_config.hpp" 
+#include "sc-config/sc_config.hpp"
 #include "sc-memory/utils/sc_logger.hpp"
 
 #include "http/sc_http_request.hpp"

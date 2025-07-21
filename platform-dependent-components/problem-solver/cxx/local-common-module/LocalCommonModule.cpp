@@ -6,12 +6,6 @@
 
 using namespace commonModule;
 
-void LocalCommonModule::Initialize(ScMemoryContext *m_context) 
-{
-    
-}
+void LocalCommonModule::Initialize(ScMemoryContext * m_context) {}
 
-void LocalCommonModule::Shutdown(ScMemoryContext * m_context)
-{
-
-}
+void LocalCommonModule::Shutdown(ScMemoryContext * m_context) {}

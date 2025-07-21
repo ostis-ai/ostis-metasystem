@@ -26,8 +26,7 @@ std::stringstream NrelFromQuasybinaryNodeTranslator::translate(ScAddr const & st
   ScAddr nrelNode;
 
   ScTemplate scTemplate;
-  scTemplate.Triple(
-      structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
+  scTemplate.Triple(structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
   scTemplate.Quintuple(
       ScType::VarNodeTuple >> TranslationConstants::TUPLE_ALIAS,
       TranslationConstants::EDGE_ALIAS,
@@ -41,12 +40,10 @@ std::stringstream NrelFromQuasybinaryNodeTranslator::translate(ScAddr const & st
         node = searchResult[TranslationConstants::NODE_ALIAS];
         tupleNode = searchResult[TranslationConstants::TUPLE_ALIAS];
         nrelNode = searchResult[TranslationConstants::NREL_ALIAS];
-        std::string const & nodeMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, node, {lang});
+        std::string const & nodeMainIdtf = utils::CommonUtils::getMainIdtf(context, node, {lang});
         if (nodeMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
-        std::string const & nrelMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
+        std::string const & nrelMainIdtf = utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
         if (nrelMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
 
@@ -57,14 +54,13 @@ std::stringstream NrelFromQuasybinaryNodeTranslator::translate(ScAddr const & st
         while (tupleNodeIterator->Next())
         {
           ScAddr const & tupleElement = tupleNodeIterator->Get(2);
-          std::string const & tupleElementMainIdtf =
-              utils::CommonUtils::getMainIdtf(context, tupleElement, {lang});
+          std::string const & tupleElementMainIdtf = utils::CommonUtils::getMainIdtf(context, tupleElement, {lang});
 
           if (tupleElementMainIdtf.empty())
-              continue;
-          if(count == 0)
+            continue;
+          if (count == 0)
             translation << tupleElementMainIdtf;
-          else 
+          else
           {
             if (count == TranslationConstants::MAX_LISTING_COUNT)
               translation << "|";

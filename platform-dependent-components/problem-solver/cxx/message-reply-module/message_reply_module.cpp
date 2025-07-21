@@ -14,12 +14,6 @@ using namespace messageReplyModule;
 
 SC_MODULE_REGISTER(MessageReplyModule)->Agent<MessageReplyAgent>();
 
-void MessageReplyModule::Initialize(ScMemoryContext *m_context) 
-{
-    
-}
+void MessageReplyModule::Initialize(ScMemoryContext * m_context) {}
 
-void MessageReplyModule::Shutdown(ScMemoryContext * m_context)
-{
-
-}
+void MessageReplyModule::Shutdown(ScMemoryContext * m_context) {}

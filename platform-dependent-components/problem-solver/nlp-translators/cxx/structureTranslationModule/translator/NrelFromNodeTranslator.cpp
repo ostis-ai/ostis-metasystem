@@ -29,8 +29,7 @@ std::stringstream NrelFromNodeTranslator::translate(ScAddr const & structAddr, S
   ScAddr nrelNode;
 
   ScTemplate scTemplate;
-  scTemplate.Triple(
-      structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
+  scTemplate.Triple(structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
   scTemplate.Quintuple(
       ScType::VarNode >> TranslationConstants::SOURCE_ALIAS,
       TranslationConstants::EDGE_ALIAS,
@@ -46,12 +45,10 @@ std::stringstream NrelFromNodeTranslator::translate(ScAddr const & structAddr, S
         if (context->CheckConnector(
                 TranslationKeynodes::translation_ignored_keynodes, nrelNode, ScType::ConstPermPosArc))
           return ScTemplateSearchRequest::CONTINUE;
-        std::string const & nrelMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
+        std::string const & nrelMainIdtf = utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
         if (nrelMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
-        std::string const & sourceMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, sourceNode, {lang});
+        std::string const & sourceMainIdtf = utils::CommonUtils::getMainIdtf(context, sourceNode, {lang});
         if (sourceMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
         auto const & usedKey = sourceMainIdtf + nrelMainIdtf;
@@ -82,8 +79,7 @@ std::string NrelFromNodeTranslator::getTranslationOfRelation(
   std::stringstream translation;
 
   ScTemplate scTemplate;
-  scTemplate.Triple(
-      structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
+  scTemplate.Triple(structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
   scTemplate.Quintuple(
       sourceNode,
       TranslationConstants::EDGE_ALIAS,
@@ -95,8 +91,7 @@ std::string NrelFromNodeTranslator::getTranslationOfRelation(
       [&](ScTemplateResultItem const & searchResult)
       {
         node = searchResult[TranslationConstants::NODE_ALIAS];
-        std::string const & nodeMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, node, {lang});
+        std::string const & nodeMainIdtf = utils::CommonUtils::getMainIdtf(context, node, {lang});
         if (nodeMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
         translation << nodeMainIdtf << ", ";

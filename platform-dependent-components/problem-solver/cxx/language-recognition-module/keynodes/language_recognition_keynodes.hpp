@@ -14,15 +14,9 @@ namespace languageRecognitionModule
 class LanguageRecognitionKeynodes : public ScKeynodes
 {
 public:
-  static inline ScKeynode const action_language_recognition{
-      "action_language_recognition",
-      ScType::ConstNodeClass};
-  static inline ScKeynode const lang_en{
-      "lang_en",
-      ScType::ConstNodeClass};
-  static inline ScKeynode const nrel_sc_text_translation{
-      "nrel_sc_text_translation",
-      ScType::ConstNodeRole};
+  static inline ScKeynode const action_language_recognition{"action_language_recognition", ScType::ConstNodeClass};
+  static inline ScKeynode const lang_en{"lang_en", ScType::ConstNodeClass};
+  static inline ScKeynode const nrel_sc_text_translation{"nrel_sc_text_translation", ScType::ConstNodeRole};
 };
 
 }  // namespace languageRecognitionModule

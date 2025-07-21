@@ -14,7 +14,6 @@
 
 #include <filesystem>
 
-
 using namespace generateResponseModule;
 using AgentTest = ScMemoryTest;
 
@@ -24,107 +23,108 @@ ScsLoader loader;
 const std::string TEST_FILES_DIR_PATH = MODULE_TEST_SRC_PATH "/testStructures/";
 const std::string TEMPLATES_DIR_PATH = GENERATE_RESPONSE_TEMPLATE_PATH;
 
-const int WAIT_TIME = 1000;
+int const WAIT_TIME = 1000;
 
 // using GenerateRsponseAgentTest = ScMemoryTest;
 
 void loadScsFile(ScAgentContext & context, std::string const & filename)
 {
-    loader.loadScsFile(context, TEST_FILES_DIR_PATH + filename);
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + filename);
 }
 
 void initialize(ScAgentContext & context)
 {
-    context.SubscribeAgent<generateResponseModule::GenerateResponseAgent>();
+  context.SubscribeAgent<generateResponseModule::GenerateResponseAgent>();
 
-    for (auto const & file : std::filesystem::directory_iterator(TEMPLATES_DIR_PATH))
-    {
-        loader.loadScsFile(context, file.path());
-    }
-    loadScsFile(context, "baseConcepts.scs");
+  for (auto const & file : std::filesystem::directory_iterator(TEMPLATES_DIR_PATH))
+  {
+    loader.loadScsFile(context, file.path());
+  }
+  loadScsFile(context, "baseConcepts.scs");
 }
 
 void shutdown(ScAgentContext & context)
 {
-    context.UnsubscribeAgent<generateResponseModule::GenerateResponseAgent>();
+  context.UnsubscribeAgent<generateResponseModule::GenerateResponseAgent>();
 }
 
 TEST_F(AgentTest, OneParameterAgentTest)
 {
-    ScAgentContext & context = *m_ctx;
+  ScAgentContext & context = *m_ctx;
 
-    loadScsFile(context, "oneParameterTest.scs");
+  loadScsFile(context, "oneParameterTest.scs");
 
-    initialize(context);
+  initialize(context);
 
+  context.SubscribeAgent<generateResponseModuleTest::OneParameterTestAgent>();
 
-    context.SubscribeAgent<generateResponseModuleTest::OneParameterTestAgent>();
+  ScAddr const testActionNode = context.SearchElementBySystemIdentifier("one_param_action_node");
+  ScAddr const message = context.SearchElementBySystemIdentifier("message");
+  ScAddr const answer = context.SearchElementBySystemIdentifier("_answer");
+  EXPECT_TRUE(testActionNode.IsValid());
+  EXPECT_TRUE(message.IsValid());
+  EXPECT_TRUE(answer.IsValid());
 
-    ScAddr const testActionNode = context.SearchElementBySystemIdentifier("one_param_action_node");
-    ScAddr const message = context.SearchElementBySystemIdentifier("message");
-    ScAddr const answer = context.SearchElementBySystemIdentifier("_answer");
-    EXPECT_TRUE(testActionNode.IsValid());
-    EXPECT_TRUE(message.IsValid());
-    EXPECT_TRUE(answer.IsValid());
-    
-    ScAction testAction = context.ConvertToAction(testActionNode);
+  ScAction testAction = context.ConvertToAction(testActionNode);
 
-    EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
-    SC_LOG_DEBUG("there");
-    EXPECT_TRUE(testAction.IsFinishedSuccessfully());
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
+  SC_LOG_DEBUG("there");
+  EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
-    SC_LOG_DEBUG("here");
+  SC_LOG_DEBUG("here");
 
-    ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, GenerateResponseKeynodes::nrel_reply_structure);
+  ScAddr messageAnswer =
+      utils::IteratorUtils::getAnyByOutRelation(&context, message, GenerateResponseKeynodes::nrel_reply_structure);
 
-    EXPECT_TRUE(messageAnswer.IsValid());
+  EXPECT_TRUE(messageAnswer.IsValid());
 
-    ScAddr testEntity = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
+  ScAddr testEntity = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
-    EXPECT_TRUE(testEntity.IsValid());
+  EXPECT_TRUE(testEntity.IsValid());
 
-    EXPECT_EQ(context.GetElementSystemIdentifier(testEntity), "test_entity");
+  EXPECT_EQ(context.GetElementSystemIdentifier(testEntity), "test_entity");
 
-    EXPECT_TRUE(context.CheckConnector(answer, messageAnswer, ScType::ConstPermPosArc));
-    
-    context.UnsubscribeAgent<generateResponseModuleTest::OneParameterTestAgent>();
-    shutdown(context);
+  EXPECT_TRUE(context.CheckConnector(answer, messageAnswer, ScType::ConstPermPosArc));
+
+  context.UnsubscribeAgent<generateResponseModuleTest::OneParameterTestAgent>();
+  shutdown(context);
 }
 
 TEST_F(AgentTest, ZeroParameterTestAgent)
 {
-    ScAgentContext & context = *m_ctx;
-    loadScsFile(context, "zeroParameterTest.scs");
+  ScAgentContext & context = *m_ctx;
+  loadScsFile(context, "zeroParameterTest.scs");
 
-    initialize(context);
+  initialize(context);
 
-    context.SubscribeAgent<generateResponseModuleTest::ZeroParameterTestAgent>();
+  context.SubscribeAgent<generateResponseModuleTest::ZeroParameterTestAgent>();
 
-    ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("zero_param_action_node");
-    ScAddr const & message = context.SearchElementBySystemIdentifier("message");
-    ScAddr const & answer = context.SearchElementBySystemIdentifier("_answer");
-    EXPECT_TRUE(testActionNode.IsValid());
-    EXPECT_TRUE(message.IsValid());
-    EXPECT_TRUE(answer.IsValid());
-    
-    ScAction testAction = context.ConvertToAction(testActionNode);
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("zero_param_action_node");
+  ScAddr const & message = context.SearchElementBySystemIdentifier("message");
+  ScAddr const & answer = context.SearchElementBySystemIdentifier("_answer");
+  EXPECT_TRUE(testActionNode.IsValid());
+  EXPECT_TRUE(message.IsValid());
+  EXPECT_TRUE(answer.IsValid());
 
-    EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
-    EXPECT_TRUE(testAction.IsFinishedSuccessfully());
+  ScAction testAction = context.ConvertToAction(testActionNode);
 
-    ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(&context, message, generateResponseModule::GenerateResponseKeynodes::nrel_reply_structure);
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
+  EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
-    EXPECT_TRUE(messageAnswer.IsValid());
+  ScAddr messageAnswer = utils::IteratorUtils::getAnyByOutRelation(
+      &context, message, generateResponseModule::GenerateResponseKeynodes::nrel_reply_structure);
 
-    ScAddr testSuccess = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
+  EXPECT_TRUE(messageAnswer.IsValid());
 
-    ScAddr correctTestSuccess = context.SearchElementBySystemIdentifier("test_success");
-    EXPECT_TRUE(correctTestSuccess.IsValid());
-    EXPECT_TRUE(testSuccess == correctTestSuccess);
+  ScAddr testSuccess = utils::IteratorUtils::getAnyFromSet(&context, messageAnswer);
 
-    EXPECT_TRUE(context.CheckConnector(answer, messageAnswer, ScType::ConstPermPosArc));
+  ScAddr correctTestSuccess = context.SearchElementBySystemIdentifier("test_success");
+  EXPECT_TRUE(correctTestSuccess.IsValid());
+  EXPECT_TRUE(testSuccess == correctTestSuccess);
 
-    context.UnsubscribeAgent<generateResponseModuleTest::ZeroParameterTestAgent>();
-    shutdown(context);
+  EXPECT_TRUE(context.CheckConnector(answer, messageAnswer, ScType::ConstPermPosArc));
+
+  context.UnsubscribeAgent<generateResponseModuleTest::ZeroParameterTestAgent>();
+  shutdown(context);
 }
-}
+}  // namespace ModuleTest

@@ -17,7 +17,6 @@
 
 using namespace searchAnswerModule;
 
-
 ScResult SearchPropertiesAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
   auto [conceptAddr, langAddr] = action.GetArguments<2>();
@@ -28,14 +27,14 @@ ScResult SearchPropertiesAgent::DoProgram(ScActionInitiatedEvent const & event, 
 
   ScTemplate answerTemplate;
   answerTemplate.Quintuple(
-        conceptAddr,
-        ScType::VarCommonArc >> SearchAnswerConstants::COMMON_EDGE,
-        ScType::VarNode >> SearchAnswerConstants::SET_NODE,
-        ScType::VarPermPosArc >> SearchAnswerConstants::RREL_EDGE,
-        SearchAnswerKeynodes::nrel_properties);
+      conceptAddr,
+      ScType::VarCommonArc >> SearchAnswerConstants::COMMON_EDGE,
+      ScType::VarNode >> SearchAnswerConstants::SET_NODE,
+      ScType::VarPermPosArc >> SearchAnswerConstants::RREL_EDGE,
+      SearchAnswerKeynodes::nrel_properties);
 
   ScAddrVector propertiesVector = findProperties(conceptAddr, langAddr);
-  
+
   size_t i = 0;
   while (i < propertiesVector.size())
   {
@@ -57,15 +56,13 @@ ScResult SearchPropertiesAgent::DoProgram(ScActionInitiatedEvent const & event, 
 
 ScAddrVector SearchPropertiesAgent::findProperties(ScAddr const & conceptAddr, ScAddr const & langAddr)
 {
-  static const ScAddrToValueUnorderedMap<std::string> none =
-{
-    {ScKeynodes::lang_ru, "нет"},
-    {SearchAnswerKeynodes::lang_en, "none"}
-};
+  static ScAddrToValueUnorderedMap<std::string> const none = {
+      {ScKeynodes::lang_ru, "нет"}, {SearchAnswerKeynodes::lang_en, "none"}};
   ScAddrVector propertiesVector;
   std::string propertyName;
-  
-  auto const & propertiesIterator = m_context.CreateIterator3(ScType::ConstNodeClass, ScType::ConstPermPosArc, conceptAddr);
+
+  auto const & propertiesIterator =
+      m_context.CreateIterator3(ScType::ConstNodeClass, ScType::ConstPermPosArc, conceptAddr);
   while (propertiesIterator->Next())
   {
     ScAddr const & propertyNode = propertiesIterator->Get(0);
@@ -96,9 +93,9 @@ ScAddrVector SearchPropertiesAgent::findProperties(ScAddr const & conceptAddr, S
 // {
 //   std::vector<std::string> propertiesVector;
 //   std::string propertyName;
-  
-//   auto const & propertiesIterator = m_context.CreateIterator3(ScType::ConstNodeClass, ScType::ConstPermPosArc, conceptAddr);
-//   while (propertiesIterator->Next())
+
+//   auto const & propertiesIterator = m_context.CreateIterator3(ScType::ConstNodeClass, ScType::ConstPermPosArc,
+//   conceptAddr); while (propertiesIterator->Next())
 //   {
 //     ScAddr const & propertyNode = variablesIterator->Get(2);
 //     if (m_context.CheckConnector(SearchAnswerKeynodes::concept_property, propertyNode, ScType::ConstPermPosArc))
@@ -114,12 +111,10 @@ ScAddrVector SearchPropertiesAgent::findProperties(ScAddr const & conceptAddr, S
 //   return propertiesVector;
 // }
 
-
 bool SearchPropertiesAgent::checkAction(ScAddr const & actionAddr)
 {
   return m_context.CheckConnector(SearchAnswerKeynodes::action_search_properties, actionAddr, ScType::ConstPermPosArc);
 }
-
 
 ScAddr SearchPropertiesAgent::GetActionClass() const
 {

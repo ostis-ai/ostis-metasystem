@@ -30,16 +30,15 @@ std::stringstream FromConceptTranslator::translate(ScAddr const & structAddr, Sc
       {
         ScAddr const & connector = searchResult[TranslationConstants::EDGE_ALIAS];
         auto const & [classNode, node] = context->GetConnectorIncidentElements(connector);
-        if (!(context->GetElementType(classNode).BitAnd(ScType::NodeClass) == ScType::NodeClass) || !context->GetElementType(node).IsNode())
+        if (!(context->GetElementType(classNode).BitAnd(ScType::NodeClass) == ScType::NodeClass)
+            || !context->GetElementType(node).IsNode())
           return ScTemplateSearchRequest::CONTINUE;
         if (isIgnored(classNode))
           return ScTemplateSearchRequest::CONTINUE;
-        std::string const & classMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, classNode, {lang});
+        std::string const & classMainIdtf = utils::CommonUtils::getMainIdtf(context, classNode, {lang});
         if (classMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
-        std::string const & nodeMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, node, {lang});
+        std::string const & nodeMainIdtf = utils::CommonUtils::getMainIdtf(context, node, {lang});
         if (nodeMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
         translations << nodeMainIdtf << " это " << classMainIdtf << ". ";

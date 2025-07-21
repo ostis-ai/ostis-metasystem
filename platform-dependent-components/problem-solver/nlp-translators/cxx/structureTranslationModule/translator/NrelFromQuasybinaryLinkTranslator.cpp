@@ -39,12 +39,10 @@ std::stringstream NrelFromQuasybinaryLinkTranslator::translate(ScAddr const & st
         node = searchResult[TranslationConstants::NODE_ALIAS];
         tupleNode = searchResult[TranslationConstants::TUPLE_ALIAS];
         nrelNode = searchResult[TranslationConstants::NREL_ALIAS];
-        std::string const & nodeMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, node, {lang});
+        std::string const & nodeMainIdtf = utils::CommonUtils::getMainIdtf(context, node, {lang});
         if (nodeMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
-        std::string const & nrelMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
+        std::string const & nrelMainIdtf = utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
         if (nrelMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
 
@@ -61,9 +59,9 @@ std::stringstream NrelFromQuasybinaryLinkTranslator::translate(ScAddr const & st
           if (linkContent.empty())
             continue;
 
-          if(count == 0)
+          if (count == 0)
             translation << linkContent;
-          else 
+          else
           {
             if (count == TranslationConstants::MAX_LISTING_COUNT)
               translation << "|";

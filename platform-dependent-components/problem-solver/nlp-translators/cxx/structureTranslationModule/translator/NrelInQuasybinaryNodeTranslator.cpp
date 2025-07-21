@@ -45,12 +45,10 @@ std::stringstream NrelInQuasybinaryNodeTranslator::translate(ScAddr const & stru
         if (context->CheckConnector(
                 TranslationKeynodes::translation_ignored_keynodes, nrelNode, ScType::ConstPermPosArc))
           return ScTemplateSearchRequest::CONTINUE;
-        std::string const & nodeMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, node, {lang});
+        std::string const & nodeMainIdtf = utils::CommonUtils::getMainIdtf(context, node, {lang});
         if (nodeMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
-        std::string const & nrelMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
+        std::string const & nrelMainIdtf = utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
         if (nrelMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
 
@@ -61,13 +59,12 @@ std::stringstream NrelInQuasybinaryNodeTranslator::translate(ScAddr const & stru
         while (tupleNodeIterator->Next())
         {
           ScAddr const & tupleElement = tupleNodeIterator->Get(2);
-          std::string const & tupleElementMainIdtf =
-              utils::CommonUtils::getMainIdtf(context, tupleElement, {lang});
+          std::string const & tupleElementMainIdtf = utils::CommonUtils::getMainIdtf(context, tupleElement, {lang});
           if (tupleElementMainIdtf.empty())
             continue;
-          if(count == 0)
+          if (count == 0)
             translation << tupleElementMainIdtf;
-          else 
+          else
           {
             if (count == TranslationConstants::MAX_LISTING_COUNT)
               translation << "|";

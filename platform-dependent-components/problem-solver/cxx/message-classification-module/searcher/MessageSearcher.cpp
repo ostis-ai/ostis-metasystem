@@ -25,11 +25,7 @@ ScAddr MessageSearcher::getFirstMessage(ScAddr const & nonAtomicMessageNode)
       ScType::VarPermPosArc,
       MessageKeynodes::nrel_message_decomposition);
   templ.Quintuple(
-      VAR_TUPLE,
-      ScType::VarPermPosArc,
-      ScType::VarNode >> VAR_MESSAGE,
-      ScType::VarPermPosArc,
-      ScKeynodes::rrel_1);
+      VAR_TUPLE, ScType::VarPermPosArc, ScType::VarNode >> VAR_MESSAGE, ScType::VarPermPosArc, ScKeynodes::rrel_1);
 
   ScAddr resultMessageNode;
 
@@ -149,8 +145,8 @@ ScAddr MessageSearcher::getMessageTheme(ScAddr const & messageNode)
 ScAddrVector MessageSearcher::getMessageLinks(ScAddr const & message, ScAddrVector const & linkClasses)
 {
   ScAddrVector messageLinks;
-  ScAddr const translationNode = utils::IteratorUtils::getAnyByInRelation(
-      context, message, MessageKeynodes::nrel_sc_text_translation);
+  ScAddr const translationNode =
+      utils::IteratorUtils::getAnyByInRelation(context, message, MessageKeynodes::nrel_sc_text_translation);
   if (!translationNode.IsValid())
   {
     SC_LOG_WARNING("MessageSearcher: text translation node not found");

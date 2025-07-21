@@ -14,12 +14,6 @@ using namespace languageRecognitionModule;
 
 SC_MODULE_REGISTER(LanguageRecognitionModule)->Agent<LanguageRecognitionAgent>();
 
-void LanguageRecognitionModule::Initialize(ScMemoryContext *m_context) 
-{
-    
-}
+void LanguageRecognitionModule::Initialize(ScMemoryContext * m_context) {}
 
-void LanguageRecognitionModule::Shutdown(ScMemoryContext * m_context)
-{
-
-}
+void LanguageRecognitionModule::Shutdown(ScMemoryContext * m_context) {}

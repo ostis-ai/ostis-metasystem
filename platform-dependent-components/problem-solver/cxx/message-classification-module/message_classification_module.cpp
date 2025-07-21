@@ -14,14 +14,6 @@ using namespace messageClassificationModule;
 
 SC_MODULE_REGISTER(MessageClassificationModule)->Agent<MessageTopicClassificationAgent>();
 
-void MessageClassificationModule::Initialize(ScMemoryContext *m_context) 
-{
-    
-}
+void MessageClassificationModule::Initialize(ScMemoryContext * m_context) {}
 
-void MessageClassificationModule::Shutdown(ScMemoryContext * m_context)
-{
-
-}
-
-
+void MessageClassificationModule::Shutdown(ScMemoryContext * m_context) {}

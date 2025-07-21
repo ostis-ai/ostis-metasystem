@@ -14,13 +14,6 @@ using namespace generateResponseModule;
 
 SC_MODULE_REGISTER(GenerateResponseModule)->Agent<GenerateResponseAgent>();
 
-void GenerateResponseModule::Initialize(ScMemoryContext *m_context) 
-{
-    
-}
+void GenerateResponseModule::Initialize(ScMemoryContext * m_context) {}
 
-void GenerateResponseModule::Shutdown(ScMemoryContext * m_context)
-{
-
-}
-
+void GenerateResponseModule::Shutdown(ScMemoryContext * m_context) {}

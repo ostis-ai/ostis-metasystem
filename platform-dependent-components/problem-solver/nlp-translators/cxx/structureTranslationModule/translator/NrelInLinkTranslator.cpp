@@ -25,8 +25,7 @@ std::stringstream NrelInLinkTranslator::translate(ScAddr const & structAddr, ScA
   ScAddr nrelNode;
 
   ScTemplate scTemplate;
-  scTemplate.Triple(
-      structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
+  scTemplate.Triple(structAddr, ScType::VarPermPosArc, ScType::VarCommonArc >> TranslationConstants::EDGE_ALIAS);
   scTemplate.Quintuple(
       ScType::VarNode >> TranslationConstants::NODE_ALIAS,
       TranslationConstants::EDGE_ALIAS,
@@ -45,12 +44,10 @@ std::stringstream NrelInLinkTranslator::translate(ScAddr const & structAddr, ScA
           return ScTemplateSearchRequest::CONTINUE;
         if (!context->CheckConnector(lang, linkNode, ScType::ConstPermPosArc))
           return ScTemplateSearchRequest::CONTINUE;
-        std::string const & nodeMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, node, {lang});
+        std::string const & nodeMainIdtf = utils::CommonUtils::getMainIdtf(context, node, {lang});
         if (nodeMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
-        std::string const & nrelMainIdtf =
-            utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
+        std::string const & nrelMainIdtf = utils::CommonUtils::getMainIdtf(context, nrelNode, {lang});
         if (nrelMainIdtf.empty())
           return ScTemplateSearchRequest::CONTINUE;
         std::string linkContent;

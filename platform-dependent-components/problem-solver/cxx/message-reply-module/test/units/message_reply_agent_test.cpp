@@ -16,7 +16,7 @@
 #include "agent/message-reply-agent.hpp"
 
 #include "test/agent/GenerateReplyMessageAgent.hpp"
- 
+
 using namespace messageReplyModule;
 using AgentTest = ScMemoryTest;
 
@@ -24,7 +24,7 @@ namespace ModuleTest
 {
 ScsLoader loader;
 std::string const TEST_FILES_DIR_PATH = MODULE_TEST_SRC_PATH "/testStructures/";
-const int WAIT_TIME = 5000;
+int const WAIT_TIME = 5000;
 
 // using MessageReplyAgentTest = ScMemoryTest;
 
@@ -41,10 +41,7 @@ bool generatedMessageIsValid(ScMemoryContext * context, ScAddr const & textLinkA
       "_user_message",
       ScType::VarPermPosArc,
       messageReplyModule::MessageReplyKeynodes::nrel_sc_text_translation);
-  scTemplate.Triple(
-      "_translation_node",
-      ScType::VarPermPosArc,
-      textLinkAddr);
+  scTemplate.Triple("_translation_node", ScType::VarPermPosArc, textLinkAddr);
   ScTemplateSearchResult searchResult;
   context->SearchByTemplate(scTemplate, searchResult);
   return searchResult.Size() == 1;
@@ -61,19 +58,15 @@ TEST_F(AgentTest, messageProcessingWithTextLinkSuccessful)
 
   context.SubscribeAgent<messageReplyModule::MessageReplyAgent>();
   context.SubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();
-  
+
   EXPECT_TRUE(test_action.InitiateAndWait(WAIT_TIME));
   SC_LOG_DEBUG("5.5");
   EXPECT_TRUE(test_action.IsFinishedSuccessfully());
 
-
   SC_LOG_DEBUG("6");
 
-  EXPECT_TRUE(generatedMessageIsValid(&context, utils::IteratorUtils::getAnyByOutRelation(
-          &context,
-          test_action,
-          ScKeynodes::rrel_1)));
-
+  EXPECT_TRUE(generatedMessageIsValid(
+      &context, utils::IteratorUtils::getAnyByOutRelation(&context, test_action, ScKeynodes::rrel_1)));
 
   SC_LOG_DEBUG("6");
 
@@ -81,12 +74,11 @@ TEST_F(AgentTest, messageProcessingWithTextLinkSuccessful)
   context.UnsubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();
 }
 
-
 TEST_F(AgentTest, argumentIsNotALink)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context,TEST_FILES_DIR_PATH + "replyMessageAgentTestStructureFirstArgumentIsNotALink.scs");
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "replyMessageAgentTestStructureFirstArgumentIsNotALink.scs");
   context.SubscribeAgent<messageReplyModule::MessageReplyAgent>();
   context.SubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();
 
@@ -105,8 +97,8 @@ TEST_F(AgentTest, linkSpecifiedIncorrectly)
 {
   ScAgentContext & context = *m_ctx;
 
-  loader.loadScsFile(context,TEST_FILES_DIR_PATH + "replyMessageAgentTestStructureWithIncorrectlySpecifiedLink.scs");
-  
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "replyMessageAgentTestStructureWithIncorrectlySpecifiedLink.scs");
+
   context.SubscribeAgent<messageReplyModule::MessageReplyAgent>();
   context.SubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();
 
@@ -121,4 +113,4 @@ TEST_F(AgentTest, linkSpecifiedIncorrectly)
   context.UnsubscribeAgent<messageReplyModuleTest::GenerateReplyMessageAgent>();
 }
 
-}//namespace messageReplyModuleTest
+}  // namespace ModuleTest

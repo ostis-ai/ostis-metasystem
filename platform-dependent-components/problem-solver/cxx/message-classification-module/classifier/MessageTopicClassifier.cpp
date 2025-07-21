@@ -63,18 +63,14 @@ ScAddrVector MessageTopicClassifier::getMessageIntentClass(ScAddr const & messag
   if (messageIntent.empty())
   {
     ScAddr const & messageIntentCLassEdge = context->GenerateConnector(
-        ScType::ConstPermPosArc,
-        MessageClassificationKeynodes::concept_not_classified_by_intent_message,
-        messageAddr);
+        ScType::ConstPermPosArc, MessageClassificationKeynodes::concept_not_classified_by_intent_message, messageAddr);
     messageIntentCLassElements.push_back(MessageClassificationKeynodes::concept_not_classified_by_intent_message);
     messageIntentCLassElements.push_back(messageIntentCLassEdge);
     return messageIntentCLassElements;
   }
 
   ScIterator3Ptr const possibleIntentIterator = context->CreateIterator3(
-      MessageClassificationKeynodes::concept_intent_possible_class,
-      ScType::ConstPermPosArc,
-      ScType::ConstNodeClass);
+      MessageClassificationKeynodes::concept_intent_possible_class, ScType::ConstPermPosArc, ScType::ConstNodeClass);
 
   std::vector<std::string> witAiIdtfs;
   ScAddr possibleMessageCLass;
@@ -88,7 +84,8 @@ ScAddrVector MessageTopicClassifier::getMessageIntentClass(ScAddr const & messag
       if (messageIntent == witAiIdtf)
       {
         SC_LOG_DEBUG(
-            "MessageTopicClassifier: found " + context->GetElementSystemIdentifier(possibleMessageCLass) + " intent class");
+            "MessageTopicClassifier: found " + context->GetElementSystemIdentifier(possibleMessageCLass)
+            + " intent class");
         ScAddr messageIntentCLassEdge =
             context->GenerateConnector(ScType::ConstPermPosArc, possibleMessageCLass, messageAddr);
         messageIntentCLassElements.push_back(possibleMessageCLass);
@@ -141,18 +138,14 @@ ScAddrVector MessageTopicClassifier::getMessageTraitClass(ScAddr const & message
   if (messageTrait.empty())
   {
     ScAddr const & messageIntentCLassEdge = context->GenerateConnector(
-        ScType::ConstPermPosArc,
-        MessageClassificationKeynodes::concept_not_classified_by_trait_message,
-        messageAddr);
+        ScType::ConstPermPosArc, MessageClassificationKeynodes::concept_not_classified_by_trait_message, messageAddr);
     messageTraitClassElements.push_back(MessageClassificationKeynodes::concept_not_classified_by_trait_message);
     messageTraitClassElements.push_back(messageIntentCLassEdge);
     return messageTraitClassElements;
   }
- 
+
   ScIterator3Ptr possibleTraitIterator = context->CreateIterator3(
-      MessageClassificationKeynodes::concept_trait_possible_class,
-      ScType::ConstPermPosArc,
-      ScType::ConstNodeClass);
+      MessageClassificationKeynodes::concept_trait_possible_class, ScType::ConstPermPosArc, ScType::ConstNodeClass);
 
   messageTraitClassElements =
       processTraits(possibleTraitIterator, messageTrait, messageTraitClassElements, messageAddr);
@@ -233,7 +226,8 @@ ScAddrVector MessageTopicClassifier::processTraits(
       if (traitClassIdtf == traitWitIdtf)
       {
         SC_LOG_DEBUG(
-            "MessageTopicClassifier: found " + context->GetElementSystemIdentifier(possibleMessageCLass) + " trait class");
+            "MessageTopicClassifier: found " + context->GetElementSystemIdentifier(possibleMessageCLass)
+            + " trait class");
         ScAddr messageTraitClassEdge =
             context->GenerateConnector(ScType::ConstPermPosArc, possibleMessageCLass, messageAddr);
         messageTraitClassElements.push_back(possibleMessageCLass);
@@ -254,9 +248,7 @@ ScAddrVector MessageTopicClassifier::getMessageEntity(ScAddr const & messageAddr
   if (!messageEntity.empty())
   {
     ScIterator3Ptr possibleEntityIterator = context->CreateIterator3(
-        MessageClassificationKeynodes::concept_entity_possible_class,
-        ScType::ConstPermPosArc,
-        ScType::ConstNodeClass);
+        MessageClassificationKeynodes::concept_entity_possible_class, ScType::ConstPermPosArc, ScType::ConstNodeClass);
 
     messageEntitiesElements = processEntities(possibleEntityIterator, messageEntity, messageAddr);
   }

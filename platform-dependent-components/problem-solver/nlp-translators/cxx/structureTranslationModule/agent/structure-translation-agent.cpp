@@ -19,18 +19,18 @@
 namespace structureTranslationModule
 {
 
-
 ScResult StructureTranslationAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
   auto [structuresSet, answerAddr, lang] = action.GetArguments<3>();
 
   SC_LOG_INFO("StructureTranslationAgent started");
-  
+
   try
   {
     std::stringstream translation;
 
-    ScIterator3Ptr const & structIterator = m_context.CreateIterator3(structuresSet, ScType::ConstPermPosArc, ScType::ConstNode);
+    ScIterator3Ptr const & structIterator =
+        m_context.CreateIterator3(structuresSet, ScType::ConstPermPosArc, ScType::ConstNode);
     while (structIterator->Next())
     {
       ScAddr const & structAddr = structIterator->Get(2);
@@ -63,7 +63,10 @@ ScAddr StructureTranslationAgent::GetActionClass() const
   return TranslationKeynodes::action_translate_structures_into_natural_language;
 }
 
-std::string StructureTranslationAgent::translateStructure(ScAddr const & structAddr, ScAddr const & lang, ScMemoryContext * context)
+std::string StructureTranslationAgent::translateStructure(
+    ScAddr const & structAddr,
+    ScAddr const & lang,
+    ScMemoryContext * context)
 {
   auto TranslatorSet = std::make_unique<StructureTranslatorSet>(context);
   auto translation = TranslatorSet->translate(structAddr, lang);

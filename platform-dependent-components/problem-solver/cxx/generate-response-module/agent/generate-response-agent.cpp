@@ -14,11 +14,9 @@
 #include "generate-response-agent.hpp"
 
 using namespace generateResponseModule;
- 
- 
+
 ScResult GenerateResponseAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-
   SC_LOG_DEBUG(GenerateResponseConstants::generateAnswerAgentClassName + " started");
 
   auto [messageAddr, answerAddr] = action.GetArguments<2>();
@@ -51,7 +49,8 @@ void GenerateResponseAgent::validateAddrWithInvalidParamException(ScAddr const &
 
 bool GenerateResponseAgent::checkAction(ScAddr const & actionAddr)
 {
-  return m_context.CheckConnector(GenerateResponseKeynodes::action_generate_response, actionAddr, ScType::ConstPermPosArc);
+  return m_context.CheckConnector(
+      GenerateResponseKeynodes::action_generate_response, actionAddr, ScType::ConstPermPosArc);
 }
 
 void GenerateResponseAgent::attachAnswer(
@@ -61,7 +60,7 @@ void GenerateResponseAgent::attachAnswer(
 {
   utils::GenerationUtils::generateRelationBetween(
       &m_context, messageAddr, messageAnswer, GenerateResponseKeynodes::nrel_reply_structure);
-      m_context.GenerateConnector(ScType::ConstPermPosArc, answerAddr, messageAnswer);
+  m_context.GenerateConnector(ScType::ConstPermPosArc, answerAddr, messageAnswer);
 }
 
 ScAction GenerateResponseAgent::createActionNode(ScAddr const & message)
@@ -83,11 +82,11 @@ ScAddr GenerateResponseAgent::FindResponseActionClass(ScAddr const & message)
 
   ScTemplate responseActionTemplate;
   responseActionTemplate.Triple(
-    GenerateResponseKeynodes::concept_intent_possible_class,
+      GenerateResponseKeynodes::concept_intent_possible_class,
       ScType::VarPermPosArc,
       ScType::VarNodeClass >> GenerateResponseConstants::messageClassVarName);
   responseActionTemplate.Quintuple(
-    GenerateResponseConstants::messageClassVarName,
+      GenerateResponseConstants::messageClassVarName,
       ScType::VarCommonArc,
       ScType::VarNode >> GenerateResponseConstants::actionClassVarName,
       ScType::VarPermPosArc,
@@ -105,7 +104,7 @@ ScAddr GenerateResponseAgent::FindResponseActionClass(ScAddr const & message)
   if (!m_context.IsElement(actionClass))
     SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "response action class not found");
 
-    SC_LOG_INFO("\n\n\n\nFound action " << m_context.GetElementSystemIdentifier(actionClass));
+  SC_LOG_INFO("\n\n\n\nFound action " << m_context.GetElementSystemIdentifier(actionClass));
   return actionClass;
 }
 
@@ -123,9 +122,11 @@ void GenerateResponseAgent::processParamsFromMessage(
 
   ScTemplate templ;
   m_context.BuildTemplate(
-      templ, m_context.SearchElementBySystemIdentifier(GenerateResponseConstants::roleRelationMappingTemplateName), params);
+      templ,
+      m_context.SearchElementBySystemIdentifier(GenerateResponseConstants::roleRelationMappingTemplateName),
+      params);
 
-      m_context.SearchByTemplate(
+  m_context.SearchByTemplate(
       templ,
       [this, &actionNode, &mappedRelations](ScTemplateResultItem const & resultItem)
       {
@@ -143,4 +144,3 @@ ScAddr GenerateResponseAgent::GetActionClass() const
 {
   return GenerateResponseKeynodes::action_generate_response;
 }
-

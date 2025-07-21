@@ -39,153 +39,149 @@ TEST_F(AgentTest, RelationWithPropertiesTest)
 
   ScAddr const & relationAddr = context.SearchElementBySystemIdentifier("relation");
 
-  ScAddr answerStruct = utils::IteratorUtils::getAnyByOutRelation(& context, testAction, ScKeynodes::nrel_result);
-  
+  ScAddr answerStruct = utils::IteratorUtils::getAnyByOutRelation(&context, testAction, ScKeynodes::nrel_result);
+
   ScTemplate propertiesTemplate;
-    propertiesTemplate.Triple(
-        answerStruct,
-        ScType::VarPermPosArc,
-        ScType::VarNode >> "set_node");
-    propertiesTemplate.Quintuple(
-        relationAddr,
-        ScType::VarCommonArc,
-        "set_node",
-        ScType::VarPermPosArc,
-        searchAnswerModule::SearchAnswerKeynodes::nrel_properties);
-    ScTemplateSearchResult result;
-    context.SearchByTemplate(propertiesTemplate, result);
+  propertiesTemplate.Triple(answerStruct, ScType::VarPermPosArc, ScType::VarNode >> "set_node");
+  propertiesTemplate.Quintuple(
+      relationAddr,
+      ScType::VarCommonArc,
+      "set_node",
+      ScType::VarPermPosArc,
+      searchAnswerModule::SearchAnswerKeynodes::nrel_properties);
+  ScTemplateSearchResult result;
+  context.SearchByTemplate(propertiesTemplate, result);
 
-    EXPECT_TRUE(!result.IsEmpty());
+  EXPECT_TRUE(!result.IsEmpty());
 
-    ScAddr setNode = result[0]["set_node"];
+  ScAddr setNode = result[0]["set_node"];
 
-    ScAddr propertyLink;
-    std::string property;
-    std::vector<std::string> propertiesVector;
+  ScAddr propertyLink;
+  std::string property;
+  std::vector<std::string> propertiesVector;
 
-    ScIterator3Ptr const & propertiesIterator = context.CreateIterator3(setNode, ScType::ConstPermPosArc, ScType::NodeLink);
-    while (propertiesIterator->Next())
-    {
-        propertyLink = propertiesIterator->Get(2);
-        context.GetLinkContent(propertyLink, property);
-        propertiesVector.push_back(property);
-    }
+  ScIterator3Ptr const & propertiesIterator =
+      context.CreateIterator3(setNode, ScType::ConstPermPosArc, ScType::NodeLink);
+  while (propertiesIterator->Next())
+  {
+    propertyLink = propertiesIterator->Get(2);
+    context.GetLinkContent(propertyLink, property);
+    propertiesVector.push_back(property);
+  }
 
-    EXPECT_EQ(propertiesVector.size(), 5u);
+  EXPECT_EQ(propertiesVector.size(), 5u);
 
-    EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "бинарное") != propertiesVector.end());
-    EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "ориентированное") != propertiesVector.end());
-    EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "антирефлексивное") != propertiesVector.end());
-    EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "асимметричное") != propertiesVector.end());
-    EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "антитранзитивное") != propertiesVector.end());
+  EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "бинарное") != propertiesVector.end());
+  EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "ориентированное") != propertiesVector.end());
+  EXPECT_TRUE(
+      std::find(propertiesVector.begin(), propertiesVector.end(), "антирефлексивное") != propertiesVector.end());
+  EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "асимметричное") != propertiesVector.end());
+  EXPECT_TRUE(
+      std::find(propertiesVector.begin(), propertiesVector.end(), "антитранзитивное") != propertiesVector.end());
 
   context.UnsubscribeAgent<searchAnswerModule::SearchPropertiesAgent>();
 }
 
 TEST_F(AgentTest, NoPropertiesEnTest)
 {
-    ScAgentContext & context = *m_ctx;
-    loader.loadScsFile(context, TEST_FILES_DIR_PATH + "no_properties_en.scs");
-    ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
-    ScAction testAction = context.ConvertToAction(testActionNode);
-  
-    context.SubscribeAgent<searchAnswerModule::SearchPropertiesAgent>();
-  
-    EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
-    EXPECT_TRUE(testAction.IsFinishedSuccessfully());
-  
-    ScAddr const & relationAddr = context.SearchElementBySystemIdentifier("relation");
-  
-    ScAddr answerStruct = utils::IteratorUtils::getAnyByOutRelation(& context, testAction, ScKeynodes::nrel_result);
-    
-    ScTemplate propertiesTemplate;
-      propertiesTemplate.Triple(
-          answerStruct,
-          ScType::VarPermPosArc,
-          ScType::VarNode >> "set_node");
-      propertiesTemplate.Quintuple(
-          relationAddr,
-          ScType::VarCommonArc,
-          "set_node",
-          ScType::VarPermPosArc,
-          searchAnswerModule::SearchAnswerKeynodes::nrel_properties);
-      ScTemplateSearchResult result;
-      context.SearchByTemplate(propertiesTemplate, result);
-    
-      EXPECT_TRUE(!result.IsEmpty());
-  
-      ScAddr setNode = result[0]["set_node"];
-  
-      ScAddr propertyLink;
-      std::string property;
-      std::vector<std::string> propertiesVector;
-  
-      ScIterator3Ptr const & propertiesIterator = context.CreateIterator3(setNode, ScType::ConstPermPosArc, ScType::NodeLink);
-      while (propertiesIterator->Next())
-      {
-        propertyLink = propertiesIterator->Get(2);
-        context.GetLinkContent(propertyLink, property);
-        propertiesVector.push_back(property);
-      }
+  ScAgentContext & context = *m_ctx;
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "no_properties_en.scs");
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
+  ScAction testAction = context.ConvertToAction(testActionNode);
 
-    EXPECT_EQ(propertiesVector.size(), 1u);
-  
-      EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "none") != propertiesVector.end());
-  
-    context.UnsubscribeAgent<searchAnswerModule::SearchPropertiesAgent>();
+  context.SubscribeAgent<searchAnswerModule::SearchPropertiesAgent>();
+
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
+  EXPECT_TRUE(testAction.IsFinishedSuccessfully());
+
+  ScAddr const & relationAddr = context.SearchElementBySystemIdentifier("relation");
+
+  ScAddr answerStruct = utils::IteratorUtils::getAnyByOutRelation(&context, testAction, ScKeynodes::nrel_result);
+
+  ScTemplate propertiesTemplate;
+  propertiesTemplate.Triple(answerStruct, ScType::VarPermPosArc, ScType::VarNode >> "set_node");
+  propertiesTemplate.Quintuple(
+      relationAddr,
+      ScType::VarCommonArc,
+      "set_node",
+      ScType::VarPermPosArc,
+      searchAnswerModule::SearchAnswerKeynodes::nrel_properties);
+  ScTemplateSearchResult result;
+  context.SearchByTemplate(propertiesTemplate, result);
+
+  EXPECT_TRUE(!result.IsEmpty());
+
+  ScAddr setNode = result[0]["set_node"];
+
+  ScAddr propertyLink;
+  std::string property;
+  std::vector<std::string> propertiesVector;
+
+  ScIterator3Ptr const & propertiesIterator =
+      context.CreateIterator3(setNode, ScType::ConstPermPosArc, ScType::NodeLink);
+  while (propertiesIterator->Next())
+  {
+    propertyLink = propertiesIterator->Get(2);
+    context.GetLinkContent(propertyLink, property);
+    propertiesVector.push_back(property);
+  }
+
+  EXPECT_EQ(propertiesVector.size(), 1u);
+
+  EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "none") != propertiesVector.end());
+
+  context.UnsubscribeAgent<searchAnswerModule::SearchPropertiesAgent>();
 }
 
 TEST_F(AgentTest, NoPropertiesRuTest)
 {
-    ScAgentContext & context = *m_ctx;
-    loader.loadScsFile(context, TEST_FILES_DIR_PATH + "no_properties_ru.scs");
-    ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
-    ScAction testAction = context.ConvertToAction(testActionNode);
-  
-    context.SubscribeAgent<searchAnswerModule::SearchPropertiesAgent>();
-  
-    EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
-    EXPECT_TRUE(testAction.IsFinishedSuccessfully());
-  
-    ScAddr const & relationAddr = context.SearchElementBySystemIdentifier("relation");
-  
-    ScAddr answerStruct = utils::IteratorUtils::getAnyByOutRelation(& context, testAction, ScKeynodes::nrel_result);
-    
-    ScTemplate propertiesTemplate;
-      propertiesTemplate.Triple(
-          answerStruct,
-          ScType::VarPermPosArc,
-          ScType::VarNode >> "set_node");
-      propertiesTemplate.Quintuple(
-          relationAddr,
-          ScType::VarCommonArc,
-          "set_node",
-          ScType::VarPermPosArc,
-          searchAnswerModule::SearchAnswerKeynodes::nrel_properties);
-      ScTemplateSearchResult result;
-      context.SearchByTemplate(propertiesTemplate, result);
-    
-      EXPECT_TRUE(!result.IsEmpty());
-  
-      ScAddr setNode = result[0]["set_node"];
-  
-      ScAddr propertyLink;
-      std::string property;
-      std::vector<std::string> propertiesVector;
-  
-      ScIterator3Ptr const & propertiesIterator = context.CreateIterator3(setNode, ScType::ConstPermPosArc, ScType::NodeLink);
-      while (propertiesIterator->Next())
-      {
-        propertyLink = propertiesIterator->Get(2);
-        context.GetLinkContent(propertyLink, property);
-        propertiesVector.push_back(property);
-      }
+  ScAgentContext & context = *m_ctx;
+  loader.loadScsFile(context, TEST_FILES_DIR_PATH + "no_properties_ru.scs");
+  ScAddr const & testActionNode = context.SearchElementBySystemIdentifier("test_action_node");
+  ScAction testAction = context.ConvertToAction(testActionNode);
 
-      EXPECT_EQ(propertiesVector.size(), 1u);
-  
-      EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "нет") != propertiesVector.end());
-  
-    context.UnsubscribeAgent<searchAnswerModule::SearchPropertiesAgent>();
+  context.SubscribeAgent<searchAnswerModule::SearchPropertiesAgent>();
+
+  EXPECT_TRUE(testAction.InitiateAndWait(WAIT_TIME));
+  EXPECT_TRUE(testAction.IsFinishedSuccessfully());
+
+  ScAddr const & relationAddr = context.SearchElementBySystemIdentifier("relation");
+
+  ScAddr answerStruct = utils::IteratorUtils::getAnyByOutRelation(&context, testAction, ScKeynodes::nrel_result);
+
+  ScTemplate propertiesTemplate;
+  propertiesTemplate.Triple(answerStruct, ScType::VarPermPosArc, ScType::VarNode >> "set_node");
+  propertiesTemplate.Quintuple(
+      relationAddr,
+      ScType::VarCommonArc,
+      "set_node",
+      ScType::VarPermPosArc,
+      searchAnswerModule::SearchAnswerKeynodes::nrel_properties);
+  ScTemplateSearchResult result;
+  context.SearchByTemplate(propertiesTemplate, result);
+
+  EXPECT_TRUE(!result.IsEmpty());
+
+  ScAddr setNode = result[0]["set_node"];
+
+  ScAddr propertyLink;
+  std::string property;
+  std::vector<std::string> propertiesVector;
+
+  ScIterator3Ptr const & propertiesIterator =
+      context.CreateIterator3(setNode, ScType::ConstPermPosArc, ScType::NodeLink);
+  while (propertiesIterator->Next())
+  {
+    propertyLink = propertiesIterator->Get(2);
+    context.GetLinkContent(propertyLink, property);
+    propertiesVector.push_back(property);
+  }
+
+  EXPECT_EQ(propertiesVector.size(), 1u);
+
+  EXPECT_TRUE(std::find(propertiesVector.begin(), propertiesVector.end(), "нет") != propertiesVector.end());
+
+  context.UnsubscribeAgent<searchAnswerModule::SearchPropertiesAgent>();
 }
 
-}  // namespace SearchAnswerModuleTest
+}  // namespace ModuleTest

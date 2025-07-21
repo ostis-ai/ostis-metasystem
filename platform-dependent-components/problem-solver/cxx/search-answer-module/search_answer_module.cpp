@@ -14,12 +14,6 @@ using namespace searchAnswerModule;
 
 SC_MODULE_REGISTER(SearchAnswerModule)->Agent<SearchPropertiesAgent>();
 
-void SearchAnswerModule::Initialize(ScMemoryContext *m_context) 
-{
-    
-}
+void SearchAnswerModule::Initialize(ScMemoryContext * m_context) {}
 
-void SearchAnswerModule::Shutdown(ScMemoryContext * m_context)
-{
-
-}
+void SearchAnswerModule::Shutdown(ScMemoryContext * m_context) {}

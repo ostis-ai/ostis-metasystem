@@ -8,12 +8,11 @@
 
 #include <sc-memory/sc_agent.hpp>
 
-
 namespace searchAnswerModule
 {
 class SearchPropertiesAgent : public ScActionInitiatedAgent
 {
- public:
+public:
   ScAddr GetActionClass() const override;
 
   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
@@ -24,4 +23,4 @@ private:
   bool checkAction(ScAddr const & actionAddr);
 };
 
-}  // namespace SearchAnswerModule
+}  // namespace searchAnswerModule

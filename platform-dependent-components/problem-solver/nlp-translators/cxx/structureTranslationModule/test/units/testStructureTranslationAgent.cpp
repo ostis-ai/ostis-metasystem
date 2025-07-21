@@ -3,7 +3,7 @@
  * Distributed under the MIT License
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
- 
+
 #include <sc-builder/scs_loader.hpp>
 
 #include <sc-memory/test/sc_test.hpp>
@@ -33,11 +33,11 @@
 using namespace structureTranslationModule;
 using AgentTest = ScMemoryTest;
 
-
 namespace StructureTranslationAgent
 {
 ScsLoader loader;
-std::string const & TEST_FILES_DIR_PATH = STRUCTURE_TRANSLATION_MODULE_TEST_SRC_PATH "/testStructures/StructureTranslation/";
+std::string const & TEST_FILES_DIR_PATH =
+    STRUCTURE_TRANSLATION_MODULE_TEST_SRC_PATH "/testStructures/StructureTranslation/";
 std::string const & TEST_QUESTION_NODE_ALIAS = "test_question_node";
 std::string const & TEST_ANSWER_NODE_ALIAS = "test_answer_node";
 std::string const & TEST_STRUCTURE_ALIAS = "test_structure";
@@ -45,14 +45,18 @@ int const WAIT_TIME = 3000;
 
 using StructureTranslationTest = ScMemoryTest;
 
-
 class TestTranslationKeynodes : public ScKeynodes
 {
 public:
   static inline ScKeynode const lang_ru{"lang_ru", ScType::ConstNodeClass};
 };
 
-void testTranslator(ScAgentContext & context, StructureTranslator & translator, std::string fileName, std::vector<std::string> answerPhrases, bool alternative)
+void testTranslator(
+    ScAgentContext & context,
+    StructureTranslator & translator,
+    std::string fileName,
+    std::vector<std::string> answerPhrases,
+    bool alternative)
 {
   context.SubscribeAgent<structureTranslationModule::StructureTranslationAgent>();
 
@@ -62,7 +66,8 @@ void testTranslator(ScAgentContext & context, StructureTranslator & translator, 
 
   if (alternative)
   {
-    EXPECT_TRUE(answer.find(answerPhrases[0]) != std::string::npos || answer.find(answerPhrases[1]) != std::string::npos);
+    EXPECT_TRUE(
+        answer.find(answerPhrases[0]) != std::string::npos || answer.find(answerPhrases[1]) != std::string::npos);
   }
   else
   {
@@ -93,7 +98,8 @@ TEST_F(StructureTranslationTest, TestNrelInLinkTranslator)
 
 TEST_F(StructureTranslationTest, TestNrelInQuasybinaryLinkTranslator)
 {
-  std::vector<std::string> answerPhrases = {"мужчина синонимы хомо сапиенс, людь", "мужчина синонимы людь, хомо сапиенс"};
+  std::vector<std::string> answerPhrases = {
+      "мужчина синонимы хомо сапиенс, людь", "мужчина синонимы людь, хомо сапиенс"};
   ScAgentContext & context = *m_ctx;
   NrelInQuasybinaryLinkTranslator translator(&context);
   testTranslator(context, translator, "testNrelInQuasybinaryLinkTranslator.scs", answerPhrases, true);
@@ -109,7 +115,8 @@ TEST_F(StructureTranslationTest, TestNrelFromQuasybinaryLinkTranslator)
 
 TEST_F(StructureTranslationTest, TestNrelInQuasybinaryNodeTranslator)
 {
-  std::vector<std::string> answerPhrases = {"человек родители первый родитель, второй родитель", "человек родители второй родитель, первый родитель"};
+  std::vector<std::string> answerPhrases = {
+      "человек родители первый родитель, второй родитель", "человек родители второй родитель, первый родитель"};
   ScAgentContext & context = *m_ctx;
   NrelInQuasybinaryNodeTranslator translator(&context);
   testTranslator(context, translator, "testNrelInQuasybinaryNodeTranslator.scs", answerPhrases, true);
@@ -117,7 +124,9 @@ TEST_F(StructureTranslationTest, TestNrelInQuasybinaryNodeTranslator)
 
 TEST_F(StructureTranslationTest, TestNrelFromQuasybinaryNodeTranslator)
 {
-  std::vector<std::string> answerPhrases = {"штука декомпозиция на части большая часть, маленькая часть", "штука декомпозиция на части маленькая часть, большая часть"};
+  std::vector<std::string> answerPhrases = {
+      "штука декомпозиция на части большая часть, маленькая часть",
+      "штука декомпозиция на части маленькая часть, большая часть"};
   ScAgentContext & context = *m_ctx;
   NrelFromQuasybinaryNodeTranslator translator(&context);
   testTranslator(context, translator, "testNrelFromQuasybinaryNodeTranslator.scs", answerPhrases, true);
@@ -158,7 +167,7 @@ TEST_F(StructureTranslationTest, TestAllTranslators)
   std::stringstream translations;
   std::string answer;
 
-  for (const auto & translator : translators)
+  for (auto const & translator : translators)
   {
     std::stringstream const & translation = translator->translate(testStructure, TestTranslationKeynodes::lang_ru);
     translations << translation.str();
@@ -173,19 +182,27 @@ TEST_F(StructureTranslationTest, TestAllTranslators)
 
   EXPECT_TRUE(answer.find("яблоко имя Арнольд") != std::string::npos);
 
-  EXPECT_TRUE(answer.find("мужчина синонимы хомо сапиенс, людь") != std::string::npos || answer.find("мужчина синонимы людь, хомо сапиенс") != std::string::npos);
+  EXPECT_TRUE(
+      answer.find("мужчина синонимы хомо сапиенс, людь") != std::string::npos
+      || answer.find("мужчина синонимы людь, хомо сапиенс") != std::string::npos);
 
-  EXPECT_TRUE(answer.find("яблоко декомпозиция мякоть, кожура") != std::string::npos || answer.find("яблоко декомпозиция кожура, мякоть") != std::string::npos);
+  EXPECT_TRUE(
+      answer.find("яблоко декомпозиция мякоть, кожура") != std::string::npos
+      || answer.find("яблоко декомпозиция кожура, мякоть") != std::string::npos);
 
-  EXPECT_TRUE(answer.find("человек родители первый родитель, второй родитель") != std::string::npos || answer.find("человек родители второй родитель, первый родитель") != std::string::npos);
+  EXPECT_TRUE(
+      answer.find("человек родители первый родитель, второй родитель") != std::string::npos
+      || answer.find("человек родители второй родитель, первый родитель") != std::string::npos);
 
-  EXPECT_TRUE(answer.find("штука декомпозиция на части большая часть, маленькая часть") != std::string::npos || answer.find("штука декомпозиция на части маленькая часть, большая часть") != std::string::npos);
+  EXPECT_TRUE(
+      answer.find("штука декомпозиция на части большая часть, маленькая часть") != std::string::npos
+      || answer.find("штука декомпозиция на части маленькая часть, большая часть") != std::string::npos);
 
   EXPECT_TRUE(answer.find("мужчина любит есть пицца") != std::string::npos);
   EXPECT_TRUE(answer.find("мужчина любит пицца") != std::string::npos);
 
   context.UnsubscribeAgent<structureTranslationModule::StructureTranslationAgent>();
-  for (const auto & translator : translators)
+  for (auto const & translator : translators)
     delete translator;
 }
 

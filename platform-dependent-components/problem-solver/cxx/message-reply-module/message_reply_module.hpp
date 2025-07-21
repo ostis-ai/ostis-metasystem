@@ -4,17 +4,17 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
- #pragma once
+#pragma once
 
- #include <sc-memory/sc_module.hpp>
- 
- namespace messageReplyModule
- {
- 
- class MessageReplyModule : public ScModule
- {
-    void Initialize(ScMemoryContext * m_context) override;
-    void Shutdown(ScMemoryContext * m_context) override;
- };
- 
- }  // namespace messageReplyModule
+#include <sc-memory/sc_module.hpp>
+
+namespace messageReplyModule
+{
+
+class MessageReplyModule : public ScModule
+{
+  void Initialize(ScMemoryContext * m_context) override;
+  void Shutdown(ScMemoryContext * m_context) override;
+};
+
+}  // namespace messageReplyModule

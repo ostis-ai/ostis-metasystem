@@ -21,8 +21,11 @@ public:
   std::stringstream translate(ScAddr const & structAddr, ScAddr const & lang) const override;
 
 private:
-  std::string getTranslationOfRelation(ScAddr const & structAddr, ScAddr const & nrelNode, ScAddr const & sourceNode, ScAddr const & lang)
-      const;
+  std::string getTranslationOfRelation(
+      ScAddr const & structAddr,
+      ScAddr const & nrelNode,
+      ScAddr const & sourceNode,
+      ScAddr const & lang) const;
 };
 
 }  // namespace structureTranslationModule

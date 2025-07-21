@@ -4,7 +4,7 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
- #include "keynodes/translation_keynodes.hpp"
+#include "keynodes/translation_keynodes.hpp"
 
 #include "constants/translation_constants.hpp"
 

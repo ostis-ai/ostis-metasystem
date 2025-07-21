@@ -8,7 +8,6 @@
 
 #include <sc-memory/sc_agent.hpp>
 
-
 namespace generateResponseModule
 {
 class GenerateResponseAgent : public ScActionInitiatedAgent

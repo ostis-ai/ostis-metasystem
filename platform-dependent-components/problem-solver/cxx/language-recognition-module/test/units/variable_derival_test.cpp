@@ -39,9 +39,9 @@ TEST_F(AgentTest, DISABLED_EnglishMessageTest)
   EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
   ScAddr const & message = context.SearchElementBySystemIdentifier("message");
-  
+
   EXPECT_TRUE(context.CheckConnector(LanguageRecognitionKeynodes::lang_en, message, ScType::ConstPermPosArc));
-  
+
   context.UnsubscribeAgent<languageRecognitionModule::LanguageRecognitionAgent>();
 }
 
@@ -59,10 +59,10 @@ TEST_F(AgentTest, DISABLED_RussianMessageTest)
   EXPECT_TRUE(testAction.IsFinishedSuccessfully());
 
   ScAddr const & message = context.SearchElementBySystemIdentifier("message");
-  
+
   EXPECT_TRUE(context.CheckConnector(ScKeynodes::lang_ru, message, ScType::ConstPermPosArc));
-  
+
   context.UnsubscribeAgent<languageRecognitionModule::LanguageRecognitionAgent>();
 }
 
-}  // namespace LanguageRecognitionTest
+}  // namespace ModuleTest

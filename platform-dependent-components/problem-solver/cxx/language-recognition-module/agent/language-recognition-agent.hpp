@@ -8,12 +8,11 @@
 
 #include <sc-memory/sc_agent.hpp>
 
-
 namespace languageRecognitionModule
 {
 class LanguageRecognitionAgent : public ScActionInitiatedAgent
 {
- public:
+public:
   ScAddr GetActionClass() const override;
 
   ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;

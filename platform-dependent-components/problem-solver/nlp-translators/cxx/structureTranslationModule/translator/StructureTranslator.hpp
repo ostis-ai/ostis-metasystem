@@ -13,7 +13,6 @@ namespace structureTranslationModule
 {
 using ScAddrSet = ScAddrUnorderedSet;
 
-
 class StructureTranslator
 {
 public:
