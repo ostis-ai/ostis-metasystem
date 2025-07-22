@@ -215,8 +215,10 @@ Before launching ostis-metasystem:
 - [extract sc-machine from GitHub Releases](https://ostis-ai.github.io/sc-machine/quick_start/#github-releases) or [build it](https://ostis-ai.github.io/sc-machine/build/quick_start/);
 - [extract scp-machine from GitHub Releases](https://ostis-ai.github.io/scp-machine/quick_start/#github-releases) or [build it](https://ostis-ai.github.io/scp-machine/build/quick_start/);
 - [extract sc-component-manager from GitHub Releases](https://ostis-ai.github.io/sc-component-manager/quick_start/#github-releases) or [build it](https://ostis-ai.github.io/sc-component-manager/build/quick_start/).
+- [extract ps-common-lib from GitHub Releases](https://github.com/ostis-ai/ostis-ps-lib/releases) or [build it](https://ostis-ai.github.io/ostis-ps-lib/ps-common-lib/#installation-build).
+- [extract non-atomic-action-interpreter-module from GitHub Releases](https://ostis-ai.github.io/ostis-ps-lib/non-atomic-action-interpreter-module/#using-module-as-an-extension-for-sc-machine) or [build it](https://ostis-ai.github.io/ostis-ps-lib/non-atomic-action-interpreter-module/#installation-build).
 
-Firstly, build knowledge base:
+Firstly, build knowledge base, make sure `repo.path` file contains paths to `section_subject_domain_of_messages` and `non_subject_domain_concepts` folders of [nika](https://github.com/ostis-apps/nika/):
 
 ```sh
 ./path/to/sc-builder/binary -i repo.path -o kb.bin --clear
@@ -226,10 +228,12 @@ After run C++ problem solver:
 
 ```sh
 ./path/to/sc-machine/binary -s kb.bin -c ostis-metasystem.ini \
-    -e "path/to/ostis-metasystem/lib/extensions;path/to/sc-machine/lib/extensions;path/to/scp-machine/lib/extensions;path/to/sc-component-manager/lib/extensions"
+    -e "path/to/ostis-metasystem/lib/extensions;path/to/sc-machine/lib/extensions;path/to/scp-machine/lib/extensions;path/to/sc-component-manager/lib/extensions;path/to/non-atomic-action-interpreter-module/lib/extensions"
 # if several paths to extensions are provided then they should be separated 
 # by semicolon and wrapped in double quotes
 ```
+
+Configure environment variables in `.env` to use any LLM for ask-ai replies.
 
 Run Python problem solver in new terminal:
 

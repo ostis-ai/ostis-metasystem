@@ -1,0 +1,19 @@
+sc_node_class
+    -> concept_man;
+    -> lang_ru;;
+
+sc_node_norole_relation
+    -> nrel_synonyms;;
+
+test_structure = [*
+    concept_man => nrel_synonyms:
+    {
+       [хомо сапиенс] (* <- lang_ru;; *);
+       [людь] (* <- lang_ru;; *)
+    };;
+    *];;
+
+concept_man
+    => nrel_main_idtf: [мужчина] (* <- lang_ru;; *);;
+nrel_synonyms
+    => nrel_main_idtf: [синонимы] (* <- lang_ru;; *);;

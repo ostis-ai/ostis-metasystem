@@ -1,0 +1,4 @@
+translation_ignored_keynodes
+->nrel_system_identifier;
+->nrel_main_idtf;
+->nrel_second_domain;;

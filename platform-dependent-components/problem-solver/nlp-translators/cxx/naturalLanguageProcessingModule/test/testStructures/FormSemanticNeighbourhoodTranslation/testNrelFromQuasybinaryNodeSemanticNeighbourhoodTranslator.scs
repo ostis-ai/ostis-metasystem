@@ -1,0 +1,68 @@
+sc_node_class
+    -> concept_apple;
+    -> concept_red;
+    -> color;
+    -> parameter;
+    -> concept_fruit;
+    -> lang_en;;
+
+sc_node_norole_relation
+    -> nrel_name;
+    -> nrel_synonyms;
+    -> nrel_decomposition;
+    -> nrel_parents;
+    -> nrel_parts_decomposition;;
+
+test_question_node
+    <- concept_apple;
+    <- concept_red;
+    <- concept_fruit;
+    => nrel_name: [Arnold] (* <- lang_en;; *);
+    => nrel_synonyms:
+    {
+       [question node] (* <- lang_en;; *);
+       [node with question] (* <- lang_en;; *)
+    };
+    <= nrel_decomposition:
+    {
+       [question 1] (* <- lang_en;; *);
+       [question 2] (* <- lang_en;; *)
+    };
+    => nrel_parents:
+    {
+        parent1;
+        parent2
+    };
+    <= nrel_parts_decomposition:
+    {
+        part1;
+        part2
+    };;
+
+concept_red <- color;;
+color <- parameter;;
+
+concept_apple
+    => nrel_main_idtf: [apple] (* <- lang_en;; *);;
+concept_red
+    => nrel_main_idtf: [red] (* <- lang_en;; *);;
+concept_fruit
+    => nrel_main_idtf: [fruit] (* <- lang_en;; *);;
+color
+    => nrel_main_idtf: [color] (* <- lang_en;; *);;
+nrel_name
+    => nrel_main_idtf: [name] (* <- lang_en;; *);;
+nrel_synonyms
+    => nrel_main_idtf: [synonyms] (* <- lang_en;; *);;
+nrel_parents
+    => nrel_main_idtf: [parents] (* <- lang_en;; *);;
+parent1
+    => nrel_main_idtf: [first parent] (* <- lang_en;; *);;
+parent2
+    => nrel_main_idtf: [second parent] (* <- lang_en;; *);;
+nrel_parts_decomposition
+    => nrel_main_idtf: [parts decomposition] (* <- lang_en;; *);;
+part1
+    => nrel_main_idtf: [big part] (* <- lang_en;; *);;
+part2
+    => nrel_main_idtf: [little part] (* <- lang_en;; *);;

@@ -1,0 +1,11 @@
+concept_message_about_subdividing
+-> ..message(*
+  -> rrel_entity: myself;;
+*);;
+
+test_action_node
+<- action_generate_response;
+-> rrel_1:..message;
+-> rrel_2: .._answer;;
+
+

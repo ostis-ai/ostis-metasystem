@@ -1,0 +1,12 @@
+check1 = [*concept_message_about_entity
+=> nrel_response_action: action_search_full_semantic_neighborhood;
+=> nrel_contained_role: ..contained_role_tuple(* <- sc_node_tuple;; *);; 
+
+action_search_full_semantic_neighborhood
+=> nrel_required_arg_role: ..required_arg_tuple(* <- sc_node_tuple;; *);;
+
+@edge1 = (..contained_role_tuple -> rrel_entity);;
+@edge2 = (..required_arg_tuple -> rrel_1);;
+
+@edge1 => nrel_corresponding_role: @edge2;;
+*];;

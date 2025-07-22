@@ -1,0 +1,87 @@
+/*
+ * This source file is part of an OSTIS project. For the latest info, see http://ostis.net
+ * Distributed under the MIT License
+ * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
+ */
+
+#include <sc-agents-common/utils/CommonUtils.hpp>
+#include <sc-agents-common/utils/IteratorUtils.hpp>
+#include "sc-memory/sc_keynodes.hpp"
+
+#include "keynodes/message_reply_keynodes.hpp"
+#include "GenerateReplyMessageAgent.hpp"
+
+using namespace messageReplyModuleTest;
+
+ScResult GenerateReplyMessageAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
+{
+  if (!m_context.CheckConnector(
+        messageReplyModule::MessageReplyKeynodes::action_interpret_non_atomic_action, action, ScType::ConstPermPosArc))
+  {
+      return action.FinishSuccessfully();
+  }
+  SC_LOG_DEBUG("GenerateMessageReplyAgent started");
+  if(!actionIsValid(action))
+  {
+      return action.FinishSuccessfully();
+  }
+
+  ScAddr argsSet = utils::IteratorUtils::getAnyByOutRelation(
+        & m_context,
+        action,
+        ScKeynodes::rrel_2);
+  ScAddr messageAddr = utils::IteratorUtils::getAnyByOutRelation(
+        & m_context,
+        argsSet,
+        ScKeynodes::rrel_1);
+
+  ScTemplate scTemplate;
+  scTemplate.Quintuple(
+      messageAddr,
+      ScType::VarCommonArc,
+      ScType::VarNode,
+      ScType::VarPermPosArc,
+      messageReplyModule::MessageReplyKeynodes::nrel_reply);
+  ScTemplateParams templateParams;
+  ScTemplateGenResult templateGenResult;
+  m_context.GenerateByTemplate(scTemplate, templateGenResult, templateParams);
+  SC_LOG_DEBUG("GenerateMessageReplyAgent finished");
+  return action.FinishSuccessfully();
+}
+
+ScAddr GenerateReplyMessageAgent::GetActionClass() const
+{
+  return messageReplyModule::MessageReplyKeynodes::action_interpret_non_atomic_action;
+}
+
+bool GenerateReplyMessageAgent::actionIsValid(const ScAddr & actionAddr)
+{
+  ScTemplate scTemplate;
+  scTemplate.Quintuple(
+        actionAddr,
+        ScType::VarPermPosArc,
+        messageReplyModule::MessageReplyKeynodes::message_processing_program,
+        ScType::VarPermPosArc,
+        ScKeynodes::rrel_1);
+  scTemplate.Quintuple(
+        actionAddr,
+        ScType::VarPermPosArc,
+        ScType::VarNode >> "_args_set",
+        ScType::VarPermPosArc,
+        ScKeynodes::rrel_2);
+  scTemplate.Quintuple(
+        "_args_set",
+        ScType::VarPermPosArc,
+        ScType::VarNode >> "_message",
+        ScType::VarPermPosArc,
+        ScKeynodes::rrel_1);
+  scTemplate.Triple(
+        messageReplyModule::MessageReplyKeynodes::concept_message,
+        ScType::VarPermPosArc,
+        "_message");
+  ScTemplateSearchResult searchResult;
+  m_context.SearchByTemplate(scTemplate, searchResult);
+  return searchResult.Size() == 1;
+}
+
+

@@ -2,3 +2,6 @@
 sc-models
 
 !sc-models/knowledge-base/install/ostis-standard/Contents
+
+../../nika/kb/section_subject_domain_of_messages
+../../nika/kb/non_subject_domain_concepts

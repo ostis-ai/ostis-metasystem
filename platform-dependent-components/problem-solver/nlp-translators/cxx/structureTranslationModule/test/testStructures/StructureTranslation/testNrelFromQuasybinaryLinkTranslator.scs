@@ -1,0 +1,22 @@
+sc_node_class
+    -> concept_apple;
+    -> color;
+    -> concept_fruit;
+    -> lang_ru;;
+
+sc_node_norole_relation
+    -> nrel_name;
+    -> nrel_decomposition;;
+
+test_structure = [*
+    concept_apple <= nrel_decomposition:
+    {
+       [кожура] (* <- lang_ru;; *);
+       [мякоть] (* <- lang_ru;; *)
+    };;
+    *];;
+
+nrel_decomposition
+    => nrel_main_idtf: [декомпозиция] (* <- lang_ru;; *);;
+concept_apple
+    => nrel_main_idtf: [яблоко] (* <- lang_ru;; *);;
