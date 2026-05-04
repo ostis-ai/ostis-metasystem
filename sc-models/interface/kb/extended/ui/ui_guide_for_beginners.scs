@@ -1,0 +1,185 @@
+// Справка для начинающего — структура и содержимое
+// Guide for beginners — structure and content
+
+// === Класс раздела справки ===
+guide_section
+<- sc_node_class;
+=> nrel_main_idtf: [Раздел справки] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Guide section] (* <- lang_en;; *);;
+
+// === Корневой узел справки ===
+guide_for_beginners
+<- guide_section;
+=> nrel_main_idtf: [Справка для начинающего] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Guide for beginners] (* <- lang_en;; *);
+=> nrel_decomposition: ... (*
+    -> guide_section_navigation;;
+    -> guide_section_context_menu;;
+    -> guide_section_view_formats;;
+    -> guide_section_library;;
+    -> guide_section_search;;
+    -> guide_section_history;;
+    -> guide_section_profile;;
+    -> guide_section_theme;;
+    -> guide_section_language;;
+    -> guide_section_pages;;
+    -> guide_section_sections;;
+    -> guide_section_install;;
+    -> guide_section_details;;
+    *);;
+
+// === Раздел 1: Навигация по графам ===
+guide_section_navigation
+<- guide_section;
+=> nrel_main_idtf: [Навигация по графам] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Navigation by graphs] (* <- lang_en;; *);
+=> nrel_explanation:
+    [База знаний Метасистемы OSTIS представляет собой семантический граф, состоящий из узлов (понятий) и связей между ними. Каждый узел — это элемент знания: понятие, объект, действие или отношение. Для навигации кликните на любой узел в области просмотра — система покажет его семантическую окрестность, то есть все связанные с ним элементы. Таким образом вы можете последовательно исследовать базу знаний, переходя от одного понятия к другому.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [The knowledge base of the OSTIS Metasystem is a semantic graph consisting of nodes (concepts) and connections between them. Each node is an element of knowledge: a concept, object, action, or relation. To navigate, click on any node in the view area — the system will show its semantic neighborhood, i.e., all related elements. This way you can sequentially explore the knowledge base, moving from one concept to another.]
+    (* <- lang_en;; *);;
+
+// === Раздел 2: Контекстное меню узлов ===
+guide_section_context_menu
+<- guide_section;
+=> nrel_main_idtf: [Контекстное меню узлов] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Node context menu] (* <- lang_en;; *);
+=> nrel_explanation:
+    [При нажатии правой кнопкой мыши на любой узел открывается контекстное меню с доступными командами. Команда "Что это такое?" показывает полную семантическую окрестность выбранного элемента. Вы также можете зафиксировать узел как аргумент для последующих команд — это позволяет выполнять действия с конкретным элементом, например, найти связанные понятия или просмотреть информацию о нём в разных форматах.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [Right-clicking on any node opens a context menu with available commands. The "What is this?" command shows the full semantic neighborhood of the selected element. You can also fix a node as an argument for subsequent commands — this allows you to perform actions with a specific element, such as finding related concepts or viewing information about it in different formats.]
+    (* <- lang_en;; *);;
+
+// === Раздел 3: Форматы просмотра ===
+guide_section_view_formats
+<- guide_section;
+=> nrel_main_idtf: [Форматы просмотра] (* <- lang_ru;; *);
+=> nrel_main_idtf: [View formats] (* <- lang_en;; *);
+=> nrel_explanation:
+    [Результаты запросов отображаются в двух форматах. SCn — текстовое представление в виде дерева, где узлы и связи показаны в структурированном текстовом виде. Этот формат удобен для детального изучения связей и чтения содержимого. SCg — графическое представление в виде диаграммы, где узлы отображаются как точки, а связи — как линии между ними. Этот формат удобен для визуального анализа структуры знаний. Переключайтесь между форматами с помощью кнопок в боковой панели.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [Query results are displayed in two formats. SCn — a textual representation as a tree, where nodes and connections are shown in structured text form. This format is convenient for detailed study of connections and reading content. SCg — a graphical representation as a diagram, where nodes are displayed as points and connections as lines between them. This format is convenient for visual analysis of knowledge structure. Switch between formats using the buttons in the side panel.]
+    (* <- lang_en;; *);;
+
+// === Раздел 4: Библиотека компонентов ===
+guide_section_library
+<- guide_section;
+=> nrel_main_idtf: [Библиотека компонентов] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Component library] (* <- lang_en;; *);
+=> nrel_explanation:
+    [Библиотека компонентов OSTIS содержит каталог многократно используемых компонентов: базы знаний, решатели задач, интерфейсные элементы и подсистемы. Для перехода в библиотеку нажмите соответствующую кнопку в боковой панели. Вы можете искать компоненты по имени и фильтровать их по типу. Клик по карточке компонента открывает подробную информацию: описание, тип, ссылку на репозиторий и пояснение к компоненту.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [The OSTIS component library contains a catalog of reusable components: knowledge bases, problem solvers, interface elements, and subsystems. To access the library, click the corresponding button in the side panel. You can search components by name and filter them by type. Clicking on a component card opens detailed information: description, type, repository link, and explanation.]
+    (* <- lang_en;; *);;
+
+// === Раздел 5: Поиск ===
+guide_section_search
+<- guide_section;
+=> nrel_main_idtf: [Поиск] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Search] (* <- lang_en;; *);
+=> nrel_explanation:
+    [Поле поиска в боковой панели позволяет находить элементы базы знаний по подстроке. При вводе текста система ищет совпадения в содержимом текстовых ссылок (контента узлов). Результаты поиска появляются с небольшой задержкой для оптимизации производительности. Выберите найденный элемент — система выполнит команду просмотра и покажет его семантическую окрестность в текущем формате (SCn или SCg).]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [The search field in the side panel allows you to find knowledge base elements by substring. When you type text, the system searches for matches in the content of text links (node content). Search results appear with a slight delay for performance optimization. Select a found element — the system will execute a view command and show its semantic neighborhood in the current format (SCn or SCg).]
+    (* <- lang_en;; *);;
+
+// === Раздел 6: История навигации ===
+guide_section_history
+<- guide_section;
+=> nrel_main_idtf: [История навигации] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Navigation history] (* <- lang_en;; *);
+=> nrel_explanation:
+    [Панель истории в боковой панели сохраняет все ваши переходы между элементами базы знаний. Каждый выполненный запрос добавляется в начало списка. Клик по элементу истории позволяет быстро вернуться к ранее просмотренному результату. Текущий элемент выделен в списке. Это удобно при глубокой навигации по графу знаний, когда нужно вернуться к ранее изученному понятию.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [The history panel in the side panel saves all your transitions between knowledge base elements. Each executed query is added to the beginning of the list. Clicking on a history item allows you to quickly return to a previously viewed result. The current element is highlighted in the list. This is convenient when deeply navigating the knowledge graph and you need to return to a previously studied concept.]
+    (* <- lang_en;; *);;
+
+// === Раздел 7: Управление профилем ===
+guide_section_profile
+<- guide_section;
+=> nrel_main_idtf: [Управление профилем] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Profile management] (* <- lang_en;; *);
+=> nrel_explanation:
+    [В правом верхнем углу интерфейса расположено меню профиля пользователя. Если вы не авторизованы, отображается кнопка "Вход" — нажмите её для перехода на страницу авторизации. После входа отображается аватар с первой буквой вашего имени. При нажатии на аватар открывается выпадающее меню, где отображается ваше имя пользователя и доступна команда "Выход". Функция выхода из системы удаляет данные сессии и возвращает вас на страницу входа. Авторизация позволяет персонализировать работу с системой и сохранять историю действий.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [The user profile menu is located in the upper right corner of the interface. If you are not logged in, the "Login" button is displayed — click it to go to the authorization page. After logging in, an avatar with the first letter of your name is displayed. Clicking on the avatar opens a dropdown menu showing your username and the "Logout" command. The logout function removes session data and returns you to the login page. Authorization allows you to personalize work with the system and preserve action history.]
+    (* <- lang_en;; *);;
+
+// === Раздел 8: Переключение темы ===
+guide_section_theme
+<- guide_section;
+=> nrel_main_idtf: [Переключение темы] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Theme switching] (* <- lang_en;; *);
+=> nrel_explanation:
+    [Рядом с меню профиля находится переключатель темы оформления. При нажатии последовательно переключаются три режима: светлая тема (солнце), тёмная тема (луна) и системная тема (автоматический режим, который подстраивается под настройки вашей операционной системы). При выборе системной темы интерфейс автоматически адаптируется к светлому или тёмному режиму в зависимости от текущих настроек вашего устройства. Выбранная тема сохраняется в памяти браузера и применяется при следующем посещении.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [Next to the profile menu is the theme toggle button. When clicked, it cycles through three modes: light theme (sun), dark theme (moon), and system theme (auto mode that adapts to your operating system settings). When system theme is selected, the interface automatically adapts to light or dark mode depending on your device's current settings. The selected theme is stored in the browser's memory and applied on the next visit.]
+    (* <- lang_en;; *);;
+
+// === Раздел 9: Выбор языка ===
+guide_section_language
+<- guide_section;
+=> nrel_main_idtf: [Выбор языка] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Language selection] (* <- lang_en;; *);
+=> nrel_explanation:
+    [Крайний справа элемент в верхней панели — переключатель языка интерфейса. Доступны два варианта: русский (Ru) и английский (En). При выборе языка весь интерфейс системы, включая меню, кнопки, подсказки и сообщения, переключается на выбранный язык. Выбор языка сохраняется в памяти браузера, поэтому при следующем входе в систему будет использован ранее выбранный язык. Русский и английский языки доступны для всей функциональности системы.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [The rightmost element in the top panel is the interface language toggle. Two options are available: Russian (Ru) and English (En). When a language is selected, the entire system interface, including menus, buttons, hints, and messages, switches to the chosen language. The language preference is stored in the browser memory, so the previously selected language will be used on the next visit. Russian and English languages are available for all system functionality.]
+    (* <- lang_en;; *);;
+
+// === Раздел 10: Навигация между страницами ===
+guide_section_pages
+<- guide_section;
+=> nrel_main_idtf: [Навигация между страницами] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Page navigation] (* <- lang_en;; *);
+=> nrel_explanation:
+    [В боковой панели, под строкой поиска, расположены кнопки переключения между основными страницами системы. Кнопка с изображением структуры (SCn) открывает главную страницу с отображением семантической сети знаний. Кнопка с изображением книжки открывает Библиотеку компонентов — каталог доступных для установки компонентов OSTIS. Кнопка со значком вопроса открывает Справку для начинающего — руководство по использованию системы. Активная страница выделена визуально. Эти кнопки позволяют быстро переключаться между основными режимами работы.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [In the side panel, below the search field, there are buttons for switching between the main pages of the system. The button with the structure image (SCn) opens the main page displaying the semantic knowledge network. The button with the book image opens the Component Library — a catalog of available OSTIS components. The button with the question mark icon opens the Guide for Beginners — a manual on using the system. The active page is visually highlighted. These buttons allow you to quickly switch between the main working modes.]
+    (* <- lang_en;; *);;
+
+// === Раздел 11: Структура разделов ===
+guide_section_sections
+<- guide_section;
+=> nrel_main_idtf: [Структура разделов] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Sections structure] (* <- lang_en;; *);
+=> nrel_explanation:
+    [Раздел "Разделы" в боковой панели отображает иерархическую структуру базы знаний Метасистемы OSTIS. При разворачивании секции отображаются основные разделы базы знаний: компоненты, подсистемы, базы знаний и другие. Каждый раздел может содержать вложенные подразделы. Нажатие на название раздела выполняет команду просмотра его содержимого в текущем формате (SCn или SCg). Для администраторов доступна кнопка добавления новых разделов. Структура разделов помогает понять организацию знаний в системе и быстро перейти к нужному разделу.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [The "Sections" section in the side panel displays the hierarchical structure of the OSTIS Metasystem knowledge base. When expanded, the section displays the main sections of the knowledge base: components, subsystems, knowledge bases, and others. Each section may contain nested subsections. Clicking on a section name executes a view command for its content in the current format (SCn or SCg). For administrators, a button to add new sections is available. The sections structure helps understand the organization of knowledge in the system and quickly navigate to the required section.]
+    (* <- lang_en;; *);;
+
+// === Раздел 12: Установка компонентов ===
+guide_section_install
+<- guide_section;
+=> nrel_main_idtf: [Установка компонентов] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Component installation] (* <- lang_en;; *);
+=> nrel_explanation:
+    [В Библиотеке компонентов каждая карточка содержит кнопку "Установить". При нажатии на эту кнопку система инициирует процесс установки выбранного компонента в вашу Метасистему. В зависимости от типа компонента установка может происходить автоматически через агент установки или путём перехода на страницу репозитория GitHub для ручной установки. После успешной установки компонент становится доступен в системе и может использоваться для решения соответствующих задач. Процесс установки может занять некоторое время в зависимости от размера и сложности компонента.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [In the Component Library, each card contains an "Install" button. When clicking this button, the system initiates the installation process for the selected component into your Metasystem. Depending on the component type, installation can occur automatically through the installation agent or by navigating to the GitHub repository page for manual installation. After successful installation, the component becomes available in the system and can be used to solve relevant tasks. The installation process may take some time depending on the size and complexity of the component.]
+    (* <- lang_en;; *);;
+
+// === Раздел 13: Информация о компоненте ===
+guide_section_details
+<- guide_section;
+=> nrel_main_idtf: [Информация о компоненте] (* <- lang_ru;; *);
+=> nrel_main_idtf: [Component details] (* <- lang_en;; *);
+=> nrel_explanation:
+    [При клике на карточку компонента в Библиотеке открывается модальное окно с подробной информацией. В этом окне отображаются: название компонента, его тип (база знаний, решатель задач, интерфейс или подсистема), описание назначения, список зависимостей от других компонентов, ссылка на репозиторий GitHub, имя автора и способ установки. Модальное окно можно закрыть нажатием на кнопку X в правом верхнем углу или кликом вне окна. Эта информация помогает понять возможности компонента перед его установкой.]
+    (* <- lang_ru;; *);
+=> nrel_explanation:
+    [Clicking on a component card in the Library opens a modal window with detailed information. This window displays: component name, its type (knowledge base, problem solver, interface, or subsystem), description of purpose, list of dependencies on other components, link to GitHub repository, author's name, and installation method. The modal can be closed by clicking the X button in the upper right corner or by clicking outside the window. This information helps understand the component's capabilities before installation.]
+    (* <- lang_en;; *);;
